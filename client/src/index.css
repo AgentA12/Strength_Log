@@ -4,6 +4,6 @@
 
 @layer {
     body {
-        @apply bg-slate-800
+        @apply dark:bg-neutral-900 dark:text-cyan-500
     }
 }
