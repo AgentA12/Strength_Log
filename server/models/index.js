@@ -1,4 +1,5 @@
+const Exercise = require("./exercise");
+const Template = require("./template");
 const User = require("./user");
-const Exercise = require("./excercise");
 
-module.exports = { Exercise, User };
+module.exports = { Exercise, Template, User };
