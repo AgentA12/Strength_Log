@@ -4,16 +4,20 @@ const typeDefs = gql`
   type Exercise {
     _id: ID
     name: String
-    pounds: Int
+    sets: Int
     reps: Int
   }
 
   type User {
     _id: ID
-    createdAt: String
     username: String
-    password: String
+    createdAt: String
     templates: [Template]
+  }
+
+  type Auth {
+    token: ID
+    user: User
   }
 
   type Template {
@@ -23,14 +27,16 @@ const typeDefs = gql`
 
   type Query {
     getExercise: [Exercise]
-    getUser: User
-    getTemplate: Template
+    getUser(_id: ID!): User
+    getTemplate(_id: ID!): Template
+    getAllUsers: [User]
   }
 
   type Mutation {
-    createUser(username: String!, password: String!): User
-    createTemplate(name: String!, exercises: ID!): Template
-    createExercise(name: String!, pounds: Int!, reps: Int!): Exercise
+    login(username: String!, password: String!): User
+    createUser(username: String!, password: String!): Auth
+    createTemplate(_id: ID!, name: String!, exercises: ID!): User
+    createExercise(name: String!, sets: Int!, reps: Int!): Exercise
   }
 `;
 

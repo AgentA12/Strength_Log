@@ -2,8 +2,11 @@ import { gql } from "@apollo/client";
 
 export const GET_EXERCISE = gql`
   query {
-    exercise {
+    getExercise {
       name
+      reps
+      sets
+      _id
     }
   }
 `;

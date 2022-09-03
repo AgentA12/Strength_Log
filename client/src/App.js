@@ -1,16 +1,12 @@
-import { useQuery } from "@apollo/client";
-import { GET_EXERCISE } from "./utils/graphql/queries";
+import { Main } from "./pages/Main";
+import { Routes, Route } from "react-router-dom";
+import Register from "./pages/Register";
 
 export default function App() {
-  const { loading, error, data } = useQuery(GET_EXERCISE);
-
-  if (data) console.log(data);
-
-  if (loading) {
-  }
-
-  if (error) {
-  }
-
-  return <>hello world</>;
+  return (
+    <Routes>
+      <Route path="/" element={<Main />} />
+      <Route path="/Register" element={<Register />} />
+    </Routes>
+  );
 }

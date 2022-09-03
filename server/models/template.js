@@ -5,6 +5,6 @@ const templateSchema = mongoose.Schema({
   exercises: [{ type: mongoose.Schema.Types.ObjectId, ref: "Exercise" }],
 });
 
-const Template = mongoose.model("Template", templateSchema);
+const Template = mongoose.model("Template", templateSchema)
 
 module.exports = Template;
