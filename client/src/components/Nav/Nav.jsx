@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_EXERCISE } from "../../utils/graphql/queries";
 import { Link } from "react-router-dom";
+import Auth from "../../utils/auth/auth";
 
 export const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -74,32 +75,47 @@ export const Nav = () => {
                 Routines
               </a>
             </li>
-            {/* <li>
-                <a
-                  href="#"
-                  className="block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent"
-                >
-                  Account
-                </a>
-              </li> */}
-            <li className="flex md:flex-col justify-center items-center md:block">
-              <Link to={"/Register"}>
-                <button
-                  type="button"
-                  className="w-fit  text-primary hover:text-background border border-primary hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary_faded font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-                >
-                  Log in
-                </button>
-              </Link>
+            {Auth.isLoggedIn() ? (
+              <>
+                <li>
+                  <a
+                    href="#"
+                    className="block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent"
+                  >
+                    Account
+                  </a>
+                </li>
 
-              <button
-                type="button"
-                className="w-fit text-background bg-gradient-to-r from-primary via-primary to-primary_faded hover:bg-gradient-to-br focus:ring-4 focus:outline-none 
+                <li>
+                  <a
+                    className="block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent cursor-pointer" 
+                    onClick={() => Auth.logout()}
+                  >
+                    logout
+                  </a>
+                </li>
+              </>
+            ) : (
+              <li className="flex md:flex-col justify-center items-center md:block">
+                <Link to={"/Login"}>
+                  <button
+                    type="button"
+                    className="w-fit  text-primary hover:text-background border border-primary hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary_faded font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                  >
+                    Log in
+                  </button>
+                </Link>
+                <Link to={"/Signup"}>
+                  <button
+                    type="button"
+                    className="w-fit text-background bg-gradient-to-r from-primary via-primary to-primary_faded hover:bg-gradient-to-br focus:ring-4 focus:outline-none 
                 focus:ring-primary_faded font-medium rounded-lg px-5 py-2.5 text-center mr-2 mb-2"
-              >
-                Sign up
-              </button>
-            </li>
+                  >
+                    Sign up
+                  </button>
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>

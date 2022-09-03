@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/graphql/mutations";
+import Auth from "../utils/auth/auth";
 
 export default function Login() {
   const [loginUser, { data, loading, error }] = useMutation(LOGIN_USER, {
@@ -22,69 +24,66 @@ export default function Login() {
     });
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
-    loginUser({
+    const mutationResponse = await loginUser({
       variables: {
         ...formState,
       },
     });
+
+    Auth.login(mutationResponse.data.login.token);
   }
 
-  if (loading) return "Submitting...";
-  if (error) return `Submission error! ${error.message}`;
+  if (error) console.log(error);
 
   return (
-    <div className="max-w-4xl bg-overlay p-8 rounded-lg ">
-      <form className="" onSubmit={(event) => handleSubmit(event)}>
-        <h5>Login</h5>
-        <div className="mb-6">
-          <label
-            htmlFor="username-success"
-            className="block mb-2 text-sm font-medium text-green-700 dark:text-green-500"
+    <div className="flex h-screen items-center justify-center">
+      <div className="w-96 bg-overlay mx-2 p-8 rounded-lg border-r-primary border-r-4">
+        <form className="" onSubmit={(event) => handleSubmit(event)}>
+          <h5 className="mb-5 font-medium text-lg">ACCOUNT LOGIN</h5>
+          <div className="relative z-0 mb-6 w-full group">
+            <input
+              onChange={handleChange}
+              type="text"
+              name="username"
+              className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-primary peer"
+              placeholder=" "
+              required
+            />
+            <label className="peer-focus:font-medium absolute text-sm text-gray-300 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              Username
+            </label>
+          </div>
+          <div className="relative z-0 mb-6 w-full group">
+            <input
+              onChange={handleChange}
+              name="password"
+              type="password"
+              className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-primary peer"
+              placeholder=" "
+              required
+            />
+            <label className="peer-focus:font-medium absolute text-sm text-gray-300 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              Password
+            </label>
+          </div>
+          <button
+            type="submit"
+            className="w-full text-background bg-gradient-to-r from-primary via-primary to-primary_faded hover:bg-gradient-to-br focus:ring-4 focus:outline-none 
+                focus:ring-primary_faded font-medium rounded-lg px-5 py-2.5 mb-4"
           >
-            Your Username
-          </label>
-          <input
-            onChange={handleChange}
-            type="text"
-            name="username"
-            className="bg-overlay border border-green-500  placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-green-100 dark:border-green-400"
-            placeholder="Bonnie Green"
-          />
-          <p className="mt-2 text-sm text-green-600 dark:text-green-500">
-            <span className="font-medium">Alright!</span> Username available!
+            Login
+          </button>
+          <p className="my-1 py-1 border-t text-error">
+            {error && error.message}
           </p>
-        </div>
-        <div>
-          <label
-            htmlFor="password"
-            className="block mb-2 text-sm font-medium text-red-700 dark:text-red-500"
-          >
-            Password
-          </label>
-          <input
-            onChange={handleChange}
-            name="password"
-            type="password"
-            className="bg-overlay border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-red-100 dark:border-red-400"
-            placeholder="Bonnie Green"
-          />
-          <p className="mt-2 text-sm text-red-600 dark:text-red-500">
-            <span className="font-medium">Oops!</span> Username Password is
-            incorrect
-          </p>
-        </div>
-        <hr className="my-3 " />
-        <button
-          type="submit"
-          className="w-fit text-background bg-gradient-to-r from-primary via-primary to-primary_faded hover:bg-gradient-to-br focus:ring-4 focus:outline-none 
-                focus:ring-primary_faded font-medium rounded-lg px-5 py-2.5 text-center mr-2 mb-2 "
-        >
-          Sign up
-        </button>
-      </form>
+        </form>
+        <Link to="/Signup" className="hover:text-primary underline">
+          Sign up instead
+        </Link>
+      </div>
     </div>
   );
 }

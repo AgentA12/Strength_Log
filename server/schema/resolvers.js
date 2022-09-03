@@ -29,8 +29,27 @@ const resolvers = {
   },
 
   Mutation: {
-    login: async function (parent, args, context, info) {
-      console.log(args);
+    login: async function (parent, { username, password }, context, info) {
+      const user = await User.findOne({ username: username });
+
+      if (!user) {
+        throw new AuthenticationError("Incorrect credentails");
+      }
+
+      console.log(user);
+
+      const dbData = await User.findOne({ password: password });
+
+      if (!dbData) {
+        throw new AuthenticationError("Incorrect credentails");
+      }
+      console.log(dbData);
+      const token = signToken({
+        username: dbData.username,
+        _id: dbData._id,
+      });
+
+      return { token, dbData };
     },
 
     createUser: async function (parent, { username, password }, context, info) {
@@ -45,9 +64,13 @@ const resolvers = {
         password: password,
       });
 
+      console.log(user);
+
       const tokenData = { username: username, _id: user._id };
 
       const token = signToken(tokenData);
+
+      console.log(token);
 
       return { token, user };
     },
@@ -58,9 +81,8 @@ const resolvers = {
     },
 
     createExercise: async function (parent, args, context, info) {
-      console.log(args);
       const dbData = await Exercise.create(args);
-      console.log(dbData);
+
       return dbData;
     },
   },
