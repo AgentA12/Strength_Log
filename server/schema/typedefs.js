@@ -1,11 +1,9 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-  type Exercise {
-    _id: ID
-    exerciseName: String
-    sets: Int
-    reps: Int
+  type Auth {
+    token: ID
+    user: User
   }
 
   type User {
@@ -16,20 +14,28 @@ const typeDefs = gql`
     templates: [Template]
   }
 
-  type Auth {
-    token: ID
-    user: User
+  type Exercise {
+    _id: ID
+    exerciseName: String
+    sets: Int
+    reps: Int
   }
 
   type Template {
+    _id: ID
     templateName: String
     exercises: [Exercise]
   }
 
+  type Routine {
+    _id: ID
+    templates: [Template]
+  }
+
   type Query {
     getExercise: [Exercise]
-    getUser(_id: ID!): User
-    getTemplates(_id: ID!): [Template]
+    getUserById(_id: ID!): User
+    getAllTemplates: [Template]
     getAllUsers: [User]
   }
 
@@ -37,12 +43,13 @@ const typeDefs = gql`
     login(username: String!, password: String!): Auth
     createUser(username: String!, password: String!): Auth
     createTemplate(
-      _id: ID!
+      userId: ID!
       templateName: String!
-      exerciseName: String
-      reps: Int
-      sets: Int
-    ): User
+      exerciseName: [String!]
+      reps: [Int!]
+      sets: [Int!]
+      weight: [Int!]
+    ): Template
     createExercise(name: String!, sets: Int!, reps: Int!): Exercise
   }
 `;

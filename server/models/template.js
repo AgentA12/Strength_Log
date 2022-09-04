@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
-const exerciseSchema = require("./exercise");
 
 const templateSchema = mongoose.Schema({
   templateName: String,
-  exercises: [exerciseSchema],
+  exercises: [{ type: mongoose.Schema.Types.ObjectId, ref: "Exercise" }],
 });
 
-module.exports = templateSchema;
+const Template = mongoose.model("Template", templateSchema);
+
+module.exports = Template;

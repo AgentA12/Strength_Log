@@ -1,15 +1,14 @@
-const { User, Exercise } = require("../models/index");
+const { User, Template } = require("../models/index");
 const { AuthenticationError } = require("apollo-server");
 const { signToken } = require("../utils/auth");
-const { bcrypt } = require("bcrypt");
 
 const resolvers = {
   Query: {
     getAllUsers: async function () {
-      return User.find({});
+      return User.find({}).populate("templates");
     },
 
-    getUser: async function (_, { _id }) {
+    getUserById: async function (_, { _id }) {
       const user = await User.findById(_id)
         .select("-password")
         .populate("templates");
@@ -17,8 +16,8 @@ const resolvers = {
       return user;
     },
 
-    getTemplates: async function (_, { _id }) {
-      const user = await User.findById(_id).populate("templates");
+    getAllTemplates: async function () {
+      const templates = await Template.find({});
 
       return templates;
     },
@@ -65,26 +64,32 @@ const resolvers = {
       return { token, user };
     },
 
+    //create a template then push the templates id to the userModel that created it
     createTemplate: async function (_, args) {
-      console.log(args);
-      const dbData = await User.updateOne(
-        { _id: args._id },
-        {
-          $push: {
-            templates: {
-              templateName: args.templateName,
-              exercises: {
-                exerciseName: args.exerciseName,
-                reps: args.reps,
-                sets: args.sets,
-              },
-            },
-          },
-        }
-      );
-      console.log(dbData);
+      try {
+        const { userId, templateName, exerciseName, reps, sets, weight } = args;
 
-      return dbData;
+        const template = await Template.create({
+          templateName: templateName,
+          exercises: {
+            exerciseName: exerciseName,
+            reps: reps,
+            sets: sets,
+            weight: weight,
+          },
+        });
+
+        const { _id: templateId } = template;
+
+        await User.findByIdAndUpdate(
+          { _id: userId },
+          { $push: { templates: templateId } }
+        );
+
+        return template;
+      } catch (error) {
+        return error;
+      }
     },
   },
 };

@@ -1,20 +1,15 @@
 const mongoose = require("mongoose");
-const templateSchema = require("./template");
 const bcrypt = require("bcrypt");
 
 const userSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },
-  password: {
-    type: String,
-    required: function () {
-      return this.password.length >= 4;
-    },
-  },
+  password: { type: String, required: true },
   createdAt: {
     type: Date,
     default: Date.now(),
   },
-  templates: [templateSchema],
+  templates: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
+  routines: [{ type: mongoose.Schema.Types.ObjectId, ref: "Routine" }],
 });
 
 userSchema.pre("save", async function (next) {
@@ -22,7 +17,6 @@ userSchema.pre("save", async function (next) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
-
   next();
 });
 
