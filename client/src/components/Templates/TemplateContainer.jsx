@@ -1,31 +1,56 @@
 import React, { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import { ADD_EXERCISE } from "../../utils/graphql/mutations";
-import { useMutation } from "@apollo/client";
+import { GET_TEMPLATES } from "../../utils/graphql/queries";
+import { CREATE_TEMPLATE } from "../../utils/graphql/mutations";
+import { useMutation, useQuery } from "@apollo/client";
+import auth from "../../utils/auth/auth";
 
 const buttonStyle = { color: "#BB86FC" };
 
-export const TemplateContainer = () => {
+export function TemplateContainer() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [addExercise, { data, loading, error }] = useMutation(ADD_EXERCISE);
 
   const [formState, setFormState] = useState({
-    name: "",
-    sets: null,
-    reps: null,
+    templateName: "",
+    exerciseName: "",
+    sets: 0,
+    reps: 0,
+  });
+
+  const {
+    data: { _id: userId },
+  } = auth.getInfo();
+
+  const [addTemplate, {}] = useMutation(CREATE_TEMPLATE);
+
+  const { data, error } = useQuery(GET_TEMPLATES, {
+    variables: {
+      _id: userId,
+    },
   });
 
   function handleChange({ target }) {
-    setFormState({ ...formState, [target.name]: target.value });
+    if (isNaN(target.value)) {
+      setFormState({ ...formState, [target.name]: target.value.trim() });
+      return;
+    }
+    setFormState({ ...formState, [target.name]: parseInt(target.value) });
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    addExercise({
+
+    console.log({ ...formState, _id: userId });
+
+    console.log(userId);
+
+    const mutationResponse = await addTemplate({
       variables: {
         ...formState,
+        _id: userId,
       },
     });
+    console.log(mutationResponse);
   }
 
   return (
@@ -44,9 +69,15 @@ export const TemplateContainer = () => {
           </button>
         </div>
 
-        <div className="template-item mt-10 p-3 border rounded-lg border-primary hover:bg-primary hover:bg-opacity-25 cursor-pointer">
-          <p className="template-title font-bold">Upper Body</p>
-        </div>
+        {data?.length ? (
+          data.getTemplates.map((template) => {
+            <div className="template-item mt-10 p-3 border rounded-lg border-primary hover:bg-primary hover:bg-opacity-25 cursor-pointer">
+              <p className="template-title font-bold">{template.name}</p>
+            </div>;
+          })
+        ) : (
+          <p className="mt-3 text-xl font-extralight">You have no templates</p>
+        )}
       </div>
 
       <div
@@ -61,10 +92,15 @@ export const TemplateContainer = () => {
       >
         <div className="relative p-4 w-full max-w-2xl h-full md:h-auto bg-overlay text-white">
           <div className="relative  rounded-lg shadow ">
-            <div className="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
-              <h3 className="text-xl font-semibold  dark:text-white">
-                Template Name
-              </h3>
+            <div className="flex justify-between items-start p-4 rounded-t">
+              <label htmlFor="templateName">template Name: </label>
+              <input
+                onChange={handleChange}
+                name="templateName"
+                type="text"
+                placeholder="Template Name"
+                className="bg-overlay mr-3"
+              />
               <button
                 onClick={() => setIsModalOpen(!isModalOpen)}
                 type="button"
@@ -95,7 +131,7 @@ export const TemplateContainer = () => {
                 <label htmlFor="reps">Name: </label>
                 <input
                   onChange={handleChange}
-                  name="name"
+                  name="exerciseName"
                   type="text"
                   placeholder="Name"
                   className="bg-overlay mr-3"
@@ -151,4 +187,4 @@ export const TemplateContainer = () => {
       </div>
     </div>
   );
-};
+}

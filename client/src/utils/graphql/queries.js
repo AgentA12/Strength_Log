@@ -10,3 +10,17 @@ export const GET_EXERCISE = gql`
     }
   }
 `;
+
+export const GET_TEMPLATES = gql`
+  query ($_id: ID!) {
+    getTemplates(_id: $_id) {
+      name
+      exercises {
+        _id
+        name
+        reps
+        sets
+      }
+    }
+  }
+`;

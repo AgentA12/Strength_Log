@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const templateSchema = require("./template");
 
 const userSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },
@@ -12,7 +13,7 @@ const userSchema = mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
-  templates: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
+  templates: [templateSchema],
 });
 
 const User = mongoose.model("User", userSchema);

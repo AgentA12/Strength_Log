@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 class Auth {
   login(token) {
     window.localStorage.setItem("token", token);
-    console.log(localStorage.getItem("token"));
+   
     window.location.assign("/");
   }
 
@@ -32,6 +32,14 @@ class Auth {
 
   getToken() {
     return window.localStorage.getItem("token");
+  }
+
+  getInfo() {
+    const token = localStorage.getItem("token");
+    
+    const info = jwt_decode(token);
+  
+    return info;
   }
 }
 

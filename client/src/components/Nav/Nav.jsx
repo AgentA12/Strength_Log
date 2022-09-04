@@ -1,15 +1,11 @@
 import React from "react";
 import { useState } from "react";
-import { useQuery } from "@apollo/client";
-import { GET_EXERCISE } from "../../utils/graphql/queries";
 import { Link } from "react-router-dom";
 import Auth from "../../utils/auth/auth";
 
 export const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { data, error, loading } = useQuery(GET_EXERCISE);
 
-  if (data) console.log(data);
   return (
     <nav className="px-2 sm:px-4 py-2.5 rounded text-white">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
@@ -52,28 +48,20 @@ export const Nav = () => {
         >
           <ul className="flex flex-col p-4 mt-4 text-center md:text-start rounded-lg border md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0">
             <li>
-              <a
-                href="#"
-                className="block py-2 pr-4 pl-3 rounded text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent"
-              >
-                Home
-              </a>
-            </li>{" "}
-            <li>
-              <a
-                href="#"
+              <Link
+                to={"/Templates"}
                 className="block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent"
               >
                 Templates
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to={"/Routines"}
                 className="block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent"
               >
                 Routines
-              </a>
+              </Link>
             </li>
             {Auth.isLoggedIn() ? (
               <>
@@ -88,7 +76,7 @@ export const Nav = () => {
 
                 <li>
                   <a
-                    className="block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent cursor-pointer" 
+                    className="block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent cursor-pointer"
                     onClick={() => Auth.logout()}
                   >
                     logout
