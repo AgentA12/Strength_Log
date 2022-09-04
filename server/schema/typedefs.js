@@ -3,13 +3,14 @@ const { gql } = require("apollo-server-express");
 const typeDefs = gql`
   type Exercise {
     _id: ID
-    name: String
+    exerciseName: String
     sets: Int
     reps: Int
   }
 
   type User {
     _id: ID
+    password: String
     username: String
     createdAt: String
     templates: [Template]
@@ -21,7 +22,7 @@ const typeDefs = gql`
   }
 
   type Template {
-    name: String
+    templateName: String
     exercises: [Exercise]
   }
 

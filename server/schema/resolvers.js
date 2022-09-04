@@ -1,14 +1,15 @@
 const { User, Exercise } = require("../models/index");
 const { AuthenticationError } = require("apollo-server");
 const { signToken } = require("../utils/auth");
+const { bcrypt } = require("bcrypt");
 
 const resolvers = {
   Query: {
-    getAllUsers: async function (parent, args, context, info) {
-      return User.find({}).select("-password");
+    getAllUsers: async function () {
+      return User.find({});
     },
 
-    getUser: async function (parent, { _id }, context, info) {
+    getUser: async function (_, { _id }) {
       const user = await User.findById(_id)
         .select("-password")
         .populate("templates");
@@ -16,38 +17,36 @@ const resolvers = {
       return user;
     },
 
-    getTemplates: async function (parent, { _id }, context, info) {
+    getTemplates: async function (_, { _id }) {
       const user = await User.findById(_id).populate("templates");
-
-      console.log(user);
 
       return templates;
     },
   },
 
   Mutation: {
-    login: async function (parent, { username, password }, context, info) {
+    login: async function (_, { username, password }) {
       const user = await User.findOne({ username: username });
 
       if (!user) {
         throw new AuthenticationError("Incorrect credentails");
       }
 
-      const dbData = await User.findOne({ password: password });
+      const correctPassword = await user.isCorrectPassword(password);
 
-      if (!dbData) {
+      if (!correctPassword) {
         throw new AuthenticationError("Incorrect credentails");
       }
 
       const token = signToken({
-        username: dbData.username,
-        _id: dbData._id,
+        username: user.username,
+        _id: user._id,
       });
 
-      return { token, dbData };
+      return { token, user };
     },
 
-    createUser: async function (parent, { username, password }, context, info) {
+    createUser: async function (_, { username, password }) {
       const isUsernameTaken = await User.findOne({ username: username });
 
       if (isUsernameTaken) {
@@ -66,7 +65,8 @@ const resolvers = {
       return { token, user };
     },
 
-    createTemplate: async function (parent, args, context, info) {
+    createTemplate: async function (_, args) {
+      console.log(args);
       const dbData = await User.updateOne(
         { _id: args._id },
         {
@@ -82,6 +82,7 @@ const resolvers = {
           },
         }
       );
+      console.log(dbData);
 
       return dbData;
     },
