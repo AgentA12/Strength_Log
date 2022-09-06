@@ -18,6 +18,7 @@ export default function Signup() {
   });
 
   function handleChange({ target }) {
+
     setFormState({
       ...formState,
       [target.name]: target.value,
@@ -26,6 +27,8 @@ export default function Signup() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+
+    console.log({...formState})
 
     const mutationResponse = await addUser({
       variables: {
