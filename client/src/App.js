@@ -11,7 +11,7 @@ export default function App() {
     <>
       <Nav />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<TemplateContainer />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/Templates" element={<TemplateContainer />} />

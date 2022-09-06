@@ -25,6 +25,7 @@ const resolvers = {
 
   Mutation: {
     login: async function (_, { username, password }) {
+      console.log(username, password);
       const user = await User.findOne({ username: username });
 
       if (!user) {
@@ -46,6 +47,8 @@ const resolvers = {
     },
 
     createUser: async function (_, { username, password }) {
+      console.log(username, password);
+
       const isUsernameTaken = await User.findOne({ username: username });
 
       if (isUsernameTaken) {

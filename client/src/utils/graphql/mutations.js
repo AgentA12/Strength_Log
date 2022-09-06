@@ -7,15 +7,6 @@ export const ADD_USER = gql`
       user {
         _id
         username
-        createdAt
-        templates {
-          name
-          exercises {
-            name
-            reps
-            sets
-          }
-        }
       }
     }
   }
@@ -28,9 +19,6 @@ export const LOGIN_USER = gql`
       user {
         _id
         username
-        templates {
-          name
-        }
       }
     }
   }

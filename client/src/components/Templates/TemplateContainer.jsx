@@ -4,12 +4,14 @@ import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import { CREATE_TEMPLATE } from "../../utils/graphql/mutations";
 import { useMutation, useQuery } from "@apollo/client";
 import auth from "../../utils/auth/auth";
+import { useEffect } from "react";
 
 const buttonStyle = { color: "#BB86FC" };
 
 export function TemplateContainer() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [userData, setUserData] = useState(null);
+  const [userTemplates, setUserTemplates] = useState([]);
   const [formState, setFormState] = useState({
     templateName: "",
     exerciseName: "",
@@ -17,17 +19,19 @@ export function TemplateContainer() {
     reps: 0,
   });
 
-  const {
-    data: { _id: userId },
-  } = auth.getInfo();
-
-  const [addTemplate, {}] = useMutation(CREATE_TEMPLATE);
+  useEffect(() => {
+    if (auth.isLoggedIn()) {
+      setUserData(auth.getInfo());
+    }
+  }, []);
 
   const { data, error } = useQuery(GET_TEMPLATES, {
     variables: {
-      _id: userId,
+      _id: userData?.userId,
     },
   });
+
+  const [addTemplate, {}] = useMutation(CREATE_TEMPLATE);
 
   function handleChange({ target }) {
     if (isNaN(target.value)) {
@@ -40,18 +44,15 @@ export function TemplateContainer() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    console.log({ ...formState, _id: userId });
-
-    console.log(userId);
-
-    const mutationResponse = await addTemplate({
+    await addTemplate({
       variables: {
         ...formState,
-        _id: userId,
+        _id: userData.userId,
       },
     });
-    console.log(mutationResponse);
   }
+
+  console.log(auth.isLoggedIn())
 
   return (
     <div className="flex justify-center mt-20">
@@ -60,17 +61,24 @@ export function TemplateContainer() {
           <h3 className="text-primary font-extrabold text-3xl">
             Your Templates
           </h3>
-          <button
-            onClick={() => setIsModalOpen(!isModalOpen)}
-            type="button"
-            className="flex items-center gap-1 text-primary bg-primary_faded bg-opacity-40  focus:outline-none focus:ring-0 font-medium rounded-full px-3 py-1 text-center"
-          >
-            <AiOutlinePlus style={buttonStyle} size={24} /> Template
-          </button>
+          {auth.isLoggedIn() && (
+            <button
+              onClick={() => setIsModalOpen(!isModalOpen)}
+              type="button"
+              className="flex items-center gap-1 text-primary bg-primary_faded bg-opacity-40  focus:outline-none focus:ring-0 font-medium rounded-full px-3 py-1 text-center"
+            >
+              <AiOutlinePlus style={buttonStyle} size={24} /> Template
+            </button>
+          )}
         </div>
 
-        {data?.length ? (
-          data.getTemplates.map((template) => {
+        {/* check if user is logged in or has templates */}
+        {!auth.isLoggedIn() ? (
+          <p className="mt-3 text-xl font-extralight">
+            You must log in to see your templates
+          </p>
+        ) : userData?.length ? (
+          userData.getTemplates.map((template) => {
             <div className="template-item mt-10 p-3 border rounded-lg border-primary hover:bg-primary hover:bg-opacity-25 cursor-pointer">
               <p className="template-title font-bold">{template.name}</p>
             </div>;
