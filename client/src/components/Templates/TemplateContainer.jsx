@@ -3,102 +3,19 @@ import TemplateCard from "./TemplateCard";
 import { AiOutlinePlus } from "react-icons/ai";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import { CREATE_TEMPLATE } from "../../utils/graphql/mutations";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useLazyQuery } from "@apollo/client";
 import auth from "../../utils/auth/auth";
 import { useEffect } from "react";
 import ExerciseForm from "./ExerciseForm";
 
 const buttonStyle = { color: "#BB86FC" };
 
-// const templates = [
-//   {
-//     templateName: "Lowerbody",
-//     exercises: [
-//       {
-//         exerciseName: "squats",
-//         weight: 225,
-//         reps: 8,
-//         sets: 4,
-//       },
-//       {
-//         exerciseName: "hipthrust",
-//         weight: 225,
-//         reps: 8,
-//         sets: 4,
-//       },
-//       {
-//         exerciseName: "romanian deadlifts",
-//         weight: 225,
-//         reps: 8,
-//         sets: 4,
-//       },
-//     ],
-//   },
-//   {
-//     templateName: "Upperbody",
-//     exercises: [
-//       {
-//         exerciseName: "benchpress",
-//         weight: 225,
-//         reps: 8,
-//         sets: 4,
-//       },
-//       {
-//         exerciseName: "Pull ups",
-//         weight: 225,
-//         reps: 8,
-//         sets: 4,
-//       },
-//       {
-//         exerciseName: "overhead press",
-//         weight: 225,
-//         reps: 8,
-//         sets: 4,
-//       },
-//     ],
-//   },
-//   {
-//     templateName: "Fullbody",
-//     exercises: [
-//       {
-//         exerciseName: "deadlifts",
-//         weight: 225,
-//         reps: 8,
-//         sets: 4,
-//       },
-//       {
-//         exerciseName: "bench press",
-//         weight: 225,
-//         reps: 8,
-//         sets: 4,
-//       },
-//       {
-//         exerciseName: "squats",
-//         weight: 225,
-//         reps: 8,
-//         sets: 4,
-//       },
-//       {
-//         exerciseName: "bicep curls",
-//         weight: 225,
-//         reps: 8,
-//         sets: 4,
-//       },
-//       {
-//         exerciseName: "tricep extentions",
-//         weight: 225,
-//         reps: 8,
-//         sets: 4,
-//       },
-//     ],
-//   },
-// ];
-
 export function TemplateContainer() {
   const [templates, setTemplates] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userData, setUserData] = useState(null);
   const [userTemplates, setUserTemplates] = useState([]);
+  const [exerciseCount, setExerciseCount] = useState(1);
   const [formState, setFormState] = useState({
     templateName: "",
     exerciseName: "",
@@ -110,14 +27,21 @@ export function TemplateContainer() {
   useEffect(() => {
     if (auth.isLoggedIn()) {
       setUserData(auth.getInfo());
+
+      getTemplates();
     }
   }, []);
 
-  const { data, error } = useQuery(GET_TEMPLATES, {
-    variables: {
-      _id: userData?.userId,
-    },
-  });
+  const [getTemplates, { called, loading, data }] = useLazyQuery(
+    GET_TEMPLATES,
+    {
+      variables: {
+        userId: userData?.data._id,
+      },
+    }
+  );
+
+  if (data) console.log(data);
 
   const [addTemplate, {}] = useMutation(CREATE_TEMPLATE);
 
@@ -135,12 +59,10 @@ export function TemplateContainer() {
     await addTemplate({
       variables: {
         ...formState,
-        userId: userData.userId,
+        userId: userData.data._id,
       },
     });
   }
-
-  console.log(auth.isLoggedIn())
 
   return (
     <div className="flex justify-center mt-20">
@@ -165,12 +87,10 @@ export function TemplateContainer() {
           <p className="mt-3 text-xl font-extralight">
             You must log in to see your templates
           </p>
-        ) : userData?.length ? (
-          userData.getTemplates.map((template) => {
-            <div className="template-item mt-10 p-3 border rounded-lg border-primary hover:bg-primary hover:bg-opacity-25 cursor-pointer">
-              <p className="template-title font-bold">{template.name}</p>
-            </div>;
-          })
+        ) : data?.getTemplates.templates.length ? (
+          data?.getTemplates.templates.map((template, i) => (
+            <TemplateCard template={template} key={i} />
+          ))
         ) : (
           <p className="text-xl font-extralight">You have no templates</p>
         )}
@@ -240,7 +160,6 @@ export function TemplateContainer() {
             </button>
 
             <button
-              onClick={handleSubmit}
               type="submit"
               className="text-white bg-primary font-medium rounded-lg text-sm px-5 py-2.5 w-full text-center"
             >

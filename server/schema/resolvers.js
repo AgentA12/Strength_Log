@@ -29,7 +29,6 @@ const resolvers = {
     },
 
     getTemplates: async function (_, { userId }) {
-      console.log(userId)
       const user = await User.findById(userId)
         .select("-password")
         .populate({
@@ -94,6 +93,7 @@ const resolvers = {
       { userId, templateName, exerciseName, reps, sets, weight }
     ) {
       try {
+        console.log(userId);
         const exercise = await Exercise.create({
           exerciseName,
           reps,

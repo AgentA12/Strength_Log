@@ -22,6 +22,7 @@ export const GET_TEMPLATES = gql`
           exerciseName
           reps
           sets
+          weight
         }
       }
     }
