@@ -19,6 +19,7 @@ const typeDefs = gql`
     exerciseName: String
     sets: Int
     reps: Int
+    weight: Int
   }
 
   type Template {
@@ -35,7 +36,7 @@ const typeDefs = gql`
   type Query {
     getExercise: [Exercise]
     getUserById(_id: ID!): User
-    getAllTemplates: [Template]
+    getTemplates(userId: ID!): User
     getAllUsers: [User]
   }
 
@@ -45,10 +46,10 @@ const typeDefs = gql`
     createTemplate(
       userId: ID!
       templateName: String!
-      exerciseName: [String!]
-      reps: [Int!]
-      sets: [Int!]
-      weight: [Int!]
+      exerciseName: String
+      reps: Int
+      sets: Int
+      weight: Int
     ): Template
     createExercise(name: String!, sets: Int!, reps: Int!): Exercise
   }

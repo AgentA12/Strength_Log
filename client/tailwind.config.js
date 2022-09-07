@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
+    "./src/**/*.{js,jsx,ts,tsx,css}",
     "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
@@ -14,8 +14,8 @@ module.exports = {
         background: "#121212",
         overlay: "#292929",
         error: "#CF6679",
-        white: "#FFFFFF"
-
+        white: "#FFFFFF",
+        white_faded: "#BABABA"
       }
     },
   },

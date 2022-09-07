@@ -1,25 +1,46 @@
-const { User, Template } = require("../models/index");
+const { User, Template, Exercise } = require("../models/index");
 const { AuthenticationError } = require("apollo-server");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
     getAllUsers: async function () {
-      return User.find({}).populate("templates");
+      return User.find({}).populate({
+        path: "templates",
+        populate: {
+          path: "exercises",
+          model: "Exercise",
+        },
+      });
     },
 
     getUserById: async function (_, { _id }) {
       const user = await User.findById(_id)
         .select("-password")
-        .populate("templates");
+        .populate({
+          path: "templates",
+          populate: {
+            path: "exercises",
+            model: "Exercise",
+          },
+        });
 
       return user;
     },
 
-    getAllTemplates: async function () {
-      const templates = await Template.find({});
+    getTemplates: async function (_, { userId }) {
+      console.log(userId)
+      const user = await User.findById(userId)
+        .select("-password")
+        .populate({
+          path: "templates",
+          populate: {
+            path: "exercises",
+            model: "Exercise",
+          },
+        });
 
-      return templates;
+      return user;
     },
   },
 
@@ -68,25 +89,31 @@ const resolvers = {
     },
 
     //create a template then push the templates id to the userModel that created it
-    createTemplate: async function (_, args) {
+    createTemplate: async function (
+      _,
+      { userId, templateName, exerciseName, reps, sets, weight }
+    ) {
       try {
-        const { userId, templateName, exerciseName, reps, sets, weight } = args;
+        const exercise = await Exercise.create({
+          exerciseName,
+          reps,
+          sets,
+          weight,
+        });
+
+        const { _id: exerciseId } = exercise;
 
         const template = await Template.create({
           templateName: templateName,
-          exercises: {
-            exerciseName: exerciseName,
-            reps: reps,
-            sets: sets,
-            weight: weight,
-          },
+          exercises: exerciseId,
         });
 
         const { _id: templateId } = template;
 
-        await User.findByIdAndUpdate(
-          { _id: userId },
-          { $push: { templates: templateId } }
+        const user = await User.findByIdAndUpdate(
+          userId,
+          { $push: { templates: [templateId] } },
+          { new: true }
         );
 
         return template;
