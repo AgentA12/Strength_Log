@@ -3,7 +3,7 @@ import TemplateCard from "./TemplateCard";
 import { AiOutlinePlus } from "react-icons/ai";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import { CREATE_TEMPLATE } from "../../utils/graphql/mutations";
-import { useMutation, useLazyQuery } from "@apollo/client";
+import { useMutation, useLazyQuery, useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import auth from "../../utils/auth/auth";
 import { useEffect } from "react";
@@ -12,9 +12,7 @@ import ExerciseForm from "./ExerciseForm";
 const buttonStyle = { color: "#BB86FC" };
 
 export function TemplateContainer() {
-  const [templates, setTemplates] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [userData, setUserData] = useState(null);
   const [formState, setFormState] = useState({
     templateName: "",
     exercises: [
@@ -27,19 +25,24 @@ export function TemplateContainer() {
     ],
   });
 
-  useEffect(() => {
-    if (auth.isLoggedIn()) {
-      setUserData(auth.getInfo());
+  if (auth.isLoggedIn()) {
+    var {
+      data: { _id: userID },
+    } = auth.getInfo();
+  }
 
-      getTemplates();
+  const [getTemplates, { called, loading, data }] = useLazyQuery(
+    GET_TEMPLATES,
+    {
+      variables: {
+        userId: userID,
+      },
     }
-  }, [templates]);
+  );
 
-  const [getTemplates, { _, __, data }] = useLazyQuery(GET_TEMPLATES, {
-    variables: {
-      userId: userData?.data._id,
-    },
-  });
+  useEffect(() => {
+    getTemplates();
+  }, []);
 
   const [addTemplate, {}] = useMutation(CREATE_TEMPLATE);
 
@@ -62,7 +65,7 @@ export function TemplateContainer() {
     const mutationRes = await addTemplate({
       variables: {
         ...formState,
-        userId: userData.data._id,
+        userId: userID,
       },
     });
     if (mutationRes) {
@@ -79,7 +82,6 @@ export function TemplateContainer() {
         ],
       });
     }
-    setTemplates(mutationRes.data.createTemplate);
   }
 
   function addExercise() {
@@ -91,13 +93,14 @@ export function TemplateContainer() {
     };
 
     const data = { ...formState };
+
     data.exercises.push(exercise);
 
     setFormState(data);
   }
 
   return (
-    <div className="ml-5 mr-auto md:ml-52 mt-20">
+    <div className="ml-5 mr-auto md:ml-52 my-20">
       <div className="flex gap-5">
         <h3 className="text-primary font-extrabold text-5xl">Your Templates</h3>
         {auth.isLoggedIn() && (
@@ -112,9 +115,9 @@ export function TemplateContainer() {
       </div>
 
       {auth.isLoggedIn() ? (
-        data?.getTemplates?.templates.length ? (
-          <div className="template-container grid grid-cols-3 gap-5 mt-10">
-            {data.getTemplates.templates.map((template, i) => (
+        data?.getTemplates.templates.length ? (
+          <div className="flex flex-wrap gap-5 mt-10">
+            {data?.getTemplates.templates.map((template, i) => (
               <TemplateCard template={template} key={i} />
             ))}
           </div>
@@ -180,7 +183,7 @@ export function TemplateContainer() {
               Template Name
             </label>
             <input
-              onChange={(event) => handleChange(_, event)}
+              onChange={(event) => handleChange(event)}
               name="templateName"
               className=" bg-overlay appearance-none block w-full text-grey-400 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:ring-0 focus:border-primary "
               type="text"
