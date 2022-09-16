@@ -4,6 +4,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import { CREATE_TEMPLATE } from "../../utils/graphql/mutations";
 import { useMutation, useLazyQuery } from "@apollo/client";
+import { Link } from "react-router-dom";
 import auth from "../../utils/auth/auth";
 import { useEffect } from "react";
 import ExerciseForm from "./ExerciseForm";
@@ -14,14 +15,16 @@ export function TemplateContainer() {
   const [templates, setTemplates] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userData, setUserData] = useState(null);
-  const [userTemplates, setUserTemplates] = useState([]);
-  const [exerciseCount, setExerciseCount] = useState(1);
   const [formState, setFormState] = useState({
     templateName: "",
-    exerciseName: "",
-    sets: 0,
-    reps: 0,
-    weight: 0,
+    exercises: [
+      {
+        exerciseName: "",
+        sets: 0,
+        reps: 0,
+        weight: 0,
+      },
+    ],
   });
 
   useEffect(() => {
@@ -30,71 +33,109 @@ export function TemplateContainer() {
 
       getTemplates();
     }
-  }, []);
+  }, [templates]);
 
-  const [getTemplates, { called, loading, data }] = useLazyQuery(
-    GET_TEMPLATES,
-    {
-      variables: {
-        userId: userData?.data._id,
-      },
-    }
-  );
-
-  if (data) console.log(data);
+  const [getTemplates, { _, __, data }] = useLazyQuery(GET_TEMPLATES, {
+    variables: {
+      userId: userData?.data._id,
+    },
+  });
 
   const [addTemplate, {}] = useMutation(CREATE_TEMPLATE);
 
-  function handleChange({ target }) {
-    if (isNaN(target.value)) {
-      setFormState({ ...formState, [target.name]: target.value.trim() });
+  function handleChange(index, { target }) {
+    let data = { ...formState };
+
+    if (target.name != "templateName") {
+      data.exercises[index][target.name] = target.value;
+
+      setFormState({ ...data });
       return;
     }
-    setFormState({ ...formState, [target.name]: parseInt(target.value) });
+
+    setFormState({ ...formState, [target.name]: target.value.trim() });
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
 
-    await addTemplate({
+    const mutationRes = await addTemplate({
       variables: {
         ...formState,
         userId: userData.data._id,
       },
     });
+    if (mutationRes) {
+      setIsModalOpen(!isModalOpen);
+      setFormState({
+        templateName: "",
+        exercises: [
+          {
+            exerciseName: "",
+            sets: 0,
+            reps: 0,
+            weight: 0,
+          },
+        ],
+      });
+    }
+    setTemplates(mutationRes.data.createTemplate);
+  }
+
+  function addExercise() {
+    const exercise = {
+      exerciseName: "",
+      sets: 0,
+      reps: 0,
+      weight: 0,
+    };
+
+    const data = { ...formState };
+    data.exercises.push(exercise);
+
+    setFormState(data);
   }
 
   return (
-    <div className="flex justify-center mt-20">
-      <div className="template-container">
-        <div className="flex gap-5">
-          <h3 className="text-primary font-extrabold text-3xl">
-            Your Templates
-          </h3>
-          {auth.isLoggedIn() && (
-            <button
-              onClick={() => setIsModalOpen(!isModalOpen)}
-              type="button"
-              className="flex items-center gap-1 text-primary bg-primary_faded bg-opacity-40  focus:outline-none focus:ring-0 font-medium rounded-full px-3 py-1 text-center"
-            >
-              <AiOutlinePlus style={buttonStyle} size={24} /> Template
-            </button>
-          )}
-        </div>
-
-        {/* check if user is logged in or has templates */}
-        {!auth.isLoggedIn() ? (
-          <p className="mt-3 text-xl font-extralight">
-            You must log in to see your templates
-          </p>
-        ) : data?.getTemplates.templates.length ? (
-          data?.getTemplates.templates.map((template, i) => (
-            <TemplateCard template={template} key={i} />
-          ))
-        ) : (
-          <p className="text-xl font-extralight">You have no templates</p>
+    <div className="ml-5 mr-auto md:ml-52 mt-20">
+      <div className="flex gap-5">
+        <h3 className="text-primary font-extrabold text-5xl">Your Templates</h3>
+        {auth.isLoggedIn() && (
+          <button
+            onClick={() => setIsModalOpen(!isModalOpen)}
+            type="button"
+            className="flex items-center gap-1 text-primary bg-primary_faded bg-opacity-40  focus:outline-none focus:ring-0 font-medium rounded-full px-3 py-1 text-center"
+          >
+            <AiOutlinePlus style={buttonStyle} size={24} /> Template
+          </button>
         )}
       </div>
+
+      {auth.isLoggedIn() ? (
+        data?.getTemplates?.templates.length ? (
+          <div className="template-container grid grid-cols-3 gap-5 mt-10">
+            {data.getTemplates.templates.map((template, i) => (
+              <TemplateCard template={template} key={i} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-xl font-extralight mt-3">You have no templates</p>
+        )
+      ) : (
+        <div className="flex gap-4 items-center mt-3">
+          <p className=" text-xl font-extralight">
+            Log in to see your templates
+          </p>
+          <Link to={"/Login"}>
+            <button
+              type="button"
+              className="w-fit text-primary hover:text-background border border-primary hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary_faded font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            >
+              Log in
+            </button>
+          </Link>
+        </div>
+      )}
 
       <div
         id="defaultModal"
@@ -139,20 +180,24 @@ export function TemplateContainer() {
               Template Name
             </label>
             <input
-              onChange={handleChange}
+              onChange={(event) => handleChange(_, event)}
               name="templateName"
-              className=" bg-overlay appearance-none block w-full text-grey-400 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none  focus:ring-0 focus:border-primary "
+              className=" bg-overlay appearance-none block w-full text-grey-400 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:ring-0 focus:border-primary "
               type="text"
             />
           </div>
 
           <form className="w-full" onSubmit={(event) => handleSubmit(event)}>
-            {[...Array(exerciseCount)].map((_, i) => (
-              <ExerciseForm key={i} handleChange={handleChange} />
+            {formState.exercises.map((input, index) => (
+              <ExerciseForm
+                key={index}
+                handleChange={handleChange}
+                index={index}
+              />
             ))}
 
             <button
-              onClick={() => setExerciseCount(exerciseCount + 1)}
+              onClick={addExercise}
               type="button"
               className="w-full font-medium rounded-lg text-sm px-5 py-2.5 justify-center my-8 flex items-center gap-1 text-primary bg-primary_faded bg-opacity-40  focus:outline-none focus:ring-0  text-center"
             >

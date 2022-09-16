@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ExerciseForm({ handleChange }) {
+export default function ExerciseForm({ handleChange, index }) {
   return (
     <>
       <div className="flex flex-wrap -mx-3 mb-6">
@@ -12,7 +12,7 @@ export default function ExerciseForm({ handleChange }) {
             Exercise Name
           </label>
           <input
-            onChange={handleChange}
+            onChange={(event) => handleChange(index, event)}
             name="exerciseName"
             className=" bg-overlay appearance-none block w-full text-grey-400 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none  focus:ring-0 focus:border-primary"
             type="text"
@@ -32,7 +32,7 @@ export default function ExerciseForm({ handleChange }) {
             name="weight"
             className="bg-overlay appearance-none block w-full  text-grey-400 border  rounded py-3 px-4 leading-tight focus:outline-none focus:ring-0 focus:border-primary"
             type="number"
-            onChange={handleChange}
+            onChange={(event) => handleChange(index, event)}
           />
         </div>
         <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -47,7 +47,7 @@ export default function ExerciseForm({ handleChange }) {
               type="number"
               name="reps"
               className="bg-overlay block appearance-none w-full border text-grey-400 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:ring-0 focus:border-primary"
-              onChange={handleChange}
+              onChange={(event) => handleChange(index, event)}
             ></input>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-grey-400"></div>
           </div>
@@ -63,7 +63,7 @@ export default function ExerciseForm({ handleChange }) {
             type="number"
             name="sets"
             className="bg-overlay appearance-none block w-full  text-grey-400 border  rounded py-3 px-4 leading-tight focus:outline-none focus:ring-0 focus:border-primary"
-            onChange={handleChange}
+            onChange={(event) => handleChange(index, event)}
           />
         </div>
       </div>

@@ -6,11 +6,12 @@ export default function TemplateCard({ template }) {
 
   return (
     <>
-      <div className="template-item p-3 border rounded-lg border-primary">
+      <div className="template-item w-96 p-3 border rounded-lg border-primary">
         <div className="flex items-center justify-between">
           <h4 className="font-bold text-2xl">
             {template.templateName.toLocaleUpperCase()}{" "}
           </h4>
+
           <button
             onClick={() => setIsEditOpen(!isEditOpen)}
             id="dropdownMenuIconHorizontalButton"
@@ -61,7 +62,7 @@ export default function TemplateCard({ template }) {
               <span>{exercise.sets} x </span>
               <span>{exercise.reps}</span>
               <span className="ml-2 text-white_faded text-sm">
-                {exercise.weight} lbs
+              {exercise.weight ? (exercise.weight + " lbs")  : null}
               </span>
             </div>
           ))}

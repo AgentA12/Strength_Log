@@ -45,7 +45,6 @@ const resolvers = {
 
   Mutation: {
     login: async function (_, { username, password }) {
-      console.log(username, password);
       const user = await User.findOne({ username: username });
 
       if (!user) {
@@ -67,8 +66,6 @@ const resolvers = {
     },
 
     createUser: async function (_, { username, password }) {
-      console.log(username, password);
-
       const isUsernameTaken = await User.findOne({ username: username });
 
       if (isUsernameTaken) {
@@ -88,35 +85,40 @@ const resolvers = {
     },
 
     //create a template then push the templates id to the userModel that created it
-    createTemplate: async function (
-      _,
-      { userId, templateName, exerciseName, reps, sets, weight }
-    ) {
+    createTemplate: async function (_, args) {
       try {
-        console.log(userId);
-        const exercise = await Exercise.create({
-          exerciseName,
-          reps,
-          sets,
-          weight,
+        const exercisesData = await Exercise.create(args.exercises);
+
+        const exerciseIds = exercisesData.map((exercise) => {
+          return exercise._id;
         });
 
-        const { _id: exerciseId } = exercise;
+        const templatePayload = {
+          exercises: exerciseIds,
+          templateName: args.templateName,
+        };
 
-        const template = await Template.create({
-          templateName: templateName,
-          exercises: exerciseId,
-        });
+        const template = await Template.create(templatePayload);
 
         const { _id: templateId } = template;
 
-        const user = await User.findByIdAndUpdate(
-          userId,
+        await User.findByIdAndUpdate(
+          args.userId,
           { $push: { templates: [templateId] } },
           { new: true }
         );
 
-        return template;
+        const userData = await User.findById(args.userId).populate({
+          path: "templates",
+          populate: {
+            path: "exercises",
+            model: "Exercise",
+          },
+        });
+
+        const { templates } = userData;
+
+        return templates;
       } catch (error) {
         return error;
       }

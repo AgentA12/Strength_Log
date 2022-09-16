@@ -17,9 +17,16 @@ const typeDefs = gql`
   type Exercise {
     _id: ID
     exerciseName: String
-    sets: Int
-    reps: Int
-    weight: Int
+    sets: String
+    reps: String
+    weight: String
+  }
+
+  input exerciseInput {
+    exerciseName: String
+    sets: String
+    reps: String
+    weight: String
   }
 
   type Template {
@@ -46,11 +53,8 @@ const typeDefs = gql`
     createTemplate(
       userId: ID!
       templateName: String!
-      exerciseName: String
-      reps: Int
-      sets: Int
-      weight: Int
-    ): Template
+      exercises: [exerciseInput!]
+    ): [Template]
     createExercise(name: String!, sets: Int!, reps: Int!): Exercise
   }
 `;

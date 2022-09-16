@@ -10,6 +10,7 @@ export const ADD_USER = gql`
         password
         createdAt
         templates {
+          _id
           templateName
           exercises {
             _id
@@ -40,26 +41,19 @@ export const CREATE_TEMPLATE = gql`
   mutation (
     $userId: ID!
     $templateName: String!
-    $exerciseName: String
-    $reps: Int
-    $sets: Int
-    $weight: Int
+    $exercises: [exerciseInput!]
   ) {
     createTemplate(
       userId: $userId
       templateName: $templateName
-      exerciseName: $exerciseName
-      reps: $reps
-      sets: $sets
-      weight: $weight
+      exercises: $exercises
     ) {
-      _id
       templateName
+      _id
       exercises {
-        _id
         exerciseName
-        sets
         reps
+        sets
         weight
       }
     }
@@ -67,8 +61,13 @@ export const CREATE_TEMPLATE = gql`
 `;
 
 export const ADD_EXERCISE = gql`
-  mutation ($templateName: String!, $reps: Int!, $sets: Int! $userId: ID!) {
-    createExercise(templateName: $templateName, reps: $reps, sets: $sets userId: $userId) {
+  mutation ($templateName: String!, $reps: Int!, $sets: Int!, $userId: ID!) {
+    createExercise(
+      templateName: $templateName
+      reps: $reps
+      sets: $sets
+      userId: $userId
+    ) {
       _id
       name
       reps

@@ -1,4 +1,3 @@
-import Home from "./pages/Home";
 import { Nav } from "./components/Nav/Nav";
 import { TemplateContainer } from "./components/Templates/TemplateContainer";
 import Login from "./components/Login";

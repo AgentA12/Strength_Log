@@ -42,8 +42,8 @@ export default function Signup() {
   if (error) console.log(error);
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="w-96 bg-overlay mx-2 p-8 rounded-lg border-r-primary border-r-4">
+    <div className="flex h-90 justify-center items-start">
+      <div className="w-96 bg-overlay mx-2 p-8 rounded-lg border-r-primary border-r-4  mt-20">
         <form className="" onSubmit={(event) => handleSubmit(event)}>
           <h5 className="mb-5 font-medium text-lg">ACCOUNT SIGNUP</h5>
           <div className="relative z-0 mb-6 w-full group">
@@ -81,8 +81,15 @@ export default function Signup() {
           >
             Signup
           </button>
+
+          <p className="my-1 py-1 
+          border-t text-error border-primary">
+            {/* {error && error.message} */}
+          </p>
+
         </form>
-        <Link to="/Login" className="hover:text-primary underline">
+
+        <Link to="/Login" className="hover:text-primary underline ">
           Login
         </Link>
       </div>
