@@ -16,6 +16,7 @@ export const GET_TEMPLATES = gql`
     getTemplates(userId: $userId) {
       username
       templates {
+        _id
         templateName
         exercises {
           _id

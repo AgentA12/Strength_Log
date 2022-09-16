@@ -123,6 +123,10 @@ const resolvers = {
         return error;
       }
     },
+
+    deleteTemplate: async function (_, { templateId }) {
+      const result = await Template.deleteOne({ _id: templateId });
+    },
   },
 };
 

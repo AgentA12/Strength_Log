@@ -1,15 +1,38 @@
 import React, { useState } from "react";
+import { useRef } from "react";
+import { useEffect } from "react";
+import { useMutation } from "@apollo/client";
 import capitalizeFirstLetter from "../../utils/helpers/functions";
+import { DELETE_TEMPLATE } from "../../utils/graphql/mutations";
 
 export default function TemplateCard({ template }) {
   const [isEditOpen, setIsEditOpen] = useState(false);
 
+  let menuRef = useRef();
+
+  useEffect(() => {
+    document.addEventListener("mousedown", ({ target }) => {
+      if (!menuRef.current.contains(target)) setIsEditOpen(false);
+    });
+  });
+
+  const [deleteTemplate, { data, loading, error }] =
+    useMutation(DELETE_TEMPLATE);
+
+  function handleDelete() {
+    deleteTemplate({
+      variables: {
+        templateId: template._id,
+      },
+    });
+  }
+
+  function handleEdit() {}
+
   return (
     <>
       <div className="template-item w-96 p-3 border rounded-lg border-primary">
-
         <div className="flex items-center justify-between relative">
-
           <h4 className="font-bold text-2xl">
             {template.templateName.toLocaleUpperCase()}{" "}
           </h4>
@@ -33,6 +56,7 @@ export default function TemplateCard({ template }) {
           </button>
 
           <div
+            ref={menuRef}
             id="dropdownDotsHorizontal"
             className={`${
               isEditOpen ? null : "hidden"
@@ -43,12 +67,22 @@ export default function TemplateCard({ template }) {
               aria-labelledby="dropdownMenuIconHorizontalButton"
             >
               <li>
-                <a href="#" className="block py-2 px-4 hover:text-primary">
+                <a
+                  onClick={handleEdit}
+                  href="#"
+                  className="block py-2 px-4 hover:text-primary"
+                  id="edit-template"
+                >
                   Edit Template
                 </a>
               </li>
               <li>
-                <a href="#" className="block py-2 px-4 hover:text-primary">
+                <a
+                  onClick={handleDelete}
+                  href="#"
+                  className="block py-2 px-4 hover:text-primary"
+                  id="delete-template"
+                >
                   Delete Template
                 </a>
               </li>
@@ -65,7 +99,7 @@ export default function TemplateCard({ template }) {
               <span>{exercise.sets} x </span>
               <span>{exercise.reps}</span>
               <span className="ml-2 text-white_faded text-sm">
-              {exercise.weight ? (exercise.weight + " lbs")  : null}
+                {exercise.weight ? exercise.weight + " lbs" : null}
               </span>
             </div>
           ))}

@@ -75,3 +75,11 @@ export const ADD_EXERCISE = gql`
     }
   }
 `;
+
+export const DELETE_TEMPLATE = gql`
+  mutation ($templateId: ID!) {
+    deleteTemplate(templateId: $templateId) {
+      templateName
+    }
+  }
+`;
