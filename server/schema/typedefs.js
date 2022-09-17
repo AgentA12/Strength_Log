@@ -23,6 +23,7 @@ const typeDefs = gql`
   }
 
   input exerciseInput {
+    _id: ID
     exerciseName: String
     sets: String
     reps: String
@@ -43,8 +44,10 @@ const typeDefs = gql`
   type Query {
     getExercise: [Exercise]
     getUserById(_id: ID!): User
-    getTemplates(userId: ID!): User
+    getTemplatesForUser(userId: ID!): User
     getAllUsers: [User]
+    getAllTemplates: [Template]
+    getAllExercises: [Exercise]
   }
 
   type Mutation {
@@ -55,6 +58,11 @@ const typeDefs = gql`
       templateName: String!
       exercises: [exerciseInput!]
     ): [Template]
+    editTemplate(
+      templateId: ID!
+      templateName: String!
+      exerciseIds: [exerciseInput!]
+    ): Template
     createExercise(name: String!, sets: Int!, reps: Int!): Exercise
     deleteTemplate(templateId: ID!): Template
   }

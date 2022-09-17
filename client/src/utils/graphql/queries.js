@@ -13,7 +13,7 @@ export const GET_EXERCISE = gql`
 
 export const GET_TEMPLATES = gql`
   query ($userId: ID!) {
-    getTemplates(userId: $userId) {
+    getTemplatesForUser(userId: $userId) {
       username
       templates {
         _id

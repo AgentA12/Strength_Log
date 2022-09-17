@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TemplateCard from "./TemplateCard";
-import { AiOutlinePlus } from "react-icons/ai";
+import { HiPlus } from "react-icons/hi";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import { CREATE_TEMPLATE } from "../../utils/graphql/mutations";
 import { useMutation, useLazyQuery, useQuery } from "@apollo/client";
@@ -39,6 +39,8 @@ export function TemplateContainer() {
       },
     }
   );
+
+  if (data) console.log(data);
 
   useEffect(() => {
     getTemplates();
@@ -107,17 +109,17 @@ export function TemplateContainer() {
           <button
             onClick={() => setIsModalOpen(!isModalOpen)}
             type="button"
-            className="flex items-center gap-1 text-primary bg-primary_faded bg-opacity-40  focus:outline-none focus:ring-0 font-medium rounded-full px-3 py-1 text-center"
+            className="flex items-center gap-1 text-primary bg-primary_faded bg-opacity-40 focus:outline-none focus:ring-0 font-medium rounded-full px-3 text-center"
           >
-            <AiOutlinePlus style={buttonStyle} size={24} /> Template
+            <HiPlus style={buttonStyle} size={24} /> Template
           </button>
         )}
       </div>
 
       {auth.isLoggedIn() ? (
-        data?.getTemplates.templates.length ? (
+        data?.getTemplatesForUser.templates.length ? (
           <div className="flex flex-wrap gap-5 mt-10">
-            {data?.getTemplates.templates.map((template, i) => (
+            {data?.getTemplatesForUser.templates.map((template, i) => (
               <TemplateCard template={template} key={i} />
             ))}
           </div>
@@ -150,12 +152,22 @@ export function TemplateContainer() {
             : "hidden"
         }  `}
       >
-        <div className="relative p-4 w-full max-w-2xl h-full md:h-auto my-10 bg-overlay text-white rounded-md">
-          <div className="text-right">
+        <div className="relative p-4 w-full max-w-2xl h-full md:h-auto  bg-overlay text-white rounded-md">
+          <div className="flex">
+            <div className="w-full mb-5">
+              <input
+                onChange={(event) => handleChange(null, event)}
+                name="templateName"
+                className="text-4xl bg-overlay border-none appearance-none block w-full mb-3 leading-tight focus:outline-none focus:ring-0"
+                type="text"
+                placeholder="Template Name"
+              />
+            </div>
+
             <button
               onClick={() => setIsModalOpen(!isModalOpen)}
               type="button"
-              className="text-gray-400 bg-transparent hover:text-gray-500 rounded-lg text-sm p-1.5 ml-auto inline-flex justify-end"
+              className="self-start bg-transparent hover:text-gray-500 rounded-lg text-sm px-3 py-1.5 ml-auto inline-flex justify-end bg-overlay_two"
               data-modal-toggle="defaultModal"
             >
               <svg
@@ -173,21 +185,6 @@ export function TemplateContainer() {
               </svg>
               <span className="sr-only">Close modal</span>
             </button>
-          </div>
-
-          <div className="w-full px-3 border-b border-primary_faded mb-5">
-            <label
-              className="block uppercase tracking-wide text-grey-400 text-xs font-bold mb-2"
-              htmlFor="grid-password"
-            >
-              Template Name
-            </label>
-            <input
-              onChange={(event) => handleChange(event)}
-              name="templateName"
-              className=" bg-overlay appearance-none block w-full text-grey-400 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:ring-0 focus:border-primary "
-              type="text"
-            />
           </div>
 
           <form className="w-full" onSubmit={(event) => handleSubmit(event)}>

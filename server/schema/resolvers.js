@@ -14,6 +14,14 @@ const resolvers = {
       });
     },
 
+    getAllTemplates: async function () {
+      return Template.find().populate("exercises");
+    },
+
+    getAllExercises: async function () {
+      return Exercise.find();
+    },
+
     getUserById: async function (_, { _id }) {
       const user = await User.findById(_id)
         .select("-password")
@@ -28,7 +36,7 @@ const resolvers = {
       return user;
     },
 
-    getTemplates: async function (_, { userId }) {
+    getTemplatesForUser: async function (_, { userId }) {
       const user = await User.findById(userId)
         .select("-password")
         .populate({
@@ -124,8 +132,30 @@ const resolvers = {
       }
     },
 
+    editTemplate: async function (
+      _,
+      { templateId, templateName, exerciseIds }
+    ) {
+      try {
+        const newTemplate = await Template.findByIdAndUpdate(
+          templateId,
+          {
+            templateName: templateName,
+            exercises: exerciseIds,
+          },
+          {
+            new: true,
+          }
+        ).populate("exercises");
+
+        return newTemplate;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     deleteTemplate: async function (_, { templateId }) {
-      const result = await Template.deleteOne({ _id: templateId });
+      await Template.deleteOne({ _id: templateId });
     },
   },
 };

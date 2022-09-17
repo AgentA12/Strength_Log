@@ -83,3 +83,27 @@ export const DELETE_TEMPLATE = gql`
     }
   }
 `;
+
+export const EDIT_TEMPLATE = gql`
+  mutation (
+    $templateId: ID!
+    $templateName: String!
+    $exerciseIds: [exerciseInput!]
+  ) {
+    editTemplate(
+      templateId: $templateId
+      templateName: $templateName
+      exerciseIds: $exerciseIds
+    ) {
+      templateName
+      _id
+      exercises {
+        _id
+        exerciseName
+        sets
+        reps
+        weight
+      }
+    }
+  }
+`;

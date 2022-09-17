@@ -13,6 +13,7 @@ module.exports = {
         secondary: "#03DAC6",
         background: "#121212",
         overlay: "#292929",
+        overlay_two: "#1F1F1F",
         error: "#CF6679",
         white: "#FFFFFF",
         white_faded: "#BABABA"

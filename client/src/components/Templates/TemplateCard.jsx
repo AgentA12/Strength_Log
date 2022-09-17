@@ -4,30 +4,44 @@ import { useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import capitalizeFirstLetter from "../../utils/helpers/functions";
 import { DELETE_TEMPLATE } from "../../utils/graphql/mutations";
+import EditTemplateModal from "./EditTemplateModal";
 
 export default function TemplateCard({ template }) {
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isEditTemplateOpen, setIsEditTemplateOpen] = useState(false);
 
   let menuRef = useRef();
 
   useEffect(() => {
-    document.addEventListener("mousedown", ({ target }) => {
-      if (!menuRef.current.contains(target)) setIsEditOpen(false);
-    });
+    let handler = (event) => {
+      if (!menuRef.current.contains(event.target)) setIsEditOpen(false);
+    };
+
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
   });
 
   const [deleteTemplate, { data, loading, error }] =
     useMutation(DELETE_TEMPLATE);
 
-  function handleDelete() {
-    deleteTemplate({
+  async function handleDelete() {
+    const deleteTemplateRes = await deleteTemplate({
       variables: {
         templateId: template._id,
       },
     });
+
+    if (deleteTemplateRes) {
+      setIsEditOpen(!isEditOpen);
+    }
   }
 
-  function handleEdit() {}
+  function handleEdit() {
+    setIsEditTemplateOpen(!isEditTemplateOpen);
+  }
 
   return (
     <>
@@ -105,6 +119,11 @@ export default function TemplateCard({ template }) {
           ))}
         </div>
       </div>
+      <EditTemplateModal
+        template={template}
+        isEditTemplateOpen={isEditTemplateOpen}
+        setIsEditTemplateOpen={setIsEditTemplateOpen}
+      />
     </>
   );
 }
