@@ -5,13 +5,12 @@ import EditTemplateModal from "./EditTemplateModal";
 import capitalizeFirstLetter from "../../utils/helpers/functions";
 import { FaTrash, FaEdit } from "react-icons/fa";
 
-export default function TemplateCard({ template }) {
+export default function TemplateCard({ template, refetch }) {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isEditTemplateOpen, setIsEditTemplateOpen] = useState(false);
 
   let menuRef = useRef();
 
-  
   //allows the edit/delete modal to close on click outside of itself
   useEffect(() => {
     let handler = (event) => {
@@ -95,7 +94,7 @@ export default function TemplateCard({ template }) {
               </li>
               <li>
                 <a
-                  onClick={handleDelete}
+                  onClick={() => [handleDelete(), refetch()]}
                   href="#"
                   className="flex items-center gap-1 py-2 px-4 hover:text-primary"
                   id="delete-template"

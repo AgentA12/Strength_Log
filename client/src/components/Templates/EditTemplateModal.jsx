@@ -34,6 +34,7 @@ export default function EditTemplateModal({
                 type="button"
                 className="self-start bg-transparent hover:text-gray-500 rounded-lg text-sm px-3 py-1.5 ml-auto inline-flex justify-end bg-overlay_two"
                 data-modal-toggle="defaultModal"
+                onClick={() => setIsEditTemplateOpen(!isEditTemplateOpen)}
               >
                 <svg
                   aria-hidden="true"
