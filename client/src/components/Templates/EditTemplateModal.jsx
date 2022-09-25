@@ -5,7 +5,6 @@ export default function EditTemplateModal({
   setIsEditTemplateOpen,
   isEditTemplateOpen,
 }) {
-  console.log(template);
   return (
     <div
       id="defaultModal"

@@ -136,6 +136,8 @@ const resolvers = {
       _,
       { templateId, templateName, exerciseIds }
     ) {
+
+      
       try {
         const newTemplate = await Template.findByIdAndUpdate(
           templateId,

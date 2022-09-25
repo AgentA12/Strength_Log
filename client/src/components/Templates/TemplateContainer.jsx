@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import TemplateCard from "./TemplateCard";
 import { HiPlus } from "react-icons/hi";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
@@ -12,25 +12,28 @@ import ExerciseForm from "./ExerciseForm";
 const buttonStyle = { color: "#BB86FC" };
 
 export function TemplateContainer() {
+  const [templates, setTemplates] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formState, setFormState] = useState({
     templateName: "",
     exercises: [
       {
         exerciseName: "",
-        sets: 0,
-        reps: 0,
-        weight: 0,
+        sets: null,
+        reps: null,
+        weight: null,
       },
     ],
   });
 
+  //getting users information
   if (auth.isLoggedIn()) {
     var {
       data: { _id: userID },
     } = auth.getInfo();
   }
 
+  //function for getting templates
   const [getTemplates, { called, loading, data }] = useLazyQuery(
     GET_TEMPLATES,
     {
@@ -40,14 +43,15 @@ export function TemplateContainer() {
     }
   );
 
-  if (data) console.log(data);
-
+  //get the templates when the component renders
   useEffect(() => {
     getTemplates();
   }, []);
 
+  //function for adding a template
   const [addTemplate, {}] = useMutation(CREATE_TEMPLATE);
 
+  //updates the form state
   function handleChange(index, { target }) {
     let data = { ...formState };
 
@@ -72,26 +76,17 @@ export function TemplateContainer() {
     });
     if (mutationRes) {
       setIsModalOpen(!isModalOpen);
-      setFormState({
-        templateName: "",
-        exercises: [
-          {
-            exerciseName: "",
-            sets: 0,
-            reps: 0,
-            weight: 0,
-          },
-        ],
-      });
+      resetFormState();
     }
   }
 
+  //adds an exercise to the form
   function addExercise() {
     const exercise = {
       exerciseName: "",
-      sets: 0,
-      reps: 0,
-      weight: 0,
+      sets: null,
+      reps: null,
+      weight: null,
     };
 
     const data = { ...formState };
@@ -101,8 +96,23 @@ export function TemplateContainer() {
     setFormState(data);
   }
 
+  //call this to reset the form modal
+  function resetFormState() {
+    setFormState({
+      templateName: "",
+      exercises: [
+        {
+          exerciseName: "",
+          sets: null,
+          reps: null,
+          weight: null,
+        },
+      ],
+    });
+  }
+
   return (
-    <div className="ml-5 mr-auto md:ml-52 my-20">
+    <div className="ml-5 mr-40 md:ml-52 my-20">
       <div className="flex gap-5">
         <h3 className="text-primary font-extrabold text-5xl">Your Templates</h3>
         {auth.isLoggedIn() && (
@@ -161,11 +171,12 @@ export function TemplateContainer() {
                 className="text-4xl bg-overlay border-none appearance-none block w-full mb-3 leading-tight focus:outline-none focus:ring-0"
                 type="text"
                 placeholder="Template Name"
+                value={formState.templateName}
               />
             </div>
 
             <button
-              onClick={() => setIsModalOpen(!isModalOpen)}
+              onClick={() => [setIsModalOpen(!isModalOpen), resetFormState()]}
               type="button"
               className="self-start bg-transparent hover:text-gray-500 rounded-lg text-sm px-3 py-1.5 ml-auto inline-flex justify-end bg-overlay_two"
               data-modal-toggle="defaultModal"
@@ -193,6 +204,7 @@ export function TemplateContainer() {
                 key={index}
                 handleChange={handleChange}
                 index={index}
+                formState={formState}
               />
             ))}
 

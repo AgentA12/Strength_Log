@@ -1,7 +1,8 @@
-import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Auth from "../../utils/auth/auth";
+import { GiWeightLiftingUp } from "react-icons/gi";
+import { IconContext } from "react-icons";
 
 export const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,12 +10,9 @@ export const Nav = () => {
   return (
     <nav className="px-2 sm:px-4 py-2.5 rounded text-white">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
-        <img
-          src="https://flowbite.com/docs/images/logo.svg"
-          className="mr-3 h-6 sm:h-9"
-          alt="Flowbite Logo"
-        />
-
+        <IconContext.Provider value={{ className: "text-primary ml-5" }}>
+          <GiWeightLiftingUp size={50} />
+        </IconContext.Provider>
         <button
           onClick={() => setIsOpen(!isOpen)}
           data-collapse-toggle="navbar-default"

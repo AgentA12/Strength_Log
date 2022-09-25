@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { useRef } from "react";
-import { useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useMutation } from "@apollo/client";
-import capitalizeFirstLetter from "../../utils/helpers/functions";
 import { DELETE_TEMPLATE } from "../../utils/graphql/mutations";
 import EditTemplateModal from "./EditTemplateModal";
+import capitalizeFirstLetter from "../../utils/helpers/functions";
+import { FaTrash, FaEdit } from "react-icons/fa";
 
 export default function TemplateCard({ template }) {
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -12,6 +11,8 @@ export default function TemplateCard({ template }) {
 
   let menuRef = useRef();
 
+  
+  //allows the edit/delete modal to close on click outside of itself
   useEffect(() => {
     let handler = (event) => {
       if (!menuRef.current.contains(event.target)) setIsEditOpen(false);
@@ -35,6 +36,7 @@ export default function TemplateCard({ template }) {
     });
 
     if (deleteTemplateRes) {
+      console.log(deleteTemplateRes);
       setIsEditOpen(!isEditOpen);
     }
   }
@@ -84,9 +86,10 @@ export default function TemplateCard({ template }) {
                 <a
                   onClick={handleEdit}
                   href="#"
-                  className="block py-2 px-4 hover:text-primary"
+                  className="flex items-center gap-1 py-2 px-4 hover:text-primary"
                   id="edit-template"
                 >
+                  <FaEdit size={14} />
                   Edit Template
                 </a>
               </li>
@@ -94,9 +97,10 @@ export default function TemplateCard({ template }) {
                 <a
                   onClick={handleDelete}
                   href="#"
-                  className="block py-2 px-4 hover:text-primary"
+                  className="flex items-center gap-1 py-2 px-4 hover:text-primary"
                   id="delete-template"
                 >
+                  <FaTrash size={14} />
                   Delete Template
                 </a>
               </li>
