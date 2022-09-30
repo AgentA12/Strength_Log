@@ -1,5 +1,4 @@
 export default function ExerciseForm({ handleChange, index, formState }) {
-
   return (
     <>
       <div className="flex flex-wrap -mx-3 mb-6">

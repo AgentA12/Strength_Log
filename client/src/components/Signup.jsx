@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../utils/graphql/mutations";
@@ -18,7 +18,6 @@ export default function Signup() {
   });
 
   function handleChange({ target }) {
-
     setFormState({
       ...formState,
       [target.name]: target.value,
@@ -27,8 +26,6 @@ export default function Signup() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-
-    console.log({...formState})
 
     const mutationResponse = await addUser({
       variables: {
@@ -82,11 +79,12 @@ export default function Signup() {
             Signup
           </button>
 
-          <p className="my-1 py-1 
-          border-t text-error border-primary">
+          <p
+            className="my-1 py-1 
+          border-t text-error border-primary"
+          >
             {/* {error && error.message} */}
           </p>
-
         </form>
 
         <Link to="/Login" className="hover:text-primary underline ">

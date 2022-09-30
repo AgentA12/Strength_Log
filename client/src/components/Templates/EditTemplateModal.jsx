@@ -1,10 +1,47 @@
 import ExerciseFormEdit from "./ExerciseFormEdit";
+import { useState } from "react";
+import { EDIT_TEMPLATE } from "../../utils/graphql/mutations";
+import { useMutation } from "@apollo/client";
 
 export default function EditTemplateModal({
   template,
   setIsEditTemplateOpen,
   isEditTemplateOpen,
+  refetch,
 }) {
+  const cloneTemplate = structuredClone(template);
+
+  const [editFormState, setEditFormState] = useState(cloneTemplate);
+
+  const [editTemplate, { data, loading, error }] = useMutation(EDIT_TEMPLATE);
+
+  function handleChange(index, { target }) {
+    let data = { ...editFormState };
+
+    if (target.name != "templateName") {
+      data.exercises[index][target.name] = target.value;
+
+      setEditFormState({ ...data });
+      return;
+    }
+
+    setEditFormState({ ...editFormState, [target.name]: target.value });
+  }
+
+  async function handleEditSubmit(event) {
+    event.preventDefault();
+
+    const mutationRes = await editTemplate({
+      variables: {
+        ...editFormState,
+      },
+    });
+
+    if (mutationRes) {
+      refetch();
+    }
+  }
+
   return (
     <div
       id="defaultModal"
@@ -26,7 +63,8 @@ export default function EditTemplateModal({
                   className="text-4xl bg-overlay border-none appearance-none block w-full mb-3 leading-tight focus:outline-none focus:ring-0"
                   type="text"
                   placeholder="Template Name"
-                  value={template.templateName}
+                  value={editFormState.templateName}
+                  onChange={(event) => handleChange(null, event)}
                 />
               </div>
 
@@ -53,9 +91,14 @@ export default function EditTemplateModal({
               </button>
             </div>
 
-            <form className="w-full">
-              {template.exercises.map((exercise) => (
-                <ExerciseFormEdit exercise={exercise} />
+            <form className="w-full" onSubmit={handleEditSubmit}>
+              {editFormState.exercises.map((exercise, index) => (
+                <ExerciseFormEdit
+                  exercise={exercise}
+                  index={index}
+                  handleChange={handleChange}
+                  key={exercise._id}
+                />
               ))}
 
               <button
@@ -69,7 +112,7 @@ export default function EditTemplateModal({
                 type="submit"
                 className="text-white bg-primary font-medium rounded-lg text-sm px-5 py-2.5 w-full text-center"
               >
-                Save Template
+                Edit Template
               </button>
             </form>
           </div>

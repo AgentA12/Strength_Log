@@ -1,12 +1,4 @@
-import { EDIT_TEMPLATE } from "../../utils/graphql/mutations";
-import { useMutation } from "@apollo/client";
-
 export default function ExerciseForm({ exercise, handleChange, index }) {
-  const [editTemplate, { data }] = useMutation(EDIT_TEMPLATE);
-
-  async function handleChange() {}
-
-  async function handleEdit() {}
 
   return (
     <>

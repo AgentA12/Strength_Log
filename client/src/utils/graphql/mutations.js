@@ -85,15 +85,11 @@ export const DELETE_TEMPLATE = gql`
 `;
 
 export const EDIT_TEMPLATE = gql`
-  mutation (
-    $templateId: ID!
-    $templateName: String!
-    $exerciseIds: [exerciseInput!]
-  ) {
+  mutation ($_id: ID!, $templateName: String!, $exercises: [exerciseInput!]) {
     editTemplate(
-      templateId: $templateId
+      _id: $_id
       templateName: $templateName
-      exerciseIds: $exerciseIds
+      exercises: $exercises
     ) {
       templateName
       _id

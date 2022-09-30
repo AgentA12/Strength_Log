@@ -132,26 +132,23 @@ const resolvers = {
       }
     },
 
-    editTemplate: async function (
-      _,
-      { templateId, templateName, exerciseIds }
-    ) {
-      try {
-        const newTemplate = await Template.findByIdAndUpdate(
-          templateId,
-          {
-            templateName: templateName,
-            exercises: exerciseIds,
-          },
-          {
-            new: true,
-          }
-        ).populate("exercises");
+    editTemplate: async function (_, { _id, templateName, exercises }) {
+      //update by id and change the template name
+      //update by exercise id and change each exercise value
+      //return this data
 
-        return newTemplate;
-      } catch (error) {
-        console.log(error);
-      }
+      const newTemplate = await Template.findByIdAndUpdate(_id, {
+        templateName: templateName,
+      });
+
+      await exercises.map(async (exercise, index) => {
+        await Exercise.findByIdAndUpdate(exercise._id, {
+          exerciseName: exercise.exerciseName,
+          weight: exercise.weight,
+          sets: exercise.sets,
+          reps: exercise.reps,
+        });
+      });
     },
 
     deleteTemplate: async function (_, { templateId }) {

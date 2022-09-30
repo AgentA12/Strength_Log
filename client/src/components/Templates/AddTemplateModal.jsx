@@ -1,18 +1,93 @@
 import ExerciseForm from "./ExerciseForm";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { useMutation } from "@apollo/client";
+import { CREATE_TEMPLATE } from "../../utils/graphql/mutations";
 
 export default function AddTemplateModal({
-  isModalOpen,
-  handleChange,
-  handleSubmit,
-  setIsModalOpen,
-  resetFormState,
-  formState,
-  addExercise,
+  isAddTemplateModalOpen,
+  setIsAddTemplateModalOpen,
+  userID,
+  refetch,
 }) {
   const scrollRef = useRef();
 
-  function setScrollHeight() {}
+  const [formState, setFormState] = useState({
+    templateName: "",
+    exercises: [
+      {
+        exerciseName: "",
+        sets: "",
+        reps: "",
+        weight: "",
+      },
+    ],
+  });
+
+  //function for adding a template
+  const [addTemplate, {}] = useMutation(CREATE_TEMPLATE);
+
+  function handleChange(index, { target }) {
+    let data = { ...formState };
+
+    if (target.name != "templateName") {
+      data.exercises[index][target.name] = target.value;
+
+      setFormState({ ...data });
+      return;
+    }
+
+    setFormState({ ...formState, [target.name]: target.value });
+  }
+
+  //call this to reset the form modal
+  function resetFormState() {
+    setFormState({
+      templateName: "",
+      exercises: [
+        {
+          exerciseName: "",
+          sets: "",
+          reps: "",
+          weight: "",
+        },
+      ],
+    });
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+  
+
+    const mutationRes = await addTemplate({
+      variables: {
+        ...formState,
+        userId: userID,
+      },
+    });
+    if (mutationRes) {
+      //li template is added, close modal, reset form and fetch new templates
+      setIsAddTemplateModalOpen(!isAddTemplateModalOpen);
+      resetFormState();
+      refetch();
+    }
+  }
+
+  //adds an exercise to the form
+  function addExercise() {
+    const exercise = {
+      exerciseName: "",
+      sets: "",
+      reps: "",
+      weight: "",
+    };
+
+    const data = { ...formState };
+
+    data.exercises.push(exercise);
+
+    setFormState(data);
+  }
 
   return (
     <div
@@ -20,14 +95,14 @@ export default function AddTemplateModal({
       tabIndex="-1"
       aria-hidden="true"
       className={`${
-        isModalOpen
+        isAddTemplateModalOpen
           ? "flex items-center justify-center bg-background bg-opacity-75 transition-opacity overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
           : "hidden"
       }  `}
     >
       <div
         ref={scrollRef}
-        className="relative p-4 w-full max-w-2xl max-h-96 overflow-y-scroll bg-overlay text-white rounded-md"
+        className="add-modal-height relative p-4 w-full max-w-2xl overflow-y-scroll bg-overlay text-white rounded-md"
       >
         <div className="flex">
           <div className="w-full mb-5">
@@ -42,7 +117,10 @@ export default function AddTemplateModal({
           </div>
 
           <button
-            onClick={() => [setIsModalOpen(!isModalOpen), resetFormState()]}
+            onClick={() => [
+              setIsAddTemplateModalOpen(!isAddTemplateModalOpen),
+              resetFormState(),
+            ]}
             type="button"
             className="self-start bg-transparent hover:text-gray-500 rounded-lg text-sm px-3 py-1.5 ml-auto inline-flex justify-end bg-overlay_two"
             data-modal-toggle="defaultModal"
@@ -67,7 +145,7 @@ export default function AddTemplateModal({
         <form className="w-full" onSubmit={(event) => handleSubmit(event)}>
           {formState.exercises.map((input, index) => (
             <ExerciseForm
-              key={index}
+              key={input.exerciseName}
               handleChange={handleChange}
               index={index}
               formState={formState}

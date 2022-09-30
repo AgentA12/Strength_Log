@@ -59,9 +59,9 @@ const typeDefs = gql`
       exercises: [exerciseInput!]
     ): [Template]
     editTemplate(
-      templateId: ID!
+      _id: ID!
       templateName: String!
-      exerciseIds: [exerciseInput!]
+      exercises: [exerciseInput!]
     ): Template
     createExercise(name: String!, sets: Int!, reps: Int!): Exercise
     deleteTemplate(templateId: ID!): Template

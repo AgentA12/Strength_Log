@@ -11,7 +11,7 @@ export default function TemplateCard({ template, refetch }) {
 
   let menuRef = useRef();
 
-  //allows the edit/delete modal to close on click outside of itself
+  //allows the edit/delete modal to close onClick outside of itself
   useEffect(() => {
     let handler = (event) => {
       if (!menuRef.current.contains(event.target)) setIsEditOpen(false);
@@ -35,8 +35,8 @@ export default function TemplateCard({ template, refetch }) {
     });
 
     if (deleteTemplateRes) {
-      console.log(deleteTemplateRes);
       setIsEditOpen(!isEditOpen);
+      //show toast to confirm template was deleted
     }
   }
 
@@ -126,6 +126,7 @@ export default function TemplateCard({ template, refetch }) {
         template={template}
         isEditTemplateOpen={isEditTemplateOpen}
         setIsEditTemplateOpen={setIsEditTemplateOpen}
+        refetch={refetch}
       />
     </>
   );
