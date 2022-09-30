@@ -107,7 +107,7 @@ export default function TemplateCard({ template, refetch }) {
           </div>
         </div>
 
-        <div className="mt-5">
+        <div className="mt-5 pr-10">
           {template.exercises.map((exercise, i) => (
             <div className="font-semibold text-xl mb-2" key={i}>
               <h5 className="text-primary_faded">

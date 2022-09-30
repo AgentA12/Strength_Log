@@ -4,7 +4,7 @@ import Auth from "../../utils/auth/auth";
 import { GiWeightLiftingUp } from "react-icons/gi";
 import { IconContext } from "react-icons";
 
-export const Nav = () => {
+export const Nav = ({ activeNav }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -48,7 +48,9 @@ export const Nav = () => {
             <li>
               <Link
                 to={"/Templates"}
-                className="block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent"
+                className={` ${
+                  activeNav === "Templates" && "text-primary"
+                } block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent`}
               >
                 Templates
               </Link>
@@ -56,7 +58,9 @@ export const Nav = () => {
             <li>
               <Link
                 to={"/Routines"}
-                className="block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent"
+                className={`${
+                  activeNav === "Routines" && "text-primary"
+                } block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent`}
               >
                 Routines
               </Link>
@@ -66,7 +70,9 @@ export const Nav = () => {
                 <li>
                   <a
                     href="#"
-                    className="block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent"
+                    className={`${
+                      activeNav === "Account" && "text-primary"
+                    } block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent`}
                   >
                     Account
                   </a>

@@ -137,18 +137,29 @@ const resolvers = {
       //update by exercise id and change each exercise value
       //return this data
 
-      const newTemplate = await Template.findByIdAndUpdate(_id, {
+      await Template.findByIdAndUpdate(_id, {
         templateName: templateName,
       });
 
       await exercises.map(async (exercise, index) => {
-        await Exercise.findByIdAndUpdate(exercise._id, {
+        const newExercise = await Exercise.findByIdAndUpdate(exercise._id, {
           exerciseName: exercise.exerciseName,
           weight: exercise.weight,
           sets: exercise.sets,
           reps: exercise.reps,
         });
+
+        // when editing a template a new exercise may be added, if thats the case create the a new exercise and push into current template
+        if (!newExercise) {
+          const createdExercise = await Exercise.create(exercise);
+
+          await Template.findByIdAndUpdate(_id, {
+            $push: { exercises: createdExercise._id },
+          });
+        }
       });
+
+      return Template.findById(_id).populate("exercises");
     },
 
     deleteTemplate: async function (_, { templateId }) {

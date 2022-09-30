@@ -29,7 +29,7 @@ export default function AddTemplateModal({
   function handleChange(index, { target }) {
     let data = { ...formState };
 
-    if (target.name != "templateName") {
+    if (target.name !== "templateName") {
       data.exercises[index][target.name] = target.value;
 
       setFormState({ ...data });
@@ -56,8 +56,6 @@ export default function AddTemplateModal({
 
   async function handleSubmit(event) {
     event.preventDefault();
-
-  
 
     const mutationRes = await addTemplate({
       variables: {
@@ -89,6 +87,8 @@ export default function AddTemplateModal({
     setFormState(data);
   }
 
+  function removeExercise() {}
+
   return (
     <div
       id="defaultModal"
@@ -96,7 +96,7 @@ export default function AddTemplateModal({
       aria-hidden="true"
       className={`${
         isAddTemplateModalOpen
-          ? "flex items-center justify-center bg-background bg-opacity-75 transition-opacity overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
+          ? " .template-modal flex items-center justify-center bg-background bg-opacity-75 transition-opacity overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
           : "hidden"
       }  `}
     >
@@ -145,10 +145,11 @@ export default function AddTemplateModal({
         <form className="w-full" onSubmit={(event) => handleSubmit(event)}>
           {formState.exercises.map((input, index) => (
             <ExerciseForm
-              key={input.exerciseName}
+              key={input._id}
               handleChange={handleChange}
               index={index}
               formState={formState}
+              removeExercise={removeExercise}
             />
           ))}
 

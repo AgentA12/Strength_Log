@@ -28,15 +28,16 @@ export function TemplateContainer() {
 
   return (
     <div className="ml-5 mr-40 md:ml-52 my-20">
-      <div className="flex gap-5">
+      <div className="flex flex-wrap gap-5">
         <h3 className="text-primary font-extrabold text-5xl">Your Templates</h3>
         {auth.isLoggedIn() && (
           <button
             onClick={() => setIsAddTemplateModalOpen(!isAddTemplateModalOpen)}
-            type="button"
-            className="flex items-center gap-1 text-primary bg-primary_faded bg-opacity-20 focus:outline-none focus:ring-0 font-medium rounded-full px-3 text-center"
+            class=" relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-purple-600 to-primary group-hover:from-purple-600 group-hover:to-primary  text-white focus:ring-4 focus:outline-none focus:ring-primary_faded dark:focus:ring-blue-800"
           >
-            <HiPlus style={buttonStyle} size={24} /> Template
+            <span class="flex gap-1  items-center bg-background relative px-5 py-2.5 transition-all ease-in duration-75 dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+              <HiPlus style={buttonStyle} size={24} /> Template
+            </span>
           </button>
         )}
       </div>
@@ -75,6 +76,7 @@ export function TemplateContainer() {
         isAddTemplateModalOpen={isAddTemplateModalOpen}
         setIsAddTemplateModalOpen={setIsAddTemplateModalOpen}
         userID={userID}
+        refetch={refetch}
       />
     </div>
   );
