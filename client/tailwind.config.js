@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#BB86FC',
+        primary: "#BB86FC",
         primary_faded: "#c9a0ff",
         primary_variant: "#3700B3",
         secondary: "#03DAC6",
@@ -16,8 +16,8 @@ module.exports = {
         overlay_two: "#1F1F1F",
         error: "#CF6679",
         white: "#FFFFFF",
-        white_faded: "#BABABA"
-      }
+        white_faded: "#BABABA",
+      },
     },
   },
   plugins: [require("flowbite/plugin")],

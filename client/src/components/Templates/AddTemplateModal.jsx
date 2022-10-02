@@ -117,7 +117,7 @@ export default function AddTemplateModal({
           </div>
 
           <button
-            onClick={() => [
+            onClick={(event) => [
               setIsAddTemplateModalOpen(!isAddTemplateModalOpen),
               resetFormState(),
             ]}

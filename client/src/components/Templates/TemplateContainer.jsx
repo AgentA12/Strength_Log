@@ -27,8 +27,8 @@ export function TemplateContainer() {
   });
 
   return (
-    <div className="ml-5 mr-40 md:ml-52 my-20">
-      <div className="flex flex-wrap gap-5">
+    <div className="mx-10  my-10">
+      <div className="flex justify-center flex-wrap gap-5">
         <h3 className="text-primary font-extrabold text-5xl">Your Templates</h3>
         {auth.isLoggedIn() && (
           <button
@@ -44,7 +44,7 @@ export function TemplateContainer() {
 
       {auth.isLoggedIn() ? (
         data?.getTemplatesForUser.templates.length ? (
-          <div className="flex flex-wrap gap-5 mt-10">
+          <div className="flex flex-wrap justify-center gap-5 mt-10">
             {data?.getTemplatesForUser.templates.map((template, i) => (
               <TemplateCard
                 template={template}
@@ -54,10 +54,10 @@ export function TemplateContainer() {
             ))}
           </div>
         ) : (
-          <p className="text-xl font-extralight mt-3">You have no templates</p>
+          <p className="text-center font-extralight mt-3">You have no templates</p>
         )
       ) : (
-        <div className="flex gap-4 items-center mt-3">
+        <div className="flex gap-4 justify-center items-center mt-3">
           <p className=" text-xl font-extralight">
             Log in to see your templates
           </p>

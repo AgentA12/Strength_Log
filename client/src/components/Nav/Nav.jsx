@@ -62,7 +62,7 @@ export const Nav = ({ activeNav }) => {
                   activeNav === "Routines" && "text-primary"
                 } block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent`}
               >
-                Routines
+                Progress
               </Link>
             </li>
             {Auth.isLoggedIn() ? (
