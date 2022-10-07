@@ -30,7 +30,9 @@ export default function TemplateCard({ template, refetch }) {
   const [deleteTemplate, { data, loading, error }] =
     useMutation(DELETE_TEMPLATE);
 
-  async function handleDelete() {
+  async function handleDelete(event) {
+    event.stopPropagation()
+
     const deleteTemplateRes = await deleteTemplate({
       variables: {
         templateId: template._id,
@@ -43,7 +45,8 @@ export default function TemplateCard({ template, refetch }) {
     }
   }
 
-  function handleEdit() {
+  function handleEdit(event) {
+    event.stopPropagation()
     setIsEditTemplateOpen(!isEditTemplateOpen);
   }
 
@@ -53,7 +56,10 @@ export default function TemplateCard({ template, refetch }) {
 
   return (
     <>
-      <div className="template-item w-96 p-3 border rounded-lg border-primary hover:bg-primary_faded hover:bg-opacity-10 cursor-pointer">
+      <div
+        className="template-item w-96 p-3 border rounded-lg border-primary hover:bg-primary_faded hover:bg-opacity-10 cursor-pointer "
+        onClick={startWorkout}
+      >
         <div className="flex items-center justify-between relative">
           <h4 className="font-bold text-2xl">
             {template.templateName.toLocaleUpperCase()}{" "}
@@ -94,19 +100,7 @@ export default function TemplateCard({ template, refetch }) {
             >
               <li>
                 <a
-                  onClick={startWorkout}
-                  href="#"
-                  className="flex items-center gap-1 py-2 px-4 hover:text-green-400"
-                  id="edit-template"
-                >
-                  <FaWeightHanging size={14} />
-                  Start Workout
-                </a>
-              </li>
-
-              <li>
-                <a
-                  onClick={handleEdit}
+                  onClick={(event) => handleEdit(event)}
                   href="#"
                   className="flex items-center gap-1 py-2 px-4 hover:text-primary"
                   id="edit-template"
@@ -117,7 +111,7 @@ export default function TemplateCard({ template, refetch }) {
               </li>
               <li>
                 <a
-                  onClick={() => [handleDelete(), refetch()]}
+                  onClick={(event) => [handleDelete(event), refetch()]}
                   href="#"
                   className="flex items-center gap-1 py-2 px-4 hover:text-red-500"
                   id="delete-template"

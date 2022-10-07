@@ -16,7 +16,7 @@ export default function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/Templates" element={<TemplateContainer />} />
-        <Route path="/Routines" element={<RoutineContainer />} />
+        <Route path="/Progress" element={<RoutineContainer />} />
       </Routes>
     </>
   );

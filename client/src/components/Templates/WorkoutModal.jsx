@@ -1,14 +1,15 @@
+import { Link } from "react-router-dom";
+import { Spinner } from "flowbite-react";
+import { useState } from "react";
+
 export default function WorkoutModal({
   template,
   isWorkoutModalOpen,
   setIsWorkoutModalOpen,
 }) {
+  const [workoutLoading, setWorkoutLoading] = useState(false);
 
   function handleClick({ target }) {
-    setIsWorkoutModalOpen(!isWorkoutModalOpen);
-  }
-  
-  function handleWorkoutSave() {
     setIsWorkoutModalOpen(!isWorkoutModalOpen);
   }
 
@@ -19,7 +20,7 @@ export default function WorkoutModal({
       aria-hidden="true"
       className={`${
         isWorkoutModalOpen
-          ? " .template-modal flex items-center justify-center bg-background bg-opacity-75 transition-opacity overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
+          ? ".modal-scroll flex items-center justify-center bg-background bg-opacity-75 transition-opacity overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
           : "hidden"
       }`}
     >
@@ -53,10 +54,10 @@ export default function WorkoutModal({
         <div className="p-5">
           {template.exercises.map((exercise, i) => (
             <>
-              <div className="flex items-center gap-2 mb-2 text-xl">
-                <span className="text-primary font-semibold text-2xl">
-                  {exercise.exerciseName}
-                </span>
+              <p className="text-primary font-semibold text-3xl text-center">
+                {exercise.exerciseName}
+              </p>
+              <div className="flex justify-center items-center gap-2 mb-2 text-xl">
                 <span className="">{exercise.sets} x </span>
                 <span className="">{exercise.reps}</span>
                 <span className="text-white_faded">
@@ -68,14 +69,16 @@ export default function WorkoutModal({
         </div>
 
         <div className=" pt-5 bg-inherit text-center">
-          <button
-            onClick={handleWorkoutSave}
-            class="w-full relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-purple-600 to-primary group-hover:from-purple-600 group-hover:to-primary  text-white focus:ring-4 focus:outline-none focus:ring-primary_faded dark:focus:ring-blue-800"
-          >
-            <span class="flex gap-1 w-full justify-center items-center bg-overlay relative px-5 py-2.5 transition-all ease-in duration-75 dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-              Mark as complete
-            </span>
-          </button>
+          <Link to={"/Progress"} state={{ template }}>
+            <button class="w-full relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-purple-600 to-primary group-hover:from-purple-600 group-hover:to-primary  text-white focus:ring-4 focus:outline-none focus:ring-primary_faded dark:focus:ring-blue-800">
+              <span class="flex gap-5 w-full justify-center items-center bg-overlay relative px-5 py-2.5 transition-all ease-in duration-75 dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                Start workout
+                {workoutLoading && (
+                  <Spinner color="purple" aria-label="loading" />
+                )}
+              </span>
+            </button>
+          </Link>
         </div>
       </div>
     </div>

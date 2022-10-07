@@ -1,9 +1,16 @@
 import auth from "../../utils/auth/auth";
-import { HiPlus } from "react-icons/hi";
 import Routine from "./Routine";
-import {Link} from "react-router-dom"
+import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Workout from "../Templates/Workout";
 
 export default function RoutineContainer() {
+  const { state } = useLocation();
+
+  if (state) {
+    return <Workout template={state.template} />;
+  }
+
   const data = [];
   return (
     <div className="ml-5 mr-40 md:ml-52 my-20">
@@ -26,7 +33,7 @@ export default function RoutineContainer() {
           </div>
         ) : (
           <p className="text-xl font-extralight mt-3">
-            You haven't saved any templates
+            You haven't saved any Workouts
           </p>
         )
       ) : (

@@ -57,7 +57,7 @@ export const Nav = ({ activeNav }) => {
             </li>
             <li>
               <Link
-                to={"/Routines"}
+                to={"/Progress"}
                 className={`${
                   activeNav === "Routines" && "text-primary"
                 } block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent`}
