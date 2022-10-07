@@ -1,17 +1,4 @@
-export default function WorkoutModal({
-  template,
-  isWorkoutModalOpen,
-  setIsWorkoutModalOpen,
-}) {
-
-  function handleClick({ target }) {
-    setIsWorkoutModalOpen(!isWorkoutModalOpen);
-  }
-  
-  function handleWorkoutSave() {
-    setIsWorkoutModalOpen(!isWorkoutModalOpen);
-  }
-
+export default function Workout({ template }) {
   return (
     <div
       id="defaultModal"
@@ -69,11 +56,11 @@ export default function WorkoutModal({
 
         <div className=" pt-5 bg-inherit text-center">
           <button
-            onClick={handleWorkoutSave}
+            onClick={handleStartWorkout}
             class="w-full relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-purple-600 to-primary group-hover:from-purple-600 group-hover:to-primary  text-white focus:ring-4 focus:outline-none focus:ring-primary_faded dark:focus:ring-blue-800"
           >
             <span class="flex gap-1 w-full justify-center items-center bg-overlay relative px-5 py-2.5 transition-all ease-in duration-75 dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-              Mark as complete
+              Start
             </span>
           </button>
         </div>

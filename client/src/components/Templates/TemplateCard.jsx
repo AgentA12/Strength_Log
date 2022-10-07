@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import { DELETE_TEMPLATE } from "../../utils/graphql/mutations";
 import EditTemplateModal from "./EditTemplateModal";
 import capitalizeFirstLetter from "../../utils/helpers/functions";
-import { FaTrash, FaEdit } from "react-icons/fa";
+import { FaTrash, FaEdit, FaWeightHanging } from "react-icons/fa";
 import WorkoutModal from "./WorkoutModal";
 
 export default function TemplateCard({ template, refetch }) {
@@ -53,10 +53,7 @@ export default function TemplateCard({ template, refetch }) {
 
   return (
     <>
-      <div
-        onClick={startWorkout}
-        className="template-item w-96 p-3 border rounded-lg border-primary hover:bg-primary_faded hover:bg-opacity-10 cursor-pointer"
-      >
+      <div className="template-item w-96 p-3 border rounded-lg border-primary hover:bg-primary_faded hover:bg-opacity-10 cursor-pointer">
         <div className="flex items-center justify-between relative">
           <h4 className="font-bold text-2xl">
             {template.templateName.toLocaleUpperCase()}{" "}
@@ -97,6 +94,18 @@ export default function TemplateCard({ template, refetch }) {
             >
               <li>
                 <a
+                  onClick={startWorkout}
+                  href="#"
+                  className="flex items-center gap-1 py-2 px-4 hover:text-green-400"
+                  id="edit-template"
+                >
+                  <FaWeightHanging size={14} />
+                  Start Workout
+                </a>
+              </li>
+
+              <li>
+                <a
                   onClick={handleEdit}
                   href="#"
                   className="flex items-center gap-1 py-2 px-4 hover:text-primary"
@@ -121,7 +130,7 @@ export default function TemplateCard({ template, refetch }) {
           </div>
         </div>
 
-        <div className="mt-5 mr-7">
+        <div className="mt-5 mr-2">
           <div className="font-semibold text-custom  z-10 text-ellipsis">
             {template.exercises.map((exercise, i) => (
               <span
