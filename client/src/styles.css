@@ -2,9 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer {
+@layer components {
   body {
     @apply bg-background text-white;
+  }
+
+  .add-template-btn {
+    @apply relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium rounded-lg  bg-gradient-to-br from-purple-600 to-primary   text-white focus:ring-4 focus:outline-none focus:ring-primary_faded dark:focus:ring-blue-800;
   }
 }
 
@@ -40,5 +44,5 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #BB86FC;
+  color: #bb86fc;
 }

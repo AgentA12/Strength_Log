@@ -11,19 +11,20 @@ export default function ExerciseForm({ exercise, handleChange, index }) {
             Exercise Name
           </label>
 
+          {/* Dont let the user remove the first exercise */}
           {index !== 0 ? (
             <button
               onClick={(event, index) => removeExercise(event, index)}
               type="button"
-              class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-0.5  dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+              className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-0.5  dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
             >
               Remove
             </button>
           ) : null}
         </div>
         <input
-          onChange={(event) => handleChange(null, event)}
-          name="templateName"
+          onChange={(event) => handleChange(index, event)}
+          name="exerciseName"
           className="text-2xl bg-overlay border-none appearance-none block w-full mb-3 leading-tight focus:outline-none focus:ring-0"
           type="text"
           placeholder="Exercise Name"

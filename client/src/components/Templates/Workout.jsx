@@ -14,7 +14,7 @@ export default function Workout({ template }) {
   // });
 
   function handleFinish() {
-    console.log("Finished!");
+   
   }
 
   function setExerciseChecked() {

@@ -1,10 +1,10 @@
 import auth from "../../utils/auth/auth";
-import Routine from "./Routine";
+import Progress from "./Progress";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Workout from "../Templates/Workout";
 
-export default function RoutineContainer() {
+export default function ProgressContainer() {
   const { state } = useLocation();
 
   if (state) {
@@ -16,19 +16,12 @@ export default function RoutineContainer() {
     <div className="ml-5 mr-40 md:ml-52 my-20">
       <div className="flex flex-wrap gap-5">
         <h3 className="text-primary font-extrabold text-5xl">Progress</h3>
-        {/* {auth.isLoggedIn() && (
-          <button class=" relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-purple-600 to-primary group-hover:from-purple-600 group-hover:to-primary  text-white focus:ring-4 focus:outline-none focus:ring-primary_faded dark:focus:ring-blue-800">
-            <span class="flex gap-1  items-center bg-background relative px-5 py-2.5 transition-all ease-in duration-75 dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-              <HiPlus size={24} /> Routine
-            </span>
-          </button>
-        )} */}
       </div>
       {auth.isLoggedIn() ? (
-        data?.getRoutinesForUser?.templates.length ? (
+        data?.getProgresssForUser?.templates.length ? (
           <div className="flex flex-wrap gap-5 mt-10">
-            {data?.getRoutinesForUser.templates.map((template, i) => (
-              <Routine />
+            {data?.getProgresssForUser.templates.map((template, i) => (
+              <Progress key={template.templateName}/>
             ))}
           </div>
         ) : (

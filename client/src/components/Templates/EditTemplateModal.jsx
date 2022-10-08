@@ -13,10 +13,13 @@ export default function EditTemplateModal({
 
   const [editFormState, setEditFormState] = useState(cloneTemplate);
 
+ 
+
   const [editTemplate, { data, loading, error }] = useMutation(EDIT_TEMPLATE);
 
   function handleChange(index, { target }) {
     let data = { ...editFormState };
+
 
     if (target.name !== "templateName") {
       data.exercises[index][target.name] = target.value;
@@ -38,6 +41,7 @@ export default function EditTemplateModal({
     });
 
     if (mutationRes) {
+      
       setIsEditTemplateOpen(!isEditTemplateOpen);
       refetch();
     }

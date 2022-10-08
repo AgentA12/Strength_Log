@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import { DELETE_TEMPLATE } from "../../utils/graphql/mutations";
 import EditTemplateModal from "./EditTemplateModal";
 import capitalizeFirstLetter from "../../utils/helpers/functions";
-import { FaTrash, FaEdit, FaWeightHanging } from "react-icons/fa";
+import { FaTrash, FaEdit } from "react-icons/fa";
 import WorkoutModal from "./WorkoutModal";
 
 export default function TemplateCard({ template, refetch }) {

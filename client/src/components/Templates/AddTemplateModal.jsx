@@ -87,7 +87,9 @@ export default function AddTemplateModal({
     setFormState(data);
   }
 
-  function removeExercise() {}
+  function removeExercise(index) {
+   
+  }
 
   return (
     <div
@@ -117,7 +119,7 @@ export default function AddTemplateModal({
           </div>
 
           <button
-            onClick={(event) => [
+            onClick={() => [
               setIsAddTemplateModalOpen(!isAddTemplateModalOpen),
               resetFormState(),
             ]}
@@ -143,9 +145,9 @@ export default function AddTemplateModal({
         </div>
 
         <form className="w-full" onSubmit={(event) => handleSubmit(event)}>
-          {formState.exercises.map((input, index) => (
+          {formState.exercises.map((exercise, index) => (
             <ExerciseForm
-              key={input._id}
+              key={index}
               handleChange={handleChange}
               index={index}
               formState={formState}

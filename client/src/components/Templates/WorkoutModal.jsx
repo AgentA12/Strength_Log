@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Spinner } from "flowbite-react";
-import { useState } from "react";
+import { useState, Fragment } from "react";
 
 export default function WorkoutModal({
   template,
@@ -53,7 +53,7 @@ export default function WorkoutModal({
 
         <div className="p-5">
           {template.exercises.map((exercise, i) => (
-            <>
+            <Fragment key={exercise.exerciseName}>
               <p className="text-primary font-semibold text-3xl text-center">
                 {exercise.exerciseName}
               </p>
@@ -64,14 +64,14 @@ export default function WorkoutModal({
                   {exercise.weight && `${exercise.weight} (lbs)`}
                 </span>
               </div>
-            </>
+            </Fragment>
           ))}
         </div>
 
         <div className=" pt-5 bg-inherit text-center">
           <Link to={"/Progress"} state={{ template }}>
-            <button class="w-full relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-purple-600 to-primary group-hover:from-purple-600 group-hover:to-primary  text-white focus:ring-4 focus:outline-none focus:ring-primary_faded dark:focus:ring-blue-800">
-              <span class="flex gap-5 w-full justify-center items-center bg-overlay relative px-5 py-2.5 transition-all ease-in duration-75 dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+            <button className="w-full relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-purple-600 to-primary group-hover:from-purple-600 group-hover:to-primary  text-white focus:ring-4 focus:outline-none focus:ring-primary_faded dark:focus:ring-blue-800">
+              <span className="flex gap-5 w-full justify-center items-center bg-overlay relative px-5 py-2.5 transition-all ease-in duration-75 dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                 Start workout
                 {workoutLoading && (
                   <Spinner color="purple" aria-label="loading" />

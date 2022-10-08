@@ -1,9 +1,9 @@
 import { Nav } from "./components/Nav/Nav";
-import { TemplateContainer } from "./components/Templates/TemplateContainer";
+import TemplateContainer from "./components/Templates/TemplateContainer";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import { Routes, Route, useLocation } from "react-router-dom";
-import RoutineContainer from "./components/Routines/RoutineContainer";
+import ProgressContainer from "./components/Progress/ProgressContainer";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -16,7 +16,7 @@ export default function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/Templates" element={<TemplateContainer />} />
-        <Route path="/Progress" element={<RoutineContainer />} />
+        <Route path="/Progress" element={<ProgressContainer />} />
       </Routes>
     </>
   );
