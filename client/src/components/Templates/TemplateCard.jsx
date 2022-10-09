@@ -31,7 +31,7 @@ export default function TemplateCard({ template, refetch }) {
     useMutation(DELETE_TEMPLATE);
 
   async function handleDelete(event) {
-    event.stopPropagation()
+    event.stopPropagation();
 
     const deleteTemplateRes = await deleteTemplate({
       variables: {
@@ -46,13 +46,15 @@ export default function TemplateCard({ template, refetch }) {
   }
 
   function handleEdit(event) {
-    event.stopPropagation()
+    event.stopPropagation();
     setIsEditTemplateOpen(!isEditTemplateOpen);
   }
 
   function startWorkout() {
     setIsWorkoutModalOpen(!isWorkoutModalOpen);
   }
+
+ 
 
   return (
     <>
@@ -144,12 +146,14 @@ export default function TemplateCard({ template, refetch }) {
         isEditTemplateOpen={isEditTemplateOpen}
         setIsEditTemplateOpen={setIsEditTemplateOpen}
         refetch={refetch}
+      
       />
       <WorkoutModal
         toolTipRef={toolTipRef}
         isWorkoutModalOpen={isWorkoutModalOpen}
         setIsWorkoutModalOpen={setIsWorkoutModalOpen}
         template={template}
+       
       />
     </>
   );
