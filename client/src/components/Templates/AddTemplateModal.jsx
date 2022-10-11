@@ -1,5 +1,5 @@
 import ExerciseForm from "./ExerciseForm";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_TEMPLATE } from "../../utils/graphql/mutations";
 
@@ -9,8 +9,6 @@ export default function AddTemplateModal({
   userID,
   refetch,
 }) {
-  const scrollRef = useRef();
-
   const [formState, setFormState] = useState({
     templateName: "",
     exercises: [
@@ -39,7 +37,7 @@ export default function AddTemplateModal({
     setFormState({ ...formState, [target.name]: target.value });
   }
 
-  //call this to reset the form modal
+  //call this to reset the addTemplateForm
   function resetFormState() {
     setFormState({
       templateName: "",
@@ -55,19 +53,24 @@ export default function AddTemplateModal({
   }
 
   async function handleSubmit(event) {
-    event.preventDefault();
+    try {
+      event.preventDefault();
 
-    const mutationRes = await addTemplate({
-      variables: {
-        ...formState,
-        userId: userID,
-      },
-    });
-    if (mutationRes) {
-      //li template is added, close modal, reset form and fetch new templates
-      setIsAddTemplateModalOpen(!isAddTemplateModalOpen);
-      resetFormState();
-      refetch();
+      const mutationRes = await addTemplate({
+        variables: {
+          ...formState,
+          userId: userID,
+        },
+      });
+
+      if (mutationRes) {
+        //if template is added, close modal, reset form and refetch new templates
+        setIsAddTemplateModalOpen(!isAddTemplateModalOpen);
+        resetFormState();
+        refetch();
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -87,9 +90,7 @@ export default function AddTemplateModal({
     setFormState(data);
   }
 
-  function removeExercise(index) {
-   
-  }
+  function removeExercise(index) {}
 
   return (
     <div
@@ -102,10 +103,7 @@ export default function AddTemplateModal({
           : "hidden"
       }  `}
     >
-      <div
-        ref={scrollRef}
-        className="add-modal-height relative p-4 w-full max-w-2xl overflow-y-scroll bg-overlay text-white rounded-md"
-      >
+      <div className="add-modal-height relative p-4 w-full max-w-2xl overflow-y-scroll bg-overlay text-white rounded-md">
         <div className="flex">
           <div className="w-full mb-5">
             <input

@@ -15,7 +15,7 @@ export default function ExerciseForm({
             >
               Exercise Name
             </label>
-
+            {/* if rendering the first exercise, dont show the remove exercise button */}
             {index !== 0 ? (
               <button
                 onClick={(index) => removeExercise(index)}

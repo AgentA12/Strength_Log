@@ -1,6 +1,8 @@
 const { User, Template, Exercise } = require("../models/index");
 const { AuthenticationError } = require("apollo-server");
 const { signToken } = require("../utils/auth");
+const { execute } = require("graphql");
+const e = require("express");
 
 const resolvers = {
   Query: {
@@ -56,13 +58,13 @@ const resolvers = {
       const user = await User.findOne({ username: username });
 
       if (!user) {
-        throw new AuthenticationError("Incorrect credentails");
+        throw new AuthenticationError("Incorrect credentials");
       }
 
       const correctPassword = await user.isCorrectPassword(password);
 
       if (!correctPassword) {
-        throw new AuthenticationError("Incorrect credentails");
+        throw new AuthenticationError("Incorrect credentials");
       }
 
       const token = signToken({
@@ -92,7 +94,7 @@ const resolvers = {
       return { token, user };
     },
 
-    //create a template then push the templates id to the userModel that created it
+    //create a template then push the new template ids to the User model
     createTemplate: async function (_, args) {
       try {
         const exercisesData = await Exercise.create(args.exercises);
@@ -133,15 +135,25 @@ const resolvers = {
     },
 
     editTemplate: async function (_, { _id, templateName, exercises }) {
-      //update by id and change the template name
-      //update by exercise id and change each exercise value
-      //return this data
-
       await Template.findByIdAndUpdate(_id, {
         templateName: templateName,
       });
 
-      await exercises.map(async (exercise, index) => {
+      const template = await Template.findById(_id).populate("exercises");
+
+      //checks to see if an exercise is removed and saves removed exercises to variable
+      const deletedExercises = template.exercises.filter((exercise) => {
+        return !exercises.find(
+          (__exercise) => exercise._id.toString() === __exercise._id
+        );
+      });
+
+      deletedExercises.forEach(async (deletedExercise) => {
+        await Exercise.deleteOne({ _id: deletedExercise._id });
+      });
+
+      //updates exercises by id and create new exercises if Exercise model returns null on update
+      await exercises.map(async (exercise) => {
         const newExercise = await Exercise.findByIdAndUpdate(exercise._id, {
           exerciseName: exercise.exerciseName,
           weight: exercise.weight,
@@ -149,7 +161,6 @@ const resolvers = {
           reps: exercise.reps,
         });
 
-        // when editing a template a new exercise may be added, if thats the case create the a new exercise and push into current template
         if (!newExercise) {
           const createdExercise = await Exercise.create(exercise);
 

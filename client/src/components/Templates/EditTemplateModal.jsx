@@ -13,7 +13,7 @@ export default function EditTemplateModal({
 
   const [editFormState, setEditFormState] = useState(cloneTemplate);
 
-  const [editTemplate, { data, loading, error }] = useMutation(EDIT_TEMPLATE);
+  const [editTemplate, {}] = useMutation(EDIT_TEMPLATE);
 
   function handleChange(index, { target }) {
     let data = { ...editFormState };
@@ -30,7 +30,7 @@ export default function EditTemplateModal({
 
   async function handleEditSubmit(event) {
     event.preventDefault();
-
+    
     console.log(editFormState)
 
     const mutationRes = await editTemplate({

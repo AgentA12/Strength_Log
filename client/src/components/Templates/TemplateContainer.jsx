@@ -29,11 +29,11 @@ export default function TemplateContainer() {
 
   if (error) console.log(error);
 
-
   return (
     <div className="mx-10 my-10">
       <div className="flex justify-center flex-wrap gap-5">
         <h3 className="text-primary font-extrabold text-5xl">Your Templates</h3>
+        {/* If the user is logged in show add template btn */}
         {auth.isLoggedIn() && (
           <button
             onClick={() => setIsAddTemplateModalOpen(!isAddTemplateModalOpen)}
@@ -46,37 +46,8 @@ export default function TemplateContainer() {
         )}
       </div>
 
-      {auth.isLoggedIn() ? (
-        data?.getTemplatesForUser.templates.length ? (
-          <div className="flex flex-wrap justify-center gap-5 mt-10">
-            {loading ? (
-              <div className="flex items-center justify-center">
-                <Spinner
-                  size="lg"
-                  color="purple"
-                  aria-label="Purple spinner example"
-                />
-              </div>
-            ) : (
-              data?.getTemplatesForUser.templates.map((template, i) => (
-                <TemplateCard
-                  template={template}
-                  refetch={refetch}
-                  key={template.templateName}
-                />
-              ))
-            )}
-          </div>
-        ) : (
-          <div className="flex items-center justify-center mt-20">
-          <Spinner
-            size="xl"
-            color="purple"
-            aria-label="Purple spinner example"
-          />
-        </div>
-        )
-      ) : (
+      {/* If the user is not logged in show login option */}
+      {!auth.isLoggedIn() ? (
         <div className="flex gap-4 justify-center items-center mt-3">
           <p className=" text-xl font-extralight">
             Log in to see your templates
@@ -90,7 +61,32 @@ export default function TemplateContainer() {
             </button>
           </Link>
         </div>
+      ) : data?.getTemplatesForUser.templates.length ? (
+        <div className="flex flex-wrap justify-center gap-5 mt-10">
+          {loading ? (
+            <div className="flex items-center justify-center">
+              <Spinner
+                size="lg"
+                color="purple"
+                aria-label="Purple spinner example"
+              />
+            </div>
+          ) : (
+            data?.getTemplatesForUser.templates.map((template) => (
+              <TemplateCard
+                template={template}
+                refetch={refetch}
+                key={template.templateName}
+              />
+            ))
+          )}
+        </div>
+      ) : (
+        <div className="flex items-center justify-center mt-10">
+          You have no templates
+        </div>
       )}
+
       {/* Passing addtemplatemodal state into component */}
       <AddTemplateModal
         isAddTemplateModalOpen={isAddTemplateModalOpen}
