@@ -99,11 +99,11 @@ export default function AddTemplateModal({
       aria-hidden="true"
       className={`${
         isAddTemplateModalOpen
-          ? " .template-modal flex items-center justify-center bg-background bg-opacity-75 transition-opacity overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
+          ? "template-modal flex items-center justify-center bg-background bg-opacity-75 transition-opacity overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
           : "hidden"
       }  `}
     >
-      <div className="add-modal-height relative p-4 w-full max-w-2xl overflow-y-scroll bg-overlay text-white rounded-md">
+      <div className="add-modal-height modal-scroll relative p-4 w-full max-w-2xl overflow-y-scroll bg-overlay text-white rounded-md">
         <div className="flex">
           <div className="w-full mb-5">
             <input

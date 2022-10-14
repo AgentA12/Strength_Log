@@ -24,7 +24,7 @@ export default function WorkoutModal({
           : "hidden"
       }`}
     >
-      <div className="add-modal-height relative p-5 w-full max-w-2xl overflow-y-scroll bg-overlay text-white rounded-md">
+      <div className="add-modal-height modal-scroll relative p-5 w-full max-w-2xl overflow-y-scroll bg-overlay text-white rounded-md">
         <div className="flex items-end justify-end">
           <span className="text-3xl font-bold ">{template.templateName}</span>
 
