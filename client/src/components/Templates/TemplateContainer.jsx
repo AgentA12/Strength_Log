@@ -27,7 +27,7 @@ export default function TemplateContainer() {
     },
   });
 
-  if (error) console.log(error);
+  if (error) <div className="text-center">{error}</div>;
 
   return (
     <div className="mx-10 my-10">
@@ -87,7 +87,7 @@ export default function TemplateContainer() {
         </div>
       )}
 
-      {/* Passing addtemplatemodal state into component */}
+      {/* Passing AddTemplateModal state into component */}
       <AddTemplateModal
         isAddTemplateModalOpen={isAddTemplateModalOpen}
         setIsAddTemplateModalOpen={setIsAddTemplateModalOpen}

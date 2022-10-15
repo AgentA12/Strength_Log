@@ -13,7 +13,9 @@ export default function EditTemplateModal({
 
   const [editFormState, setEditFormState] = useState(cloneTemplate);
 
-  const [editTemplate, {}] = useMutation(EDIT_TEMPLATE);
+  const [editTemplate, { data, loading, error }] = useMutation(EDIT_TEMPLATE);
+
+  if (error) console.log(error);
 
   function handleChange(index, { target }) {
     let data = { ...editFormState };
@@ -30,8 +32,6 @@ export default function EditTemplateModal({
 
   async function handleEditSubmit(event) {
     event.preventDefault();
-    
-    console.log(editFormState)
 
     const mutationRes = await editTemplate({
       variables: {
@@ -63,7 +63,7 @@ export default function EditTemplateModal({
   function removeExercise(event, index) {
     let data = { ...editFormState };
 
-    const filteredExercises = editFormState.exercises.filter((exercise, i) => {
+    const filteredExercises = editFormState.exercises.filter((_, i) => {
       return i != index;
     });
 
@@ -130,6 +130,10 @@ export default function EditTemplateModal({
                 removeExercise={removeExercise}
               />
             ))}
+
+            <div className="text-center text-red-400">
+              {error && error.message}
+            </div>
 
             <button
               onClick={addExercise}

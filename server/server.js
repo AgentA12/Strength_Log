@@ -13,6 +13,18 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: authMiddleWare,
+  formatError: (error) => {
+    console.log(error.message);
+    if (error.message.startsWith("Exercise")) {
+      return new Error("You must fill in all Exercise fields");
+    }
+
+    if (error.message.startsWith("Template")) {
+      return new Error("You must add a template name");
+    } else {
+      return new Error("You must fill out all fields");
+    }
+  },
 });
 
 function startApolloServer(typeDefs, resolvers) {

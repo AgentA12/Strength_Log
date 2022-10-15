@@ -58,7 +58,7 @@ export default function WorkoutModal({
                 {exercise.exerciseName}
               </p>
               <div className="flex justify-center items-center gap-2 mb-2 text-xl">
-                <span className="">{exercise.sets} x </span>
+                <span className="">{exercise.sets} {exercise.sets && "x"} </span>
                 <span className="">{exercise.reps}</span>
                 <span className="text-white_faded">
                   {exercise.weight && `${exercise.weight} (lbs)`}

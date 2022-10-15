@@ -1,8 +1,7 @@
 const { User, Template, Exercise } = require("../models/index");
 const { AuthenticationError } = require("apollo-server");
+const CustomError = require("../utils/customErrors");
 const { signToken } = require("../utils/auth");
-const { execute } = require("graphql");
-const e = require("express");
 
 const resolvers = {
   Query: {
@@ -135,42 +134,46 @@ const resolvers = {
     },
 
     editTemplate: async function (_, { _id, templateName, exercises }) {
-      await Template.findByIdAndUpdate(_id, {
-        templateName: templateName,
-      });
-
-      const template = await Template.findById(_id).populate("exercises");
-
-      //checks to see if an exercise is removed and saves removed exercises to variable
-      const deletedExercises = template.exercises.filter((exercise) => {
-        return !exercises.find(
-          (__exercise) => exercise._id.toString() === __exercise._id
-        );
-      });
-
-      deletedExercises.forEach(async (deletedExercise) => {
-        await Exercise.deleteOne({ _id: deletedExercise._id });
-      });
-
-      //updates exercises by id and create new exercises if Exercise model returns null on update
-      await exercises.map(async (exercise) => {
-        const newExercise = await Exercise.findByIdAndUpdate(exercise._id, {
-          exerciseName: exercise.exerciseName,
-          weight: exercise.weight,
-          sets: exercise.sets,
-          reps: exercise.reps,
+      try {
+        await Template.findByIdAndUpdate(_id, {
+          templateName: templateName,
         });
 
-        if (!newExercise) {
-          const createdExercise = await Exercise.create(exercise);
+        const template = await Template.findById(_id).populate("exercises");
 
-          await Template.findByIdAndUpdate(_id, {
-            $push: { exercises: createdExercise._id },
+        //checks to see if an exercise is removed and saves removed exercises to variable
+        const deletedExercises = template.exercises.filter((exercise) => {
+          return !exercises.find(
+            (__exercise) => exercise._id.toString() === __exercise._id
+          );
+        });
+
+        deletedExercises.forEach(async (deletedExercise) => {
+          await Exercise.deleteOne({ _id: deletedExercise._id });
+        });
+
+        //updates exercises by id and create new exercises if Exercise model returns null on update
+        await exercises.map(async (exercise) => {
+          const newExercise = await Exercise.findByIdAndUpdate(exercise._id, {
+            exerciseName: exercise.exerciseName,
+            weight: exercise.weight,
+            sets: exercise.sets,
+            reps: exercise.reps,
           });
-        }
-      });
 
-      return Template.findById(_id).populate("exercises");
+          if (!newExercise) {
+            const createdExercise = await Exercise.create(exercise);
+
+            await Template.findByIdAndUpdate(_id, {
+              $push: { exercises: createdExercise._id },
+            });
+          }
+        });
+
+        return Template.findById(_id).populate("exercises");
+      } catch (error) {
+        return error;
+      }
     },
 
     deleteTemplate: async function (_, { templateId }) {

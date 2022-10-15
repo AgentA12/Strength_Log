@@ -38,7 +38,7 @@ export default function ExerciseForm({ exercise, handleChange, index, removeExer
             className="block uppercase tracking-wide text-grey-400 text-xs font-bold mb-2"
             htmlFor="weight"
           >
-            Weight <span className="lowercase">(lbs)</span>
+            Weight <span className="lowercase">(lbs)  </span>
           </label>
           <input
             name="weight"

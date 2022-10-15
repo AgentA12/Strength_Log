@@ -1,7 +1,8 @@
 import ExerciseForm from "./ExerciseForm";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_TEMPLATE } from "../../utils/graphql/mutations";
+import { Spinner } from "flowbite-react";
 
 export default function AddTemplateModal({
   isAddTemplateModalOpen,
@@ -9,6 +10,12 @@ export default function AddTemplateModal({
   userID,
   refetch,
 }) {
+  //this ref is on the addExercise btn so the modal with scroll to the newly added exercise
+  const bottomRef = useRef(null);
+  useEffect(() => {
+    bottomRef.current.scrollIntoView();
+  });
+
   const [formState, setFormState] = useState({
     templateName: "",
     exercises: [
@@ -22,7 +29,7 @@ export default function AddTemplateModal({
   });
 
   //function for adding a template
-  const [addTemplate, {}] = useMutation(CREATE_TEMPLATE);
+  const [addTemplate, { data, loading, error }] = useMutation(CREATE_TEMPLATE);
 
   function handleChange(index, { target }) {
     let data = { ...formState };
@@ -70,7 +77,7 @@ export default function AddTemplateModal({
         refetch();
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -90,7 +97,17 @@ export default function AddTemplateModal({
     setFormState(data);
   }
 
-  function removeExercise(index) {}
+  function removeExercise(event, index) {
+    let data = { ...formState };
+
+    const filteredExercises = formState.exercises.filter((_, i) => {
+      return i != index;
+    });
+
+    data.exercises = filteredExercises;
+
+    setFormState(data);
+  }
 
   return (
     <div
@@ -153,7 +170,12 @@ export default function AddTemplateModal({
             />
           ))}
 
+          <div className="text-center text-red-400">
+            {error && error.message}
+          </div>
+
           <button
+            ref={bottomRef}
             onClick={addExercise}
             type="button"
             className="w-full font-medium rounded-lg text-sm px-5 py-2.5 justify-center my-8 flex items-center gap-1 text-primary bg-primary_faded bg-opacity-40  focus:outline-none focus:ring-0  text-center"
@@ -166,6 +188,9 @@ export default function AddTemplateModal({
             className="text-white bg-primary font-medium rounded-lg text-sm px-5 py-2.5 w-full text-center"
           >
             Save Template
+            {loading && (
+              <Spinner color="purple" aria-label="Purple spinner example" />
+            )}
           </button>
         </form>
       </div>

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const templateSchema = mongoose.Schema({
-  templateName: String,
+  templateName: { type: String, required: true, null: false },
   exercises: [{ type: mongoose.Schema.Types.ObjectId, ref: "Exercise" }],
 });
 
