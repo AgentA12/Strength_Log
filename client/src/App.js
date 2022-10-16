@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import { Routes, Route, useLocation } from "react-router-dom";
 import ProgressContainer from "./components/Progress/ProgressContainer";
+import Workout from "./components/Templates/Workout";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/Signup" element={<Signup />} />
         <Route path="/Templates" element={<TemplateContainer />} />
         <Route path="/Progress" element={<ProgressContainer />} />
+        <Route path="/Workout" element={<Workout />} />
       </Routes>
     </>
   );

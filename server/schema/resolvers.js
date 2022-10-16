@@ -16,6 +16,8 @@ const resolvers = {
     },
 
     getAllTemplates: async function () {
+      const t = await Template.find().populate("exercises");
+      console.log(t);
       return Template.find().populate("exercises");
     },
 

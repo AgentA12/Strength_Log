@@ -69,17 +69,6 @@ export const Nav = ({ activeNav }) => {
               <>
                 <li>
                   <a
-                    href="#"
-                    className={`${
-                      activeNav === "Account" && "text-primary"
-                    } block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent`}
-                  >
-                    Account
-                  </a>
-                </li>
-
-                <li>
-                  <a
                     className="block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent cursor-pointer"
                     onClick={() => Auth.logout()}
                   >

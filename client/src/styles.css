@@ -12,6 +12,10 @@
   }
 }
 
+.h-custom{
+  max-height: 450px;
+}
+
 .add-modal-height {
   max-height: 50rem;
 }

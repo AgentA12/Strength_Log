@@ -10,7 +10,7 @@ export default function AddTemplateModal({
   userID,
   refetch,
 }) {
-  //this ref is on the addExercise btn so the modal with scroll to the newly added exercise
+  //this ref is on the add exercise btn so the modal with scroll to the newly added exercise
   const bottomRef = useRef(null);
   useEffect(() => {
     bottomRef.current.scrollIntoView();
@@ -28,8 +28,7 @@ export default function AddTemplateModal({
     ],
   });
 
-  //function for adding a template
-  const [addTemplate, { data, loading, error }] = useMutation(CREATE_TEMPLATE);
+  const [addTemplate, { loading, error }] = useMutation(CREATE_TEMPLATE);
 
   function handleChange(index, { target }) {
     let data = { ...formState };
@@ -101,7 +100,7 @@ export default function AddTemplateModal({
     let data = { ...formState };
 
     const filteredExercises = formState.exercises.filter((_, i) => {
-      return i != index;
+      return i !== index;
     });
 
     data.exercises = filteredExercises;
@@ -189,7 +188,12 @@ export default function AddTemplateModal({
           >
             Save Template
             {loading && (
-              <Spinner color="purple" aria-label="Purple spinner example" />
+              <Spinner
+                color="purple"
+                size={"sm"}
+                aria-label="Purple spinner"
+                style={{ marginLeft: 10 }}
+              />
             )}
           </button>
         </form>

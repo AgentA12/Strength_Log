@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
-import { Spinner } from "flowbite-react";
+import { Spinner, Button } from "flowbite-react";
 import { useState, Fragment } from "react";
+
+const btnColor = "#c9a0ff";
 
 export default function WorkoutModal({
   template,
@@ -11,6 +13,10 @@ export default function WorkoutModal({
 
   function handleClick({ target }) {
     setIsWorkoutModalOpen(!isWorkoutModalOpen);
+  }
+
+  function handleSave() {
+    console.log(template);
   }
 
   return (
@@ -58,7 +64,9 @@ export default function WorkoutModal({
                 {exercise.exerciseName}
               </p>
               <div className="flex justify-center items-center gap-2 mb-2 text-xl">
-                <span className="">{exercise.sets} {exercise.sets && "x"} </span>
+                <span className="">
+                  {exercise.sets} {exercise.sets && "x"}{" "}
+                </span>
                 <span className="">{exercise.reps}</span>
                 <span className="text-white_faded">
                   {exercise.weight && `${exercise.weight} (lbs)`}
@@ -79,6 +87,18 @@ export default function WorkoutModal({
               </span>
             </button>
           </Link>
+
+          <button
+            onClick={handleSave}
+            className="mt-3 w-full relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-purple-600 to-primary group-hover:from-purple-600 group-hover:to-primary  text-white focus:ring-4 focus:outline-none focus:ring-primary_faded dark:focus:ring-blue-800"
+          >
+            <span className="flex gap-5 w-full justify-center items-center bg-overlay relative px-5 py-2.5 transition-all ease-in duration-75 dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+              Save as complete
+              {workoutLoading && (
+                <Spinner color="purple" aria-label="loading" />
+              )}
+            </span>
+          </button>
         </div>
       </div>
     </div>
