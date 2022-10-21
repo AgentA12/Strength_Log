@@ -8,7 +8,7 @@ export const Nav = ({ activeNav }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="px-2 sm:px-4 py-2.5 rounded text-white">
+    <nav className="px-2 sm:px-4 py-2.5 rounded text-white bg-overlay_two">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
         <IconContext.Provider value={{ className: "text-primary ml-5" }}>
           <GiWeightLiftingUp size={50} />
@@ -44,9 +44,10 @@ export const Nav = ({ activeNav }) => {
           }`}
           id="navbar-default"
         >
-          <ul className="flex flex-col p-4 mt-4 text-center md:text-start rounded-lg border md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0">
+          <ul className="flex flex-col items-center p-4 mt-4 text-center md:text-start rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0">
             <li>
               <Link
+                onClick={() => setIsOpen(!isOpen)}
                 to={"/Templates"}
                 className={` ${
                   activeNav === "Templates" && "text-primary"
@@ -57,10 +58,12 @@ export const Nav = ({ activeNav }) => {
             </li>
             <li>
               <Link
+                onClick={() => setIsOpen(!isOpen)}
+
                 to={"/Progress"}
                 className={`${
                   activeNav === "Routines" && "text-primary"
-                } block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent`}
+                } block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 mb-5 md:mb-0 md:dark:hover:bg-transparent`}
               >
                 Progress
               </Link>
@@ -70,7 +73,7 @@ export const Nav = ({ activeNav }) => {
                 <li>
                   <a
                     className="block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent cursor-pointer"
-                    onClick={() => Auth.logout()}
+                    onClick={() => [Auth.logout(), setIsOpen(!isOpen)]}
                   >
                     logout
                   </a>

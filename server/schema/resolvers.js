@@ -16,8 +16,6 @@ const resolvers = {
     },
 
     getAllTemplates: async function () {
-      const t = await Template.find().populate("exercises");
-      console.log(t);
       return Template.find().populate("exercises");
     },
 
@@ -180,6 +178,10 @@ const resolvers = {
 
     deleteTemplate: async function (_, { templateId }) {
       await Template.deleteOne({ _id: templateId });
+    },
+
+    saveWorkout: async function (_, args) {
+      console.log(args);
     },
   },
 };

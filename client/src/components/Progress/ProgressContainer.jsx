@@ -7,7 +7,27 @@ import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import ProgressCard from "./ProgressCard";
 import auth from "../../utils/auth/auth";
 
-const cards = [1,3,4,4,4,4];
+const cards = [
+  {
+    date: "Monday, October 25",
+    totalWeight: 3055,
+    time: "50 min",
+  },
+  {
+    date: "Tuesday, October 26",
+    totalWeight: 2250,
+    time: "2 hours, 30 min",
+  },
+  {
+    date: "Thursday, October 28",
+    totalWeight: 3555,
+    time: "25 min",
+  },
+  {
+    date: "Friday, October 29",
+    totalWeight: 3055,
+  },
+];
 
 export default function ProgressContainer() {
   const { state } = useLocation();
@@ -24,8 +44,6 @@ export default function ProgressContainer() {
       userId: userID,
     },
   });
-
-  if (data) console.log(data);
 
   if (state) {
     return <Workout template={state.template} />;
@@ -71,17 +89,19 @@ export default function ProgressContainer() {
         )}
       </div>
 
-      <div className=" mr-40 md:ml-52 my-5 pb-10 w-fit pr-20">
-        <h5 className="text-white font-extrabold text-3xl mb-2">
-          Upper Body Monday
-        </h5>
-        <p className="text-white_faded font-bold mb-1">History</p>
-        <div className=" flex flex-col gap-5 py-10 px-3 h-custom overflow-y-scroll modal-scroll">
-        {cards.map((card) => (
-          <ProgressCard />
-        ))}
+      {auth.isLoggedIn() ? (
+        <div className=" mr-40 md:ml-52 my-5 pb-10 w-fit pr-20">
+          <h5 className="text-white font-extrabold text-3xl mb-2">
+            Upper Body Monday
+          </h5>
+          <p className="text-white_faded font-bold mb-1">History</p>
+          <div className=" flex flex-col gap-5 py-10 px-3 h-custom overflow-y-scroll modal-scroll">
+            {cards.map((card) => (
+              <ProgressCard card={card} />
+            ))}
+          </div>
         </div>
-      </div>
+      ) : null}
     </>
   );
 }

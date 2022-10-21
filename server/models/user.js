@@ -1,6 +1,18 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
+const progressSchema = mongoose.Schema({
+  template: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
+  totalWeight: Number,
+  personalRecords: [Number],
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
+});
+
+progressSchema.pre("save", function () {});
+
 const userSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
@@ -9,7 +21,7 @@ const userSchema = mongoose.Schema({
     default: Date.now(),
   },
   templates: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
-  routines: [{ type: mongoose.Schema.Types.ObjectId, ref: "Routine" }],
+  progress: [progressSchema],
 });
 
 userSchema.pre("save", async function (next) {

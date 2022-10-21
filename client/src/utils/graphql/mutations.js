@@ -103,3 +103,9 @@ export const EDIT_TEMPLATE = gql`
     }
   }
 `;
+
+export const SAVE_WORKOUT = gql`
+  mutation ($templateId: ID!) {
+    saveWorkout(templateId: $templateId)
+  }
+`;
