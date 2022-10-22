@@ -10,6 +10,12 @@ export default function AddTemplateModal({
   userID,
   refetch,
 }) {
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   //this ref is on the add exercise btn so the modal with scroll to the newly added exercise
   const bottomRef = useRef(null);
   useEffect(() => {
@@ -123,6 +129,7 @@ export default function AddTemplateModal({
         <div className="flex">
           <div className="w-full mb-5">
             <input
+              ref={inputRef}
               onChange={(event) => handleChange(null, event)}
               name="templateName"
               className="text-4xl bg-overlay border-none appearance-none block w-full mb-3 leading-tight focus:outline-none focus:ring-0"

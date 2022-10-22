@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
-import { Spinner, Button } from "flowbite-react";
+import { Spinner } from "flowbite-react";
 import { useState, Fragment } from "react";
+import { useMutation } from "@apollo/client";
+import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
+import auth from "../../utils/auth/auth";
 
 const btnColor = "#c9a0ff";
 
@@ -9,14 +12,19 @@ export default function WorkoutModal({
   isWorkoutModalOpen,
   setIsWorkoutModalOpen,
 }) {
+  if (auth.isLoggedIn()) {
+    var {
+      data: { _id: userID },
+    } = auth.getInfo();
+  }
+
   const [workoutLoading, setWorkoutLoading] = useState(false);
+
+  const [saveWorkoutFunction, { data, loading, error }] =
+    useMutation(SAVE_WORKOUT);
 
   function handleClick({ target }) {
     setIsWorkoutModalOpen(!isWorkoutModalOpen);
-  }
-
-  function handleSave() {
-    console.log(template);
   }
 
   return (
@@ -89,7 +97,14 @@ export default function WorkoutModal({
           </Link>
 
           <button
-            onClick={handleSave}
+            onClick={() =>
+              saveWorkoutFunction({
+                variables: {
+                  templateId: template._id,
+                  userID: userID,
+                },
+              })
+            }
             className="mt-3 w-full relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-purple-600 to-primary group-hover:from-purple-600 group-hover:to-primary  text-white focus:ring-4 focus:outline-none focus:ring-primary_faded dark:focus:ring-blue-800"
           >
             <span className="flex gap-5 w-full justify-center items-center bg-overlay relative px-5 py-2.5 transition-all ease-in duration-75 dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">

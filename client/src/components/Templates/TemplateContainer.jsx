@@ -23,8 +23,12 @@ export default function TemplateContainer() {
   const { loading, error, data, refetch } = useQuery(GET_TEMPLATES, {
     variables: {
       userId: userID,
+      offset: 0,
+      limit: 5,
     },
   });
+
+  if (data) console.log(data);
 
   if (error) console.log(error);
 
@@ -72,8 +76,8 @@ export default function TemplateContainer() {
                 aria-label="Purple spinner example"
               />
             </div>
-          ) : data?.getTemplatesForUser.templates.length ? (
-            data?.getTemplatesForUser.templates.map((template) => (
+          ) : data?.getTemplatesForUser.length ? (
+            data?.getTemplatesForUser.map((template) => (
               <TemplateCard
                 template={template}
                 refetch={refetch}

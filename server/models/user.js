@@ -3,15 +3,16 @@ const bcrypt = require("bcrypt");
 
 const progressSchema = mongoose.Schema({
   template: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
-  totalWeight: Number,
-  personalRecords: [Number],
+  timeToComplete: String,
   createdAt: {
     type: Date,
     default: Date.now(),
   },
 });
 
-progressSchema.pre("save", function () {});
+progressSchema.virtual("totalWeight").get(function() {
+return "1000"
+})
 
 const userSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },

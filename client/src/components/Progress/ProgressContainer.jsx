@@ -45,6 +45,8 @@ export default function ProgressContainer() {
     },
   });
 
+  if(data)console.log(data)
+
   if (state) {
     return <Workout template={state.template} />;
   }
@@ -53,7 +55,7 @@ export default function ProgressContainer() {
     <>
       <div
         className={`${
-          data?.getTemplatesForUser.templates.length &&
+          data?.getTemplatesForUser.length &&
           "border-primary border-b"
         } mr-40 md:ml-52 mt-10  pb-10 w-fit pr-20`}
       >
@@ -61,9 +63,9 @@ export default function ProgressContainer() {
           <h2 className="text-primary font-extrabold text-5xl">Progress</h2>
         </div>
         {auth.isLoggedIn() ? (
-          data?.getTemplatesForUser.templates.length ? (
+          data?.getTemplatesForUser.length ? (
             <div className="flex flex-nowrap gap-5 mt-10">
-              {data?.getTemplatesForUser.templates.map((template) => (
+              {data?.getTemplatesForUser.map((template) => (
                 <Progress key={template._id} template={template} />
               ))}
             </div>
