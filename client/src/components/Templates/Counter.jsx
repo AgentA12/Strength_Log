@@ -6,7 +6,7 @@ export default function Counter() {
       autoStart: true,
     });
 
-  if (hours >= 95) pause();
+  if (hours >= 8) pause();
 
   return (
     <div className="text-bold text-white_faded text-lg my-1">

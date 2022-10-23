@@ -4,8 +4,7 @@ import { useState, Fragment } from "react";
 import { useMutation } from "@apollo/client";
 import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
 import auth from "../../utils/auth/auth";
-
-const btnColor = "#c9a0ff";
+import { motion } from "framer-motion";
 
 export default function WorkoutModal({
   template,
@@ -26,26 +25,27 @@ export default function WorkoutModal({
   function handleClick({ target }) {
     setIsWorkoutModalOpen(!isWorkoutModalOpen);
   }
+  const modalAnimation = {
+    y: isWorkoutModalOpen ? 0 : 100,
+    opacity: isWorkoutModalOpen ? 1 : 0,
+  };
 
   return (
     <div
-      id="defaultModal"
-      tabIndex="-1"
       aria-hidden="true"
-      className={`${
-        isWorkoutModalOpen
-          ? ".modal-scroll flex items-center justify-center bg-background bg-opacity-75 transition-opacity overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
-          : "hidden"
-      }`}
+      className={`${isWorkoutModalOpen ? "modal-container" : "hidden"}`}
     >
-      <div className="add-modal-height modal-scroll relative p-5 w-full max-w-2xl overflow-y-scroll bg-overlay text-white rounded-md">
+      <motion.div
+        animate={modalAnimation}
+        className="modal-body add-modal-height modal-scroll"
+      >
         <div className="flex items-end justify-end">
           <span className="text-3xl font-bold ">{template.templateName}</span>
 
           <button
             onClick={handleClick}
             type="button"
-            className=" self-end bg-transparent hover:text-gray-500 rounded-lg text-sm px-3 py-1.5 ml-auto inline-flex justify-end bg-overlay_two"
+            className="self-end bg-transparent hover:text-gray-500 rounded-lg text-sm px-3 py-1.5 ml-auto inline-flex justify-end bg-overlay_two"
             data-modal-toggle="defaultModal"
           >
             <svg
@@ -115,7 +115,7 @@ export default function WorkoutModal({
             </span>
           </button>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

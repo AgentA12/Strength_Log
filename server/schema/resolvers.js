@@ -23,8 +23,8 @@ const resolvers = {
       return Exercise.find();
     },
 
-    getUserById: async function (_, args) {
-      const user = await User.findById(args._id)
+    getUserById: async function (_, { _id }) {
+      const user = await User.findById(_id)
         .select("-password")
         .populate({
           path: "templates",
@@ -37,8 +37,8 @@ const resolvers = {
       return user;
     },
 
-    getTemplatesForUser: async function (_, args) {
-      const user = await User.findById(args.userId)
+    getTemplatesForUser: async function (_, { userId }) {
+      const user = await User.findById(userId)
         .select("-password")
         .populate({
           path: "templates",
@@ -183,7 +183,7 @@ const resolvers = {
     saveWorkout: async function (_, args) {
       const user = await User.findById(args.userID);
 
-      const t = await User.findByIdAndUpdate(args.userID, {
+      await User.findByIdAndUpdate(args.userID, {
         progress: {
           template: args.templateId,
         },
@@ -194,7 +194,6 @@ const resolvers = {
           model: "Exercise",
         },
       });
-      console.log(t);
     },
   },
 };

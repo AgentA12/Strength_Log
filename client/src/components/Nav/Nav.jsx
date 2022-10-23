@@ -3,12 +3,19 @@ import { Link } from "react-router-dom";
 import Auth from "../../utils/auth/auth";
 import { GiWeightLiftingUp } from "react-icons/gi";
 import { IconContext } from "react-icons";
+import { HiOutlineTemplate } from "react-icons/hi";
+import { SiProgress } from "react-icons/si";
+import LoginBtn from "../buttons/LoginBtn";
+import SignupBtn from "../buttons/SignupBtn";
+import { motion } from "framer-motion";
+import TemplateNavBtn from "../buttons/TemplateNavBtn";
+import ProgressNavBtn from "../buttons/ProgressNavBtn";
 
 export const Nav = ({ activeNav }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="px-2 sm:px-4 py-2.5 rounded text-white bg-overlay_two">
+    <nav className="px-2 sm:px-4 py-2 text-white bg-black border-b border-gray-600">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
         <IconContext.Provider value={{ className: "text-primary ml-5" }}>
           <GiWeightLiftingUp size={50} />
@@ -44,35 +51,22 @@ export const Nav = ({ activeNav }) => {
           }`}
           id="navbar-default"
         >
-          <ul className="flex flex-col items-center p-4 mt-4 text-center md:text-start rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0">
+          <ul className="flex flex-col items-center p-4 mt-4 text-center md:text-start rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0">
             <li>
-              <Link
-                onClick={() => setIsOpen(!isOpen)}
-                to={"/Templates"}
-                className={` ${
-                  activeNav === "Templates" && "text-primary"
-                } block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent`}
-              >
-                Templates
+              <Link onClick={() => setIsOpen(!isOpen)} to={"/Templates"}>
+                <TemplateNavBtn activeNav={activeNav} />
               </Link>
             </li>
             <li>
-              <Link
-                onClick={() => setIsOpen(!isOpen)}
-
-                to={"/Progress"}
-                className={`${
-                  activeNav === "Routines" && "text-primary"
-                } block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 mb-5 md:mb-0 md:dark:hover:bg-transparent`}
-              >
-                Progress
+              <Link onClick={() => setIsOpen(!isOpen)} to={"/Progress"}>
+                <ProgressNavBtn activeNav={activeNav} />
               </Link>
             </li>
             {Auth.isLoggedIn() ? (
               <>
                 <li>
                   <a
-                    className="block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent cursor-pointer"
+                    className="block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent cursor-pointer transition-colors duration-300"
                     onClick={() => [Auth.logout(), setIsOpen(!isOpen)]}
                   >
                     logout
@@ -80,24 +74,9 @@ export const Nav = ({ activeNav }) => {
                 </li>
               </>
             ) : (
-              <li className="flex md:flex-col justify-center items-center md:block">
-                <Link to={"/Login"}>
-                  <button
-                    type="button"
-                    className="w-fit  text-primary hover:text-background border border-primary hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary_faded font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-                  >
-                    Log in
-                  </button>
-                </Link>
-                <Link to={"/Signup"}>
-                  <button
-                    type="button"
-                    className="w-fit text-background bg-gradient-to-r from-primary via-primary to-primary_faded hover:bg-gradient-to-br focus:ring-4 focus:outline-none 
-                focus:ring-primary_faded font-medium rounded-lg px-5 py-2.5 text-center mr-2 mb-2"
-                  >
-                    Sign up
-                  </button>
-                </Link>
+              <li className="flex-col justify-center items-center">
+                <LoginBtn />
+                <SignupBtn />
               </li>
             )}
           </ul>

@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_TEMPLATE } from "../../utils/graphql/mutations";
 import { Spinner } from "flowbite-react";
+import { motion } from "framer-motion";
 
 export default function AddTemplateModal({
   isAddTemplateModalOpen,
@@ -10,6 +11,11 @@ export default function AddTemplateModal({
   userID,
   refetch,
 }) {
+  const modalAnimation = {
+    y: isAddTemplateModalOpen ? 0 : 100,
+    opacity: isAddTemplateModalOpen ? 1 : 0,
+  };
+
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -125,7 +131,10 @@ export default function AddTemplateModal({
           : "hidden"
       }  `}
     >
-      <div className="add-modal-height modal-scroll relative p-4 w-full max-w-2xl overflow-y-scroll bg-overlay text-white rounded-md">
+      <motion.div
+        animate={modalAnimation}
+        className="add-modal-height modal-scroll relative p-4 w-full max-w-2xl overflow-y-scroll bg-overlay text-white rounded-md"
+      >
         <div className="flex">
           <div className="w-full mb-5">
             <input
@@ -204,7 +213,7 @@ export default function AddTemplateModal({
             )}
           </button>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 }

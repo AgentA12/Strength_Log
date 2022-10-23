@@ -6,6 +6,7 @@ import { useQuery } from "@apollo/client";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import ProgressCard from "./ProgressCard";
 import auth from "../../utils/auth/auth";
+import LoginBtn from "../buttons/LoginBtn";
 
 const cards = [
   {
@@ -80,12 +81,7 @@ export default function ProgressContainer() {
               Log in to see your Progress
             </p>
             <Link to={"/Login"}>
-              <button
-                type="button"
-                className="w-fit text-primary hover:text-background border border-primary hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary_faded font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-              >
-                Log in
-              </button>
+           <LoginBtn />
             </Link>
           </div>
         )}
