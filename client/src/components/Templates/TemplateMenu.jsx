@@ -6,10 +6,34 @@ import {
 } from "@material-tailwind/react";
 import { FaTrash, FaEdit } from "react-icons/fa";
 
+const theme = {
+  menu: {
+    styles: {
+      base: {
+        menu: {
+          bg: "bg-white",
+          p: "p-3",
+        },
+        item: {
+          initial: {
+            display: "block",
+            width: "w-full",
+          },
+          disabled: {
+            opacity: "opacity-50",
+            cursor: "cursor-not-allowed",
+          },
+        },
+      },
+    },
+  },
+};
+
 export default function TemplateMenu({ handleEdit, handleDelete, refetch }) {
   return (
     <Menu placement="bottom-end" className="shadow-none">
       <MenuHandler
+        bubbles={false}
         onClick={(event) => {
           event.stopPropagation();
         }}
@@ -30,10 +54,12 @@ export default function TemplateMenu({ handleEdit, handleDelete, refetch }) {
           </svg>
         </button>
       </MenuHandler>
-      <MenuList className="bg-overlay_two border-none p-1">
+      <MenuList className="bg-overlay_two border-none  shadow-none text-white_faded">
         <MenuItem className="hover:bg-overlay hover:text-primary">
           <a
-            onClick={(event) => handleEdit(event)}
+            onClick={(event) => {
+              handleEdit(event);
+            }}
             href="#"
             className="flex items-center gap-1 py-2 px-4 "
           >

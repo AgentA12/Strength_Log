@@ -6,6 +6,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import ProgressContainer from "./components/Progress/ProgressContainer";
 import Workout from "./components/Templates/Workout";
 import { ThemeProvider } from "@material-tailwind/react";
+import CreateTemplate from "./components/Templates/CreateTemplateContainer";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -24,6 +25,8 @@ export default function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/Templates" element={<TemplateContainer />} />
+        <Route path="/Create-Template" element={<CreateTemplate />} />
+
         <Route path="/Progress" element={<ProgressContainer />} />
         <Route path="/Workout" element={<Workout />} />
       </Routes>

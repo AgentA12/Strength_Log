@@ -1,11 +1,28 @@
+import { IoMdRemove } from "react-icons/io";
+import { animate, motion, useIsPresent } from "framer-motion";
+
 export default function ExerciseForm({
   handleChange,
   index,
   formState,
   removeExercise,
 }) {
+  const exerciseListAnimation = {
+    initial: { opacity: 0, scale: 0.5 },
+    animate: { opacity: 1, scale: 1 },
+    exit: { scale: 0, opacity: 0 },
+    transition: {
+      type: "",
+      damping: 40,
+      stiffness: 900,
+    },
+  };
+
   return (
-    <>
+    <motion.div
+      {...exerciseListAnimation}
+      className="border border-gray-600 rounded-lg p-5 mb-7"
+    >
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3 ">
           <div className="flex items-center justify-between mb-2">
@@ -15,30 +32,19 @@ export default function ExerciseForm({
             >
               Exercise Name
             </label>
-            {/* if rendering the first exercise, dont show the remove exercise button */}
-            {index !== 0 ? (
-              <button
-                onClick={(event) => removeExercise(event, index)}
-                type="button"
-                className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-0.5  dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-              >
-                Remove
-              </button>
-            ) : null}
           </div>
 
           <input
             onChange={(event) => handleChange(index, event)}
             name="exerciseName"
-            placeholder="Exercise Name"
-            className=" text-2xl bg-overlay border-none appearance-none block w-full mb-3 leading-tight focus:outline-none focus:ring-0"
+            className=" bg-background appearance-none border border-gray-600 rounded w-full py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors  ease-in"
             type="text"
             value={formState.exercises[index].exerciseName}
           />
         </div>
       </div>
 
-      <div className="flex flex-wrap -mx-3 mb-3 pb-4 border-b border-primary">
+      <div className="flex flex-wrap -mx-3 mb-3 pb-4 border-b border-gray-600">
         <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
           <label
             className="block uppercase tracking-wide text-grey-400 text-xs font-bold mb-2"
@@ -48,7 +54,7 @@ export default function ExerciseForm({
           </label>
           <input
             name="weight"
-            className="bg-overlay appearance-none block w-full  text-grey-400 border  rounded py-3 px-4 leading-tight focus:outline-none focus:ring-0 focus:border-primary"
+            className="bg-background appearance-none border border-gray-600 rounded w-full py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors  ease-in"
             type="number"
             onChange={(event) => handleChange(index, event)}
             value={formState.exercises[index].weight}
@@ -65,7 +71,7 @@ export default function ExerciseForm({
             <input
               type="number"
               name="reps"
-              className="bg-overlay block appearance-none w-full border text-grey-400 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:ring-0 focus:border-primary"
+              className="bg-background appearance-none border border-gray-600 rounded w-full py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors  ease-in"
               onChange={(event) => handleChange(index, event)}
               value={formState.exercises[index].reps}
             ></input>
@@ -82,12 +88,39 @@ export default function ExerciseForm({
           <input
             type="number"
             name="sets"
-            className="bg-overlay appearance-none block w-full  text-grey-400 border  rounded py-3 px-4 leading-tight focus:outline-none focus:ring-0 focus:border-primary"
+            className="bg-background appearance-none border border-gray-600 rounded w-full py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors  ease-in"
             onChange={(event) => handleChange(index, event)}
             value={formState.exercises[index].sets}
           />
         </div>
       </div>
-    </>
+
+      <div className="flex items-center justify-between">
+        <select
+          onChange={(event) => handleChange(index, event)}
+          name="exerciseType"
+          className="w-6/12 bg-background appearance-none border border-gray-600 rounded py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in"
+        >
+          <option selected disabled hidden className="text-gray-600">
+            Type
+          </option>
+          <option value="US">Barbell</option>
+          <option value="CA">Dumbell</option>
+          <option value="FR">Machine</option>
+          <option value="DE">Other</option>
+        </select>
+        {/* if rendering the first exercise, dont show the remove exercise button */}
+        {index !== 0 ? (
+          <button
+            onClick={(event) => removeExercise(event, index)}
+            type="button"
+            className="flex items-center bg-transparent py-2 px-4 border border-error hover:border-opacity-10 hover:bg-opacity-10 hover:bg-error rounded transition-colors ease-in"
+          >
+            <span className="pr-2">Remove Exercise</span>{" "}
+            <IoMdRemove color={"white"} />
+          </button>
+        ) : null}
+      </div>
+    </motion.div>
   );
 }

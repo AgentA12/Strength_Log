@@ -1,15 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Auth from "../../utils/auth/auth";
 import { GiWeightLiftingUp } from "react-icons/gi";
 import { IconContext } from "react-icons";
-import { HiOutlineTemplate } from "react-icons/hi";
-import { SiProgress } from "react-icons/si";
 import LoginBtn from "../buttons/LoginBtn";
 import SignupBtn from "../buttons/SignupBtn";
-import { motion } from "framer-motion";
 import TemplateNavBtn from "../buttons/TemplateNavBtn";
 import ProgressNavBtn from "../buttons/ProgressNavBtn";
+import AddTemplateBtn from "../buttons/AddTemplateBtn";
+import Auth from "../../utils/auth/auth";
+import auth from "../../utils/auth/auth";
 
 export const Nav = ({ activeNav }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,7 +51,8 @@ export const Nav = ({ activeNav }) => {
           id="navbar-default"
         >
           <ul className="flex flex-col items-center p-4 mt-4 text-center md:text-start rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0">
-            <li>
+            <li className="flex">
+              {auth.isLoggedIn() ? <AddTemplateBtn /> : null}
               <Link onClick={() => setIsOpen(!isOpen)} to={"/Templates"}>
                 <TemplateNavBtn activeNav={activeNav} />
               </Link>

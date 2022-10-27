@@ -33,7 +33,7 @@ export default function WorkoutModal({
   return (
     <div
       aria-hidden="true"
-      className={`${isWorkoutModalOpen ? "modal-container" : "hidden"}`}
+      className={`${isWorkoutModalOpen ? "modal-container overflow-visible" : "hidden"}`}
     >
       <motion.div
         animate={modalAnimation}
