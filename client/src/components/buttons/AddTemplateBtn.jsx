@@ -14,7 +14,7 @@ export default function AddTemplateBtn({
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsAddTemplateModalOpen(!isAddTemplateModalOpen)}
       >
-        <span className="add-template-btn">
+        <span className="add-template-btn" aria-button >
           <HiPlus style={buttonStyle} size={20} /> Template
         </span>
       </motion.button>

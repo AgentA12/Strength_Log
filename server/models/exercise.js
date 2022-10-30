@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 
 const exerciseSchema = mongoose.Schema({
   exerciseName: { type: String, required: true },
+  type: {
+    type: String,
+  },
   sets: {
     type: Number,
     required: true,

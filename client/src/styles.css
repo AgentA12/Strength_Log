@@ -16,7 +16,11 @@
   }
 
   .add-template-btn {
-    @apply flex items-center  bg-background  text-primary_faded  py-2 px-4 border border-gray-600 rounded shadow hover:bg-primary_faded hover:bg-opacity-10 hover:border-opacity-10 hover:border-primary_faded transition-colors duration-100;
+    @apply flex items-center  bg-background  text-primary_faded  py-2 px-4 border border-gray-600 rounded shadow hover:bg-primary_faded hover:bg-opacity-10 hover:border-opacity-10 hover:border-primary_faded transition-colors duration-100 whitespace-nowrap;
+  }
+
+  .add-exercise-btn {
+    @apply flex items-center  bg-background  text-green-500  py-2 px-4 border border-gray-600 rounded shadow hover:bg-green-500 hover:bg-opacity-10 hover:border-opacity-10 hover:border-green-400 transition-colors duration-100 whitespace-nowrap;
   }
 
   .nav-link {
@@ -26,6 +30,10 @@
 
 .h-custom {
   max-height: 450px;
+}
+
+.h-custom-2 {
+  max-height: 500px;
 }
 
 .add-modal-height {
@@ -53,6 +61,11 @@ body::-webkit-scrollbar-thumb {
   background-color: #bb86fc;
   border-radius: 100vh;
 }
+
+/* .modal-scroll::-webkit-scrollbar {
+  background-color: #292929;
+  border-radius: 100vh;
+} */
 
 .custom-ellipsis {
   display: block; /* Fallback for non-webkit */

@@ -105,6 +105,7 @@ const resolvers = {
         const templatePayload = {
           exercises: exerciseIds,
           templateName: args.templateName,
+          templateNotes: args.templateNotes,
         };
 
         const template = await Template.create(templatePayload);

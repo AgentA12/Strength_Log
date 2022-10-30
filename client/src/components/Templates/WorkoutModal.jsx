@@ -45,7 +45,7 @@ export default function WorkoutModal({
           <button
             onClick={handleClick}
             type="button"
-            className="self-end bg-transparent hover:text-gray-500 rounded-lg text-sm px-3 py-1.5 ml-auto inline-flex justify-end bg-overlay_two"
+            className=" self-end bg-transparent hover:text-gray-500 rounded-lg text-sm px-3 py-1.5 ml-auto inline-flex justify-end bg-overlay_two"
             data-modal-toggle="defaultModal"
           >
             <svg

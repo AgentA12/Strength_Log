@@ -41,11 +41,13 @@ export const CREATE_TEMPLATE = gql`
   mutation (
     $userId: ID!
     $templateName: String!
+    $templateNotes: String
     $exercises: [exerciseInput!]
   ) {
     createTemplate(
       userId: $userId
       templateName: $templateName
+      templateNotes: $templateNotes
       exercises: $exercises
     ) {
       templateName
@@ -61,11 +63,12 @@ export const CREATE_TEMPLATE = gql`
 `;
 
 export const ADD_EXERCISE = gql`
-  mutation ($templateName: String!, $reps: Int!, $sets: Int!, $userId: ID!) {
+  mutation ($templateName: String!, $reps: Int!, $sets: Int!, $type: String, $userId: ID!) {
     createExercise(
       templateName: $templateName
       reps: $reps
       sets: $sets
+      type: $type
       userId: $userId
     ) {
       _id

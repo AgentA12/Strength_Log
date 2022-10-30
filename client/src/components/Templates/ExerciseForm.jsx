@@ -60,6 +60,7 @@ export default function ExerciseForm({
             value={formState.exercises[index].weight}
           />
         </div>
+
         <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
           <label
             className="block uppercase tracking-wide text-grey-400 text-xs font-bold mb-2"
@@ -98,16 +99,16 @@ export default function ExerciseForm({
       <div className="flex items-center justify-between">
         <select
           onChange={(event) => handleChange(index, event)}
-          name="exerciseType"
+          name="type"
           className="w-6/12 bg-background appearance-none border border-gray-600 rounded py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in"
         >
           <option selected disabled hidden className="text-gray-600">
             Type
           </option>
-          <option value="US">Barbell</option>
-          <option value="CA">Dumbell</option>
-          <option value="FR">Machine</option>
-          <option value="DE">Other</option>
+          <option value="Barbell">Barbell</option>
+          <option value="Dumbell">Dumbell</option>
+          <option value="Machine">Machine</option>
+          <option value="Other">Other</option>
         </select>
         {/* if rendering the first exercise, dont show the remove exercise button */}
         {index !== 0 ? (

@@ -28,11 +28,13 @@ const typeDefs = gql`
     sets: String
     reps: String
     weight: String
+    type: String
   }
 
   type Template {
     _id: ID
     templateName: String
+    templateNotes: String
     exercises: [Exercise]
   }
 
@@ -56,6 +58,7 @@ const typeDefs = gql`
     createTemplate(
       userId: ID!
       templateName: String!
+      templateNotes: String
       exercises: [exerciseInput!]
     ): [Template]
     editTemplate(

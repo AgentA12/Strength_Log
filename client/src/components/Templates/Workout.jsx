@@ -113,7 +113,6 @@ export default function Workout() {
           </div>
           <div className=" flex justify-center">
             <Link to="/Templates">
-              {" "}
               <Button gradientMonochrome="failure">Cancel Workout</Button>
             </Link>
           </div>

@@ -14,7 +14,7 @@ export const Nav = ({ activeNav }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="px-2 sm:px-4 py-2 text-white bg-black border-b border-gray-600">
+    <nav className="px-2 sm:px-4 py-2 text-white bg-background border-b border-gray-600">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
         <IconContext.Provider value={{ className: "text-primary ml-5" }}>
           <GiWeightLiftingUp size={50} />
@@ -74,7 +74,7 @@ export const Nav = ({ activeNav }) => {
                 </li>
               </>
             ) : (
-              <li className="flex-col justify-center items-center">
+              <li className="flex gap-2 justify-center items-center">
                 <LoginBtn />
                 <SignupBtn />
               </li>
