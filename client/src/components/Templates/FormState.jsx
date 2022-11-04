@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function FormState(props) {
+export default function FormState({template}) {
   const [formState, setFormState] = useState({
     templateName: "",
     exercises: [

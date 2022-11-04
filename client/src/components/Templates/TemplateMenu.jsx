@@ -45,7 +45,7 @@ export default function TemplateMenu({ template, handleDelete, refetch }) {
           className="hover:bg-overlay hover:text-primary "
         >
           <Link
-            to={"/Create-template"}
+            to={"/Edit-template"}
             className="flex items-center gap-1 py-2 px-4"
             state={{ template: template }}
           >

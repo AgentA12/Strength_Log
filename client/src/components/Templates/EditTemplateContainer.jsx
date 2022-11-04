@@ -1,30 +1,22 @@
 import ExerciseForm from "./ExerciseForm";
 import { useState, useEffect, useRef } from "react";
 import { useMutation } from "@apollo/client";
-import { CREATE_TEMPLATE } from "../../utils/graphql/mutations";
+import { EDIT_TEMPLATE } from "../../utils/graphql/mutations";
 import auth from "../../utils/auth/auth";
 import { useQuery } from "@apollo/client";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import AddExerciseBtn from "../buttons/AddExerciseBtn";
 import SaveTemplateBtn from "../buttons/SaveTemplateBtn";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-export default function CreateTemplateContainer() {
+export default function EditTemplate() {
   const navigate = useNavigate();
+
+  const { state } = useLocation();
+
   const [errorMessage, setErrorMessage] = useState(null);
-  const [formState, setFormState] = useState({
-    templateName: "",
-    templateNotes: "",
-    exercises: [
-      {
-        exerciseName: "",
-        sets: "",
-        reps: "",
-        weight: "",
-        type: "type",
-      },
-    ],
-  });
+  const [formState, setFormState] = useState(state.template);
+  //   const [exerciseContainer, setExerciseContainer] = useState(null)
 
   //getting user info
   if (auth.isLoggedIn()) {
@@ -45,7 +37,7 @@ export default function CreateTemplateContainer() {
     bottomRef.current.scrollIntoView();
   });
 
-  const [addTemplate] = useMutation(CREATE_TEMPLATE);
+  const [EditTemplate] = useMutation(EDIT_TEMPLATE);
 
   function handleChange(index, { target }) {
     let data = { ...formState };
@@ -80,7 +72,9 @@ export default function CreateTemplateContainer() {
     try {
       event.preventDefault();
 
-      const mutationRes = await addTemplate({
+      console.log(formState);
+
+      const mutationRes = await EditTemplate({
         variables: {
           ...formState,
           userId: userID,
@@ -89,13 +83,13 @@ export default function CreateTemplateContainer() {
 
       if (mutationRes) {
         //if template is added, reset form and refetch new templates and remove the error message
-        resetFormState();
+        console.log(mutationRes);
         refetch();
-        setErrorMessage(null);
-        navigate("/Templates")
+        navigate("/Templates");
       }
     } catch (error) {
       if (error.message) {
+        console.log(error.message);
         setErrorMessage(error.message);
       }
     }
@@ -133,11 +127,7 @@ export default function CreateTemplateContainer() {
   return (
     <>
       <div className="py-10 xl:pl-72 pl-10 border-b border-gray-600">
-        <h1 className="font-medium text-3xl">
-          {/* {template
-            ? `Edit ${template.template.templateName.toUpperCase()}`
-            : "Create A Template"} */}
-        </h1>
+        <h1 className="font-medium text-3xl">Edit Template</h1>
       </div>
 
       <div className="flex gap-6 mt-12 mb-10 mr-5">
@@ -148,14 +138,14 @@ export default function CreateTemplateContainer() {
               name="templateName"
               className="h-20 text-3xl bg-background appearance-none border border-gray-600 rounded w-full py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in"
               type="text"
-              value={formState.templateName}
+              value={formState?.templateName}
               placeholder="Template Name"
             />
           </div>
 
           <div className="h-custom-2 modal-scroll overflow-scroll pr-2 ">
             <form className="" onSubmit={(event) => handleSubmit(event)}>
-              {formState.exercises.map((exercise, index) => (
+              {formState?.exercises.map((exercise, index) => (
                 <ExerciseForm
                   key={index}
                   handleChange={handleChange}
@@ -178,7 +168,7 @@ export default function CreateTemplateContainer() {
             cols="30"
             rows="10"
             placeholder="Template notes"
-            value={formState.templateNotes}
+            value={formState?.templateNotes}
           ></textarea>
 
           <div className="flex justify-between">
