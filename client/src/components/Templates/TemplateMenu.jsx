@@ -4,32 +4,10 @@ import {
   MenuList,
   MenuItem,
 } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 import { FaTrash, FaEdit } from "react-icons/fa";
 
-const theme = {
-  menu: {
-    styles: {
-      base: {
-        menu: {
-          bg: "bg-white",
-          p: "p-3",
-        },
-        item: {
-          initial: {
-            display: "block",
-            width: "w-full",
-          },
-          disabled: {
-            opacity: "opacity-50",
-            cursor: "cursor-not-allowed",
-          },
-        },
-      },
-    },
-  },
-};
-
-export default function TemplateMenu({ handleEdit, handleDelete, refetch }) {
+export default function TemplateMenu({ template, handleDelete, refetch }) {
   return (
     <Menu placement="bottom-end" className="shadow-none">
       <MenuHandler
@@ -54,28 +32,35 @@ export default function TemplateMenu({ handleEdit, handleDelete, refetch }) {
           </svg>
         </button>
       </MenuHandler>
-      <MenuList className="bg-overlay_two border-none  shadow-none text-white_faded">
-        <MenuItem className="hover:bg-overlay hover:text-primary">
-          <a
-            onClick={(event) => {
-              handleEdit(event);
-            }}
-            href="#"
-            className="flex items-center gap-1 py-2 px-4 "
+      <MenuList
+        className="bg-overlay_two border-none  shadow-none text-white_faded"
+        onClick={(event) => {
+          event.stopPropagation();
+        }}
+      >
+        <MenuItem
+          // onClick={(event) => {
+          //   handleEdit(event);
+          // }}
+          className="hover:bg-overlay hover:text-primary "
+        >
+          <Link
+            to={"/Create-template"}
+            className="flex items-center gap-1 py-2 px-4"
+            state={{ template: template }}
           >
             <FaEdit size={14} />
             Edit Template
-          </a>
+          </Link>
         </MenuItem>
-        <MenuItem className="hover:bg-overlay hover:text-error">
-          <a
-            onClick={(event) => [handleDelete(event), refetch()]}
-            href="#"
-            className="flex items-center gap-1 py-2 px-4 "
-          >
+        <MenuItem
+          className="hover:bg-overlay hover:text-error "
+          onClick={(event) => [handleDelete(event), refetch()]}
+        >
+          <span className="flex items-center gap-1 py-2 px-4">
             <FaTrash size={14} />
             Delete Template
-          </a>
+          </span>
         </MenuItem>
       </MenuList>
     </Menu>

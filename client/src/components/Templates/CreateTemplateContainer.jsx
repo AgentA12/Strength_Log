@@ -7,28 +7,10 @@ import { useQuery } from "@apollo/client";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import AddExerciseBtn from "../buttons/AddExerciseBtn";
 import SaveTemplateBtn from "../buttons/SaveTemplateBtn";
-import LoadingScreen from "../LoadingScreen";
+import { useLocation } from "react-router-dom";
 
 export default function CreateTemplateContainer() {
-  //getting user info
-  if (auth.isLoggedIn()) {
-    var {
-      data: { _id: userID },
-    } = auth.getInfo();
-  }
-
-  const { loading, error, data, refetch } = useQuery(GET_TEMPLATES, {
-    variables: {
-      userId: userID,
-    },
-  });
-
-  //ref on error message to scroll to bottom of div when exercise is added
-  const bottomRef = useRef(null);
-  useEffect(() => {
-    bottomRef.current.scrollIntoView();
-  });
-
+  const [errorMessage, setErrorMessage] = useState(null);
   const [formState, setFormState] = useState({
     templateName: "",
     templateNotes: "",
@@ -38,9 +20,55 @@ export default function CreateTemplateContainer() {
         sets: "",
         reps: "",
         weight: "",
-        type: "",
+        type: "type",
       },
     ],
+  });
+
+  const { state } = useLocation();
+
+  // if (state.template) {
+  //   setFormState(state.template);
+  //   console.log(formState)
+
+  // } else {
+  //   setFormState({
+  //     templateName: "",
+  //     templateNotes: "",
+  //     exercises: [
+  //       {
+  //         exerciseName: "",
+  //         sets: "",
+  //         reps: "",
+  //         weight: "",
+  //         type: "type",
+  //       },
+  //     ],
+  //   });
+  // }
+
+  // console.log(state.template);
+
+  // if (state.template) setFormState(state.template);
+  // console.log(formState);
+
+  //getting user info
+  if (auth.isLoggedIn()) {
+    var {
+      data: { _id: userID },
+    } = auth.getInfo();
+  }
+
+  const { loading, refetch } = useQuery(GET_TEMPLATES, {
+    variables: {
+      userId: userID,
+    },
+  });
+
+  //ref on error message to scroll to bottom of exercise container div when exercise is added
+  const bottomRef = useRef(null);
+  useEffect(() => {
+    bottomRef.current.scrollIntoView();
   });
 
   const [addTemplate] = useMutation(CREATE_TEMPLATE);
@@ -58,17 +86,17 @@ export default function CreateTemplateContainer() {
     setFormState({ ...formState, [target.name]: target.value });
   }
 
-  //call this to reset the addTemplateForm
   function resetFormState() {
     setFormState({
       templateName: "",
+      templateNotes: "",
       exercises: [
         {
           exerciseName: "",
           sets: "",
           reps: "",
           weight: "",
-          templateNotes: "",
+          type: "",
         },
       ],
     });
@@ -78,8 +106,6 @@ export default function CreateTemplateContainer() {
     try {
       event.preventDefault();
 
-      console.log(formState);
-
       const mutationRes = await addTemplate({
         variables: {
           ...formState,
@@ -88,12 +114,15 @@ export default function CreateTemplateContainer() {
       });
 
       if (mutationRes) {
-        //if template is added, close modal, reset form and refetch new templates
+        //if template is added, reset form and refetch new templates and remove the error message
         resetFormState();
         refetch();
+        setErrorMessage(null);
       }
     } catch (error) {
-      console.log(error);
+      if (error.message) {
+        setErrorMessage(error.message);
+      }
     }
   }
 
@@ -128,9 +157,12 @@ export default function CreateTemplateContainer() {
 
   return (
     <>
-      {loading ? <LoadingScreen /> : null}
       <div className="py-10 xl:pl-72 pl-10 border-b border-gray-600">
-        <h1 className="font-medium text-3xl">Create A Template</h1>
+        <h1 className="font-medium text-3xl">
+          {/* {template
+            ? `Edit ${template.template.templateName.toUpperCase()}`
+            : "Create A Template"} */}
+        </h1>
       </div>
 
       <div className="flex gap-6 mt-12 mb-10 mr-5">
@@ -180,7 +212,7 @@ export default function CreateTemplateContainer() {
           </div>
 
           <div className="text-center text-red-400 text-lg mt-5">
-            {error ? error.message : null}
+            {errorMessage ? errorMessage : null}
           </div>
         </div>
       </div>

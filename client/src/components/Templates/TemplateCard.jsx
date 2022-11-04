@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { DELETE_TEMPLATE } from "../../utils/graphql/mutations";
 import EditTemplateModal from "./EditTemplateModal";
@@ -28,11 +28,10 @@ export default function TemplateCard({ template, refetch }) {
     }
   }
 
-  function handleEdit(event) {
-    event.stopPropagation();
-
-    setIsEditTemplateOpen(!isEditTemplateOpen);
-  }
+  // function handleEdit(event) {
+  //   event.stopPropagation();
+  //   setIsEditTemplateOpen(!isEditTemplateOpen);
+  // }
 
   return (
     <>
@@ -41,12 +40,12 @@ export default function TemplateCard({ template, refetch }) {
         onClick={() => setIsWorkoutModalOpen(!isWorkoutModalOpen)}
       >
         <div className="flex items-center justify-between relative">
-          <h4 className="font-bold text-2xl">
+          <h4 className="font-bold text-2xl mr-1">
             {template.templateName.toLocaleUpperCase()}
           </h4>
           <TemplateMenu
             handleDelete={handleDelete}
-            handleEdit={handleEdit}
+            template={template}
             refetch={refetch}
           />
         </div>
@@ -66,12 +65,12 @@ export default function TemplateCard({ template, refetch }) {
           </div>
         </div>
       </div>
-      <EditTemplateModal
+      {/* <EditTemplateModal
         template={template}
         isEditTemplateOpen={isEditTemplateOpen}
         setIsEditTemplateOpen={setIsEditTemplateOpen}
         refetch={refetch}
-      />
+      /> */}
       <WorkoutModal
         isWorkoutModalOpen={isWorkoutModalOpen}
         setIsWorkoutModalOpen={setIsWorkoutModalOpen}

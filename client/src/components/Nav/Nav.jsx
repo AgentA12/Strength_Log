@@ -21,13 +21,9 @@ export const Nav = ({ activeNav }) => {
         </IconContext.Provider>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          data-collapse-toggle="navbar-default"
-          type="button"
           className="inline-flex items-center p-2 ml-3 text-sm text-primary rounded-lg md:hidden  focus:outline-none  "
-          aria-controls="navbar-default"
-          aria-expanded="false"
         >
-          <span className="sr-only">Open main menu</span>
+         
           <svg
             className="w-6 h-6"
             aria-hidden="true"
@@ -57,11 +53,11 @@ export const Nav = ({ activeNav }) => {
                 <TemplateNavBtn activeNav={activeNav} />
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link onClick={() => setIsOpen(!isOpen)} to={"/Progress"}>
                 <ProgressNavBtn activeNav={activeNav} />
               </Link>
-            </li>
+            </li> */}
             {Auth.isLoggedIn() ? (
               <>
                 <li>

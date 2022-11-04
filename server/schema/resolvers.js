@@ -95,6 +95,7 @@ const resolvers = {
 
     //create a template then push the new template ids to the User model
     createTemplate: async function (_, args) {
+      console.log(args)
       try {
         const exercisesData = await Exercise.create(args.exercises);
 
