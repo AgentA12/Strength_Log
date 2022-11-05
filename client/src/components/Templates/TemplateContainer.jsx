@@ -29,7 +29,7 @@ export default function TemplateContainer() {
   return (
     <main className="mx-10 my-10">
       <div className="flex justify-center flex-wrap gap-5">
-        <h3 className="text-primary font-extrabold text-5xl">Your Templates</h3>
+        <h3 className="text-primary font-extrabold text-3xl sm:text-5xl">Your Templates</h3>
       </div>
 
       <div className="flex flex-wrap justify-center gap-5 mt-6">

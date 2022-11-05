@@ -92,7 +92,7 @@ export default function CreateTemplateContainer() {
         resetFormState();
         refetch();
         setErrorMessage(null);
-        navigate("/Templates")
+        navigate("/Templates");
       }
     } catch (error) {
       if (error.message) {
@@ -133,11 +133,7 @@ export default function CreateTemplateContainer() {
   return (
     <>
       <div className="py-10 xl:pl-72 pl-10 border-b border-gray-600">
-        <h1 className="font-medium text-3xl">
-          {/* {template
-            ? `Edit ${template.template.templateName.toUpperCase()}`
-            : "Create A Template"} */}
-        </h1>
+        <h1 className="font-bold text-3xl">Create A Template</h1>
       </div>
 
       <div className="flex gap-6 mt-12 mb-10 mr-5">

@@ -127,7 +127,7 @@ export default function EditTemplate() {
   return (
     <>
       <div className="py-10 xl:pl-72 pl-10 border-b border-gray-600">
-        <h1 className="font-medium text-3xl">Edit Template</h1>
+        <h1 className="font-bold text-3xl">Edit  <span className="text-primary ml-1">{formState.templateName}</span> </h1>
       </div>
 
       <div className="flex gap-6 mt-12 mb-10 mr-5">
