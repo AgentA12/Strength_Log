@@ -7,6 +7,7 @@ import SignupBtn from "../buttons/SignupBtn";
 import TemplateNavBtn from "../buttons/TemplateNavBtn";
 import ProgressNavBtn from "../buttons/ProgressNavBtn";
 import AddTemplateBtn from "../buttons/AddTemplateBtn";
+import LogoutBtn from "../buttons/LogoutBtn";
 import Auth from "../../utils/auth/auth";
 import auth from "../../utils/auth/auth";
 
@@ -23,7 +24,6 @@ export const Nav = ({ activeNav }) => {
           onClick={() => setIsOpen(!isOpen)}
           className="inline-flex items-center p-2 ml-3 text-sm text-primary rounded-lg md:hidden  focus:outline-none  "
         >
-         
           <svg
             className="w-6 h-6"
             aria-hidden="true"
@@ -61,12 +61,7 @@ export const Nav = ({ activeNav }) => {
             {Auth.isLoggedIn() ? (
               <>
                 <li>
-                  <a
-                    className="block py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent cursor-pointer transition-colors duration-300"
-                    onClick={() => [Auth.logout(), setIsOpen(!isOpen)]}
-                  >
-                    logout
-                  </a>
+                  <LogoutBtn setIsOpen={setIsOpen} isOpen={isOpen} />
                 </li>
               </>
             ) : (

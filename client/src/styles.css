@@ -19,8 +19,16 @@
     @apply flex items-center  bg-background  text-primary_faded  py-2 px-4 border border-gray-600 rounded shadow hover:bg-primary_faded hover:bg-opacity-10 hover:border-opacity-10 hover:border-primary_faded transition-colors duration-100 whitespace-nowrap;
   }
 
+  .start-workout-btn {
+    @apply flex items-center  bg-overlay  text-primary_faded  py-2 px-4 border border-gray-600 rounded shadow hover:bg-primary_faded hover:bg-opacity-10 hover:border-opacity-10 hover:border-primary_faded transition-colors duration-100 whitespace-nowrap;
+  }
+
   .add-exercise-btn {
     @apply flex items-center  bg-background  text-green-500  py-2 px-4 border border-gray-600 rounded shadow hover:bg-green-500 hover:bg-opacity-10 hover:border-opacity-10 hover:border-green-400 transition-colors duration-100 whitespace-nowrap;
+  }
+  
+  .save-workout-btn {
+    @apply flex items-center  bg-overlay  text-green-500  py-2 px-4 border border-gray-600 rounded shadow hover:bg-green-500 hover:bg-opacity-10 hover:border-opacity-10 hover:border-green-400 transition-colors duration-100 whitespace-nowrap;
   }
 
   .nav-link {

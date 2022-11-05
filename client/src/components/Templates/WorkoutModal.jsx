@@ -5,7 +5,8 @@ import { useMutation } from "@apollo/client";
 import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
 import auth from "../../utils/auth/auth";
 import { motion } from "framer-motion";
-
+import StartWorkoutBtn from "../buttons/StartWorkoutBtn";
+import SaveWorkoutBtn from "../buttons/SaveWorkoutBtn";
 export default function WorkoutModal({
   template,
   isWorkoutModalOpen,
@@ -33,7 +34,9 @@ export default function WorkoutModal({
   return (
     <div
       aria-hidden="true"
-      className={`${isWorkoutModalOpen ? "modal-container overflow-visible" : "hidden"}`}
+      className={`${
+        isWorkoutModalOpen ? "modal-container overflow-visible" : "hidden"
+      }`}
     >
       <motion.div
         animate={modalAnimation}
@@ -84,8 +87,8 @@ export default function WorkoutModal({
           ))}
         </div>
 
-        <div className=" pt-5 bg-inherit text-center">
-          <Link to={"/Progress"} state={{ template }}>
+        <div className="flex gap-3 pt-5 bg-inherit text-center">
+          {/* <Link to={"/Progress"} state={{ template }}>
             <button className="w-full relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-purple-600 to-primary group-hover:from-purple-600 group-hover:to-primary  text-white focus:ring-4 focus:outline-none focus:ring-primary_faded dark:focus:ring-blue-800">
               <span className="flex gap-5 w-full justify-center items-center bg-overlay relative px-5 py-2.5 transition-all ease-in duration-75 dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                 Start workout
@@ -94,9 +97,16 @@ export default function WorkoutModal({
                 )}
               </span>
             </button>
-          </Link>
+          </Link> */}
 
-          <button
+          <StartWorkoutBtn template={template}/>
+          <SaveWorkoutBtn
+            template={template}
+            userID={userID}
+            workoutLoading={workoutLoading}
+          />
+
+          {/* <button
             onClick={() =>
               saveWorkoutFunction({
                 variables: {
@@ -113,7 +123,7 @@ export default function WorkoutModal({
                 <Spinner color="purple" aria-label="loading" />
               )}
             </span>
-          </button>
+          </button> */}
         </div>
       </motion.div>
     </div>
