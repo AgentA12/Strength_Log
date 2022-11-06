@@ -23,7 +23,6 @@ const typeDefs = gql`
   }
 
   input exerciseInput {
-    _id: ID
     exerciseName: String
     sets: String
     reps: String

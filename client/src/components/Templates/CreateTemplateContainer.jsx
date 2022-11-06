@@ -1,4 +1,4 @@
-import ExerciseForm from "./ExerciseForm";
+import ExerciseForm from "../exercises/ExerciseForm";
 import { useState, useEffect, useRef } from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_TEMPLATE } from "../../utils/graphql/mutations";
@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function CreateTemplateContainer() {
   const navigate = useNavigate();
+
   const [errorMessage, setErrorMessage] = useState(null);
   const [formState, setFormState] = useState({
     templateName: "",
@@ -79,6 +80,8 @@ export default function CreateTemplateContainer() {
   async function handleSubmit(event) {
     try {
       event.preventDefault();
+
+      console.log(formState)
 
       const mutationRes = await addTemplate({
         variables: {
@@ -149,8 +152,8 @@ export default function CreateTemplateContainer() {
             />
           </div>
 
-          <div className="h-custom-2 modal-scroll overflow-scroll pr-2 ">
-            <form className="" onSubmit={(event) => handleSubmit(event)}>
+          <div className="h-custom-2 modal-scroll overflow-scroll pr-2">
+            <form onSubmit={(event) => handleSubmit(event)}>
               {formState.exercises.map((exercise, index) => (
                 <ExerciseForm
                   key={index}

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { LOGIN_USER } from "../utils/graphql/mutations";
-import Auth from "../utils/auth/auth";
+import { ADD_USER } from "../../utils/graphql/mutations";
+import Auth from "../../utils/auth/auth";
 
-export default function Login() {
-  const [loginUser, { data, loading, error }] = useMutation(LOGIN_USER, {
+export default function Signup() {
+  const [addUser, { error }] = useMutation(ADD_USER, {
     variables: {
       username: "",
       password: "",
@@ -27,13 +27,13 @@ export default function Login() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    const mutationResponse = await loginUser({
+    const mutationResponse = await addUser({
       variables: {
         ...formState,
       },
     });
 
-    Auth.login(mutationResponse.data.login.token);
+    Auth.login(mutationResponse.data.createUser.token);
   }
 
   if (error) console.log(error);
@@ -42,7 +42,7 @@ export default function Login() {
     <div className="flex h-90 justify-center items-start">
       <div className="w-96 bg-overlay mx-2 p-8 rounded-lg border-r-primary border-r-4  mt-20">
         <form className="" onSubmit={(event) => handleSubmit(event)}>
-          <h5 className="mb-5 font-medium text-lg">ACCOUNT LOGIN</h5>
+          <h5 className="mb-5 font-medium text-lg">ACCOUNT SIGNUP</h5>
           <div className="relative z-0 mb-6 w-full group">
             <input
               onChange={handleChange}
@@ -55,6 +55,7 @@ export default function Login() {
             <label className="peer-focus:font-medium absolute text-sm text-gray-300 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
               Username
             </label>
+            <p className="my-2 text-error">{error && error.message}</p>
           </div>
           <div className="relative z-0 mb-6 w-full group">
             <input
@@ -74,14 +75,17 @@ export default function Login() {
             className="w-full text-background bg-gradient-to-r from-primary via-primary to-primary_faded hover:bg-gradient-to-br focus:ring-4 focus:outline-none 
                 focus:ring-primary_faded font-medium rounded-lg px-5 py-2.5 mb-4"
           >
-            Login
+            Signup
           </button>
-          <p className="my-1 py-1 border-t text-error border-primary">
-            {error && error.message}
-          </p>
+
+          <p
+            className="my-1 py-1 
+          border-t text-error border-primary"
+          ></p>
         </form>
-        <Link to="/Signup" className="hover:text-primary underline">
-          Sign up instead
+
+        <Link to="/Login" className="hover:text-primary underline ">
+          Login
         </Link>
       </div>
     </div>

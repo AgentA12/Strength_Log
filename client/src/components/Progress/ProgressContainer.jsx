@@ -1,7 +1,7 @@
 import Progress from "./Progress";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
-import Workout from "../Templates/Workout";
+import Workout from "../workout/Workout";
 import { useQuery } from "@apollo/client";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import ProgressCard from "./ProgressCard";
@@ -13,20 +13,25 @@ const cards = [
     date: "Monday, October 25",
     totalWeight: 3055,
     time: "50 min",
+    id: "dsflgk;e4tog"
   },
   {
     date: "Tuesday, October 26",
     totalWeight: 2250,
     time: "2 hours, 30 min",
+    id: "dsfhjkhjkhjklgk;e4togdnfg"
+
   },
   {
     date: "Thursday, October 28",
     totalWeight: 3555,
     time: "25 min",
+    id: "djkjksflgk;e4togdnfg"
   },
   {
     date: "Friday, October 29",
     totalWeight: 3055,
+    id: "dsflgjkjkjk77i"
   },
 ];
 
@@ -95,7 +100,7 @@ export default function ProgressContainer() {
           <p className="text-white_faded font-bold mb-1">History</p>
           <div className=" flex flex-col gap-5 py-10 px-3 h-custom overflow-y-scroll modal-scroll">
             {cards.map((card) => (
-              <ProgressCard card={card} />
+              <ProgressCard card={card} key={card.id} />
             ))}
           </div>
         </div>

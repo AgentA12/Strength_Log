@@ -40,7 +40,7 @@ export default function WorkoutModal({
     >
       <motion.div
         animate={modalAnimation}
-        className="modal-body add-modal-height modal-scroll"
+        className="modal-body add-modal-height modal-scroll mx-2"
       >
         <div className="flex items-end justify-end">
           <span className="text-3xl font-bold ">{template.templateName}</span>
@@ -87,7 +87,7 @@ export default function WorkoutModal({
           ))}
         </div>
 
-        <div className="flex gap-3 pt-5 bg-inherit text-center">
+        <div className="flex flex-wrap md:flex-nowrap justify-center gap-3">
           {/* <Link to={"/Progress"} state={{ template }}>
             <button className="w-full relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-purple-600 to-primary group-hover:from-purple-600 group-hover:to-primary  text-white focus:ring-4 focus:outline-none focus:ring-primary_faded dark:focus:ring-blue-800">
               <span className="flex gap-5 w-full justify-center items-center bg-overlay relative px-5 py-2.5 transition-all ease-in duration-75 dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">

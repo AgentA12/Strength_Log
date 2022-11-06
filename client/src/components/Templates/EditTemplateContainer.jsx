@@ -1,4 +1,4 @@
-import ExerciseForm from "./ExerciseForm";
+import ExerciseForm from "../exercises/ExerciseForm";
 import { useState, useEffect, useRef } from "react";
 import { useMutation } from "@apollo/client";
 import { EDIT_TEMPLATE } from "../../utils/graphql/mutations";
@@ -16,7 +16,6 @@ export default function EditTemplate() {
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [formState, setFormState] = useState(state.template);
-  //   const [exerciseContainer, setExerciseContainer] = useState(null)
 
   //getting user info
   if (auth.isLoggedIn()) {
@@ -35,7 +34,7 @@ export default function EditTemplate() {
   const bottomRef = useRef(null);
   useEffect(() => {
     bottomRef.current.scrollIntoView();
-  });
+  }, [formState.exercises.length]);
 
   const [EditTemplate] = useMutation(EDIT_TEMPLATE);
 
@@ -52,27 +51,9 @@ export default function EditTemplate() {
     setFormState({ ...formState, [target.name]: target.value });
   }
 
-  function resetFormState() {
-    setFormState({
-      templateName: "",
-      templateNotes: "",
-      exercises: [
-        {
-          exerciseName: "",
-          sets: "",
-          reps: "",
-          weight: "",
-          type: "",
-        },
-      ],
-    });
-  }
-
   async function handleSubmit(event) {
     try {
       event.preventDefault();
-
-      console.log(formState);
 
       const mutationRes = await EditTemplate({
         variables: {
@@ -82,14 +63,11 @@ export default function EditTemplate() {
       });
 
       if (mutationRes) {
-        //if template is added, reset form and refetch new templates and remove the error message
-        console.log(mutationRes);
         refetch();
         navigate("/Templates");
       }
     } catch (error) {
       if (error.message) {
-        console.log(error.message);
         setErrorMessage(error.message);
       }
     }
@@ -127,11 +105,16 @@ export default function EditTemplate() {
   return (
     <>
       <div className="py-10 xl:pl-72 pl-10 border-b border-gray-600">
-        <h1 className="font-bold text-3xl">Edit  <span className="text-primary ml-1">{formState.templateName}</span> </h1>
+        <h1 className="font-bold text-3xl">
+          Edit{" "}
+          <span className="text-primary ml-1">
+            {state.template.templateName}
+          </span>{" "}
+        </h1>
       </div>
 
-      <div className="flex gap-6 mt-12 mb-10 mr-5">
-        <div className="xl:pl-72 pl-10 w-fit">
+      <div className="flex gap-6 mt-12 mb-10 mx-5">
+        <div className="xl:pl-72 w-fit">
           <div className="mb-5">
             <input
               onChange={(event) => handleChange(null, event)}
@@ -143,7 +126,28 @@ export default function EditTemplate() {
             />
           </div>
 
-          <div className="h-custom-2 modal-scroll overflow-scroll pr-2 ">
+          <div className="block md:hidden flex-col  items-center">
+            <textarea
+              onChange={(event) => handleChange(null, event)}
+              className="text-xl bg-background appearance-none border border-gray-600 rounded w-full p-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in resize-none"
+              name="templateNotes"
+              cols="30"
+              rows="5"
+              placeholder="Template notes"
+              value={formState?.templateNotes}
+            ></textarea>
+
+            <div className="flex justify-between">
+              <AddExerciseBtn addExercise={addExercise} />
+              <SaveTemplateBtn loading={loading} handleSubmit={handleSubmit} />
+            </div>
+
+            <div className="text-center text-red-400 text-lg mt-5">
+              {errorMessage ? errorMessage : null}
+            </div>
+          </div>
+
+          <div className="h-custom-2 modal-scroll overflow-scroll pr-2 pt-3 border-t border-gray-600">
             <form className="" onSubmit={(event) => handleSubmit(event)}>
               {formState?.exercises.map((exercise, index) => (
                 <ExerciseForm
@@ -160,7 +164,7 @@ export default function EditTemplate() {
           </div>
         </div>
 
-        <div className="flex-col w-96">
+        <div className="hidden md:block flex-col w-96">
           <textarea
             onChange={(event) => handleChange(null, event)}
             className="text-xl bg-background appearance-none border border-gray-600 rounded w-full p-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in resize-none"

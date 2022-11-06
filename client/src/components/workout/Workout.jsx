@@ -4,8 +4,8 @@ import { BsCheck2All } from "react-icons/bs";
 import capitalizeFirstLetter from "../../utils/helpers/functions";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import Counter from "./Counter";
-import FinishedModel from "./FinishedModel";
+import Counter from "../miscellaneous/Counter";
+import FinishedModel from "../miscellaneous/FinishedModel";
 
 export default function Workout() {
   const time = new Date();

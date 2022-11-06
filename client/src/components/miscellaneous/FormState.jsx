@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function FormState({template}) {
+function FormState({ template }) {
   const [formState, setFormState] = useState({
     templateName: "",
     exercises: [
@@ -70,3 +70,59 @@ export default function FormState({template}) {
 
   return <></>;
 }
+
+const formState = {
+  handleChange: function (index, { target }, setFormState) {
+    let data = { ...formState };
+
+    if (target.name !== "templateName") {
+      data.exercises[index][target.name] = target.value;
+
+      setFormState({ ...data });
+      return;
+    }
+
+    setFormState({ ...formState, [target.name]: target.value });
+  },
+
+  removeExercise: function (event, index, setFormState) {
+    let data = { ...formState };
+
+    const filteredExercises = formState.exercises.filter((_, i) => {
+      return i != index;
+    });
+
+    data.exercises = filteredExercises;
+
+    setFormState(data);
+  },
+
+  addExercise: function (setFormState) {
+    const exercise = {
+      exerciseName: "",
+      sets: "",
+      reps: "",
+      weight: "",
+    };
+
+    const data = { ...formState };
+
+    data.exercises.push(exercise);
+
+    setFormState(data);
+  },
+
+  resetFormState: function (setFormState) {
+    setFormState({
+      templateName: "",
+      exercises: [
+        {
+          exerciseName: "",
+          sets: "",
+          reps: "",
+          weight: "",
+        },
+      ],
+    });
+  },
+};

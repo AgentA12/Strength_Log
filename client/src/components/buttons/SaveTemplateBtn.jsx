@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 
-function SaveTemplateBtn({ loading, handleSubmit }) {
+function SaveTemplateBtn({  handleSubmit }) {
   return (
     <motion.button
       onClick={handleSubmit}

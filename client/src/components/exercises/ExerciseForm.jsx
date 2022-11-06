@@ -1,5 +1,5 @@
 import { IoMdRemove } from "react-icons/io";
-import { animate, motion, useIsPresent } from "framer-motion";
+import { motion } from "framer-motion";
 
 export default function ExerciseForm({
   handleChange,
@@ -7,24 +7,23 @@ export default function ExerciseForm({
   formState,
   removeExercise,
 }) {
-  const exerciseListAnimation = {
-    initial: { opacity: 0, scale: 0.5 },
-    animate: { opacity: 1, scale: 1 },
-    exit: { scale: 0, opacity: 0 },
-    transition: {
-      type: "",
-      damping: 40,
-      stiffness: 900,
-    },
-  };
-
   return (
     <motion.div
-      {...exerciseListAnimation}
+      layout
+      initial={{ x: 0, y: -35, opacity: 0 }}
+      animate={{
+        x: 0,
+        y: 0,
+        opacity: 1,
+      }}
+      exit={{
+        opacity: 0,
+      }}
+      transition={{ type: "", damping: 40, stiffness: 900 }}
       className="border border-gray-600 rounded-lg p-5 mb-7"
     >
       <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3 ">
+        <div className="w-full px-3">
           <div className="flex items-center justify-between mb-2">
             <label
               className="block uppercase tracking-wide text-grey-400 text-xs font-bold "
@@ -102,12 +101,18 @@ export default function ExerciseForm({
           name="type"
           className="w-6/12 bg-background appearance-none border border-gray-600 rounded py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in"
         >
-          <option selected disabled hidden className="text-gray-600">
+          <option
+            defaultValue={"Other"}
+            disabled
+            hidden
+            className="text-gray-600"
+          >
             Type
           </option>
           <option value="Barbell">Barbell</option>
           <option value="Dumbell">Dumbell</option>
           <option value="Machine">Machine</option>
+          <option value="Machine">Body weight</option>
           <option value="Other">Other</option>
         </select>
         {/* if rendering the first exercise, dont show the remove exercise button */}

@@ -50,8 +50,8 @@ export const CREATE_TEMPLATE = gql`
       templateNotes: $templateNotes
       exercises: $exercises
     ) {
-      templateName
       _id
+      templateName
       exercises {
         exerciseName
         reps

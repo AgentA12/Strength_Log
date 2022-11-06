@@ -1,13 +1,13 @@
-import { Nav } from "./components/Nav/Nav";
-import TemplateContainer from "./components/Templates/TemplateContainer";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
+import { Nav } from "./components/navbar/Nav";
+import TemplateContainer from "./components/templates/TemplateContainer";
+import Login from "./components/miscellaneous/Login";
+import Signup from "./components/miscellaneous/Signup";
 import { Routes, Route, useLocation } from "react-router-dom";
-import ProgressContainer from "./components/Progress/ProgressContainer";
-import Workout from "./components/Templates/Workout";
+import ProgressContainer from "./components/progress/ProgressContainer";
+import Workout from "./components/workout/Workout";
 import { ThemeProvider } from "@material-tailwind/react";
-import CreateTemplate from "./components/Templates/CreateTemplateContainer";
-import EditTemplate from "./components/Templates/EditTemplateContainer";
+import CreateTemplate from "./components/templates/CreateTemplateContainer";
+import EditTemplate from "./components/templates/EditTemplateContainer";
 
 export default function App() {
   const { pathname } = useLocation();
