@@ -5,10 +5,13 @@ import capitalizeFirstLetter from "../../utils/helpers/functions";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Counter from "../miscellaneous/Counter";
-import FinishedModel from "../miscellaneous/FinishedModel";
+import FinishedModel from "./FinishedModel";
+import { motion } from "framer-motion";
+import { IoReturnUpBackOutline } from "react-icons/io5";
 
 export default function Workout() {
   const time = new Date();
+
   time.setSeconds(time.getSeconds() + 100);
 
   const { state } = useLocation();
@@ -19,15 +22,20 @@ export default function Workout() {
 
   return (
     <>
-      <div
-        id="defaultModal"
-        tabIndex="-1"
-        aria-hidden="true"
+      <motion.div
+        initial={{ opacity: 0, y: 500 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: "tween", delay: 0.1 }}
+        exit={{ opacity: 0 }}
         className={
-          "bg-overlay text-white flex items-center justify-center  w-full h-full overflow-y-scroll"
+          "pt-5 modal-scroll bg-overlay text-white flex items-center justify-center  w-full h-screen overflow-y-scroll absolute top-0 right-0"
         }
       >
-        <div className="p-5 border border-primary rounded-lg my-5">
+        {/* <div className="cursor-pointer">
+          <IoReturnUpBackOutline size={40} color={"#BB86FC"} />
+        </div> */}
+
+        <div className="p-5 my-5">
           <div className="flex gap-20 sm:gap-80 items-center justify-between">
             <h1 className="text-3xl font-bold text-primary">
               {state.template.templateName}
@@ -117,7 +125,7 @@ export default function Workout() {
             </Link>
           </div>
         </div>
-      </div>
+      </motion.div>
       <FinishedModel isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );

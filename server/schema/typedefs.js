@@ -20,9 +20,19 @@ const typeDefs = gql`
     sets: String
     reps: String
     weight: String
+    type: String
   }
 
   input exerciseInput {
+    exerciseName: String
+    sets: String
+    reps: String
+    weight: String
+    type: String
+  }
+
+  input editExerciseInput {
+    _id: ID
     exerciseName: String
     sets: String
     reps: String
@@ -49,6 +59,7 @@ const typeDefs = gql`
     getAllUsers: [User]
     getAllTemplates: [Template]
     getAllExercises: [Exercise]
+    getTemplateProgressForUser: [Template]
   }
 
   type Mutation {
@@ -63,7 +74,8 @@ const typeDefs = gql`
     editTemplate(
       _id: ID!
       templateName: String!
-      exercises: [exerciseInput!]
+      templateNotes: String
+      exercises: [editExerciseInput!]
     ): Template
     createExercise(name: String!, sets: Int!, reps: Int!): Exercise
     deleteTemplate(templateId: ID!): Template

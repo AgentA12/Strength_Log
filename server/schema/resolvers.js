@@ -50,6 +50,20 @@ const resolvers = {
 
       return user.templates;
     },
+
+    getTemplateProgressForUser: async function (_, { userId }) {
+      const user = await User.findById(userId)
+        .select("-password")
+        .populate({
+          path: "templates",
+          populate: {
+            path: "exercises",
+            model: "Exercise",
+          },
+        });
+
+      return user.templates;
+    },
   },
 
   Mutation: {
@@ -95,7 +109,6 @@ const resolvers = {
 
     //create a template then push the new template ids to the User model
     createTemplate: async function (_, args) {
-      console.log(args)
       try {
         const exercisesData = await Exercise.create(args.exercises);
 
@@ -135,10 +148,14 @@ const resolvers = {
       }
     },
 
-    editTemplate: async function (_, { _id, templateName, exercises }) {
+    editTemplate: async function (
+      _,
+      { _id, templateName, templateNotes, exercises }
+    ) {
       try {
         await Template.findByIdAndUpdate(_id, {
           templateName: templateName,
+          templateNotes: templateNotes,
         });
 
         const template = await Template.findById(_id).populate("exercises");
@@ -183,11 +200,9 @@ const resolvers = {
     },
 
     saveWorkout: async function (_, args) {
-      const user = await User.findById(args.userID);
-
-      await User.findByIdAndUpdate(args.userID, {
-        progress: {
-          template: args.templateId,
+      const data = await User.findByIdAndUpdate(args.userID, {
+        $push: {
+          progress: { template: args.templateId },
         },
       }).populate({
         path: "templates",
@@ -196,6 +211,8 @@ const resolvers = {
           model: "Exercise",
         },
       });
+
+      console.log(data);
     },
   },
 };

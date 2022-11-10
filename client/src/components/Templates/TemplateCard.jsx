@@ -13,7 +13,7 @@ export default function TemplateCard({ template, refetch }) {
 
   const [deleteTemplate] = useMutation(DELETE_TEMPLATE);
 
-  async function handleDelete(event) {
+  async function handleDeleteTemplate(event) {
     event.stopPropagation();
 
     const deleteTemplateRes = await deleteTemplate({
@@ -54,11 +54,11 @@ export default function TemplateCard({ template, refetch }) {
         onClick={() => setIsWorkoutModalOpen(!isWorkoutModalOpen)}
       >
         <div className="flex items-center justify-between relative">
-          <h4 className="font-bold text-2xl mr-1">
+          <h4 className="custom-ellipsis-title font-bold text-2xl mr-2">
             {template.templateName.toLocaleUpperCase()}
           </h4>
           <TemplateMenu
-            handleDelete={handleDelete}
+            handleDeleteTemplate={handleDeleteTemplate}
             template={template}
             refetch={refetch}
           />

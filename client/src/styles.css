@@ -4,11 +4,11 @@
 
 @layer components {
   body {
-    @apply bg-background text-white font-sans;
+    @apply bg-background text-white font-sans overflow-hidden;
   }
 
   .modal-container {
-    @apply flex items-center justify-center bg-background bg-opacity-75 backdrop-blur-sm transition-opacity overflow-y-auto overflow-x-hidden  fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full;
+    @apply flex items-center justify-center bg-background bg-opacity-75 backdrop-blur-sm transition-opacity overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full;
   }
 
   .modal-body {
@@ -75,11 +75,6 @@ body::-webkit-scrollbar-thumb {
   border-radius: 25%;
 }
 
-/* .modal-scroll::-webkit-scrollbar {
-  background-color: #292929;
-  border-radius: 100vh;
-} */
-
 .custom-ellipsis {
   display: block; /* Fallback for non-webkit */
   display: -webkit-box;
@@ -91,5 +86,14 @@ body::-webkit-scrollbar-thumb {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #bb86fc;
+}
+
+.custom-ellipsis-title {
+  display: block; /* Fallback for non-webkit */
+  display: -webkit-box;
+  line-height: 1.6;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

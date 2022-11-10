@@ -1,12 +1,10 @@
-import { Link } from "react-router-dom";
-import { Spinner } from "flowbite-react";
-import { useState, Fragment } from "react";
-import { useMutation } from "@apollo/client";
-import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
+import { Fragment } from "react";
+
 import auth from "../../utils/auth/auth";
 import { motion } from "framer-motion";
 import StartWorkoutBtn from "../buttons/StartWorkoutBtn";
 import SaveWorkoutBtn from "../buttons/SaveWorkoutBtn";
+
 export default function WorkoutModal({
   template,
   isWorkoutModalOpen,
@@ -18,14 +16,10 @@ export default function WorkoutModal({
     } = auth.getInfo();
   }
 
-  const [workoutLoading, setWorkoutLoading] = useState(false);
-
-  const [saveWorkoutFunction, { data, loading, error }] =
-    useMutation(SAVE_WORKOUT);
-
-  function handleClick({ target }) {
+  function handleClick() {
     setIsWorkoutModalOpen(!isWorkoutModalOpen);
   }
+
   const modalAnimation = {
     y: isWorkoutModalOpen ? 0 : 100,
     opacity: isWorkoutModalOpen ? 1 : 0,
@@ -43,12 +37,12 @@ export default function WorkoutModal({
         className="modal-body add-modal-height modal-scroll mx-2"
       >
         <div className="flex items-end justify-end">
-          <span className="text-3xl font-bold ">{template.templateName}</span>
+          <span className="custom-ellipsis-title text-3xl font-bold mr-3">{template.templateName}</span>
 
           <button
             onClick={handleClick}
             type="button"
-            className=" self-end bg-transparent hover:text-gray-500 rounded-lg text-sm px-3 py-1.5 ml-auto inline-flex justify-end bg-overlay_two"
+            className=" self-start bg-transparent hover:text-gray-500 rounded-lg text-sm px-3 py-1.5 ml-auto inline-flex justify-end bg-overlay_two"
             data-modal-toggle="defaultModal"
           >
             <svg
@@ -67,6 +61,7 @@ export default function WorkoutModal({
             <span className="sr-only">Close modal</span>
           </button>
         </div>
+        <div className="mt-4">{template.templateNotes.trim() ? "- ": null} {template.templateNotes}</div>
 
         <div className="p-5">
           {template.exercises.map((exercise, i) => (
@@ -88,42 +83,8 @@ export default function WorkoutModal({
         </div>
 
         <div className="flex flex-wrap md:flex-nowrap justify-center gap-3">
-          {/* <Link to={"/Progress"} state={{ template }}>
-            <button className="w-full relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-purple-600 to-primary group-hover:from-purple-600 group-hover:to-primary  text-white focus:ring-4 focus:outline-none focus:ring-primary_faded dark:focus:ring-blue-800">
-              <span className="flex gap-5 w-full justify-center items-center bg-overlay relative px-5 py-2.5 transition-all ease-in duration-75 dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                Start workout
-                {workoutLoading && (
-                  <Spinner color="purple" aria-label="loading" />
-                )}
-              </span>
-            </button>
-          </Link> */}
-
-          <StartWorkoutBtn template={template}/>
-          <SaveWorkoutBtn
-            template={template}
-            userID={userID}
-            workoutLoading={workoutLoading}
-          />
-
-          {/* <button
-            onClick={() =>
-              saveWorkoutFunction({
-                variables: {
-                  templateId: template._id,
-                  userID: userID,
-                },
-              })
-            }
-            className="mt-3 w-full relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-purple-600 to-primary group-hover:from-purple-600 group-hover:to-primary  text-white focus:ring-4 focus:outline-none focus:ring-primary_faded dark:focus:ring-blue-800"
-          >
-            <span className="flex gap-5 w-full justify-center items-center bg-overlay relative px-5 py-2.5 transition-all ease-in duration-75 dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-              Save as complete
-              {workoutLoading && (
-                <Spinner color="purple" aria-label="loading" />
-              )}
-            </span>
-          </button> */}
+          <StartWorkoutBtn template={template} />
+          <SaveWorkoutBtn template={template} userID={userID} />
         </div>
       </motion.div>
     </div>

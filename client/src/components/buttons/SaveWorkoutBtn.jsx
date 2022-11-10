@@ -1,11 +1,14 @@
 import { Spinner } from "flowbite-react";
+import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
+import { useMutation } from "@apollo/client";
+export default function SaveWorkoutBtn({ userID, template }) {
+  const [saveWorkoutFunction, { data, loading, error }] =
+    useMutation(SAVE_WORKOUT);
 
-export default function SaveWorkoutBtn({
-  saveWorkoutFunction,
-  userID,
-  template,
-  workoutLoading,
-}) {
+  if (data) console.log(data);
+
+  if (error) return <div className="text-error">{error.message}</div>;
+
   return (
     <button
       onClick={() =>
@@ -20,7 +23,7 @@ export default function SaveWorkoutBtn({
     >
       <span className="flex gap-5 w-full justify-center items-center relative px-5 py-2.5 transition-all ease-in duration-75  rounded-md group-hover:bg-opacity-0">
         Save as complete
-        {workoutLoading && <Spinner color="purple" aria-label="loading" />}
+        {loading && <Spinner color="purple" aria-label="loading" />}
       </span>
     </button>
   );

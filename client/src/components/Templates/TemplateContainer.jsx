@@ -1,5 +1,4 @@
 import TemplateCard from "./TemplateCard";
-import AddTemplateBtn from "../buttons/AddTemplateBtn";
 import auth from "../../utils/auth/auth";
 import { useQuery } from "@apollo/client";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
@@ -33,7 +32,7 @@ export default function TemplateContainer() {
             aria-label="Purple spinner example"
           />
         </div>
-      ) : //does the array of template have templates?
+      ) : //does the array of templates have length?
       data?.getTemplatesForUser.length ? (
         data?.getTemplatesForUser.map((template) => (
           <TemplateCard
@@ -69,9 +68,9 @@ export default function TemplateContainer() {
         {displayQueryState()}
       </div>
 
-      {/* {error ? (
+      {error ? (
         <p className="text-error text-xl text-center">{error.message}</p>
-      ) : null} */}
+      ) : null}
     </main>
   );
 }

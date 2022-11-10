@@ -81,7 +81,7 @@ export default function CreateTemplateContainer() {
     try {
       event.preventDefault();
 
-      console.log(formState)
+      console.log(formState);
 
       const mutationRes = await addTemplate({
         variables: {
@@ -139,22 +139,43 @@ export default function CreateTemplateContainer() {
         <h1 className="font-bold text-3xl">Create A Template</h1>
       </div>
 
-      <div className="flex gap-6 mt-12 mb-10 mr-5">
-        <div className="xl:pl-72 pl-10 w-fit">
+      <div className="flex gap-6 mt-12 mb-10 mx-5">
+        <div className="xl:pl-72 w-fit">
           <div className="mb-5">
             <input
               onChange={(event) => handleChange(null, event)}
               name="templateName"
               className="h-20 text-3xl bg-background appearance-none border border-gray-600 rounded w-full py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in"
               type="text"
-              value={formState.templateName}
+              value={formState?.templateName}
               placeholder="Template Name"
             />
           </div>
 
-          <div className="h-custom-2 modal-scroll overflow-scroll pr-2">
-            <form onSubmit={(event) => handleSubmit(event)}>
-              {formState.exercises.map((exercise, index) => (
+          <div className="block md:hidden flex-col  items-center">
+            <textarea
+              onChange={(event) => handleChange(null, event)}
+              className="text-xl bg-background appearance-none border border-gray-600 rounded w-full p-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in resize-none"
+              name="templateNotes"
+              cols="30"
+              rows="5"
+              placeholder="Template notes"
+              value={formState?.templateNotes}
+            ></textarea>
+
+            <div className="flex justify-between">
+              <AddExerciseBtn addExercise={addExercise} />
+              <SaveTemplateBtn loading={loading} handleSubmit={handleSubmit} />
+            </div>
+
+            <div className="text-center text-red-400 text-lg mt-5">
+              {errorMessage ? errorMessage : null}
+            </div>
+          </div>
+
+          <div className="h-custom-2 modal-scroll overflow-scroll pr-2 pt-3 border-t border-gray-600">
+            <form className="" onSubmit={(event) => handleSubmit(event)}>
+              {formState?.exercises.map((exercise, index) => (
                 <ExerciseForm
                   key={index}
                   handleChange={handleChange}
@@ -169,7 +190,7 @@ export default function CreateTemplateContainer() {
           </div>
         </div>
 
-        <div className="flex-col w-96">
+        <div className="hidden md:block flex-col w-96">
           <textarea
             onChange={(event) => handleChange(null, event)}
             className="text-xl bg-background appearance-none border border-gray-600 rounded w-full p-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in resize-none"

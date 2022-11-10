@@ -3,16 +3,23 @@ const bcrypt = require("bcrypt");
 
 const progressSchema = mongoose.Schema({
   template: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
-  timeToComplete: String,
+  timeToComplete: {
+    type: String,
+    default: function () {
+      return "5 mins";
+    },
+  },
+  totalWeight: {
+    type: Number,
+    default: function () {
+      return 100;
+    },
+  },
   createdAt: {
     type: Date,
     default: Date.now(),
   },
 });
-
-progressSchema.virtual("totalWeight").get(function() {
-return "1000"
-})
 
 const userSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },
@@ -30,6 +37,7 @@ userSchema.pre("save", async function (next) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
+
   next();
 });
 

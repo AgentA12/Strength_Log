@@ -16,6 +16,24 @@ export const GET_TEMPLATES = gql`
     getTemplatesForUser(userId: $userId) {
       _id
       templateName
+      templateNotes
+      exercises {
+        _id
+        exerciseName
+        reps
+        sets
+        weight
+      }
+    }
+  }
+`;
+
+export const GET_TEMPLATES_PROGRESS = gql`
+  query ($userId: ID!) {
+    getTemplateProgressForUser(userId: $userId) {
+      _id
+      templateName
+      templateNotes
       exercises {
         _id
         exerciseName

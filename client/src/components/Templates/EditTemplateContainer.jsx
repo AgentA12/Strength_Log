@@ -106,10 +106,10 @@ export default function EditTemplate() {
     <>
       <div className="py-10 xl:pl-72 pl-10 border-b border-gray-600">
         <h1 className="font-bold text-3xl">
-          Edit{" "}
+         <span className="mr-3"> Edit</span>
           <span className="text-primary ml-1">
             {state.template.templateName}
-          </span>{" "}
+          </span>
         </h1>
       </div>
 
@@ -172,7 +172,7 @@ export default function EditTemplate() {
             cols="30"
             rows="10"
             placeholder="Template notes"
-            value={formState?.templateNotes}
+            value={formState.templateNotes}
           ></textarea>
 
           <div className="flex justify-between">
