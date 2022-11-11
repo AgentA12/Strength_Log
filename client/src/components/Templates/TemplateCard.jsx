@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { motion } from "framer-motion";
 import { DELETE_TEMPLATE } from "../../utils/graphql/mutations";
-import capitalizeFirstLetter from "../../utils/helpers/functions";
+import {capitalizeFirstLetter} from "../../utils/helpers/functions";
 import WorkoutModal from "../workout/WorkoutModal";
 import TemplateMenu from "./TemplateMenu";
 import CustomAlert from "../miscellaneous/CustomAlert";

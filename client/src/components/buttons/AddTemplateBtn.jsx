@@ -8,7 +8,7 @@ export default function AddTemplateBtn({setOpenNav}) {
   return (
     <Link to={"Create-Template"} onClick={() => setOpenNav(false)}>
       <motion.button whileTap={{ scale: 0.9 }}>
-        <span className="add-template-btn">
+        <span className="add-template-btn border-dotted">
           <HiPlus style={buttonStyle} size={20} /> Template
         </span>
       </motion.button>

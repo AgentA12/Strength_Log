@@ -1,39 +1,18 @@
+import { useState } from "react";
 import ProgressCard from "./ProgressCard";
 import { Link } from "react-router-dom";
-import { useQuery } from "@apollo/client";
-import { GET_TEMPLATES } from "../../utils/graphql/queries";
+import { useQuery, useLazyQuery } from "@apollo/client";
+import {
+  GET_TEMPLATES,
+  GET_TEMPLATES_PROGRESS,
+} from "../../utils/graphql/queries";
 import TemplateCard from "./TemplateCard";
 import auth from "../../utils/auth/auth";
 import LoginBtn from "../buttons/LoginBtn";
 import { Spinner } from "flowbite-react";
 
-// const cards = [
-//   {
-//     date: "Monday, October 25",
-//     totalWeight: 3055,
-//     time: "50 min",
-//     id: "dsflgk;e4tog",
-//   },
-//   {
-//     date: "Tuesday, October 26",
-//     totalWeight: 2250,
-//     time: "2 hours, 30 min",
-//     id: "dsfhjkhjkhjklgk;e4togdnfg",
-//   },
-//   {
-//     date: "Thursday, October 28",
-//     totalWeight: 3555,
-//     time: "25 min",
-//     id: "djkjksflgk;e4togdnfg",
-//   },
-//   {
-//     date: "Friday, October 29",
-//     totalWeight: 3055,
-//     id: "dsflgjkjkjk77i",
-//   },
-// ];
-
 export default function ProgressContainer() {
+  const [activeTemplate, setActiveTemplate] = useState();
   //getting users information
   if (auth.isLoggedIn()) {
     var {
@@ -46,6 +25,18 @@ export default function ProgressContainer() {
       userId: userID,
     },
   });
+
+  const [loadOneTemplate, res] = useLazyQuery(GET_TEMPLATES_PROGRESS);
+
+  function handleQuery(templateId) {
+    loadOneTemplate({
+      variables: {
+        id: templateId,
+      },
+    });
+  }
+
+  if (res.data) console.log(res);
 
   if (error) console.log(error);
 
@@ -74,6 +65,8 @@ export default function ProgressContainer() {
                 <TemplateCard
                   key={template._id}
                   template={template}
+                  handleQuery={handleQuery}
+                  res={res}
                   activeTemplate={true}
                 />
               ))}
@@ -102,9 +95,16 @@ export default function ProgressContainer() {
           </h5>
           <p className="text-white_faded font-bold mb-1">History</p>
           <div className=" flex flex-col gap-5 py-10 px-3 h-custom overflow-y-scroll modal-scroll">
-            {data?.getTemplatesForUser.map((template) => (
-              <ProgressCard card={template} key={template._id} />
-            ))}
+            {res.data?.getProgress.length ? (
+              res.data.getProgress.map((progressInfo) => (
+                <ProgressCard
+                  progressInfo={progressInfo}
+                  key={progressInfo._id}
+                />
+              ))
+            ) : (
+              <p className="">You haven't saved workouts</p>
+            )}
           </div>
         </div>
       ) : null}

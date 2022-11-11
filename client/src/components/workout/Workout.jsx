@@ -1,13 +1,13 @@
 import { Button } from "flowbite-react";
 import { useState } from "react";
 import { BsCheck2All } from "react-icons/bs";
-import capitalizeFirstLetter from "../../utils/helpers/functions";
+import { capitalizeFirstLetter } from "../../utils/helpers/functions";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Counter from "../miscellaneous/Counter";
 import FinishedModel from "./FinishedModel";
 import { motion } from "framer-motion";
-import { IoReturnUpBackOutline } from "react-icons/io5";
+//import { IoReturnUpBackOutline } from "react-icons/io5";
 
 export default function Workout() {
   const time = new Date();

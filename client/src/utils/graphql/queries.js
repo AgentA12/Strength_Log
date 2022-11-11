@@ -11,6 +11,23 @@ export const GET_EXERCISE = gql`
   }
 `;
 
+export const GET_TEMPLATE_BY_ID = gql`
+  query ($id: ID!) {
+    getTemplateById(id: $id) {
+      _id
+      templateName
+      templateNotes
+      exercises {
+        _id
+        exerciseName
+        reps
+        sets
+        weight
+      }
+    }
+  }
+`;
+
 export const GET_TEMPLATES = gql`
   query ($userId: ID!) {
     getTemplatesForUser(userId: $userId) {
@@ -29,17 +46,15 @@ export const GET_TEMPLATES = gql`
 `;
 
 export const GET_TEMPLATES_PROGRESS = gql`
-  query ($userId: ID!) {
-    getTemplateProgressForUser(userId: $userId) {
+  query ($id: ID!) {
+    getProgress(id: $id) {
+      completedAt
       _id
-      templateName
-      templateNotes
-      exercises {
+      timeToComplete
+      totalWeight
+      template {
         _id
-        exerciseName
-        reps
-        sets
-        weight
+        templateName
       }
     }
   }

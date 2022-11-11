@@ -15,7 +15,7 @@ const progressSchema = mongoose.Schema({
       return 100;
     },
   },
-  createdAt: {
+  completedAt: {
     type: Date,
     default: Date.now(),
   },
@@ -26,7 +26,6 @@ const userSchema = mongoose.Schema({
   password: { type: String, required: true },
   createdAt: {
     type: Date,
-    default: Date.now(),
   },
   templates: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
   progress: [progressSchema],

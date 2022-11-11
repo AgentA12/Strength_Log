@@ -51,6 +51,17 @@ const resolvers = {
       return user.templates;
     },
 
+    getProgress: async function (_, { id }) {
+      console.log(id)
+      const { progress } = await User.findOne({
+        "progress.template": id,
+      });
+
+      console.log(progress);
+
+      return progress;
+    },
+
     getTemplateProgressForUser: async function (_, { userId }) {
       const user = await User.findById(userId)
         .select("-password")
