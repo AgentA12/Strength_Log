@@ -1,20 +1,30 @@
 import { Alert } from "@material-tailwind/react";
+import { useState, useEffect } from "react";
 
-export default function CustomAlert({ message, showToast, setShowtoast }) {
-  return (
+export default function CustomAlert({ message }) {
+  // the alert is displayed by default
+  const [alert, setAlert] = useState(false);
+
+  useEffect(() => {
+    // when the component is mounted, the alert is displayed for 3 seconds
+    setTimeout(() => {
+      setAlert(false);
+    }, 3000);
+  }, []);
+
+  return alert ? (
     <Alert
-      className="absolute bottom-0 right-0 mb-10 w-fit mr-20 text-green-400 bg-background border border-green-400"
-      show={showToast}
+      className={`absolute bottom-0 right-0 mb-10 w-fit mr-20 bg-background border text-green-400 border-green-400`}
       animate={{
         mount: { y: 0 },
         unmount: { y: -50 },
       }}
       dismissible={{
-        onClose: () => setShowtoast(false),
+        onClose: () => setAlert(false),
       }}
       color="green"
     >
       {message}
     </Alert>
-  );
+  ) : null;
 }

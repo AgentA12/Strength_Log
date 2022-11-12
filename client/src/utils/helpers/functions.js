@@ -3,7 +3,6 @@ function capitalizeFirstLetter(string) {
 }
 
 function formatDate(date) {
-  console.log(date)
   const options = {
     weekday: "long",
     month: "long",
@@ -11,7 +10,6 @@ function formatDate(date) {
   };
   const formattedDate = date.toLocaleDateString("en-US", options);
 
-  console.log(formattedDate);
   return formattedDate;
 }
 

@@ -2,47 +2,25 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { motion } from "framer-motion";
 import { DELETE_TEMPLATE } from "../../utils/graphql/mutations";
-import {capitalizeFirstLetter} from "../../utils/helpers/functions";
+import { capitalizeFirstLetter } from "../../utils/helpers/functions";
 import WorkoutModal from "../workout/WorkoutModal";
 import TemplateMenu from "./TemplateMenu";
-import CustomAlert from "../miscellaneous/CustomAlert";
 
 export default function TemplateCard({ template, refetch }) {
   const [isWorkoutModalOpen, setIsWorkoutModalOpen] = useState(false);
-  const [showToast, setShowtoast] = useState(false);
 
-  const [deleteTemplate] = useMutation(DELETE_TEMPLATE);
+  const [deleteTemplate, { data, loading, error }] =
+    useMutation(DELETE_TEMPLATE);
 
-  async function handleDeleteTemplate(event) {
-    event.stopPropagation();
+  if (data) refetch();
 
-    const deleteTemplateRes = await deleteTemplate({
-      variables: {
-        templateId: template._id,
-      },
-    });
-
-    if (deleteTemplateRes) {
-      refetch();
-      setShowtoast(true);
-      setTimeout(() => {
-        setShowtoast(false);
-      }, 3000);
-    }
-  }
+  if (error) console.log(error);
 
   return (
     <>
-      <CustomAlert
-        message={`${template.templateName} was removed`}
-        showToast={showToast}
-        setShowtoast={setShowtoast}
-      />
       <motion.div
         layout
-        initial={{scale: .9,
-          opacity: 0,
-        }}
+        initial={{ scale: 0.9, opacity: 0 }}
         animate={{
           scale: 1,
           opacity: 1,
@@ -57,11 +35,7 @@ export default function TemplateCard({ template, refetch }) {
           <h4 className="custom-ellipsis-title font-bold text-2xl mr-2">
             {template.templateName.toLocaleUpperCase()}
           </h4>
-          <TemplateMenu
-            handleDeleteTemplate={handleDeleteTemplate}
-            template={template}
-            refetch={refetch}
-          />
+          <TemplateMenu template={template} deleteTemplate={deleteTemplate} />
         </div>
 
         <div className="mt-5 mr-2">

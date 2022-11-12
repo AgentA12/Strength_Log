@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-function SaveTemplateBtn({  handleSubmit }) {
+export default function SaveTemplateBtn({ handleSubmit }) {
   return (
     <motion.button
       onClick={handleSubmit}
@@ -12,5 +12,3 @@ function SaveTemplateBtn({  handleSubmit }) {
     </motion.button>
   );
 }
-
-export default SaveTemplateBtn;

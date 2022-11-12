@@ -8,11 +8,9 @@ import LoginBtn from "../buttons/LoginBtn";
 
 export default function TemplateContainer() {
   //getting user info
-  if (auth.isLoggedIn()) {
-    var {
-      data: { _id: userID },
-    } = auth.getInfo();
-  }
+  var {
+    data: { _id: userID },
+  } = auth.getInfo();
 
   const { loading, error, data, refetch } = useQuery(GET_TEMPLATES, {
     variables: {

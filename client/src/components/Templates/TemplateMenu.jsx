@@ -7,7 +7,7 @@ import {
 import { Link } from "react-router-dom";
 import { FaTrash, FaEdit } from "react-icons/fa";
 
-export default function TemplateMenu({ template, handleDeleteTemplate }) {
+export default function TemplateMenu({ template, deleteTemplate }) {
   const menuList = (
     <MenuList
       className="bg-overlay_two border-none  shadow-none text-white_faded"
@@ -27,7 +27,13 @@ export default function TemplateMenu({ template, handleDeleteTemplate }) {
       </MenuItem>
       <MenuItem
         className="hover:bg-overlay hover:text-error "
-        onClick={(event) => [handleDeleteTemplate(event)]}
+        onClick={() => {
+          deleteTemplate({
+            variables: {
+              templateId: template._id,
+            },
+          });
+        }}
       >
         <span className="flex items-center gap-1 py-2 px-4">
           <FaTrash size={14} />

@@ -88,7 +88,8 @@ export const ADD_EXERCISE = gql`
 export const DELETE_TEMPLATE = gql`
   mutation ($templateId: ID!) {
     deleteTemplate(templateId: $templateId) {
-      templateName
+      acknowledged
+      deleteCount
     }
   }
 `;
@@ -123,7 +124,7 @@ export const EDIT_TEMPLATE = gql`
 export const SAVE_WORKOUT = gql`
   mutation ($templateId: ID!, $userID: ID!) {
     saveWorkout(templateId: $templateId, userID: $userID) {
-      templateName
+      username
     }
   }
 `;

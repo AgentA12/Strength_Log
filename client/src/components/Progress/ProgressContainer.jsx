@@ -36,8 +36,6 @@ export default function ProgressContainer() {
     });
   }
 
-  if (res.data) console.log(res);
-
   if (error) console.log(error);
 
   if (loading)

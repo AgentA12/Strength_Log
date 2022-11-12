@@ -81,8 +81,6 @@ export default function CreateTemplateContainer() {
     try {
       event.preventDefault();
 
-      console.log(formState);
-
       const mutationRes = await addTemplate({
         variables: {
           ...formState,

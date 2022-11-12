@@ -60,6 +60,11 @@ const typeDefs = gql`
     totalWeight: String
   }
 
+  type isDeleted {
+    acknowledged: Boolean
+    deleteCount: Int
+  }
+
   type Query {
     getExercise: [Exercise]
     getUserById(_id: ID!): User
@@ -87,8 +92,8 @@ const typeDefs = gql`
       exercises: [editExerciseInput!]
     ): Template
     createExercise(name: String!, sets: Int!, reps: Int!): Exercise
-    deleteTemplate(templateId: ID!): Template
-    saveWorkout(templateId: ID!, userID: ID!): Template
+    deleteTemplate(templateId: ID!): isDeleted
+    saveWorkout(templateId: ID!, userID: ID!): User
   }
 `;
 

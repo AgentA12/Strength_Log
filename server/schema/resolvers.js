@@ -52,12 +52,9 @@ const resolvers = {
     },
 
     getProgress: async function (_, { id }) {
-      console.log(id)
       const { progress } = await User.findOne({
         "progress.template": id,
       });
-
-      console.log(progress);
 
       return progress;
     },
@@ -207,23 +204,21 @@ const resolvers = {
     },
 
     deleteTemplate: async function (_, { templateId }) {
-      await Template.deleteOne({ _id: templateId });
+      const res = await Template.deleteOne({ _id: templateId });
+
+      return res;
     },
 
     saveWorkout: async function (_, args) {
-      const data = await User.findByIdAndUpdate(args.userID, {
+      await User.findByIdAndUpdate(args.userID, {
         $push: {
           progress: { template: args.templateId },
         },
-      }).populate({
-        path: "templates",
-        populate: {
-          path: "exercises",
-          model: "Exercise",
-        },
       });
 
-      console.log(data);
+      const progressAry = await User.find({
+        "progress.template": args.templateId,
+      }).populate("templates");
     },
   },
 };
