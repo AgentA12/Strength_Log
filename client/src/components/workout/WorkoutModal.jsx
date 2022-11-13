@@ -10,11 +10,9 @@ export default function WorkoutModal({
   isWorkoutModalOpen,
   setIsWorkoutModalOpen,
 }) {
-  if (auth.isLoggedIn()) {
-    var {
-      data: { _id: userID },
-    } = auth.getInfo();
-  }
+  const {
+    data: { _id: userID },
+  } = auth.getInfo();
 
   function handleClick() {
     setIsWorkoutModalOpen(!isWorkoutModalOpen);
@@ -37,7 +35,9 @@ export default function WorkoutModal({
         className="modal-body add-modal-height modal-scroll mx-2"
       >
         <div className="flex items-end justify-end">
-          <span className="custom-ellipsis-title text-3xl font-bold mr-3">{template.templateName}</span>
+          <span className="custom-ellipsis-title text-3xl font-bold mr-3">
+            {template.templateName}
+          </span>
 
           <button
             onClick={handleClick}
@@ -61,7 +61,9 @@ export default function WorkoutModal({
             <span className="sr-only">Close modal</span>
           </button>
         </div>
-        <div className="mt-4">{template.templateNotes.trim() ? "- ": null} {template.templateNotes}</div>
+        <div className="mt-4">
+          {template.templateNotes.trim() ? "- " : null} {template.templateNotes}
+        </div>
 
         <div className="p-5">
           {template.exercises.map((exercise, i) => (

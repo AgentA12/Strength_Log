@@ -1,25 +1,25 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
-const progressSchema = mongoose.Schema({
-  template: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
-  timeToComplete: {
-    type: String,
-    default: function () {
-      return "5 mins";
+const progressSchema = mongoose.Schema(
+  {
+    template: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
+
+    timeToComplete: {
+      type: String,
+      default: function () {
+        return "5 mins";
+      },
+    },
+    totalWeight: {
+      type: Number,
+      default: function () {
+        return 100;
+      },
     },
   },
-  totalWeight: {
-    type: Number,
-    default: function () {
-      return 100;
-    },
-  },
-  completedAt: {
-    type: Date,
-    default: Date.now(),
-  },
-});
+  { timestamps: true }
+);
 
 const userSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },

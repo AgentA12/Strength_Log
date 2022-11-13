@@ -100,9 +100,12 @@ export default function ExerciseForm({
           onChange={(event) => handleChange(index, event)}
           name="type"
           className="w-6/12 bg-background appearance-none border border-gray-600 rounded py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in"
+          defaultValue={"Barbell"}
+          value={formState.exercises[index].type}
         >
           <option
-            defaultValue={"Other"}
+            defaultValue={"Barbell"}
+            value
             disabled
             hidden
             className="text-gray-600"
@@ -112,7 +115,7 @@ export default function ExerciseForm({
           <option value="Barbell">Barbell</option>
           <option value="Dumbell">Dumbell</option>
           <option value="Machine">Machine</option>
-          <option value="Machine">Body weight</option>
+          <option value="Body weight">Body weight</option>
           <option value="Other">Other</option>
         </select>
         {/* if rendering the first exercise, dont show the remove exercise button */}

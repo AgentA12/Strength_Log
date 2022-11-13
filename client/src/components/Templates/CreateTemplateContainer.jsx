@@ -71,7 +71,7 @@ export default function CreateTemplateContainer() {
           sets: "",
           reps: "",
           weight: "",
-          type: "",
+          type: "Barbell",
         },
       ],
     });
@@ -109,7 +109,7 @@ export default function CreateTemplateContainer() {
       sets: "",
       reps: "",
       weight: "",
-      type: "",
+      type: "Barbell",
     };
 
     const data = { ...formState };

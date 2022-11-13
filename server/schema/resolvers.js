@@ -1,7 +1,7 @@
 const { User, Template, Exercise } = require("../models/index");
 const { AuthenticationError } = require("apollo-server");
-const CustomError = require("../utils/customErrors");
 const { signToken } = require("../utils/auth");
+const { modelName } = require("../models/user");
 
 const resolvers = {
   Query: {
@@ -52,9 +52,22 @@ const resolvers = {
     },
 
     getProgress: async function (_, { id }) {
-      const { progress } = await User.findOne({
-        "progress.template": id,
+      const template = await Template.findById(id);
+
+      const res = await User.find().populate({
+        path: "progress.template",
+        model: "Template",
+        populate: {
+          path: "exercises",
+          model: "Exercise",
+        },
       });
+
+      const progress = res[0].progress.filter(
+        (processObj) => processObj.template[0]._id.toString() == id
+      );
+
+      progress[0].templateName = template.templateName;
 
       return progress;
     },
@@ -216,9 +229,16 @@ const resolvers = {
         },
       });
 
-      const progressAry = await User.find({
-        "progress.template": args.templateId,
-      }).populate("templates");
+      const progressAry = await User.find().populate({
+        path: "progress.template",
+        model: "Template",
+        populate: {
+          path: "exercises",
+          model: "Exercise",
+        },
+      });
+
+      return progressAry;
     },
   },
 };

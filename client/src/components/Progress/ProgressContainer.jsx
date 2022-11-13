@@ -12,13 +12,11 @@ import LoginBtn from "../buttons/LoginBtn";
 import { Spinner } from "flowbite-react";
 
 export default function ProgressContainer() {
-  const [activeTemplate, setActiveTemplate] = useState();
-  //getting users information
-  if (auth.isLoggedIn()) {
-    var {
-      data: { _id: userID },
-    } = auth.getInfo();
-  }
+  const [activeTemplate, setActiveTemplate] = useState("");
+
+  const {
+    data: { _id: userID },
+  } = auth.getInfo();
 
   const { loading, error, data } = useQuery(GET_TEMPLATES, {
     variables: {
@@ -35,6 +33,8 @@ export default function ProgressContainer() {
       },
     });
   }
+
+  if (res) console.log(res);
 
   if (error) console.log(error);
 
@@ -65,7 +65,8 @@ export default function ProgressContainer() {
                   template={template}
                   handleQuery={handleQuery}
                   res={res}
-                  activeTemplate={true}
+                  activeTemplate={activeTemplate}
+                  setActiveTemplate={setActiveTemplate}
                 />
               ))}
             </div>
@@ -89,7 +90,7 @@ export default function ProgressContainer() {
       {auth.isLoggedIn() ? (
         <div className=" mr-40 md:ml-52 my-5 pb-10 w-fit pr-20">
           <h5 className="text-white font-extrabold text-3xl mb-2">
-            Upper Body Monday
+            res.data.getProgress
           </h5>
           <p className="text-white_faded font-bold mb-1">History</p>
           <div className=" flex flex-col gap-5 py-10 px-3 h-custom overflow-y-scroll modal-scroll">

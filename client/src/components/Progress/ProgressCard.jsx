@@ -4,7 +4,7 @@ import { BiTime } from "react-icons/bi";
 
 export default function ProgressCard({ progressInfo }) {
   return (
-    <div className="bg-overlay rounded-lg p-5 shadow-sm shadow-black ">
+    <div className="bg-overlay rounded-lg p-5 shadow-sm shadow-black">
       <div className="flex justify-between gap-5">
         <p className="text-2xl font-bold tracking-tight text-white mb-3">
           {Date(progressInfo.completedAt)}
