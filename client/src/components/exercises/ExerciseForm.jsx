@@ -99,7 +99,7 @@ export default function ExerciseForm({
         <select
           onChange={(event) => handleChange(index, event)}
           name="type"
-          className="w-6/12 bg-background appearance-none border border-gray-600 rounded py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in"
+          className="w-6/12 bg-background appearance-none border border-gray-600 rounded py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in mr-5"
           defaultValue={"Barbell"}
           value={formState.exercises[index].type}
         >
