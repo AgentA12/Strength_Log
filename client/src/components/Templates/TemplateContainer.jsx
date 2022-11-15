@@ -2,12 +2,17 @@ import TemplateCard from "./TemplateCard";
 import auth from "../../utils/auth/auth";
 import { useQuery } from "@apollo/client";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
-import { Link } from "react-router-dom";
-import { Spinner } from "flowbite-react";
-import LoginBtn from "../buttons/LoginBtn";
+import { useState } from "react";
+import Spinner from "../miscellaneous/Spinner";
+import Pagination from "../miscellaneous/Pagination";
 
 export default function TemplateContainer() {
-  //getting user info
+  const [currentPage, setCurrentPage] = useState(1);
+  const [templatesPerPage] = useState(8);
+
+  const indexOfLastTemplate = currentPage * templatesPerPage;
+  const indexOfFirstTemplate = indexOfLastTemplate - templatesPerPage;
+
   var {
     data: { _id: userID },
   } = auth.getInfo();
@@ -18,57 +23,58 @@ export default function TemplateContainer() {
     },
   });
 
+  const currentTemplates = data?.getTemplatesForUser.slice(
+    indexOfFirstTemplate,
+    indexOfLastTemplate
+  );
+
+  function paginate(number) {
+    setCurrentPage(number);
+  }
+
   function displayQueryState() {
-    //is user logged in?
-    return auth.isLoggedIn() ? (
-      //is the query loading?
-      loading ? (
-        <div className="flex gap-2 items-center justify-center mt-10">
-          <Spinner
-            size="lg"
-            color="purple"
-            aria-label="Purple spinner example"
-          />
-        </div>
-      ) : //does the array of templates have length?
-      data?.getTemplatesForUser.length ? (
-        data?.getTemplatesForUser.map((template) => (
-          <TemplateCard
-            template={template}
-            refetch={refetch}
-            key={template._id}
-          />
-        ))
-      ) : (
-        //if the array does not have templates
-        <p className="text-center mt-5">You have no templates</p>
-      )
-    ) : (
-      //if the user is not logged in
-      <div className="flex gap-4 justify-center items-center">
-        <p className="text-xl font-extralight">Log in to see your templates</p>
-        <Link to={"/Login"}>
-          <LoginBtn />
-        </Link>
+    // is the query loading?
+    return loading ? (
+      <div className="flex gap-2 items-center justify-center mt-10">
+        <Spinner />
       </div>
+    ) : // does the array of templates have length?
+    currentTemplates.length ? (
+      currentTemplates.map((template) => (
+        <TemplateCard
+          template={template}
+          refetch={refetch}
+          key={template._id}
+        />
+      ))
+    ) : (
+      //if the array does not have templates
+      <p className="text-center mt-5">You have no templates</p>
     );
   }
 
   return (
     <main className="mx-10 my-10">
-      <div className="text-center">
-        <h2 className="text-primary font-extrabold text-3xl sm:text-5xl">
-          Your Templates
-        </h2>
-      </div>
-
-      <div className="flex flex-wrap justify-center gap-5 mt-6">
-        {displayQueryState()}
-      </div>
+      <h2 className="text-center text-primary font-extrabold text-3xl sm:text-5xl">
+        Your Templates
+      </h2>
 
       {error ? (
         <p className="text-error text-xl text-center">{error.message}</p>
-      ) : null}
+      ) : (
+        <>
+          <Pagination
+            templatesPerPage={templatesPerPage}
+            totalTemplates={data?.getTemplatesForUser.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
+
+          <div className="flex flex-wrap justify-center gap-5 mt-6">
+            {displayQueryState()}
+          </div>
+        </>
+      )}
     </main>
   );
 }

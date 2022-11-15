@@ -9,7 +9,7 @@ import {
 import TemplateCard from "./TemplateCard";
 import auth from "../../utils/auth/auth";
 import LoginBtn from "../buttons/LoginBtn";
-import { Spinner } from "flowbite-react";
+import Spinner from "../miscellaneous/Spinner";
 
 export default function ProgressContainer() {
   const [activeTemplate, setActiveTemplate] = useState();
