@@ -228,8 +228,8 @@ const resolvers = {
           progress: { template: args.templateId },
         },
       });
-
-      const progressAry = await User.find().populate({
+ 
+      const progressAry = await User.findById(args.userID).populate({
         path: "progress.template",
         model: "Template",
         populate: {
@@ -237,6 +237,8 @@ const resolvers = {
           model: "Exercise",
         },
       });
+
+      console.log(progressAry)
 
       return progressAry;
     },
