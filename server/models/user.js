@@ -7,19 +7,24 @@ const progressSchema = mongoose.Schema(
 
     timeToComplete: {
       type: String,
-      default: function () {
-        return "5 mins";
-      },
+      default: "1 hour 30 min's",
     },
-    totalWeight: {
-      type: Number,
-      default: function () {
-        return 100;
-      },
+
+    dateCompleted: {
+      type: String,
+      default: new Date().toLocaleDateString("en-us", {
+        weekday: "long",
+        month: "short",
+        day: "numeric",
+      }),
     },
   },
-  { timestamps: true }
+  { timeStamps: true }
 );
+
+progressSchema.virtual("totalWeight").get(function () {
+  return this;
+});
 
 const userSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },

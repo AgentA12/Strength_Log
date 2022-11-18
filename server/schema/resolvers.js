@@ -223,13 +223,16 @@ const resolvers = {
     },
 
     saveWorkout: async function (_, args) {
-      await User.findByIdAndUpdate(args.userID, {
-        $push: {
-          progress: { template: args.templateId },
+      const { progress } = await User.findByIdAndUpdate(
+        args.userID,
+        {
+          $push: {
+            progress: { template: args.templateId },
+          },
         },
-      });
- 
-      const progressAry = await User.findById(args.userID).populate({
+
+        { new: true }
+      ).populate({
         path: "progress.template",
         model: "Template",
         populate: {
@@ -238,9 +241,9 @@ const resolvers = {
         },
       });
 
-      console.log(progressAry)
+      //progress.map(p => console.log(p.template + '\n'))
 
-      return progressAry;
+      return progress;
     },
   },
 };

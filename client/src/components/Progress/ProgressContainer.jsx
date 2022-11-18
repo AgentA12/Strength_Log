@@ -24,13 +24,15 @@ export default function ProgressContainer() {
 
   const [loadOneTemplate, res] = useLazyQuery(GET_TEMPLATES_PROGRESS);
 
-  function handleQuery(templateId) {
-    loadOneTemplate({
+  async function handleQuery(templateId) {
+    await loadOneTemplate({
       variables: {
         id: templateId,
       },
     });
   }
+
+  if (res) console.log(res);
 
   if (error) console.log(error);
 
@@ -67,7 +69,7 @@ export default function ProgressContainer() {
           </div>
         ) : (
           <p className="text-xl font-extralight mt-3">
-            You haven't saved any Workouts
+            You haven't saved any templates
           </p>
         )}
       </div>
@@ -76,7 +78,7 @@ export default function ProgressContainer() {
         <h5 className="text-white font-extrabold text-3xl mb-2">
           {activeTemplate}
         </h5>
-        <p className="text-white_faded font-bold mb-1">History</p>
+
         <div className=" flex flex-col gap-5 py-10 px-3 h-custom overflow-y-scroll modal-scroll">
           {res.data?.getProgress.length ? (
             res.data.getProgress.map((progressInfo) => (

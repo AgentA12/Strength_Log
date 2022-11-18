@@ -36,7 +36,7 @@ export default function ExerciseForm({
           <input
             onChange={(event) => handleChange(index, event)}
             name="exerciseName"
-            className=" bg-background appearance-none border border-gray-600 rounded w-full py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors  ease-in"
+            className=" bg-background appearance-none border border-gray-600 rounded w-full py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in"
             type="text"
             value={formState.exercises[index].exerciseName}
           />

@@ -56,8 +56,10 @@ const typeDefs = gql`
     _id: ID
     template: [Template]
     createdAt: String
+    updatedAt: String
     timeToComplete: String
     totalWeight: String
+    dateCompleted: String
   }
 
   type isDeleted {
