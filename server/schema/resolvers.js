@@ -166,6 +166,8 @@ const resolvers = {
           templateNotes: templateNotes,
         });
 
+        console.log( _id, templateName, templateNotes, exercises )
+
         const template = await Template.findById(_id).populate("exercises");
 
         //checks to see if an exercise is removed and saves removed exercises to variable

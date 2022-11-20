@@ -1,29 +1,38 @@
 import React from "react";
-import { Button, Modal } from "flowbite-react";
 import { GiPartyPopper } from "react-icons/gi";
+import { Dialog, DialogHeader, DialogFooter } from "@material-tailwind/react";
 
 function FinishedModel({ isOpen, setIsOpen }) {
   return (
     <React.Fragment>
-      <Modal color="grey" show={isOpen} size="md" popup={true}>
-        <Modal.Header
-          onClick={() => {
-            setIsOpen(!isOpen);
-          }}
-        />
-        <Modal.Body>
-          <div className="text-center">
-            <GiPartyPopper color="green" className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
-            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-              Finish your workout?
-            </h3>
-            <div className="flex justify-center gap-4">
-              <Button>Yes, I'm sure</Button>
-              <Button color="gray">No</Button>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
+      <Dialog
+        open={isOpen}
+        handler={setIsOpen}
+        animate={{
+          mount: { scale: 1, y: 0 },
+          unmount: { scale: 0.9, y: -100 },
+        }}
+        className="bg-overlay"
+      >
+        <DialogHeader className="text-white_faded justify-center">
+          Finish Workout ?
+        </DialogHeader>
+
+        <DialogFooter className="justify-between">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="text-error mr-1 bg-transparent py-2 px-4 border border-error hover:border-opacity-10 hover:bg-opacity-10 hover:bg-error rounded transition-colors ease-in"
+          >
+            <span>Cancel</span>
+          </button>
+          <button
+            className="save-workout-btn gap-3"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <GiPartyPopper size={32} /> <span>Confirm</span>
+          </button>
+        </DialogFooter>
+      </Dialog>
     </React.Fragment>
   );
 }

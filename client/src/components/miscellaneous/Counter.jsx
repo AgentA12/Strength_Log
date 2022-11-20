@@ -1,7 +1,7 @@
 import { useStopwatch } from "react-timer-hook";
 
 export default function Counter() {
-  const { seconds, minutes, hours, days, isRunning, pause } = useStopwatch({
+  const { seconds, minutes, hours, isRunning, pause } = useStopwatch({
     autoStart: true,
   });
 
