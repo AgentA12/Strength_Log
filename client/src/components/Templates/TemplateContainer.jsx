@@ -5,11 +5,14 @@ import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import { useState } from "react";
 import Spinner from "../miscellaneous/Spinner";
 import Pagination from "../miscellaneous/Pagination";
+import { DELETE_TEMPLATE } from "../../utils/graphql/mutations";
+import { useMutation } from "@apollo/client";
 
 export default function TemplateContainer() {
   const [currentPage, setCurrentPage] = useState(1);
   const [templatesPerPage] = useState(8);
-
+  const [deleteTemplate, { deleteData, deleteError }] =
+    useMutation(DELETE_TEMPLATE);
   const indexOfLastTemplate = currentPage * templatesPerPage;
   const indexOfFirstTemplate = indexOfLastTemplate - templatesPerPage;
 
@@ -23,13 +26,25 @@ export default function TemplateContainer() {
     },
   });
 
-  const currentTemplates = data?.getTemplatesForUser.slice(
+  let currentTemplates = data?.getTemplatesForUser.slice(
     indexOfFirstTemplate,
     indexOfLastTemplate
   );
 
+  console.log(currentTemplates)
+
   function paginate(number) {
     setCurrentPage(number);
+  }
+
+  async function handleTemplateDelete(templateId) {
+    await deleteTemplate({
+      variables: {
+        templateId: templateId,
+      },
+    });
+
+    refetch();
   }
 
   function displayQueryState() {
@@ -45,6 +60,7 @@ export default function TemplateContainer() {
           template={template}
           refetch={refetch}
           key={template._id}
+          handleTemplateDelete={handleTemplateDelete}
         />
       ))
     ) : (

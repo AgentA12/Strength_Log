@@ -20,7 +20,14 @@ export default function App() {
       <Nav activeNav={pathname.replace("/", "")} />
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/Login" element={<Login />} />
+        <Route
+          path="/Login"
+          element={
+            <Protected isLoggedIn={isLoggedIn}>
+              <TemplateContainer />
+            </Protected>
+          }
+        />
         <Route path="/Signup" element={<Signup />} />
         <Route
           path="/Templates"
@@ -57,14 +64,14 @@ export default function App() {
           }
         />
 
-        <Route
+        {/* <Route
           path="/Workout"
           element={
             <Protected isLoggedIn={isLoggedIn}>
               <Workout />
             </Protected>
           }
-        />
+        /> */}
       </Routes>
     </>
   );

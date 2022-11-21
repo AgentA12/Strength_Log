@@ -1,20 +1,15 @@
 import { useState } from "react";
-import { useMutation } from "@apollo/client";
 import { motion } from "framer-motion";
-import { DELETE_TEMPLATE } from "../../utils/graphql/mutations";
 import { capitalizeFirstLetter } from "../../utils/helpers/functions";
 import WorkoutModal from "../workout/WorkoutModal";
 import TemplateMenu from "./TemplateMenu";
 
-export default function TemplateCard({ template, refetch }) {
+export default function TemplateCard({
+  template,
+  refetch,
+  handleTemplateDelete,
+}) {
   const [isWorkoutModalOpen, setIsWorkoutModalOpen] = useState(false);
-
-  const [deleteTemplate, { data, loading, error }] =
-    useMutation(DELETE_TEMPLATE);
-
-  if (data) refetch();
-
-  if (error) console.log(error);
 
   return (
     <>
@@ -35,7 +30,10 @@ export default function TemplateCard({ template, refetch }) {
           <h4 className="custom-ellipsis-title font-bold text-2xl mr-2">
             {template.templateName.toLocaleUpperCase()}
           </h4>
-          <TemplateMenu template={template} deleteTemplate={deleteTemplate} />
+          <TemplateMenu
+            template={template}
+            handleTemplateDelete={handleTemplateDelete}
+          />
         </div>
 
         <div className="mt-5 mr-2">

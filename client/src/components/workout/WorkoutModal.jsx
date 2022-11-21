@@ -4,8 +4,8 @@ import auth from "../../utils/auth/auth";
 import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
 import { useMutation } from "@apollo/client";
 import { motion } from "framer-motion";
-import StartWorkoutBtn from "../buttons/StartWorkoutBtn";
-import SaveWorkoutBtn from "../buttons/SaveWorkoutBtn";
+// import StartWorkoutBtn from "../buttons/StartWorkoutBtn";
+import SaveWorkoutBtn from "../buttons/SaveWorkoutBtn.jsx";
 
 export default function WorkoutModal({
   template,
@@ -100,7 +100,7 @@ export default function WorkoutModal({
           ))}
         </div>
         <div className="flex flex-wrap md:flex-nowrap justify-center gap-3">
-          <StartWorkoutBtn template={template} />
+          {/* <StartWorkoutBtn template={template} /> */}
           <SaveWorkoutBtn
             loading={loading}
             handleSaveWorkout={handleSaveWorkout}
