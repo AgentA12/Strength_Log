@@ -4,6 +4,7 @@ import { useMutation } from "@apollo/client";
 import { useState } from "react";
 
 export default function SaveWorkoutBtn({ userID, template }) {
+  console.log('rendered saveworkoutbtn')
   const [errorMessage, setErrorMessage] = useState();
   const [buttonText, setButtonText] = useState("Save as complete");
   const [saveWorkoutFunction, { loading, error }] = useMutation(SAVE_WORKOUT);
@@ -29,17 +30,20 @@ export default function SaveWorkoutBtn({ userID, template }) {
       console.log(error);
       setErrorMessage(error.message);
     }
+
+    return (
+      <button onClick={() => handleSave()} className="save-workout-btn w-full">
+        <span
+          className={`${
+            buttonText === "Saved!"
+              ? "cursor-not-allowed bg-opacity-0 group-hover:bg-none"
+              : "group-hover:bg-opacity-0"
+          } flex gap-5 w-full justify-center items-center relative px-5 py-2.5 transition-all ease-in duration-75 rounded-md `}
+        >
+          {buttonText}
+          {loading ? <Spinner color={"green-500"} className="pl-4" /> : null}
+        </span>
+      </button>
+    );
   }
 }
-
-export default function SaveWorkoutBtn({ loading, handleSaveWorkout }) {
-  return (
-    <button onClick={handleSave} className="save-workout-btn w-full">
-      <span className={`${buttonText === "Saved!" ? "cursor-not-allowed bg-opacity-0 group-hover:bg-none" : "group-hover:bg-opacity-0" } flex gap-5 w-full justify-center items-center relative px-5 py-2.5 transition-all ease-in duration-75 rounded-md `}>
-        {buttonText}
-        {loading ? <Spinner color={"green-500"} className="pl-4" /> : null}
-      </span>
-    </button>
-  );
-}
-

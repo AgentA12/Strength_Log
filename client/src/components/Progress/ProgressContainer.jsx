@@ -7,12 +7,8 @@ import {
 } from "../../utils/graphql/queries";
 import TemplateCard from "./TemplateCard";
 import auth from "../../utils/auth/auth";
-<<<<<<< HEAD
 import LoginBtn from "../buttons/LoginBtn";
 import Spinner from "../miscellaneous/Spinner";
-=======
-import { Spinner } from "flowbite-react";
->>>>>>> progress-feature
 
 export default function ProgressContainer() {
   const [activeTemplate, setActiveTemplate] = useState("Select A Template");

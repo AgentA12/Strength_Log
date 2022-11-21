@@ -2,13 +2,9 @@ import TemplateCard from "./TemplateCard";
 import auth from "../../utils/auth/auth";
 import { useQuery } from "@apollo/client";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
-<<<<<<< HEAD
 import { useState } from "react";
 import Spinner from "../miscellaneous/Spinner";
 import Pagination from "../miscellaneous/Pagination";
-=======
-import { Spinner } from "flowbite-react";
->>>>>>> progress-feature
 
 export default function TemplateContainer() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,7 +33,6 @@ export default function TemplateContainer() {
   }
 
   function displayQueryState() {
-<<<<<<< HEAD
     // is the query loading?
     return loading ? (
       <div className="flex gap-2 items-center justify-center mt-10">
@@ -46,16 +41,6 @@ export default function TemplateContainer() {
     ) : // does the array of templates have length?
     currentTemplates.length ? (
       currentTemplates.map((template) => (
-=======
-    //is the query loading?
-    return loading ? (
-      <div className="flex gap-2 items-center justify-center mt-10">
-        <Spinner size="lg" color="purple" aria-label="Purple spinner example" />
-      </div>
-    ) : //does the array of templates have length?
-    data?.getTemplatesForUser.length ? (
-      data?.getTemplatesForUser.map((template) => (
->>>>>>> progress-feature
         <TemplateCard
           template={template}
           refetch={refetch}
@@ -63,13 +48,8 @@ export default function TemplateContainer() {
         />
       ))
     ) : (
-<<<<<<< HEAD
-      //if the array does not have templates
-      <p className="text-center mt-5">You have no templates</p>
-=======
       //if the array does not contain templates
       <p className="text-center mt-5">You have no templates saved</p>
->>>>>>> progress-feature
     );
   }
 
