@@ -72,8 +72,7 @@ export default function Signup() {
           </div>
           <button
             type="submit"
-            className="w-full text-background bg-gradient-to-r from-primary via-primary to-primary_faded hover:bg-gradient-to-br focus:ring-4 focus:outline-none 
-                focus:ring-primary_faded font-medium rounded-lg px-5 py-2.5 mb-4"
+            className="mb-2 bg-overlay  text-primary_faded  py-2 px-4 border border-gray-600 rounded shadow hover:bg-primary_faded hover:bg-opacity-10 hover:border-opacity-10 hover:border-primary_faded transition-colors duration-100 whitespace-nowrap w-full text-center"
           >
             Signup
           </button>

@@ -166,7 +166,7 @@ const resolvers = {
           templateNotes: templateNotes,
         });
 
-        console.log( _id, templateName, templateNotes, exercises )
+        console.log(_id, templateName, templateNotes, exercises);
 
         const template = await Template.findById(_id).populate("exercises");
 
@@ -212,15 +212,21 @@ const resolvers = {
     },
 
     saveWorkout: async function (_, args) {
-      await User.findByIdAndUpdate(args.userID, {
-        $push: {
-          progress: { template: args.templateId },
-        },
-      });
+      try {
+        await User.findByIdAndUpdate(args.userID, {
+          $push: {
+            progress: { template: args.templateId },
+          },
+        });
 
-      const progressAry = await User.find({
-        "progress.template": args.templateId,
-      }).populate("templates");
+        const progressAry = await User.find({
+          "progress.template": args.templateId,
+        }).populate("templates");
+
+        return { username: progressAry[0].username };
+      } catch (error) {
+        return error;
+      }
     },
   },
 };
