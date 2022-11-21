@@ -71,7 +71,7 @@ export default function CreateTemplateContainer() {
           sets: "",
           reps: "",
           weight: "",
-          type: "",
+          type: "Barbell",
         },
       ],
     });
@@ -109,7 +109,7 @@ export default function CreateTemplateContainer() {
       sets: "",
       reps: "",
       weight: "",
-      type: "",
+      type: "Barbell",
     };
 
     const data = { ...formState };
@@ -133,12 +133,12 @@ export default function CreateTemplateContainer() {
 
   return (
     <>
-      <div className="py-10 xl:pl-72 pl-10 border-b border-gray-600">
-        <h1 className="font-bold text-3xl">Create A Template</h1>
+      <div className="py-10 3xl:pl-72 md:pl-10 border-b border-gray-600">
+        <h1 className="font-bold text-3xl text-center md:text-left">Create A Template</h1>
       </div>
 
       <div className="flex gap-6 mt-12 mb-10 mx-5">
-        <div className="xl:pl-72 w-fit">
+        <div className="3xl:pl-72 w-fit">
           <div className="mb-5">
             <input
               onChange={(event) => handleChange(null, event)}

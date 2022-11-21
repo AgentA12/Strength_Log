@@ -1,6 +1,8 @@
 import { Fragment } from "react";
 
 import auth from "../../utils/auth/auth";
+import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
+import { useMutation } from "@apollo/client";
 import { motion } from "framer-motion";
 import StartWorkoutBtn from "../buttons/StartWorkoutBtn";
 import SaveWorkoutBtn from "../buttons/SaveWorkoutBtn";
@@ -10,7 +12,22 @@ export default function WorkoutModal({
   isWorkoutModalOpen,
   setIsWorkoutModalOpen,
 }) {
-  var {
+  const [saveWorkoutFunction, { loading, error }] = useMutation(SAVE_WORKOUT);
+
+  async function handleSaveWorkout() {
+    try {
+      const res = await saveWorkoutFunction({
+        variables: {
+          templateId: template._id,
+          userID: userID,
+        },
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const {
     data: { _id: userID },
   } = auth.getInfo();
 
@@ -64,7 +81,6 @@ export default function WorkoutModal({
         <div className="mt-4">
           {template.templateNotes.trim() ? "- " : null} {template.templateNotes}
         </div>
-
         <div className="p-5">
           {template.exercises.map((exercise, i) => (
             <Fragment key={exercise.exerciseName}>
@@ -83,11 +99,14 @@ export default function WorkoutModal({
             </Fragment>
           ))}
         </div>
-
         <div className="flex flex-wrap md:flex-nowrap justify-center gap-3">
           <StartWorkoutBtn template={template} />
-          <SaveWorkoutBtn template={template} userID={userID} />
+          <SaveWorkoutBtn
+            loading={loading}
+            handleSaveWorkout={handleSaveWorkout}
+          />
         </div>
+        {error ? <div className="text-error">{error.message}</div> : null}
       </motion.div>
     </div>
   );

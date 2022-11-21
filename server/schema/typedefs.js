@@ -55,9 +55,11 @@ const typeDefs = gql`
   type Progress {
     _id: ID
     template: [Template]
-    completedAt: String
+    createdAt: String
+    updatedAt: String
     timeToComplete: String
     totalWeight: String
+    dateCompleted: String
   }
 
   type isDeleted {

@@ -1,10 +1,18 @@
 import { GiCheckMark } from "react-icons/gi";
 import { FaWeightHanging } from "react-icons/fa";
 import { BiTime } from "react-icons/bi";
+//import { useState } from "react";
+import { motion } from "framer-motion";
 
-export default function ProgressCard({ progressInfo }) {
+export default function ProgressCard({ progressInfo, handleProgressModel }) {
+  //const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div className="bg-overlay rounded-lg p-5 shadow-sm shadow-black ">
+    <motion.div
+      whileHover={{ translateY: -5 }}
+      onClick={handleProgressModel}
+      className="bg-overlay rounded-lg p-5 shadow-sm shadow-black cursor-pointer hover:drop-shadow-2xl group"
+    >
       <div className="flex justify-between gap-5">
         <p className="text-2xl font-bold tracking-tight text-white mb-3">
           {Date(progressInfo.completedAt)}
@@ -14,17 +22,21 @@ export default function ProgressCard({ progressInfo }) {
         </span>
       </div>
 
-      <p className="flex gap-2 font-normal text-gray-400">
-        <span className="flex items-center gap-1">
-          <FaWeightHanging /> Total Weight: {progressInfo.totalWeight}
-        </span>
-        {progressInfo.timeToComplete ? (
+      <div className="flex gap-2 justify-between font-normal text-gray-400">
+        <div className="flex gap-2">
           <span className="flex items-center gap-1">
-            <BiTime />
-            {progressInfo.timeToComplete}
+            <FaWeightHanging /> Total Weight: {progressInfo.totalWeight}
           </span>
-        ) : null}
-      </p>
-    </div>
+          {progressInfo.timeToComplete ? (
+            <span className="flex items-center gap-1">
+              <BiTime />
+              {progressInfo.timeToComplete}
+            </span>
+          ) : null}{" "}
+        </div>
+        <motion.span className="text-primary justify-self-end self-end opacity-0 group-hover:opacity-100 transition-all duration-150 group-hover:-translate-x-2">Show Summary</motion.span>
+      </div>
+      {/* <ProgressSummary /> */}
+    </motion.div>
   );
 }

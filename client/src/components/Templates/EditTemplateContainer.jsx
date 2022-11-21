@@ -104,9 +104,9 @@ export default function EditTemplate() {
 
   return (
     <>
-      <div className="py-10 xl:pl-72 pl-10 border-b border-gray-600">
-        <h1 className="font-bold text-3xl">
-         <span className="mr-3"> Edit</span>
+      <div className="py-10 3xl:pl-72 md:pl-10 border-b border-gray-600">
+        <h1 className="font-bold text-3xl text-center md:text-left">
+         <span className="mr-3">Edit</span>
           <span className="text-primary ml-1">
             {state.template.templateName}
           </span>
@@ -114,7 +114,7 @@ export default function EditTemplate() {
       </div>
 
       <div className="flex gap-6 mt-12 mb-10 mx-5">
-        <div className="xl:pl-72 w-fit">
+        <div className="3xl:pl-72 w-fit">
           <div className="mb-5">
             <input
               onChange={(event) => handleChange(null, event)}

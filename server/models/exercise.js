@@ -16,7 +16,7 @@ const exerciseSchema = mongoose.Schema({
     required: true,
     min: [1, "Must enter at lease one rep"],
   },
-  weight: { type: Number },
+  weight: { type: Number, required: false },
 });
 
 const Exercise = mongoose.model("Exercise", exerciseSchema);

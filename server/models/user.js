@@ -1,24 +1,29 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
-const progressSchema = mongoose.Schema({
-  template: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
-  timeToComplete: {
-    type: String,
-    default: function () {
-      return "5 mins";
+const progressSchema = mongoose.Schema(
+  {
+    template: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
+
+    timeToComplete: {
+      type: String,
+      default: "1 hour 30 min's",
+    },
+
+    dateCompleted: {
+      type: String,
+      default: new Date().toLocaleDateString("en-us", {
+        weekday: "long",
+        month: "short",
+        day: "numeric",
+      }),
     },
   },
-  totalWeight: {
-    type: Number,
-    default: function () {
-      return 100;
-    },
-  },
-  completedAt: {
-    type: Date,
-    default: Date.now(),
-  },
+  { timeStamps: true }
+);
+
+progressSchema.virtual("totalWeight").get(function () {
+  return this;
 });
 
 const userSchema = mongoose.Schema({

@@ -36,7 +36,7 @@ export default function ExerciseForm({
           <input
             onChange={(event) => handleChange(index, event)}
             name="exerciseName"
-            className=" bg-background appearance-none border border-gray-600 rounded w-full py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors  ease-in"
+            className=" bg-background appearance-none border border-gray-600 rounded w-full py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in"
             type="text"
             value={formState.exercises[index].exerciseName}
           />
@@ -99,10 +99,13 @@ export default function ExerciseForm({
         <select
           onChange={(event) => handleChange(index, event)}
           name="type"
-          className="w-6/12 bg-background appearance-none border border-gray-600 rounded py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in"
+          className="w-6/12 bg-background appearance-none border border-gray-600 rounded py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in mr-5"
+          defaultValue={"Barbell"}
+          value={formState.exercises[index].type}
         >
           <option
-            defaultValue={"Other"}
+            defaultValue={"Barbell"}
+            value
             disabled
             hidden
             className="text-gray-600"
@@ -112,7 +115,7 @@ export default function ExerciseForm({
           <option value="Barbell">Barbell</option>
           <option value="Dumbell">Dumbell</option>
           <option value="Machine">Machine</option>
-          <option value="Machine">Body weight</option>
+          <option value="Body weight">Body weight</option>
           <option value="Other">Other</option>
         </select>
         {/* if rendering the first exercise, dont show the remove exercise button */}
