@@ -31,8 +31,6 @@ export default function TemplateContainer() {
     indexOfLastTemplate
   );
 
-  console.log(currentTemplates)
-
   function paginate(number) {
     setCurrentPage(number);
   }

@@ -7,7 +7,7 @@ import {
 } from "../../utils/graphql/queries";
 import TemplateCard from "./TemplateCard";
 import auth from "../../utils/auth/auth";
-import LoginBtn from "../buttons/LoginBtn";
+// import LoginBtn from "../buttons/LoginBtn";
 import Spinner from "../miscellaneous/Spinner";
 
 export default function ProgressContainer() {
@@ -32,8 +32,6 @@ export default function ProgressContainer() {
       },
     });
   }
-
-  if (res) console.log(res);
 
   if (error) console.log(error);
 

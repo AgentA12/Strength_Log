@@ -6,7 +6,7 @@ export default function Pagination({
 }) {
   const pageNumbers = [];
 
-  console.log(pageNumbers)
+ 
 
   for (let i = 1; i <= Math.ceil(totalTemplates / templatesPerPage); i++) {
     pageNumbers.push(i);
