@@ -30,7 +30,7 @@ export default function EditTemplate() {
     },
   });
 
-  //ref on error message to scroll to bottom of exercise container div when exercise is added
+  //ref on error message to scroll to bottom of exercise container when an exercise is added
   const bottomRef = useRef(null);
   useEffect(() => {
     bottomRef.current.scrollIntoView();

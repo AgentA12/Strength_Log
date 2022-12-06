@@ -11,8 +11,6 @@ export default function RenderExercises({
     exerciseArray.push(exercise);
   }
 
-  exerciseArray.map((e) => console.log(e.isChecked));
-
   return (
     <>
       {exerciseArray.map((exercise, i) => (

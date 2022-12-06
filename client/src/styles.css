@@ -44,6 +44,10 @@
   max-height: 450px;
 }
 
+.h-custom {
+  max-height: 1000px;
+}
+
 .h-custom-2 {
   max-height: 500px;
 }
@@ -54,6 +58,10 @@
 
 .workout-container {
   height: 60rem;
+}
+
+.w-custom {
+  max-width: 800px;
 }
 
 body::-webkit-scrollbar {

@@ -1,6 +1,4 @@
 import Spinner from "../miscellaneous/Spinner";
-import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
-import { useMutation } from "@apollo/client";
 import { useState } from "react";
 
 export default function SaveWorkoutBtn({
@@ -8,9 +6,7 @@ export default function SaveWorkoutBtn({
   saveWorkoutTrue,
   loading,
 }) {
-  const [buttonText, setButtonText] = useState("Save as complete");
-
-  if (saveWorkoutTrue) console.log(saveWorkoutTrue);
+  const [buttonText] = useState("Save as complete");
 
   return (
     <button onClick={handleSaveWorkout} className="save-workout-btn w-full">

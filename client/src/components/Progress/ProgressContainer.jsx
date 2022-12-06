@@ -7,8 +7,11 @@ import {
 } from "../../utils/graphql/queries";
 import TemplateCard from "./TemplateCard";
 import auth from "../../utils/auth/auth";
-// import LoginBtn from "../buttons/LoginBtn";
 import Spinner from "../miscellaneous/Spinner";
+import { FcSearch } from "react-icons/fc";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export default function ProgressContainer() {
   const [activeTemplate, setActiveTemplate] = useState("Select A Template");
@@ -28,7 +31,8 @@ export default function ProgressContainer() {
   async function handleQuery(templateId) {
     await loadOneTemplate({
       variables: {
-        id: templateId,
+        templateID: templateId,
+        userID: userID,
       },
     });
   }
@@ -42,53 +46,100 @@ export default function ProgressContainer() {
       </div>
     );
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    autoplay: false,
+    centerMode: true,
+    className: "mb-10",
+    centerMode: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  };
+
   return (
     <>
-      <div
-        className={`${
-          data?.getTemplatesForUser.length && "border-primary border-b"
-        } mr-40 md:ml-52 mt-10 pb-10 w-fit pr-20`}
-      >
-        <div className="flex flex-nowrap gap-5">
-          <h2 className="text-primary font-extrabold text-5xl">Progress</h2>
+      <div className="w-9/12 md:w-10/12 xl:w-8/12 m-auto mt-20">
+        <div className="flex flex-col gap-5 items-center justify-center pb-4 mb-4">
+          <h1 className="text-primary text-6xl font-extrabold">Progress</h1>
+
+          <label className="relative inline-block w-64">
+            <span className="sr-only">Search</span>
+            <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+              <FcSearch size={24} />
+            </span>
+            <input
+              className="placeholder:italic bg-inherit placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-primary focus:ring-0 sm:text-sm"
+              placeholder="Search for templates"
+              type="text"
+              name="search"
+            />
+          </label>
         </div>
 
-        {data?.getTemplatesForUser.length ? (
-          <div className="flex flex-wrap gap-5 mt-10">
-            {data?.getTemplatesForUser.map((template) => (
-              <TemplateCard
-                key={template._id}
-                template={template}
-                handleQuery={handleQuery}
-                res={res}
-                activeTemplate={activeTemplate}
-                setActiveTemplate={setActiveTemplate}
-              />
-            ))}
-          </div>
-        ) : (
-          <p className="text-xl font-extralight mt-3">
-            You haven't saved any templates
-          </p>
-        )}
-      </div>
-
-      <div className="mr-40 md:ml-52 my-5 pb-10 w-fit pr-20">
-        <h5 className="text-white font-extrabold text-3xl mb-2">
-          {activeTemplate}
-        </h5>
-
-        <div className=" flex flex-col gap-5 py-10 px-3 h-custom overflow-y-scroll modal-scroll">
-          {res.data?.getProgress.length ? (
-            res.data.getProgress.map((progressInfo) => (
-              <ProgressCard
-                progressInfo={progressInfo}
-                key={progressInfo._id}
-              />
-            ))
+        <div>
+          {data?.getTemplatesForUser.length ? (
+            <Slider {...settings}>
+              {data?.getTemplatesForUser.map((template) => (
+                <TemplateCard
+                  key={template._id}
+                  template={template}
+                  handleQuery={handleQuery}
+                  res={res}
+                  activeTemplate={activeTemplate}
+                  setActiveTemplate={setActiveTemplate}
+                />
+              ))}
+            </Slider>
           ) : (
-            <p className="text-lg">You haven't saved workouts</p>
+            <p className="">you have no templates saved</p>
           )}
+        </div>
+
+        <p className="text-white text-center text-3xl font-extrabold mb-5">
+          {activeTemplate}
+        </p>
+
+        <div className="card-container flex justify-center mb-20">
+          <div className="flex flex-col gap-5 h-custom-2 w-custom mb-10">
+            {res.data?.getProgress.length ? (
+              res.data.getProgress.map((progressInfo) => (
+                <ProgressCard
+                  progressInfo={progressInfo}
+                  key={progressInfo._id}
+                />
+              ))
+            ) : (
+              <p className="text-lg">You haven't saved workouts</p>
+            )}
+          </div>
         </div>
       </div>
     </>

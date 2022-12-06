@@ -27,8 +27,6 @@ export default function WorkoutModal({
           userID: userID,
         },
       });
-
-      if (data.saveWorkout) console.log(data);
     } catch (error) {
       console.log(error);
     }

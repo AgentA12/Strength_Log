@@ -22,6 +22,8 @@ const server = new ApolloServer({
     if (error.message.startsWith("Template")) {
       return new Error("You must add a template name");
     }
+
+    return new Error(error.message.toString());
   },
 });
 

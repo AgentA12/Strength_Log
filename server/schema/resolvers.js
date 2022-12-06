@@ -51,25 +51,31 @@ const resolvers = {
       return user.templates;
     },
 
-    getProgress: async function (_, { id }) {
-      const template = await Template.findById(id);
+    getProgress: async function (_, { templateID, userID }) {
+      try {
+        const template = await Template.findById(templateID);
 
-      const res = await User.find().populate({
-        path: "progress.template",
-        model: "Template",
-        populate: {
-          path: "exercises",
-          model: "Exercise",
-        },
-      });
+        const res = await User.findById(userID).populate({
+          path: "progress.template",
+          model: "Template",
+          populate: {
+            path: "exercises",
+            model: "Exercise",
+          },
+        });
 
-      const progress = res[0].progress.filter(
-        (processObj) => processObj.template[0]._id.toString() == id
-      );
+        const progress = res.progress.filter((processObj) => {
+          if (processObj.template[0] === undefined) return false;
+          return processObj.template[0]._id.toString() == templateID.toString();
+        });
 
-      progress[0].templateName = template.templateName;
+        progress[0].templateName = template.templateName;
 
-      return progress;
+        return progress;
+      } catch (error) {
+        console.log(error);
+        return error;
+      }
     },
 
     getTemplateProgressForUser: async function (_, { userId }) {
@@ -212,7 +218,8 @@ const resolvers = {
 
         return Template.findById(_id).populate("exercises");
       } catch (error) {
-        return error;
+        console.log(error)
+        return error.message;
       }
     },
 

@@ -55,10 +55,7 @@ const typeDefs = gql`
   type Progress {
     _id: ID
     template: [Template]
-    createdAt: String
-    updatedAt: String
     timeToComplete: String
-    totalWeight: String
     dateCompleted: String
   }
 
@@ -71,7 +68,7 @@ const typeDefs = gql`
     getExercise: [Exercise]
     getUserById(_id: ID!): User
     getTemplatesForUser(userId: ID!): [Template]
-    getProgress(id: ID!): [Progress]
+    getProgress(templateID: ID!, userID: ID!): [Progress]
     getAllUsers: [User]
     getAllTemplates: [Template]
     getAllExercises: [Exercise]
