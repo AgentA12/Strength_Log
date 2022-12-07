@@ -48,10 +48,10 @@ export default function ProgressContainer() {
 
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToScroll: 2,
     autoplay: false,
     centerMode: true,
     className: "mb-10",
@@ -127,8 +127,8 @@ export default function ProgressContainer() {
           {activeTemplate}
         </p>
 
-        <div className="card-container flex justify-center mb-20">
-          <div className="flex flex-col gap-5 h-custom-2 w-custom mb-10">
+        <div className="card-container flex justify-center mb-10">
+          <div className="flex flex-col gap-5 h-custom-2 w-custom">
             {res.data?.getProgress.length ? (
               res.data.getProgress.map((progressInfo) => (
                 <ProgressCard
