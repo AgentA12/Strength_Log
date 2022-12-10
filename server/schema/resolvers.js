@@ -53,9 +53,11 @@ const resolvers = {
 
     getProgress: async function (_, { templateID, userID }) {
       try {
-        const template = await Template.findById(templateID);
+        const template = await Template.findById(templateID).populate(
+          "exercises"
+        );
 
-        const res = await User.findById(userID).populate({
+        const user = await User.findById(userID).populate({
           path: "progress.template",
           model: "Template",
           populate: {
@@ -64,14 +66,25 @@ const resolvers = {
           },
         });
 
-        const progress = res.progress.filter((processObj) => {
-          if (processObj.template[0] === undefined) return false;
-          return processObj.template[0]._id.toString() == templateID.toString();
-        });
+        const totalWeight = template.exercises.reduce(
+          (accumulator, { weight, reps, sets }) => {
+            return (accumulator += weight * reps * sets);
+          },
+          0
+        );
 
-        progress[0].templateName = template.templateName;
+        let progress = user.progress.find(
+          (processObj) =>
+            processObj.template[0]._id.toString() == templateID.toString()
+        );
 
-        return progress;
+        progress.totalWeight = totalWeight;
+
+        const test = [];
+
+        test.push(progress);
+
+        return test;
       } catch (error) {
         console.log(error);
         return error;
@@ -218,7 +231,7 @@ const resolvers = {
 
         return Template.findById(_id).populate("exercises");
       } catch (error) {
-        console.log(error)
+        console.log(error);
         return error.message;
       }
     },

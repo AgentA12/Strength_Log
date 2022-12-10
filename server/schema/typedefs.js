@@ -56,6 +56,7 @@ const typeDefs = gql`
     _id: ID
     template: [Template]
     timeToComplete: String
+    totalWeight: Int
     dateCompleted: String
   }
 

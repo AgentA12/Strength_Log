@@ -7,7 +7,6 @@ const progressSchema = mongoose.Schema(
 
     timeToComplete: {
       type: String,
-      default: "1 hour 30 min's",
     },
 
     dateCompleted: {
@@ -21,10 +20,6 @@ const progressSchema = mongoose.Schema(
   },
   { timeStamps: true }
 );
-
-progressSchema.virtual("totalWeight").get(function () {
-  return this;
-});
 
 const userSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },
@@ -44,6 +39,8 @@ userSchema.pre("save", async function (next) {
 
   next();
 });
+
+userSchema.methods.getProgress = function () {};
 
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);

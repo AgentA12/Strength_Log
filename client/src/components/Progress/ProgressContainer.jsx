@@ -46,12 +46,13 @@ export default function ProgressContainer() {
       </div>
     );
 
+
   const settings = {
     dots: true,
     infinite: false,
     speed: 500,
     slidesToShow: 3,
-    slidesToScroll: 2,
+    slidesToScroll: 1,
     autoplay: false,
     centerMode: true,
     className: "mb-10",
@@ -63,25 +64,25 @@ export default function ProgressContainer() {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: true
-        }
+          dots: true,
+        },
       },
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
-          initialSlide: 2
-        }
+          initialSlide: 2,
+        },
       },
       {
         breakpoint: 480,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ]
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   return (
@@ -119,7 +120,7 @@ export default function ProgressContainer() {
               ))}
             </Slider>
           ) : (
-            <p className="">you have no templates saved</p>
+            <p className="text-center">you have no templates saved</p>
           )}
         </div>
 
@@ -129,7 +130,7 @@ export default function ProgressContainer() {
 
         <div className="card-container flex justify-center mb-10">
           <div className="flex flex-col gap-5 h-custom-2 w-custom">
-            {res.data?.getProgress.length ? (
+            {res.data?.getProgress ? (
               res.data.getProgress.map((progressInfo) => (
                 <ProgressCard
                   progressInfo={progressInfo}

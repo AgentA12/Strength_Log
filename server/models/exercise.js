@@ -5,6 +5,7 @@ const exerciseSchema = mongoose.Schema({
   type: {
     type: String,
     required: true,
+    default: "Barbell"
   },
   sets: {
     type: Number,

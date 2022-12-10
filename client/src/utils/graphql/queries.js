@@ -51,6 +51,7 @@ export const GET_TEMPLATES_PROGRESS = gql`
       _id
       timeToComplete
       dateCompleted
+      totalWeight
       template {
         _id
         templateName
