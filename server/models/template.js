@@ -11,6 +11,10 @@ const templateSchema = mongoose.Schema(
   }
 );
 
+// templateSchema.pre("deleteOne", function (next) {
+//   next();
+// });
+
 const Template = mongoose.model("Template", templateSchema);
 
 module.exports = Template;

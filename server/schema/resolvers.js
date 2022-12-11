@@ -239,12 +239,17 @@ const resolvers = {
     deleteTemplate: async function (_, { templateId }) {
       const res = await Template.deleteOne({ _id: templateId });
 
+      await User.updateOne({
+        $pull: { progress: { templates: templateId } },
+        $pull: { templates: templateId },
+      });
+
       return res;
     },
 
     saveWorkout: async function (_, args) {
       try {
-        await User.findByIdAndUpdate(args.userID, {
+        const user = await User.findByIdAndUpdate(args.userID, {
           $push: {
             progress: { template: args.templateId },
           },

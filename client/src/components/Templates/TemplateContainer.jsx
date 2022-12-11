@@ -11,8 +11,8 @@ import { useMutation } from "@apollo/client";
 export default function TemplateContainer() {
   const [currentPage, setCurrentPage] = useState(1);
   const [templatesPerPage] = useState(8);
-  const [deleteTemplate, { deleteData, deleteError }] =
-    useMutation(DELETE_TEMPLATE);
+  const [deleteTemplate] = useMutation(DELETE_TEMPLATE);
+  
   const indexOfLastTemplate = currentPage * templatesPerPage;
   const indexOfFirstTemplate = indexOfLastTemplate - templatesPerPage;
 
@@ -63,7 +63,9 @@ export default function TemplateContainer() {
       ))
     ) : (
       //if the array does not contain templates
-      <p className="text-center mt-5">You have no templates saved</p>
+      <p className="text-center text-2xl mt-5">
+        You have no templates &#128550;
+      </p>
     );
   }
 

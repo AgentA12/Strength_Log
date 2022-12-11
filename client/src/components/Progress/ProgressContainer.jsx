@@ -46,7 +46,6 @@ export default function ProgressContainer() {
       </div>
     );
 
-
   const settings = {
     dots: true,
     infinite: false,
@@ -107,40 +106,44 @@ export default function ProgressContainer() {
 
         <div>
           {data?.getTemplatesForUser.length ? (
-            <Slider {...settings}>
-              {data?.getTemplatesForUser.map((template) => (
-                <TemplateCard
-                  key={template._id}
-                  template={template}
-                  handleQuery={handleQuery}
-                  res={res}
-                  activeTemplate={activeTemplate}
-                  setActiveTemplate={setActiveTemplate}
-                />
-              ))}
-            </Slider>
+            <>
+              <Slider {...settings}>
+                {data?.getTemplatesForUser.map((template) => (
+                  <TemplateCard
+                    key={template._id}
+                    template={template}
+                    handleQuery={handleQuery}
+                    res={res}
+                    activeTemplate={activeTemplate}
+                    setActiveTemplate={setActiveTemplate}
+                  />
+                ))}
+              </Slider>
+
+              <p className="text-white text-center text-3xl font-extrabold mb-5">
+                {activeTemplate}
+              </p>
+
+              <div className="card-container flex justify-center mb-10">
+                <div className="flex flex-col gap-5 h-custom-2 w-custom">
+                  {res.data?.getProgress ? (
+                    res.data.getProgress.map((progressInfo) => (
+                      <ProgressCard
+                        progressInfo={progressInfo}
+                        key={progressInfo._id}
+                      />
+                    ))
+                  ) : (
+                    <p className="text-lg">You haven't saved workouts</p>
+                  )}
+                </div>
+              </div>
+            </>
           ) : (
-            <p className="text-center">you have no templates saved</p>
+            <p className="text-center text-xl mb-3">
+              You haven't saved any templates &#128533;
+            </p>
           )}
-        </div>
-
-        <p className="text-white text-center text-3xl font-extrabold mb-5">
-          {activeTemplate}
-        </p>
-
-        <div className="card-container flex justify-center mb-10">
-          <div className="flex flex-col gap-5 h-custom-2 w-custom">
-            {res.data?.getProgress ? (
-              res.data.getProgress.map((progressInfo) => (
-                <ProgressCard
-                  progressInfo={progressInfo}
-                  key={progressInfo._id}
-                />
-              ))
-            ) : (
-              <p className="text-lg">You haven't saved workouts</p>
-            )}
-          </div>
         </div>
       </div>
     </>
