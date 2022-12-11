@@ -73,10 +73,10 @@ const resolvers = {
           0
         );
 
-        let progress = user.progress.find(
-          (processObj) =>
-            processObj.template[0]._id.toString() == templateID.toString()
-        );
+        let progress = user.progress.find((processObj) => {
+          if (!processObj.template[0]._id) return false;
+          return processObj.template[0]._id.toString() == templateID.toString();
+        });
 
         progress.totalWeight = totalWeight;
 
@@ -240,7 +240,6 @@ const resolvers = {
       const res = await Template.deleteOne({ _id: templateId });
 
       await User.updateOne({
-        $pull: { progress: { templates: templateId } },
         $pull: { templates: templateId },
       });
 
@@ -249,7 +248,7 @@ const resolvers = {
 
     saveWorkout: async function (_, args) {
       try {
-        const user = await User.findByIdAndUpdate(args.userID, {
+        await User.findByIdAndUpdate(args.userID, {
           $push: {
             progress: { template: args.templateId },
           },
