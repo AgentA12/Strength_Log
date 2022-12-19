@@ -83,7 +83,7 @@ const resolvers = {
         //     },
         //     0
         //   );
-        // });
+        // });s
 
         let progress = user.progress.filter(
           (processObj) =>
@@ -270,15 +270,11 @@ const resolvers = {
 
     saveWorkout: async function (_, { templateId, userID, exerciseInput }) {
       try {
-<<<<<<< HEAD
         let template = await Template.findById(templateId);
 
         template.exercises = exerciseInput;
 
         await User.findByIdAndUpdate(userID, {
-=======
-        await User.findByIdAndUpdate(args.userID, {
->>>>>>> summary
           $push: {
             progress: { template: template },
           },
