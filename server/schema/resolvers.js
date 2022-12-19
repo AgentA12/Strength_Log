@@ -65,6 +65,10 @@ const resolvers = {
           },
         });
 
+        user.progress[0].template.forEach(function (obj) {
+          console.log(obj)
+        })
+
         const totalWeight = template.exercises.reduce(
           (accumulator, { weight, reps, sets }) => {
             return (accumulator += weight * reps * sets);
@@ -72,7 +76,16 @@ const resolvers = {
           0
         );
 
-        let progress = user.progress.find(
+        // user.progress.forEach((obj) => {
+        //   obj.template[0].exercises.reduce(
+        //     (accumulator, { weight, reps, sets }) => {
+        //       return (accumulator += weight * reps * sets);
+        //     },
+        //     0
+        //   );
+        // });
+
+        let progress = user.progress.filter(
           (processObj) =>
             processObj.template[0]._id.toString() == templateID.toString()
         );
@@ -258,20 +271,18 @@ const resolvers = {
 
     saveWorkout: async function (_, { templateId, userID, exerciseInput }) {
       try {
-        console.log(templateId, userID, exerciseInput);
-
         let template = await Template.findById(templateId);
 
-        console.log(template);
+        template.exercises = exerciseInput;
 
         await User.findByIdAndUpdate(userID, {
           $push: {
-            progress: { template: templateId },
+            progress: { template: template },
           },
         });
 
         const progressAry = await User.find({
-          "progress.template": templateId,
+          "progress.template._id": templateId,
         }).populate("templates");
 
         return { username: progressAry[0].username };

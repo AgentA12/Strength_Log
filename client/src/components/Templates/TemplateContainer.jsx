@@ -69,7 +69,6 @@ export default function TemplateContainer() {
     );
   }
 
-  console.log(currentTemplates)
 
   return (
     <main className="mx-10 my-10">

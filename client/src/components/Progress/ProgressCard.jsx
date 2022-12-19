@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 export default function ProgressCard({ progressInfo, handleProgressModel }) {
   //const [isOpen, setIsOpen] = useState(false);
 
-
   return (
     <motion.div
       whileHover={{ translateY: -5 }}

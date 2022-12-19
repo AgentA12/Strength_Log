@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const { templateSchema } = require("./template");
 
 const progressSchema = mongoose.Schema(
   {
-    template: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
+    template: [templateSchema],
 
     timeToComplete: {
       type: String,
