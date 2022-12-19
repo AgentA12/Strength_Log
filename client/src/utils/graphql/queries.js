@@ -40,6 +40,7 @@ export const GET_TEMPLATES = gql`
         reps
         sets
         weight
+        type
       }
     }
   }

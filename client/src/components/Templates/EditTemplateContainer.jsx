@@ -17,12 +17,9 @@ export default function EditTemplate() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [formState, setFormState] = useState(state.template);
 
-  //getting user info
-  if (auth.isLoggedIn()) {
-    var {
-      data: { _id: userID },
-    } = auth.getInfo();
-  }
+  var {
+    data: { _id: userID },
+  } = auth.getInfo();
 
   const { loading, refetch } = useQuery(GET_TEMPLATES, {
     variables: {
@@ -54,6 +51,8 @@ export default function EditTemplate() {
   async function handleSubmit(event) {
     try {
       event.preventDefault();
+
+      console.log(`This is the formState: ${formState}`)
 
       const mutationRes = await EditTemplate({
         variables: {
@@ -106,7 +105,7 @@ export default function EditTemplate() {
     <>
       <div className="py-10 3xl:pl-72 md:pl-10 border-b border-gray-600">
         <h1 className="font-bold text-3xl text-center md:text-left">
-         <span className="mr-3">Edit</span>
+          <span className="mr-3">Edit</span>
           <span className="text-primary ml-1">
             {state.template.templateName}
           </span>

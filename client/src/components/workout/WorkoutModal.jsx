@@ -1,5 +1,4 @@
-import { Fragment } from "react";
-
+import { Fragment, useState } from "react";
 import auth from "../../utils/auth/auth";
 import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
 import { useMutation } from "@apollo/client";
@@ -12,6 +11,8 @@ export default function WorkoutModal({
   isWorkoutModalOpen,
   setIsWorkoutModalOpen,
 }) {
+  const [templateState, setTemplateState] = useState(template);
+
   const [saveWorkoutFunction, { data, loading, error }] =
     useMutation(SAVE_WORKOUT);
 
@@ -25,11 +26,20 @@ export default function WorkoutModal({
         variables: {
           templateId: template._id,
           userID: userID,
+          exercises: templateState.exercises,
         },
       });
     } catch (error) {
       console.log(error);
     }
+  }
+
+  function handleChange({ target }, index) {
+    let data = JSON.parse(JSON.stringify(templateState));
+
+    data.exercises[index][target.name] = target.value;
+
+    setTemplateState({ ...data });
   }
 
   return (
@@ -63,6 +73,7 @@ export default function WorkoutModal({
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
                 >
+
                   <path
                     fillRule="evenodd"
                     d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -77,18 +88,41 @@ export default function WorkoutModal({
               {template.templateNotes}
             </div>
             <div className="p-5">
-              {template.exercises.map((exercise, i) => (
+              {templateState.exercises.map((exercise, index) => (
                 <Fragment key={exercise.exerciseName}>
                   <p className="text-primary font-semibold text-3xl text-center">
                     {exercise.exerciseName}
                   </p>
                   <div className="flex justify-center items-center gap-2 mb-2 text-xl">
-                    <span className="">
-                      {exercise.sets} {exercise.sets && "x"}{" "}
+                    <span>
+                      <input
+                        type="text"
+                        name="sets"
+                        value={exercise.sets}
+                        onChange={(event) => handleChange(event, index)}
+                        className="rounded-lg bg-black text-white px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none"
+                      />{" "}
+                      x
                     </span>
-                    <span className="">{exercise.reps}</span>
+                    <input
+                      type="text"
+                      name="reps"
+                      value={exercise.reps}
+                      onChange={(event) => handleChange(event, index)}
+                      className="rounded-lg bg-black text-white px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none"
+                    />
                     <span className="text-white_faded">
-                      {exercise.weight && `${exercise.weight} (lbs)`}
+                      {exercise.weight ? (
+                        <input
+                          type="text"
+                          name="weight"
+                          value={exercise.weight}
+                          onChange={(event) => handleChange(event, index)}
+                          className="rounded-lg bg-black text-white px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none"
+                        />
+                      ) : (
+                        "Body weight"
+                      )}
                     </span>
                   </div>
                 </Fragment>

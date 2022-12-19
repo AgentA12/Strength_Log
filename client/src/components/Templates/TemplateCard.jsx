@@ -4,11 +4,7 @@ import { capitalizeFirstLetter } from "../../utils/helpers/functions";
 import WorkoutModal from "../workout/WorkoutModal";
 import TemplateMenu from "./TemplateMenu";
 
-export default function TemplateCard({
-  template,
-  refetch,
-  handleTemplateDelete,
-}) {
+export default function TemplateCard({ template, handleTemplateDelete }) {
   const [isWorkoutModalOpen, setIsWorkoutModalOpen] = useState(false);
 
   return (
@@ -19,9 +15,6 @@ export default function TemplateCard({
         animate={{
           scale: 1,
           opacity: 1,
-        }}
-        exit={{
-          opacity: 0,
         }}
         className="template-item w-96 p-3 border rounded-lg border-gray-600 hover:bg-primary_faded hover:bg-opacity-10 cursor-pointer transition-colors duration-100"
         onClick={() => setIsWorkoutModalOpen(!isWorkoutModalOpen)}

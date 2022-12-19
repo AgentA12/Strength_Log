@@ -1,7 +1,6 @@
 const { User, Template, Exercise } = require("../models/index");
 const { AuthenticationError } = require("apollo-server");
 const { signToken } = require("../utils/auth");
-const { modelName } = require("../models/user");
 
 const resolvers = {
   Query: {
@@ -150,6 +149,7 @@ const resolvers = {
     //create a template then push the new template ids to the User model
     createTemplate: async function (_, args) {
       try {
+        console.log(args);
         const exercisesData = await Exercise.create(args.exercises);
 
         const exerciseIds = exercisesData.map((exercise) => {
@@ -157,7 +157,7 @@ const resolvers = {
         });
 
         const templatePayload = {
-          exercises: exerciseIds,
+          exercises: args.exercises,
           templateName: args.templateName,
           templateNotes: args.templateNotes,
         };
@@ -193,43 +193,52 @@ const resolvers = {
       { _id, templateName, templateNotes, exercises }
     ) {
       try {
-        await Template.findByIdAndUpdate(_id, {
-          templateName: templateName,
-          templateNotes: templateNotes,
-        });
+        await Template.findByIdAndUpdate(
+          _id,
+          {
+            templateName: templateName,
+            templateNotes: templateNotes,
+            $set: { exercises: exercises },
+          },
 
-        const template = await Template.findById(_id).populate("exercises");
+          { new: true }
+        );
 
-        //checks to see if an exercise is removed and saves removed exercises to variable
-        const deletedExercises = template.exercises.filter((exercise) => {
-          return !exercises.find(
-            (__exercise) => exercise._id.toString() === __exercise._id
-          );
-        });
+        // //checks to see if an exercise is removed and saves removed exercises to variable
+        // const deletedExercises = template.exercises.filter((exercise) => {
+        //   return !exercises.find(
+        //     (__exercise) => exercise._id.toString() === __exercise._id
+        //   );
+        // });
 
-        deletedExercises.forEach(async (deletedExercise) => {
-          await Exercise.deleteOne({ _id: deletedExercise._id });
-        });
+        // console.log(`${deletedExercises}\n`);
 
-        //updates exercises by id and create new exercises if Exercise model returns null on update
-        await exercises.map(async (exercise) => {
-          const newExercise = await Exercise.findByIdAndUpdate(exercise._id, {
-            exerciseName: exercise.exerciseName,
-            weight: exercise.weight,
-            sets: exercise.sets,
-            reps: exercise.reps,
-          });
+        // deletedExercises.forEach(async (deletedExercise) => {
+        //   await Exercise.deleteOne({ _id: deletedExercise._id });
+        // });
 
-          if (!newExercise) {
-            const createdExercise = await Exercise.create(exercise);
+        // //updates exercises by id and create new exercises if Exercise model returns null on update
+        // await exercises.map(async (exercise) => {
+        //   const newExercise = await Exercise.findByIdAndUpdate(exercise._id, {
+        //     exerciseName: exercise.exerciseName,
+        //     weight: exercise.weight,
+        //     sets: exercise.sets,
+        //     reps: exercise.reps,
+        //     type: exercise.type,
+        //   });
 
-            await Template.findByIdAndUpdate(_id, {
-              $push: { exercises: createdExercise._id },
-            });
-          }
-        });
+        //   if (!newExercise) {
+        //     const createdExercise = await Exercise.create(exercise);
 
-        return Template.findById(_id).populate("exercises");
+        //     console.log(createdExercise);
+
+        //     await Template.findByIdAndUpdate(_id, {
+        //       $push: { exercises: createdExercise._id },
+        //     });
+        //   }
+        // });
+
+        return Template.findById(_id);
       } catch (error) {
         console.log(error);
         return error.message;
@@ -247,16 +256,22 @@ const resolvers = {
       return res;
     },
 
-    saveWorkout: async function (_, args) {
+    saveWorkout: async function (_, { templateId, userID, exerciseInput }) {
       try {
-        const user = await User.findByIdAndUpdate(args.userID, {
+        console.log(templateId, userID, exerciseInput);
+
+        let template = await Template.findById(templateId);
+
+        console.log(template);
+
+        await User.findByIdAndUpdate(userID, {
           $push: {
-            progress: { template: args.templateId },
+            progress: { template: templateId },
           },
         });
 
         const progressAry = await User.find({
-          "progress.template": args.templateId,
+          "progress.template": templateId,
         }).populate("templates");
 
         return { username: progressAry[0].username };

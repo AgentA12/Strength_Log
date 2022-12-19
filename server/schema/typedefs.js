@@ -24,6 +24,7 @@ const typeDefs = gql`
   }
 
   input exerciseInput {
+    _id: ID
     exerciseName: String
     sets: String
     reps: String
@@ -93,7 +94,11 @@ const typeDefs = gql`
     ): Template
     createExercise(name: String!, sets: Int!, reps: Int!): Exercise
     deleteTemplate(templateId: ID!): isDeleted
-    saveWorkout(templateId: ID!, userID: ID!): User
+    saveWorkout(
+      templateId: ID!
+      userID: ID!
+      exerciseInput: [exerciseInput!]
+    ): User
   }
 `;
 

@@ -69,6 +69,8 @@ export default function TemplateContainer() {
     );
   }
 
+  console.log(currentTemplates)
+
   return (
     <main className="mx-10 my-10">
       <h2 className="text-center text-primary font-extrabold text-3xl sm:text-5xl">

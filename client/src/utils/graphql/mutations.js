@@ -122,8 +122,12 @@ export const EDIT_TEMPLATE = gql`
 `;
 
 export const SAVE_WORKOUT = gql`
-  mutation ($templateId: ID!, $userID: ID!) {
-    saveWorkout(templateId: $templateId, userID: $userID) {
+  mutation ($templateId: ID!, $userID: ID!, $exercises: [exerciseInput!]) {
+    saveWorkout(
+      templateId: $templateId
+      userID: $userID
+      exerciseInput: $exercises
+    ) {
       username
     }
   }

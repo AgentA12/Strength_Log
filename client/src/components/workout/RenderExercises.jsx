@@ -1,10 +1,6 @@
 import { BsCheck2All } from "react-icons/bs";
 
-export default function RenderExercises({
-  exercise,
-
-  handleWorkoutChange,
-}) {
+export default function RenderExercises({ exercise, handleWorkoutChange }) {
   const exerciseArray = [];
 
   for (let i = 0; i < parseInt(exercise.sets); i++) {
