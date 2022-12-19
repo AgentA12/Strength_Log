@@ -262,7 +262,6 @@ const resolvers = {
       const res = await Template.deleteOne({ _id: templateId });
 
       await User.updateOne({
-        $pull: { progress: { templates: templateId } },
         $pull: { templates: templateId },
       });
 
@@ -271,11 +270,15 @@ const resolvers = {
 
     saveWorkout: async function (_, { templateId, userID, exerciseInput }) {
       try {
+<<<<<<< HEAD
         let template = await Template.findById(templateId);
 
         template.exercises = exerciseInput;
 
         await User.findByIdAndUpdate(userID, {
+=======
+        await User.findByIdAndUpdate(args.userID, {
+>>>>>>> summary
           $push: {
             progress: { template: template },
           },

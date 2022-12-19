@@ -18,7 +18,7 @@ export default function SaveWorkoutBtn({
         } flex gap-5 w-full justify-center items-center relative px-5 py-2.5 transition-all ease-in duration-75 rounded-md `}
       >
         {saveWorkoutTrue ? "saved!" : "Save as complete"}
-        {loading ? <Spinner color={"green-500"} className="pl-4" /> : null}
+        {loading ? <Spinner size="sm" color={"green-500"} className="pl-4" /> : null}
       </span>
     </button>
   );

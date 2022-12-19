@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ProgressCard from "./ProgressCard";
 import { useQuery, useLazyQuery } from "@apollo/client";
+import SummaryContainer from "../summary/summaryContainer";
 import {
   GET_TEMPLATES,
   GET_TEMPLATES_PROGRESS,
@@ -15,6 +16,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 export default function ProgressContainer() {
   const [activeTemplate, setActiveTemplate] = useState("Select A Template");
+  const [isOpen, setIsOpen] = useState(false);
 
   const {
     data: { _id: userID },
@@ -35,6 +37,11 @@ export default function ProgressContainer() {
         userID: userID,
       },
     });
+  }
+
+  function handleSummary(progressInfo) {
+    setIsOpen(true);
+    
   }
 
   if (error) console.log(error);
@@ -129,6 +136,7 @@ export default function ProgressContainer() {
                   {res.data?.getProgress ? (
                     res.data.getProgress.map((progressInfo) => (
                       <ProgressCard
+                        handleSummary={handleSummary}
                         progressInfo={progressInfo}
                         key={progressInfo._id}
                       />
@@ -145,6 +153,7 @@ export default function ProgressContainer() {
             </p>
           )}
         </div>
+        <SummaryContainer isOpen={isOpen} setIsOpen={setIsOpen} res={res} />
       </div>
     </>
   );
