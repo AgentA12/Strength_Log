@@ -1,7 +1,6 @@
 const { User, Template, Exercise } = require("../models/index");
 const { AuthenticationError } = require("apollo-server");
 const { signToken } = require("../utils/auth");
-const { modelName } = require("../models/user");
 
 const resolvers = {
   Query: {

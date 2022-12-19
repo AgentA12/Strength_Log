@@ -1,17 +1,14 @@
 import { GiCheckMark } from "react-icons/gi";
 import { FaWeightHanging } from "react-icons/fa";
 import { BiTime } from "react-icons/bi";
-//import { useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 
-export default function ProgressCard({ progressInfo, handleProgressModel }) {
-  //const [isOpen, setIsOpen] = useState(false);
-
-
+export default function ProgressCard({ progressInfo,  handleSummary }) {
   return (
     <motion.div
       whileHover={{ translateY: -5 }}
-      onClick={handleProgressModel}
+      onClick={() => handleSummary(progressInfo)}
       className="border border-white rounded-lg p-5 shadow-sm shadow-black cursor-pointer group"
     >
       <div className="flex justify-between gap-5">
@@ -26,7 +23,7 @@ export default function ProgressCard({ progressInfo, handleProgressModel }) {
       <div className="flex gap-2 justify-between font-normal text-gray-400">
         <div className="flex gap-2">
           <span className="flex items-center gap-1">
-            <FaWeightHanging /> Total Weight: {progressInfo.totalWeight}
+            <FaWeightHanging /> Total Weight: {progressInfo.totalWeight} (lbs)
           </span>
           {progressInfo.timeToComplete ? (
             <span className="flex items-center gap-1 mr-20">
@@ -35,11 +32,10 @@ export default function ProgressCard({ progressInfo, handleProgressModel }) {
             </span>
           ) : null}{" "}
         </div>
-        <motion.span className="text-primary justify-self-end self-end opacity-0 group-hover:opacity-100 transition-all duration-150 group-hover:-translate-x-2">
-          Show Summary
+        <motion.span className="text-primary text-sm justify-self-end self-end opacity-0 group-hover:opacity-100 transition-all duration-150 group-hover:-translate-x-2">
+            Summary
         </motion.span>
       </div>
-      {/* <ProgressSummary /> */}
     </motion.div>
   );
 }

@@ -115,6 +115,7 @@ export default function ExerciseForm({
           <option value="Barbell">Barbell</option>
           <option value="Dumbell">Dumbell</option>
           <option value="Machine">Machine</option>
+          <option value="Cable">Cable</option>
           <option value="Body weight">Body weight</option>
           <option value="Other">Other</option>
         </select>
