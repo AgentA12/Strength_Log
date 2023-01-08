@@ -1,33 +1,31 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const { templateSchema } = require("./template");
+const { exerciseSchema } = require("./exercise");
 
 const progressSchema = mongoose.Schema(
   {
-    template: [templateSchema],
-
-    timeToComplete: {
-      type: String,
-    },
-
+    templateName: String,
+    templateId: { type: String },
+    exercises: [exerciseSchema],
+    timeToComplete: { type: String },
     dateCompleted: {
       type: String,
-      default: new Date().toLocaleDateString("en-us", {
-        weekday: "long",
-        month: "short",
-        day: "numeric",
-      }),
+      default: () => {
+        return new Date().toLocaleDateString("en-us", {
+          weekday: "long",
+          month: "short",
+          day: "numeric",
+        });
+      },
     },
   },
-  { timeStamps: true }
+  { timestamps: true }
 );
 
 const userSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  createdAt: {
-    type: Date,
-  },
+  createdAt: { type: Date, default: () => Date.now() },
   templates: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
   progress: [progressSchema],
 });
@@ -37,12 +35,34 @@ userSchema.pre("save", async function (next) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
-
   next();
 });
 
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
+};
+
+userSchema.methods.getProgress = function (templateID) {
+  let r = this.progress.filter((progressObj) => {
+    return progressObj.templateId.toString() === templateID;
+  });
+
+  const result = [...r];
+
+  result.forEach((resultObj, i) => {
+    let total = resultObj.exercises.reduce(
+      (accumulator, { weight, reps, sets }) => {
+        return (accumulator += weight * reps * sets);
+      },
+      0
+    );
+
+    result[i].totalWeight = total;
+  });
+
+  result.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
+
+  return result;
 };
 
 const User = mongoose.model("User", userSchema);

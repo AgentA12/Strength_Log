@@ -52,51 +52,11 @@ const resolvers = {
 
     getProgress: async function (_, { templateID, userID }) {
       try {
-        const template = await Template.findById(templateID).populate(
-          "exercises"
-        );
+        const user = await User.findById(userID);
 
-        const user = await User.findById(userID).populate({
-          path: "progress.template",
-          model: "Template",
-          populate: {
-            path: "exercises",
-            model: "Exercise",
-          },
-        });
+        const progress = user.getProgress(templateID);
 
-        user.progress[0].template.forEach(function (obj) {
-          console.log(obj)
-        })
-
-        const totalWeight = template.exercises.reduce(
-          (accumulator, { weight, reps, sets }) => {
-            return (accumulator += weight * reps * sets);
-          },
-          0
-        );
-
-        // user.progress.forEach((obj) => {
-        //   obj.template[0].exercises.reduce(
-        //     (accumulator, { weight, reps, sets }) => {
-        //       return (accumulator += weight * reps * sets);
-        //     },
-        //     0
-        //   );
-        // });s
-
-        let progress = user.progress.filter(
-          (processObj) =>
-            processObj.template[0]._id.toString() == templateID.toString()
-        );
-
-        progress.totalWeight = totalWeight;
-
-        const test = [];
-
-        test.push(progress);
-
-        return test;
+        return progress;
       } catch (error) {
         console.log(error);
         return error;
@@ -115,6 +75,12 @@ const resolvers = {
         });
 
       return user.templates;
+    },
+
+    exerciseProgress: async function (_, args) {
+      const t = await User.findById(args.userId).sort({
+        "progress.createdAt": "asc",
+      });
     },
   },
 
@@ -162,7 +128,6 @@ const resolvers = {
     //create a template then push the new template ids to the User model
     createTemplate: async function (_, args) {
       try {
-        console.log(args);
         const exercisesData = await Exercise.create(args.exercises);
 
         const exerciseIds = exercisesData.map((exercise) => {
@@ -179,11 +144,9 @@ const resolvers = {
 
         const { _id: templateId } = template;
 
-        await User.findByIdAndUpdate(
-          args.userId,
-          { $push: { templates: [templateId] } },
-          { new: true }
-        );
+        await User.findByIdAndUpdate(args.userId, {
+          $push: { templates: [templateId] },
+        });
 
         const userData = await User.findById(args.userId).populate({
           path: "templates",
@@ -197,96 +160,64 @@ const resolvers = {
 
         return templates;
       } catch (error) {
-        return error;
+        return error.message;
       }
     },
 
-    editTemplate: async function (
-      _,
-      { _id, templateName, templateNotes, exercises }
-    ) {
+    editTemplate: async function (_, args) {
       try {
         await Template.findByIdAndUpdate(
-          _id,
+          args._id,
           {
-            templateName: templateName,
-            templateNotes: templateNotes,
-            $set: { exercises: exercises },
+            templateName: args.templateName,
+            templateNotes: args.templateNotes,
+            $set: { exercises: args.exercises },
           },
 
           { new: true }
         );
 
-        // //checks to see if an exercise is removed and saves removed exercises to variable
-        // const deletedExercises = template.exercises.filter((exercise) => {
-        //   return !exercises.find(
-        //     (__exercise) => exercise._id.toString() === __exercise._id
-        //   );
-        // });
-
-        // console.log(`${deletedExercises}\n`);
-
-        // deletedExercises.forEach(async (deletedExercise) => {
-        //   await Exercise.deleteOne({ _id: deletedExercise._id });
-        // });
-
-        // //updates exercises by id and create new exercises if Exercise model returns null on update
-        // await exercises.map(async (exercise) => {
-        //   const newExercise = await Exercise.findByIdAndUpdate(exercise._id, {
-        //     exerciseName: exercise.exerciseName,
-        //     weight: exercise.weight,
-        //     sets: exercise.sets,
-        //     reps: exercise.reps,
-        //     type: exercise.type,
-        //   });
-
-        //   if (!newExercise) {
-        //     const createdExercise = await Exercise.create(exercise);
-
-        //     console.log(createdExercise);
-
-        //     await Template.findByIdAndUpdate(_id, {
-        //       $push: { exercises: createdExercise._id },
-        //     });
-        //   }
-        // });
-
-        return Template.findById(_id);
+        return Template.findById(args._id);
       } catch (error) {
-        console.log(error);
         return error.message;
       }
     },
 
     deleteTemplate: async function (_, { templateId }) {
-      const res = await Template.deleteOne({ _id: templateId });
+      try {
+        const res = await Template.deleteOne({ _id: templateId });
 
-      await User.updateOne({
-        $pull: { templates: templateId },
-      });
+        await User.updateOne({
+          $pull: { templates: templateId },
+        });
 
-      return res;
+        return res;
+      } catch (error) {
+        return error.message;
+      }
     },
 
     saveWorkout: async function (_, { templateId, userID, exerciseInput }) {
       try {
-        let template = await Template.findById(templateId);
+        const template = await Template.findById(templateId);
 
-        template.exercises = exerciseInput;
-
-        await User.findByIdAndUpdate(userID, {
-          $push: {
-            progress: { template: template },
+        const user = await User.findByIdAndUpdate(
+          userID,
+          {
+            $push: {
+              progress: {
+                templateName: template.templateName,
+                exercises: exerciseInput,
+                templateId: templateId,
+              },
+            },
           },
-        });
+          { new: true }
+        ).select("-password");
 
-        const progressAry = await User.find({
-          "progress.template._id": templateId,
-        }).populate("templates");
-
-        return { username: progressAry[0].username };
+        return user;
       } catch (error) {
-        return error;
+        return error.message;
       }
     },
   },

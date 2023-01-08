@@ -73,7 +73,6 @@ export default function WorkoutModal({
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-
                   <path
                     fillRule="evenodd"
                     d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -90,7 +89,7 @@ export default function WorkoutModal({
             <div className="p-5">
               {templateState.exercises.map((exercise, index) => (
                 <Fragment key={exercise.exerciseName}>
-                  <p className="text-primary font-semibold text-3xl text-center">
+                  <p className="text-primary font-semibold text-3xl text-center mb-1">
                     {exercise.exerciseName}
                   </p>
                   <div className="flex justify-center items-center gap-2 mb-2 text-xl">
@@ -101,7 +100,7 @@ export default function WorkoutModal({
                         value={exercise.sets}
                         onChange={(event) => handleChange(event, index)}
                         className="rounded-lg bg-black text-white px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none"
-                      />{" "}
+                      />{" "} 
                       x
                     </span>
                     <input
@@ -112,7 +111,7 @@ export default function WorkoutModal({
                       className="rounded-lg bg-black text-white px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none"
                     />
                     <span className="text-white_faded">
-                      {exercise.weight ? (
+                      {exercise.weight != "Body weight" ? (
                         <input
                           type="text"
                           name="weight"
@@ -121,9 +120,10 @@ export default function WorkoutModal({
                           className="rounded-lg bg-black text-white px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none"
                         />
                       ) : (
-                        "Body weight"
+                        null
                       )}
                     </span>
+                    Ibs
                   </div>
                 </Fragment>
               ))}
@@ -133,7 +133,7 @@ export default function WorkoutModal({
               <SaveWorkoutBtn
                 loading={loading}
                 handleSaveWorkout={handleSaveWorkout}
-                saveWorkoutTrue={!!data?.saveWorkout?.username}
+                data={data}
               />
 
               {error ? (

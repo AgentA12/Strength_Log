@@ -54,8 +54,9 @@ const typeDefs = gql`
   }
 
   type Progress {
-    _id: ID
-    template: [Template]
+    templateName: String
+    templateId: String
+    exercises: [Exercise]
     timeToComplete: String
     totalWeight: Int
     dateCompleted: String
@@ -75,6 +76,7 @@ const typeDefs = gql`
     getAllTemplates: [Template]
     getAllExercises: [Exercise]
     getTemplateProgressForUser: [Template]
+    exerciseProgress(_id: ID!): [User]
   }
 
   type Mutation {

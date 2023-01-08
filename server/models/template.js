@@ -7,9 +7,7 @@ const templateSchema = mongoose.Schema(
     templateNotes: { type: String, trim: true },
     exercises: [exerciseSchema],
   },
-  {
-    timeStamps: true,
-  }
+  { timeStamps: true }
 );
 
 const Template = mongoose.model("Template", templateSchema);

@@ -52,8 +52,6 @@ export default function EditTemplate() {
     try {
       event.preventDefault();
 
-      console.log(`This is the formState: ${formState}`)
-
       const mutationRes = await EditTemplate({
         variables: {
           ...formState,

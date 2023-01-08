@@ -1,10 +1,9 @@
 import { GiCheckMark } from "react-icons/gi";
 import { FaWeightHanging } from "react-icons/fa";
 import { BiTime } from "react-icons/bi";
-import { useState } from "react";
 import { motion } from "framer-motion";
 
-export default function ProgressCard({ progressInfo,  handleSummary }) {
+export default function ProgressCard({ progressInfo, handleSummary }) {
   return (
     <motion.div
       whileHover={{ translateY: -5 }}
@@ -22,7 +21,7 @@ export default function ProgressCard({ progressInfo,  handleSummary }) {
 
       <div className="flex gap-2 justify-between font-normal text-gray-400">
         <div className="flex gap-2">
-          <span className="flex items-center gap-1">
+          <span className="flex items-center gap-1 mr-5">
             <FaWeightHanging /> Total Weight: {progressInfo.totalWeight} (lbs)
           </span>
           {progressInfo.timeToComplete ? (
@@ -30,10 +29,10 @@ export default function ProgressCard({ progressInfo,  handleSummary }) {
               <BiTime />
               {progressInfo.timeToComplete}
             </span>
-          ) : null}{" "}
+          ) : null}
         </div>
         <motion.span className="text-primary text-sm justify-self-end self-end opacity-0 group-hover:opacity-100 transition-all duration-150 group-hover:-translate-x-2">
-            Summary
+        Show Summary
         </motion.span>
       </div>
     </motion.div>

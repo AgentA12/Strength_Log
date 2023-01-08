@@ -6,7 +6,8 @@ import { useLocation } from "react-router-dom";
 import Counter from "../miscellaneous/Counter";
 import FinishedModel from "./FinishedModel";
 import { motion } from "framer-motion";
-import RenderExercises from "./RenderExercises";
+import RenderExercises from "../summary/RenderExercises";
+
 export default function Workout() {
   const { state } = useLocation();
 

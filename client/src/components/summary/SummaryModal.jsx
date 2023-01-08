@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Fragment } from "react";
+import RenderExercises from "./RenderExercises";
 
-export default function SummaryContainer({ isOpen, setIsOpen, res }) {
+export default function SummaryModal({ isOpen, setIsOpen, progressObj }) {
   return (
     <AnimatePresence>
       <div
@@ -16,6 +16,10 @@ export default function SummaryContainer({ isOpen, setIsOpen, res }) {
             className="modal-body add-modal-height modal-scroll mx-2"
           >
             <div className="flex items-end justify-end">
+              <p className="text-lg">
+                {/* {res?.data?.getProgress[0].templateName.toUpperCase()} */}
+              </p>
+
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 type="button"
@@ -40,25 +44,11 @@ export default function SummaryContainer({ isOpen, setIsOpen, res }) {
             </div>
 
             <div className="p-5">
-              {res.data.getProgress[0].template[0].templateName}
-              {res.data.getProgress[0].template[0].exercises.map(
-                (exercise, i) => (
-                  <Fragment key={exercise.exerciseName}>
-                    <p className="text-primary font-semibold text-3xl text-center">
-                      {exercise.exerciseName}
-                    </p>
-                    <div className="flex justify-center items-center gap-2 mb-2 text-xl">
-                      <span className="">
-                        {exercise.sets} {exercise.sets && "x"}{" "}
-                      </span>
-                      <span className="">{exercise.reps}</span>
-                      <span className="text-white_faded">
-                        {exercise.weight && `${exercise.weight} (lbs)`}
-                      </span>
-                    </div>
-                  </Fragment>
-                )
-              )}
+              {/* {res?.data?.getProgress.map((progressObj) =>
+                progressObj.exercises.map((exercise) => (
+                  <RenderExercises exercise={exercise} />
+                ))
+              )} */}
             </div>
           </motion.div>
         )}

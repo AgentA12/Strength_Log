@@ -49,19 +49,19 @@ export const GET_TEMPLATES = gql`
 export const GET_TEMPLATES_PROGRESS = gql`
   query ($templateID: ID!, $userID: ID!) {
     getProgress(templateID: $templateID, userID: $userID) {
-      _id
+      templateName
+      templateId
+      exercises {
+        _id
+        exerciseName
+        reps
+        sets
+        weight
+        type
+      }
       timeToComplete
       dateCompleted
       totalWeight
-      template {
-        _id
-        templateName
-        exercises {
-          reps
-          sets
-          weight
-        }
-      }
     }
   }
 `;

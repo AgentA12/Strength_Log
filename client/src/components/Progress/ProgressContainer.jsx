@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ProgressCard from "./ProgressCard";
 import { useQuery, useLazyQuery } from "@apollo/client";
-import SummaryContainer from "../summary/summaryContainer";
+import SummaryModal from "../summary/SummaryModal";
 import {
   GET_TEMPLATES,
   GET_TEMPLATES_PROGRESS,
@@ -13,6 +13,43 @@ import { FcSearch } from "react-icons/fc";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
+const settings = {
+  dots: true,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 2,
+  slidesToScroll: 1,
+  autoplay: false,
+  centerMode: false,
+  className: "mb-10",
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: true,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        initialSlide: 2,
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+  ],
+};
 
 export default function ProgressContainer() {
   const [activeTemplate, setActiveTemplate] = useState("Select A Template");
@@ -39,9 +76,8 @@ export default function ProgressContainer() {
     });
   }
 
-  function handleSummary(progressInfo) {
+  function handleSummary() {
     setIsOpen(true);
-    
   }
 
   if (error) console.log(error);
@@ -53,43 +89,7 @@ export default function ProgressContainer() {
       </div>
     );
 
-  const settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplay: false,
-    centerMode: true,
-    className: "mb-10",
-    centerMode: true,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
+  if (res) console.log(res);
 
   return (
     <>
@@ -153,7 +153,14 @@ export default function ProgressContainer() {
             </p>
           )}
         </div>
-        <SummaryContainer isOpen={isOpen} setIsOpen={setIsOpen} res={res} />
+
+        {data?.getTemplatesForUser.map((progressObj) => (
+          <SummaryModal
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            progressObj={progressObj}
+          />
+        ))}
       </div>
     </>
   );
