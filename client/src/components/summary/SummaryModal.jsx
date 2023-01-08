@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import RenderExercises from "./RenderExercises";
 
-export default function SummaryModal({ isOpen, setIsOpen, progressObj }) {
+export default function SummaryModal({ isOpen, setIsOpen, res }) {
   return (
     <AnimatePresence>
       <div
@@ -44,11 +44,11 @@ export default function SummaryModal({ isOpen, setIsOpen, progressObj }) {
             </div>
 
             <div className="p-5">
-              {/* {res?.data?.getProgress.map((progressObj) =>
+              {res?.data?.getProgress.map((progressObj) =>
                 progressObj.exercises.map((exercise) => (
                   <RenderExercises exercise={exercise} />
                 ))
-              )} */}
+              )}
             </div>
           </motion.div>
         )}
