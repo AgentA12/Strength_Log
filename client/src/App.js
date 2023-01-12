@@ -16,6 +16,7 @@ export default function App() {
   const { pathname } = useLocation();
 
   return (
+    // <Dashboard />
     <>
       <Nav activeNav={pathname.replace("/", "")} />
       <Routes>

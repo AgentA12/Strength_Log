@@ -47,6 +47,8 @@ const resolvers = {
           },
         });
 
+      console.log(user.progress);
+
       return user.templates;
     },
 

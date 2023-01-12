@@ -7,7 +7,7 @@ import {
 } from "@material-tailwind/react";
 
 import { Link } from "react-router-dom";
-import { GiWeightLiftingUp } from "react-icons/gi";
+import { AiOutlineThunderbolt } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import Auth from "../../utils/auth/auth";
 import LoginBtn from "../buttons/LoginBtn";
@@ -68,7 +68,7 @@ export function Nav({ activeNav }) {
           className="mr-4 cursor-pointer py-1.5 font-normal"
         >
           <IconContext.Provider value={{ className: "text-primary ml-5" }}>
-            <GiWeightLiftingUp size={50} />
+            <AiOutlineThunderbolt size={50} />
           </IconContext.Provider>
         </Typography>
         <div className="hidden lg:block">{navList}</div>
