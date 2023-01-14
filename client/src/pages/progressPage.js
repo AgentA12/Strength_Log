@@ -1,3 +1,1 @@
-export const progressPage = () => {
-  return undefined;
-};
+export const ProgressPage = () => {};

@@ -29,9 +29,7 @@ export default function WorkoutModal({
           exercises: templateState.exercises,
         },
       });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   function handleChange({ target }, index) {
@@ -100,7 +98,7 @@ export default function WorkoutModal({
                         value={exercise.sets}
                         onChange={(event) => handleChange(event, index)}
                         className="rounded-lg bg-black text-white px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none"
-                      />{" "} 
+                      />{" "}
                       x
                     </span>
                     <input
@@ -119,9 +117,7 @@ export default function WorkoutModal({
                           onChange={(event) => handleChange(event, index)}
                           className="rounded-lg bg-black text-white px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none"
                         />
-                      ) : (
-                        null
-                      )}
+                      ) : null}
                     </span>
                     Ibs
                   </div>

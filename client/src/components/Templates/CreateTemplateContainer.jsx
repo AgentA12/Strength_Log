@@ -132,15 +132,15 @@ export default function CreateTemplateContainer() {
   }
 
   return (
-    <>
-      <div className="py-10 3xl:pl-72 md:pl-10 border-b border-gray-600">
+    <main className="ml-40">
+      <div className="py-10  md:pl-10 border-b border-gray-600 ">
         <h1 className="font-bold text-3xl text-center md:text-left">
           Create A Template
         </h1>
       </div>
 
       <div className="flex gap-6 mt-12 mb-10 mx-5">
-        <div className="3xl:pl-72 w-fit">
+        <div className=" w-fit">
           <div className="mb-5">
             <input
               onChange={(event) => handleChange(null, event)}
@@ -211,6 +211,6 @@ export default function CreateTemplateContainer() {
           </div>
         </div>
       </div>
-    </>
+    </main>
   );
 }

@@ -6,8 +6,6 @@ export default function Pagination({
 }) {
   const pageNumbers = [];
 
- 
-
   for (let i = 1; i <= Math.ceil(totalTemplates / templatesPerPage); i++) {
     pageNumbers.push(i);
   }
@@ -23,7 +21,7 @@ export default function Pagination({
                   onClick={() => {
                     paginate(number);
                   }}
-                  href="#"
+                  href=""
                   className={`${
                     number === currentPage
                       ? "bg-primary text-background border-background"

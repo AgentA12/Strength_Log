@@ -14,7 +14,6 @@ const server = new ApolloServer({
   resolvers,
   context: authMiddleWare,
   formatError: (error) => {
-    console.log(error.message);
     if (error.message.startsWith("Exercise")) {
       return new Error("You must fill in all Exercise fields");
     }
@@ -31,11 +30,7 @@ function startApolloServer(typeDefs, resolvers) {
   db.once("open", async () => {
     await server.start();
     server.applyMiddleware({ app });
-    app.listen(PORT, () => {
-      console.log(
-        `Use for testing at http://localhost:${PORT}${server.graphqlPath}`
-      );
-    });
+    app.listen(PORT, () => {});
   });
 }
 

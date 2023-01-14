@@ -4,7 +4,7 @@
 
 @layer components {
   body {
-    @apply bg-background text-white font-sans;
+    @apply bg-background text-white font-sans m-0 p-0;
   }
 
   .modal-container {
@@ -32,7 +32,7 @@
   }
 
   .nav-link {
-    @apply flex items-center gap-1 py-2 pr-4 pl-3 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent transition-colors ease-in;
+    @apply flex items-center gap-1 rounded hover:text-primary md:hover:bg-transparent md:border-0 md:dark:hover:bg-transparent transition-colors ease-in;
   }
 
   .alert {
@@ -108,4 +108,10 @@ body::-webkit-scrollbar-thumb {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.underline {
+  height: 30px;
+  width: 5px;
+  background: #bb86fc;
 }

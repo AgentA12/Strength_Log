@@ -70,7 +70,8 @@ const typeDefs = gql`
   type Query {
     getExercise: [Exercise]
     getUserById(_id: ID!): User
-    getTemplatesForUser(userId: ID!): [Template]
+    getTemplatesForUser(userId: ID!,  offset: Int,
+      limit: Int): [Template]
     getProgress(templateID: ID!, userID: ID!): [Progress]
     getAllUsers: [User]
     getAllTemplates: [Template]

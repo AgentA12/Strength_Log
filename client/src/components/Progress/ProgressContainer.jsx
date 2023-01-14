@@ -85,8 +85,6 @@ export default function ProgressContainer() {
 
   function handleSummary() {}
 
-  if (error) console.log(error);
-
   if (loading)
     return (
       <div className="flex items-center justify-center">
@@ -95,7 +93,7 @@ export default function ProgressContainer() {
     );
 
   return (
-    <div className="ml-20 flex justify-around mt-12">
+    <div className="ml-20 flex justify-around mt-12 ml-56">
       <section className=" ">
         <h3 className="text-primary text-4xl font-extrabold mb-3">Progress</h3>
         <div className="w-fit p-5 border border-gray-600 rounded-md ">

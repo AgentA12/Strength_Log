@@ -36,8 +36,6 @@ export default function Login() {
     Auth.login(mutationResponse.data.login.token);
   }
 
-  if (error) console.log(error);
-
   return (
     <div className="flex h-90 justify-center items-start">
       <div className="w-96 bg-overlay mx-2 p-8 rounded-lg border-r-primary border-r-4  mt-20">

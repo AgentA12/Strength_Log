@@ -47,7 +47,6 @@ const resolvers = {
           },
         });
 
-      console.log(user.progress);
 
       return user.templates;
     },
@@ -60,7 +59,6 @@ const resolvers = {
 
         return progress;
       } catch (error) {
-        console.log(error);
         return error;
       }
     },

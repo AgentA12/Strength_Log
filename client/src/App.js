@@ -4,11 +4,11 @@ import Login from "./components/miscellaneous/Login";
 import Signup from "./components/miscellaneous/Signup";
 import { Routes, Route, useLocation } from "react-router-dom";
 import ProgressContainer from "./components/progress/ProgressContainer";
-import Workout from "./components/workout/Workout";
 import CreateTemplate from "./components/templates/CreateTemplateContainer";
 import EditTemplate from "./components/templates/EditTemplateContainer";
 import Protected from "./components/ProtectedRoute";
 import auth from "./utils/auth/auth";
+import { TemplatePage } from "./pages/templatesPage";
 
 export default function App() {
   const isLoggedIn = auth.isLoggedIn();
@@ -16,7 +16,6 @@ export default function App() {
   const { pathname } = useLocation();
 
   return (
-    // <Dashboard />
     <>
       <Nav activeNav={pathname.replace("/", "")} />
       <Routes>
@@ -25,7 +24,7 @@ export default function App() {
           path="/Login"
           element={
             <Protected isLoggedIn={isLoggedIn}>
-              <TemplateContainer />
+              <TemplatePage />
             </Protected>
           }
         />
@@ -34,13 +33,13 @@ export default function App() {
           path="/Templates"
           element={
             <Protected isLoggedIn={isLoggedIn}>
-              <TemplateContainer />
+              <TemplatePage />
             </Protected>
           }
         />
 
         <Route
-          path="/Create-Template"
+          path="Templates/Create-Template"
           element={
             <Protected isLoggedIn={isLoggedIn}>
               <CreateTemplate />
@@ -64,15 +63,6 @@ export default function App() {
             </Protected>
           }
         />
-
-        {/* <Route
-          path="/Workout"
-          element={
-            <Protected isLoggedIn={isLoggedIn}>
-              <Workout />
-            </Protected>
-          }
-        /> */}
       </Routes>
     </>
   );

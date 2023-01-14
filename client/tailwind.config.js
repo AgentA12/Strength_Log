@@ -7,8 +7,16 @@ module.exports = withMT({
     "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: " #BB86FC",
+        },
+      },
+    },
+
     screens: {
-      '3xl': "1600px"
+      "3xl": "1600px",
     },
     extend: {
       colors: {

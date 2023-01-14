@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const buttonStyle = { color: "#c9a0ff" };
 
-export default function AddTemplateBtn({setOpenNav}) {
+export default function AddTemplateBtn({ setOpenNav }) {
   return (
     <Link to={"Create-Template"} onClick={() => setOpenNav(false)}>
       <motion.button whileTap={{ scale: 0.9 }}>
