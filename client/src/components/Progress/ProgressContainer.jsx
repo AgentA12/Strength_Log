@@ -13,7 +13,7 @@ import { FcSearch } from "react-icons/fc";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Chart } from "../chart/char";
+import { Chart } from "../chart/Chart";
 
 const settings = {
   dots: true,
@@ -93,7 +93,7 @@ export default function ProgressContainer() {
     );
 
   return (
-    <div className="ml-20 flex justify-around mt-12 ml-56">
+    <div className="ml-40 flex justify-around mt-12">
       <section className=" ">
         <h3 className="text-primary text-4xl font-extrabold mb-3">Progress</h3>
         <div className="w-fit p-5 border border-gray-600 rounded-md ">
@@ -155,8 +155,8 @@ export default function ProgressContainer() {
 
           <div className="w-6/12 ">
             <h6 className="mt-10">Recents</h6>
-            <div className="h-5/6 overflow-y-scroll card-container flex justify-center mb-10">
-              <div className="flex flex-col gap-5 h-custom-2 w-custom">
+            <div className="h-5/6 overflow-y-scroll  modal-scroll card-container flex justify-center mb-10">
+              <div className="flex flex-col gap-5 h-custom-2 w-custom ">
                 {res.data?.getProgress ? (
                   res.data.getProgress.map((progressInfo) => (
                     <ProgressCard

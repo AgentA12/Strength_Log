@@ -65,3 +65,12 @@ export const GET_TEMPLATES_PROGRESS = gql`
     }
   }
 `;
+
+export const GET_TEMPLATE_CHART_DATA = gql`
+  query ($templateId: ID!, $userId: ID!) {
+    getChartData(templateId: $templateId, userId: $userId) {
+      labels
+      totalWeights
+    }
+  }
+`;

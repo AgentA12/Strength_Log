@@ -3,7 +3,7 @@ import { FaWeightHanging } from "react-icons/fa";
 import { BiTime } from "react-icons/bi";
 import { motion } from "framer-motion";
 
-export default function ProgressCard({ progressInfo, handleSummary }) {
+export default function ProgressCard({ progressInfo, handleSummary, }) {
   return (
     <motion.div
       whileHover={{ translateY: -5 }}

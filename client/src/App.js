@@ -1,9 +1,8 @@
 import { Nav } from "./components/navbar/Nav";
-import TemplateContainer from "./components/templates/TemplateContainer";
 import Login from "./components/miscellaneous/Login";
 import Signup from "./components/miscellaneous/Signup";
 import { Routes, Route, useLocation } from "react-router-dom";
-import ProgressContainer from "./components/progress/ProgressContainer";
+import  {ProgressPage} from "./pages/progressPage";
 import CreateTemplate from "./components/templates/CreateTemplateContainer";
 import EditTemplate from "./components/templates/EditTemplateContainer";
 import Protected from "./components/ProtectedRoute";
@@ -59,7 +58,7 @@ export default function App() {
           path="/Progress"
           element={
             <Protected isLoggedIn={isLoggedIn}>
-              <ProgressContainer />
+              <ProgressPage />
             </Protected>
           }
         />

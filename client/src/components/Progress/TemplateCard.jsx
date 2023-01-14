@@ -3,12 +3,14 @@ export default function TemplateCard({
   handleQuery,
   activeTemplate,
   setActiveTemplate,
+  getChartData,
 }) {
   return (
     <div
       onClick={() => [
         handleQuery(template._id),
         setActiveTemplate(template.templateName),
+        getChartData(template._id, template.templateName),
       ]}
       className={`${
         activeTemplate === template.templateName ? "border-gray-200" : null

@@ -47,7 +47,6 @@ const resolvers = {
           },
         });
 
-
       return user.templates;
     },
 
@@ -81,6 +80,35 @@ const resolvers = {
       const t = await User.findById(args.userId).sort({
         "progress.createdAt": "asc",
       });
+    },
+
+    getChartData: async function (_, args) {
+      const { progress } = await User.findById(args.userId).select("progress");
+
+      progress.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
+
+      const labels = progress.map((progressObject) => {
+        return progressObject.dateCompleted;
+      });
+
+      let copy = [...progress];
+
+      copy.forEach((resultObj, i) => {
+        let total = resultObj.exercises.reduce(
+          (accumulator, { weight, reps, sets }) => {
+            return (accumulator += weight * reps * sets);
+          },
+          0
+        );
+
+        copy[i].totalWeight = total;
+      });
+
+      let totalWeight = copy.map((c) => {
+        return c.totalWeight;
+      });
+
+      return { labels: labels, totalWeights: totalWeight };
     },
   },
 

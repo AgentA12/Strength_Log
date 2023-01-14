@@ -67,17 +67,22 @@ const typeDefs = gql`
     deleteCount: Int
   }
 
+  type Chart {
+    labels: [String]
+    totalWeights: [Int]
+  }
+
   type Query {
     getExercise: [Exercise]
     getUserById(_id: ID!): User
-    getTemplatesForUser(userId: ID!,  offset: Int,
-      limit: Int): [Template]
+    getTemplatesForUser(userId: ID!, offset: Int, limit: Int): [Template]
     getProgress(templateID: ID!, userID: ID!): [Progress]
     getAllUsers: [User]
     getAllTemplates: [Template]
     getAllExercises: [Exercise]
     getTemplateProgressForUser: [Template]
     exerciseProgress(_id: ID!): [User]
+    getChartData(templateId: ID!, userId: ID!): Chart
   }
 
   type Mutation {

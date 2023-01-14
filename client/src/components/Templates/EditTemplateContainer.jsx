@@ -100,8 +100,8 @@ export default function EditTemplate() {
   }
 
   return (
-    <>
-      <div className="py-10 3xl:pl-72 md:pl-10 border-b border-gray-600">
+    <main className="ml-40">
+      <div className="py-10  md:pl-10 border-b border-gray-600">
         <h1 className="font-bold text-3xl text-center md:text-left">
           <span className="mr-3">Edit</span>
           <span className="text-primary ml-1">
@@ -111,7 +111,7 @@ export default function EditTemplate() {
       </div>
 
       <div className="flex gap-6 mt-12 mb-10 mx-5">
-        <div className="3xl:pl-72 w-fit">
+        <div className="w-fit">
           <div className="mb-5">
             <input
               onChange={(event) => handleChange(null, event)}
@@ -182,6 +182,6 @@ export default function EditTemplate() {
           </div>
         </div>
       </div>
-    </>
+    </main>
   );
 }
