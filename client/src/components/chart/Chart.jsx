@@ -28,24 +28,38 @@ export const options = {
     },
     title: {
       display: true,
-      text: "Template Weight",
+      text: "Total weight over time",
     },
   },
 };
 
-export function Chart({ chartData, activeTemplate }) {
-  if (chartData)
+export const Chart = ({ chartSummaryData, chartExerciseData }) => {
+  if (chartSummaryData) {
     var data = {
-      labels: chartData.labels,
+      labels: chartSummaryData.labels,
       datasets: [
         {
-          label: activeTemplate,
-          data: chartData.totalWeights,
+          label: "Total Volume",
+          data: chartSummaryData.totalWeights,
           borderColor: "#BB86FC",
           backgroundColor: "rgba(255, 99, 132, 0.5)",
         },
       ],
     };
+  }
+  //  else if (chartExerciseData != undefined){
+  //   var data = {
+  //     labels: chartExerciseData.labels,
+  //     datasets: [
+  //       {
+  //         label: "Total Volume",
+  //         data: chartExerciseData,
+  //         borderColor: "#BB86FC",
+  //         backgroundColor: "rgba(255, 99, 132, 0.5)",
+  //       },
+  //     ],
+  //   };
+  // }
 
   return <Line options={options} data={data} />;
-}
+};

@@ -65,6 +65,28 @@ userSchema.methods.getProgress = function (templateID) {
   return result;
 };
 
+userSchema.methods.getExerciseProgress = function (templateID) {
+  let r = this.progress.filter((progressObj) => {
+    return progressObj.templateId.toString() === templateID;
+  });
+
+  const result = [...r];
+
+  result.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
+
+  let firstExercise = result[0].exercises;
+
+  let secondExercise = result[1].exercises;
+
+  console.log(firstExercise, secondExercise);
+
+  // for each
+
+  const shape = {};
+
+  return { firstExercise: firstExercise, secondExercise: secondExercise };
+};
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;

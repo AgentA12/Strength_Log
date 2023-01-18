@@ -56,6 +56,8 @@ const resolvers = {
 
         const progress = user.getProgress(templateID);
 
+        user.getExerciseProgress(templateID);
+
         return progress;
       } catch (error) {
         return error;

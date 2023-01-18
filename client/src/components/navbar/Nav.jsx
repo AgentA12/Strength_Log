@@ -58,7 +58,7 @@ export function Nav({ activeNav }) {
       </li>
 
       {navData.map((item) => (
-        <li className="mb-5">
+        <li className="mb-5" key={item.link}>
           <Link onClick={() => setOpenNav(false)} to={item.link}>
             <item.componentName activeNav={activeNav} />
             {/* <motion.div

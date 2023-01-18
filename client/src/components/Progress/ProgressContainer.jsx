@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ProgressCard from "./ProgressCard";
 import { useQuery, useLazyQuery } from "@apollo/client";
-import SummaryModal from "../summary/SummaryModal";
+// import SummaryModal from "../summary/SummaryModal";
 import {
   GET_TEMPLATES,
   GET_TEMPLATES_PROGRESS,
@@ -10,47 +10,9 @@ import TemplateCard from "./TemplateCard";
 import auth from "../../utils/auth/auth";
 import Spinner from "../miscellaneous/Spinner";
 import { FcSearch } from "react-icons/fc";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Chart } from "../chart/Chart";
-
-const settings = {
-  dots: true,
-  infinite: false,
-  speed: 500,
-  slidesToShow: 2,
-  slidesToScroll: 1,
-  autoplay: false,
-  centerMode: false,
-  className: "mb-10",
-  responsive: [
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        infinite: true,
-        dots: true,
-      },
-    },
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 1,
-        initialSlide: 2,
-      },
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      },
-    },
-  ],
-};
 
 export default function ProgressContainer() {
   const [activeTemplate, setActiveTemplate] = useState("Select A Template");

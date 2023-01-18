@@ -100,7 +100,7 @@ export const TemplatePage = () => {
   }
 
   return (
-    <main className="mx-10 my-10 ml-56">
+    <main className="mx-3 my-10 ml-56">
       <div className="flex flex-wrap gap-5 items-center">
         <h2 className=" text-primary font-extrabold text-3xl sm:text-5xl">
           Your Templates

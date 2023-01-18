@@ -1,4 +1,4 @@
-export default function TemplateCard({
+export default function TemplateListItem({
   template,
   handleQuery,
   activeTemplate,
