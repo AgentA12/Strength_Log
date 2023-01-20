@@ -82,7 +82,7 @@ const typeDefs = gql`
     getAllExercises: [Exercise]
     getTemplateProgressForUser: [Template]
     exerciseProgress(_id: ID!): [User]
-    getChartData(templateId: ID!, userId: ID!): Chart
+    getChartData(templateName: String!, userId: ID!): Chart
   }
 
   type Mutation {

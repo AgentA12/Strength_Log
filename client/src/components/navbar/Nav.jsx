@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import { motion } from "framer-motion";
-
 import Auth from "../../utils/auth/auth";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import LoginBtn from "../buttons/LoginBtn";
@@ -61,10 +59,6 @@ export function Nav({ activeNav }) {
         <li className="mb-5" key={item.link}>
           <Link onClick={() => setOpenNav(false)} to={item.link}>
             <item.componentName activeNav={activeNav} />
-            {/* <motion.div
-              className={`${activeNav === item.name && "underline"}`}
-              layoutId="underline"
-            /> */}
           </Link>
         </li>
       ))}

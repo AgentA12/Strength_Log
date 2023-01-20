@@ -33,33 +33,24 @@ export const options = {
   },
 };
 
-export const Chart = ({ chartSummaryData, chartExerciseData }) => {
-  if (chartSummaryData) {
+export const Chart = ({ loadChartSummaryData }) => {
+  if (loadChartSummaryData) {
     var data = {
-      labels: chartSummaryData.labels,
+      labels: loadChartSummaryData?.getChartData.labels,
       datasets: [
         {
           label: "Total Volume",
-          data: chartSummaryData.totalWeights,
+          data: loadChartSummaryData?.getChartData.totalWeights,
           borderColor: "#BB86FC",
           backgroundColor: "rgba(255, 99, 132, 0.5)",
         },
       ],
     };
   }
-  //  else if (chartExerciseData != undefined){
-  //   var data = {
-  //     labels: chartExerciseData.labels,
-  //     datasets: [
-  //       {
-  //         label: "Total Volume",
-  //         data: chartExerciseData,
-  //         borderColor: "#BB86FC",
-  //         backgroundColor: "rgba(255, 99, 132, 0.5)",
-  //       },
-  //     ],
-  //   };
-  // }
 
-  return <Line options={options} data={data} />;
+  if (loadChartSummaryData.getChartData.labels.length) {
+    return <Line options={options} data={data} />;
+  } else {
+    return null;
+  }
 };

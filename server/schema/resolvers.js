@@ -85,15 +85,21 @@ const resolvers = {
     },
 
     getChartData: async function (_, args) {
+      console.log(args)
       const { progress } = await User.findById(args.userId).select("progress");
 
-      progress.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
+      const test = progress.filter((p) => {
+        return p.templateName === args.templateName;
+      });
+      console.log(test);
 
-      const labels = progress.map((progressObject) => {
+      test.sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1));
+
+      const labels = test.map((progressObject) => {
         return progressObject.dateCompleted;
       });
 
-      let copy = [...progress];
+      let copy = [...test];
 
       copy.forEach((resultObj, i) => {
         let total = resultObj.exercises.reduce(

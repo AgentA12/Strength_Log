@@ -1,27 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery, useLazyQuery } from "@apollo/client";
-// import SummaryModal from "../summary/SummaryModal";
+
+import auth from "../utils/auth/auth";
+import Spinner from "../components/miscellaneous/Spinner";
+import { TemplateSearchBar } from "../components/progress/TemplateSearchBar";
+import { SectionMenu } from "../components/progress/SectionMenu";
+import { SummaryContainer } from "../components/progress/SummaryContainer";
+import { ExerciseContainer } from "../components/progress/ExerciseContainer";
+import TemplateListItem from "../components/progress/TemplateListItem";
+
 import {
   GET_TEMPLATES,
   GET_TEMPLATES_PROGRESS,
   GET_TEMPLATE_CHART_DATA,
 } from "../utils/graphql/queries";
-import TemplateListItem from "../components/progress/TemplateListItem";
-import auth from "../utils/auth/auth";
-import Spinner from "../components/miscellaneous/Spinner";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { TemplateSearchBar } from "../components/progress/TemplateSearchBar";
-import { SectionMenu } from "../components/progress/SectionMenu";
-import { SummaryContainer } from "../components/progress/SummaryContainer";
-import { ExerciseContainer } from "../components/progress/ExerciseContainer";
 
 export const ProgressPage = () => {
   const [activeTemplate, setActiveTemplate] = useState();
-  const [isOpen, setIsOpen] = useState(false);
-  const [templates, setTemplates] = useState([]);
   const [activeSection, setActiveSection] = useState("Summary");
-  const [chartSummaryData, setChartSummaryData] = useState([]);
 
   const {
     data: { _id: userID },
@@ -33,12 +29,23 @@ export const ProgressPage = () => {
     },
   });
 
-  useEffect(() => {
-    setTemplates(data);
-  }, []);
+  const [
+    loadOneTemplate,
+    {
+      loading: loadOneTemplateLoadingState,
+      error: loadOneTemplateError,
+      data: loadOneTemplateData,
+    },
+  ] = useLazyQuery(GET_TEMPLATES_PROGRESS);
 
-  const [loadOneTemplate, res] = useLazyQuery(GET_TEMPLATES_PROGRESS);
-  const [loadChartSummaryData, resData] = useLazyQuery(GET_TEMPLATE_CHART_DATA);
+  const [
+    loadChartSummary,
+    {
+      loading: loadChartSummaryDataLoading,
+      error: loadChartSummaryDataError,
+      data: loadChartSummaryData,
+    },
+  ] = useLazyQuery(GET_TEMPLATE_CHART_DATA);
 
   async function handleQuery(templateId) {
     await loadOneTemplate({
@@ -49,20 +56,16 @@ export const ProgressPage = () => {
     });
   }
 
-  function handleSummary() {}
-
-  async function getChartData(templateId) {
-    await loadChartSummaryData({
+  async function getChartData(templateName) {
+    await loadChartSummary({
       variables: {
-        templateId: templateId,
+        templateName: templateName,
         userId: userID,
       },
     });
-
-    if (resData.data) {
-      setChartSummaryData(resData.data.getChartData);
-    }
   }
+
+  if (loadChartSummaryData) console.log(loadChartSummaryData);
 
   if (loading)
     return (
@@ -85,7 +88,6 @@ export const ProgressPage = () => {
                 key={template._id}
                 template={template}
                 handleQuery={handleQuery}
-                res={res}
                 activeTemplate={activeTemplate}
                 setActiveTemplate={setActiveTemplate}
                 getChartData={getChartData}
@@ -115,15 +117,14 @@ export const ProgressPage = () => {
 
         {activeSection === "Summary" ? (
           <SummaryContainer
-            chartSummaryData={chartSummaryData}
+            loadChartSummaryData={loadChartSummaryData}
             activeTemplate={activeTemplate}
-            handleSummary={handleSummary}
-            res={res}
+            loadOneTemplateData={loadOneTemplateData}
           />
         ) : (
           <ExerciseContainer
-            chartSummaryData={chartSummaryData}
-            res={res}
+            loadChartSummaryData={loadChartSummaryData}
+            loadOneTemplateData={loadOneTemplateData}
             activeTemplate={activeTemplate}
           />
         )}

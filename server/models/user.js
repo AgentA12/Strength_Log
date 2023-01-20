@@ -78,12 +78,6 @@ userSchema.methods.getExerciseProgress = function (templateID) {
 
   let secondExercise = result[1].exercises;
 
-  console.log(firstExercise, secondExercise);
-
-  // for each
-
-  const shape = {};
-
   return { firstExercise: firstExercise, secondExercise: secondExercise };
 };
 
