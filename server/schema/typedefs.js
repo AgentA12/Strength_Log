@@ -72,6 +72,11 @@ const typeDefs = gql`
     totalWeights: [Int]
   }
 
+  type ExerciseProgress {
+    dateCompleted: String
+    exercises: [Exercise]
+  }
+
   type Query {
     getExercise: [Exercise]
     getUserById(_id: ID!): User
@@ -81,7 +86,7 @@ const typeDefs = gql`
     getAllTemplates: [Template]
     getAllExercises: [Exercise]
     getTemplateProgressForUser: [Template]
-    exerciseProgress(_id: ID!): [User]
+    getExerciseProgress(templateID: ID!, userID: ID!): [ExerciseProgress]
     getChartData(templateName: String!, userId: ID!): Chart
   }
 

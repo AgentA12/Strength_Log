@@ -7,11 +7,11 @@ export default function TemplateListItem({
 }) {
   return (
     <div
-      onClick={() => {
-        handleQuery(template._id);
-        setActiveTemplate(template.templateName);
-        getChartData(template.templateName);
-      }}
+      onClick={() => [
+        handleQuery(template._id),
+        setActiveTemplate(template.templateName),
+        getChartData(template._id, template.templateName),
+      ]}
       className={`${
         activeTemplate === template.templateName ? "border-gray-200" : null
       } text-white block py-2 px-1 mx-1 max-w-sm  border-b border-gray-600 hover:border-gray-300 shadow-md cursor-pointer transition-colors duration-200 `}

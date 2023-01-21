@@ -56,8 +56,6 @@ const resolvers = {
 
         const progress = user.getProgress(templateID);
 
-        user.getExerciseProgress(templateID);
-
         return progress;
       } catch (error) {
         return error;
@@ -78,20 +76,12 @@ const resolvers = {
       return user.templates;
     },
 
-    exerciseProgress: async function (_, args) {
-      const t = await User.findById(args.userId).sort({
-        "progress.createdAt": "asc",
-      });
-    },
-
     getChartData: async function (_, args) {
-      console.log(args)
       const { progress } = await User.findById(args.userId).select("progress");
 
       const test = progress.filter((p) => {
         return p.templateName === args.templateName;
       });
-      console.log(test);
 
       test.sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1));
 
@@ -117,6 +107,14 @@ const resolvers = {
       });
 
       return { labels: labels, totalWeights: totalWeight };
+    },
+
+    async getExerciseProgress(_, { templateID, userID }) {
+      const user = await User.findById(userID);
+
+      const exerciseProgress = user.ExerciseProgress(templateID);
+
+      return exerciseProgress;
     },
   },
 

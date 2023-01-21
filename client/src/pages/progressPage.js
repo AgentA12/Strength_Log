@@ -7,7 +7,7 @@ import { TemplateSearchBar } from "../components/progress/TemplateSearchBar";
 import { SectionMenu } from "../components/progress/SectionMenu";
 import { SummaryContainer } from "../components/progress/SummaryContainer";
 import { ExerciseContainer } from "../components/progress/ExerciseContainer";
-import TemplateListItem from "../components/progress/TemplateListItem";
+import { TemplateListContainer } from "../components/progress/TemplateListContainer";
 
 import {
   GET_TEMPLATES,
@@ -65,8 +65,6 @@ export const ProgressPage = () => {
     });
   }
 
-  if (loadChartSummaryData) console.log(loadChartSummaryData);
-
   if (loading)
     return (
       <div className="mt-60 flex items-center justify-center">
@@ -75,33 +73,20 @@ export const ProgressPage = () => {
     );
 
   return (
-    <div className="ml-40 flex justify-around mt-12  progress_page">
-      <section className="main_progress_section">
-        <h3 className="text-primary text-4xl font-extrabold mb-3">Progress</h3>
-
-        <div className="w-fit p-5 border border-gray-600 rounded-md ">
-          <TemplateSearchBar />
-
-          <div className="mt-2 h-80 overflow-scroll modal-scroll template_list_Container">
-            {data?.getTemplatesForUser.map((template) => (
-              <TemplateListItem
-                key={template._id}
-                template={template}
-                handleQuery={handleQuery}
-                activeTemplate={activeTemplate}
-                setActiveTemplate={setActiveTemplate}
-                getChartData={getChartData}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="w-10/12 ml-10 main_progress_display">
-        <div className="flex gap-5 items-center">
-          <h4 className="text-3xl mb-5">
+    <div className="ml-52 mt-20">
+      <section>
+        <div className="flex-col items-center">
+          <h2 className="text-3xl mb-5">
             {activeTemplate ? activeTemplate : "Select a template"}
-          </h4>
+          </h2>
+
+          <TemplateListContainer
+            data={data}
+            handleQuery={handleQuery}
+            activeTemplate={activeTemplate}
+            setActiveTemplate={setActiveTemplate}
+            getChartData={getChartData}
+          />
         </div>
 
         <div className="flex justify-between px-20">
@@ -113,7 +98,7 @@ export const ProgressPage = () => {
           </div>
         </div>
 
-        <div className="border-b border-gray-600"></div>
+        <div className="border-b border-gray-600 mb-10"></div>
 
         {activeSection === "Summary" ? (
           <SummaryContainer
@@ -125,15 +110,9 @@ export const ProgressPage = () => {
           <ExerciseContainer
             loadChartSummaryData={loadChartSummaryData}
             loadOneTemplateData={loadOneTemplateData}
-            activeTemplate={activeTemplate}
           />
         )}
       </section>
     </div>
   );
 };
-
-// onClick on exercises
-// get the exercises for the template
-// pass the exercises into the chart component and the exercise list component
-//

@@ -1,12 +1,16 @@
 import { Chart } from "../chart/Chart";
-
-const ExerciseListContainer = ({templates}) => {
+import { useQuery } from "@apollo/client";
+import { GET_EXERCISE_PROGRESS } from "../../utils/graphql/queries";
+import auth from "../../utils/auth/auth";
+const ExerciseListContainer = ({ templates }) => {
   return (
     <div className="">
       {templates.length ? (
         <div>
           {templates[0].exercises.map((exercise) => (
-            <div className="cursor-pointer">{exercise.exerciseName}</div>
+            <div key={exercise._id} className="cursor-pointer">
+              {exercise.exerciseName}
+            </div>
           ))}
         </div>
       ) : (
@@ -18,24 +22,29 @@ const ExerciseListContainer = ({templates}) => {
 
 export const ExerciseContainer = ({
   loadChartSummaryData,
-  activeTemplate,
-  loadOneTemplateData
+  loadOneTemplateData,
 }) => {
-  // get an array of labels for the exercises dataset
-  // then for each label add a dataset
+  const {
+    data: { _id: userID },
+  } = auth.getInfo();
 
-  // a data set will have to be made for each exercise and the labels will be the weight on the y axis and the save date on the x;
+  const { loading, error, data } = useQuery(GET_EXERCISE_PROGRESS, {
+    variables: {
+      templateID: loadOneTemplateData?.getProgress[0].templateId,
+      userID: userID,
+    },
+  });
 
+  if (error) console.log(error);
+  if (loading) return <div>loading...</div>;
   return (
     <div className="flex">
       <div className="w-6/12">
-        <Chart loadChartSummaryData={loadChartSummaryData} />
+        <Chart exerciseData={data?.getExerciseProgress} />
       </div>
 
-      <div className="">
-        <p className="text-primary_faded text-xl mb-2">
-          {activeTemplate} Exercises
-        </p>
+      <div>
+        <p className="text-primary_faded text-xl mb-2">Exercises</p>
         {loadOneTemplateData?.getProgress ? (
           <ExerciseListContainer templates={loadOneTemplateData.getProgress} />
         ) : null}

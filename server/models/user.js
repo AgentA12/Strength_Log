@@ -30,10 +30,10 @@ const userSchema = mongoose.Schema({
   progress: [progressSchema],
 });
 
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", function (next) {
   if (this.isNew || this.isModified("password")) {
     const saltRounds = 10;
-    this.password = await bcrypt.hash(this.password, saltRounds);
+    this.password = bcrypt.hash(this.password, saltRounds);
   }
   next();
 });
@@ -61,11 +61,10 @@ userSchema.methods.getProgress = function (templateID) {
   });
 
   result.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
-
   return result;
 };
 
-userSchema.methods.getExerciseProgress = function (templateID) {
+userSchema.methods.ExerciseProgress = function (templateID) {
   let r = this.progress.filter((progressObj) => {
     return progressObj.templateId.toString() === templateID;
   });
@@ -74,11 +73,17 @@ userSchema.methods.getExerciseProgress = function (templateID) {
 
   result.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
 
-  let firstExercise = result[0].exercises;
+  const data = result.map((r) => {
+    let obj = {};
 
-  let secondExercise = result[1].exercises;
+    obj.dateCompleted = r.dateCompleted;
 
-  return { firstExercise: firstExercise, secondExercise: secondExercise };
+    obj.exercises = r.exercises;
+
+    return obj;
+  });
+
+  return data;
 };
 
 const User = mongoose.model("User", userSchema);

@@ -9,8 +9,11 @@ export const SummaryContainer = ({
 }) => {
   return (
     <div className="flex">
-      <div className="w-6/12">
-        <Chart loadChartSummaryData={loadChartSummaryData} activeTemplate={activeTemplate} />
+      <div className="w-6/12 bg-overlay rounded-3xl h-fit p-5 ">
+        <Chart
+          loadChartSummaryData={loadChartSummaryData}
+          activeTemplate={activeTemplate}
+        />
       </div>
 
       <div className="w-6/12 ">

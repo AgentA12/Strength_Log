@@ -66,7 +66,7 @@ export function Nav({ activeNav }) {
   );
 
   return (
-    <nav className="absolute h-screen top-0 left-0 border-r border-r-gray-600 p-8 z-10 bg-background">
+    <nav className="absolute h-screen top-0 left-0 border-r border-r-gray-600 p-8 z-10 test">
       {navItems}
     </nav>
   );

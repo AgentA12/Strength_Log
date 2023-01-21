@@ -20,7 +20,7 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
+const options = {
   responsive: true,
   plugins: {
     legend: {
@@ -33,7 +33,7 @@ export const options = {
   },
 };
 
-export const Chart = ({ loadChartSummaryData }) => {
+export const Chart = ({ loadChartSummaryData, exerciseData }) => {
   if (loadChartSummaryData) {
     var data = {
       labels: loadChartSummaryData?.getChartData.labels,
@@ -42,13 +42,13 @@ export const Chart = ({ loadChartSummaryData }) => {
           label: "Total Volume",
           data: loadChartSummaryData?.getChartData.totalWeights,
           borderColor: "#BB86FC",
-          backgroundColor: "rgba(255, 99, 132, 0.5)",
+          backgroundColor: "#121212",
         },
       ],
     };
   }
 
-  if (loadChartSummaryData.getChartData.labels.length) {
+  if (loadChartSummaryData?.getChartData.labels.length) {
     return <Line options={options} data={data} />;
   } else {
     return null;
