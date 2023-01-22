@@ -73,8 +73,15 @@ const typeDefs = gql`
   }
 
   type ExerciseProgress {
-    dateCompleted: String
-    exercises: [Exercise]
+    label: String
+    dataSet: [DataSet]
+  }
+
+  type DataSet {
+    label: String
+    data: Int
+    borderColor: String
+    backgroundColor: String
   }
 
   type Query {

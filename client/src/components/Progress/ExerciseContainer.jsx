@@ -1,7 +1,8 @@
-import { Chart } from "../chart/Chart";
 import { useQuery } from "@apollo/client";
 import { GET_EXERCISE_PROGRESS } from "../../utils/graphql/queries";
 import auth from "../../utils/auth/auth";
+import {ExerciseChart} from "../chart/ExerciseChart";
+
 const ExerciseListContainer = ({ templates }) => {
   return (
     <div className="">
@@ -20,10 +21,7 @@ const ExerciseListContainer = ({ templates }) => {
   );
 };
 
-export const ExerciseContainer = ({
-  loadChartSummaryData,
-  loadOneTemplateData,
-}) => {
+export const ExerciseContainer = ({ loadOneTemplateData }) => {
   const {
     data: { _id: userID },
   } = auth.getInfo();
@@ -35,12 +33,11 @@ export const ExerciseContainer = ({
     },
   });
 
-  if (error) console.log(error);
   if (loading) return <div>loading...</div>;
   return (
     <div className="flex">
-      <div className="w-6/12">
-        <Chart exerciseData={data?.getExerciseProgress} />
+      <div className="w-6/12 bg-overlay rounded-3xl h-fit p-5">
+        <ExerciseChart exerciseData={data?.getExerciseProgress} />
       </div>
 
       <div>

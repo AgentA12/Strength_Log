@@ -73,12 +73,29 @@ userSchema.methods.ExerciseProgress = function (templateID) {
 
   result.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
 
+  let labels = result.map((r) => r.dateCompleted);
+
+  let exercises = result[0].exercises.map((exercise) => exercise.exerciseName);
+
+  labels.forEach((label, i) => {
+    console.log(result[i].exercises);
+  });
+
   const data = result.map((r) => {
     let obj = {};
 
-    obj.dateCompleted = r.dateCompleted;
+    obj.label = r.dateCompleted;
 
-    obj.exercises = r.exercises;
+    obj.dataSet = {};
+
+    obj.dataSet = r.exercises.map((exercise) => {
+      let dataSetObject = {};
+      dataSetObject.label = exercise.exerciseName;
+      dataSetObject.data = exercise.weight;
+      dataSetObject.borderColor = "#BB86FC";
+      dataSetObject.backgroundColor = "#121212";
+      return { ...dataSetObject };
+    });
 
     return obj;
   });

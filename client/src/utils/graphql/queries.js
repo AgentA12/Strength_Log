@@ -78,12 +78,12 @@ export const GET_TEMPLATE_CHART_DATA = gql`
 export const GET_EXERCISE_PROGRESS = gql`
   query ($templateID: ID!, $userID: ID!) {
     getExerciseProgress(templateID: $templateID, userID: $userID) {
-      dateCompleted
-      exercises {
-        weight
-        exerciseName
-        reps
-        sets
+      label
+      dataSet {
+        data
+        label
+        borderColor
+        backgroundColor
       }
     }
   }
