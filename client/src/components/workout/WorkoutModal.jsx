@@ -3,7 +3,6 @@ import auth from "../../utils/auth/auth";
 import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
 import { useMutation } from "@apollo/client";
 import { motion, AnimatePresence } from "framer-motion";
-// import StartWorkoutBtn from "../buttons/StartWorkoutBtn";
 import SaveWorkoutBtn from "../buttons/SaveWorkoutBtn.jsx";
 
 export default function WorkoutModal({
@@ -97,7 +96,7 @@ export default function WorkoutModal({
                         name="sets"
                         value={exercise.sets}
                         onChange={(event) => handleChange(event, index)}
-                        className="rounded-lg bg-black text-white px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none"
+                        className="rounded-lg   px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none"
                       />{" "}
                       x
                     </span>
@@ -106,16 +105,16 @@ export default function WorkoutModal({
                       name="reps"
                       value={exercise.reps}
                       onChange={(event) => handleChange(event, index)}
-                      className="rounded-lg bg-black text-white px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none"
+                      className="rounded-lg   px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none"
                     />
-                    <span className="text-white_faded">
+                    <span className="_faded">
                       {exercise.weight != "Body weight" ? (
                         <input
                           type="text"
                           name="weight"
                           value={exercise.weight}
                           onChange={(event) => handleChange(event, index)}
-                          className="rounded-lg bg-black text-white px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none"
+                          className="rounded-lg   px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none"
                         />
                       ) : null}
                     </span>

@@ -7,7 +7,7 @@ import { TemplateSearchBar } from "../components/progress/TemplateSearchBar";
 import { SectionMenu } from "../components/progress/SectionMenu";
 import { SummaryContainer } from "../components/progress/SummaryContainer";
 import { ExerciseContainer } from "../components/progress/ExerciseContainer";
-import { TemplateListContainer } from "../components/progress/TemplateListContainer";
+import { TemplateSelect } from "../components/progress/TemplateSelect";
 
 import {
   GET_TEMPLATES,
@@ -32,7 +32,7 @@ export const ProgressPage = () => {
   const [
     loadOneTemplate,
     {
-      loading: loadOneTemplateLoadingState,
+      loading: loadOneTemplateLoading,
       error: loadOneTemplateError,
       data: loadOneTemplateData,
     },
@@ -47,10 +47,10 @@ export const ProgressPage = () => {
     },
   ] = useLazyQuery(GET_TEMPLATE_CHART_DATA);
 
-  async function handleQuery(templateId) {
+  async function handleQuery(templateName) {
     await loadOneTemplate({
       variables: {
-        templateID: templateId,
+        templateName: templateName,
         userID: userID,
       },
     });
@@ -73,46 +73,40 @@ export const ProgressPage = () => {
     );
 
   return (
-    <div className="ml-52 mt-20">
-      <section>
-        <div className="flex-col items-center">
-          <h2 className="text-3xl mb-5">
-            {activeTemplate ? activeTemplate : "Select a template"}
-          </h2>
+    <section className="ml-44 mt-5">
+      <div className="mb-5">
+        <h2 className="text-5xl font-black text-primary mb-5">
+          {activeTemplate ? activeTemplate : "Select a template"}
+        </h2>
 
-          <TemplateListContainer
-            data={data}
-            handleQuery={handleQuery}
-            activeTemplate={activeTemplate}
-            setActiveTemplate={setActiveTemplate}
-            getChartData={getChartData}
-          />
-        </div>
+        <TemplateSelect
+          data={data}
+          handleQuery={handleQuery}
+          activeTemplate={activeTemplate}
+          setActiveTemplate={setActiveTemplate}
+          getChartData={getChartData}
+        />
+      </div>
 
-        <div className="flex justify-between px-20">
-          <div className="">
-            <SectionMenu
-              activeSection={activeSection}
-              setActiveSection={setActiveSection}
-            />
-          </div>
-        </div>
+      <SectionMenu
+        activeSection={activeSection}
+        setActiveSection={setActiveSection}
+      />
 
-        <div className="border-b border-gray-600 mb-10"></div>
-
-        {activeSection === "Summary" ? (
-          <SummaryContainer
-            loadChartSummaryData={loadChartSummaryData}
-            activeTemplate={activeTemplate}
-            loadOneTemplateData={loadOneTemplateData}
-          />
-        ) : (
-          <ExerciseContainer
-            loadChartSummaryData={loadChartSummaryData}
-            loadOneTemplateData={loadOneTemplateData}
-          />
-        )}
-      </section>
-    </div>
+      {activeSection === "Summary" ? (
+        <SummaryContainer
+          loadChartSummaryData={loadChartSummaryData}
+          activeTemplate={activeTemplate}
+          loadOneTemplateData={loadOneTemplateData}
+          loadChartSummaryDataLoading={loadChartSummaryDataLoading}
+          loadOneTemplateLoading={loadOneTemplateLoading}
+        />
+      ) : (
+        <ExerciseContainer
+          loadChartSummaryData={loadChartSummaryData}
+          loadOneTemplateData={loadOneTemplateData}
+        />
+      )}
+    </section>
   );
 };

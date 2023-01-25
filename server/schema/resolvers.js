@@ -50,11 +50,11 @@ const resolvers = {
       return user.templates;
     },
 
-    getProgress: async function (_, { templateID, userID }) {
+    getProgress: async function (_, { templateName, userID }) {
       try {
         const user = await User.findById(userID);
 
-        const progress = user.getProgress(templateID);
+        const progress = user.getProgress(templateName);
 
         return progress;
       } catch (error) {
@@ -115,6 +115,18 @@ const resolvers = {
       const exerciseProgress = user.ExerciseProgress(templateID);
 
       return exerciseProgress;
+    },
+
+    async getTemplateModalProgress(_, { templateId, userId }) {
+      const progress = await User.findById(userId).where({
+        "progress.templateId": templateId,
+      });
+
+      //quering the user by userId, then in that user I want to query the progress array and filter by the property templateId
+
+      console.log(progress);
+
+      return null;
     },
   },
 

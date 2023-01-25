@@ -6,7 +6,7 @@ export default function AddExerciseBtn({ addExercise }) {
       whileTap={{ scale: 0.8 }}
       onClick={addExercise}
       type="button"
-      className="add-template-btn "
+      className="add-template-btn"
     >
       Add Exercise
     </motion.button>

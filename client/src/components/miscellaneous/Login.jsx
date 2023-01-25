@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../utils/graphql/mutations";
 import Auth from "../../utils/auth/auth";
+import { Button } from "@mantine/core";
 
 export default function Login() {
-  const [loginUser, { data, loading, error }] = useMutation(LOGIN_USER, {
+  const [loginUser, { error }] = useMutation(LOGIN_USER, {
     variables: {
       username: "",
       password: "",
@@ -38,7 +39,7 @@ export default function Login() {
 
   return (
     <div className="flex h-90 justify-center items-start">
-      <div className="w-96 bg-overlay mx-2 p-8 rounded-lg border-r-primary border-r-4  mt-20">
+      <div className="w-96  mx-2 p-8 rounded-lg border-r-gray-600 border-r-4  mt-20">
         <form className="" onSubmit={(event) => handleSubmit(event)}>
           <h5 className="mb-5 font-medium text-lg">ACCOUNT LOGIN</h5>
           <div className="relative z-0 mb-6 w-full group">
@@ -46,11 +47,11 @@ export default function Login() {
               onChange={handleChange}
               type="text"
               name="username"
-              className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-primary peer"
+              className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:  focus:outline-none focus:ring-0 peer"
               placeholder=" "
               required
             />
-            <label className="peer-focus:font-medium absolute text-sm text-gray-300 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+            <label className="peer-focus:font-medium absolute text-sm text-gray-300 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0   peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
               Username
             </label>
           </div>
@@ -59,25 +60,22 @@ export default function Login() {
               onChange={handleChange}
               name="password"
               type="password"
-              className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-primary peer"
+              className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:  focus:outline-none focus:ring-0 peer"
               placeholder=" "
               required
             />
-            <label className="peer-focus:font-medium absolute text-sm text-gray-300 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0  peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+            <label className="peer-focus:font-medium absolute text-sm text-gray-300 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0   peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
               Password
             </label>
           </div>
-          <button
-            type="submit"
-            className="mb-2 bg-overlay  text-primary_faded  py-2 px-4 border border-gray-600 rounded shadow hover:bg-primary_faded hover:bg-opacity-10 hover:border-opacity-10 hover:border-primary_faded transition-colors duration-100 whitespace-nowrap w-full text-center"
-          >
+          <Button type="submit" variant="outline">
             Login
-          </button>
-          <p className="my-1 py-1 border-t text-error border-primary">
+          </Button>
+          <p className="my-2 py-1 border-t text-error">
             {error && error.message}
           </p>
         </form>
-        <Link to="/Signup" className="hover:text-primary underline">
+        <Link to="/Signup" className="underline">
           Sign up instead
         </Link>
       </div>

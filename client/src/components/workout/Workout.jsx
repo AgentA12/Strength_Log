@@ -64,7 +64,7 @@ export default function Workout() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "tween", duration: 0.5 }}
         className={
-          " flex justify-center py-5 modal-scroll bg-overlay text-white h-screen overflow-y-scroll absolute top-0 right-0 w-full"
+          " flex justify-center py-5 modal-scroll bg-overlay  h-screen overflow-y-scroll absolute top-0 right-0 w-full"
         }
       >
         <div className="p-5 min-w-min">

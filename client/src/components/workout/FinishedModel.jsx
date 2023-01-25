@@ -14,7 +14,7 @@ function FinishedModel({ isOpen, setIsOpen }) {
         }}
         className="bg-overlay"
       >
-        <DialogHeader className="text-white_faded justify-center">
+        <DialogHeader className="_faded justify-center">
           Finish Workout ?
         </DialogHeader>
 

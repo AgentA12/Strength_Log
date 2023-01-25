@@ -14,7 +14,7 @@ export default function CustomAlert({ message }) {
 
   return alert ? (
     <Alert
-      className={`absolute bottom-0 right-0 mb-10 w-fit mr-20 bg-background border text-green-400 border-green-400`}
+      className={`absolute bottom-0 right-0 mb-10 w-fit mr-20  border text-green-400 border-green-400`}
       animate={{
         mount: { y: 0 },
         unmount: { y: -50 },

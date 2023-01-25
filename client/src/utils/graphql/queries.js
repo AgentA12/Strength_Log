@@ -47,8 +47,8 @@ export const GET_TEMPLATES = gql`
 `;
 
 export const GET_TEMPLATES_PROGRESS = gql`
-  query ($templateID: ID!, $userID: ID!) {
-    getProgress(templateID: $templateID, userID: $userID) {
+  query ($templateName: String!, $userID: ID!) {
+    getProgress(templateName: $templateName, userID: $userID) {
       templateName
       templateId
       exercises {
@@ -78,6 +78,20 @@ export const GET_TEMPLATE_CHART_DATA = gql`
 export const GET_EXERCISE_PROGRESS = gql`
   query ($templateID: ID!, $userID: ID!) {
     getExerciseProgress(templateID: $templateID, userID: $userID) {
+      label
+      dataSet {
+        data
+        label
+        borderColor
+        backgroundColor
+      }
+    }
+  }
+`;
+
+export const GET_TEMPLATE_MODAL_PROGRESS = gql`
+  query ($templateId: ID!, $userId: ID!) {
+    getTemplateModalProgress(templateId: $templateId, userId: $userId) {
       label
       dataSet {
         data

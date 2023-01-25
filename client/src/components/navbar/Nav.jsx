@@ -41,7 +41,7 @@ export function Nav({ activeNav }) {
   const navItems = (
     <ul className="flex flex-col items-center">
       <li>
-        <AiOutlineThunderbolt color="#BB86FC" size={90} />
+        <AiOutlineThunderbolt size={90} />
       </li>
 
       <li className="my-10">
@@ -66,7 +66,7 @@ export function Nav({ activeNav }) {
   );
 
   return (
-    <nav className="absolute h-screen top-0 left-0 border-r border-r-gray-600 p-8 z-10 test">
+    <nav className="absolute min-h-screen top-0 left-0 border-r border-r-gray-600 p-8 z-10 test">
       {navItems}
     </nav>
   );

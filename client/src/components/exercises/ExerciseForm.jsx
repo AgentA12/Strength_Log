@@ -36,7 +36,7 @@ export default function ExerciseForm({
           <input
             onChange={(event) => handleChange(index, event)}
             name="exerciseName"
-            className=" bg-background appearance-none border border-gray-600 rounded w-full py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in"
+            className=" bg-inherit appearance-none border border-gray-600 rounded w-full py-2 px-4  leading-tight focus:ring-0 focus:outline-none  transition-colors ease-in"
             type="text"
             value={formState.exercises[index].exerciseName}
           />
@@ -53,7 +53,7 @@ export default function ExerciseForm({
           </label>
           <input
             name="weight"
-            className="bg-background appearance-none border border-gray-600 rounded w-full py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors  ease-in"
+            className="bg-inherit appearance-none border border-gray-600 rounded w-full py-2 px-4  leading-tight focus:ring-0 focus:outline-none  transition-colors  ease-in"
             type="number"
             onChange={(event) => handleChange(index, event)}
             value={formState.exercises[index].weight}
@@ -71,7 +71,7 @@ export default function ExerciseForm({
             <input
               type="number"
               name="reps"
-              className="bg-background appearance-none border border-gray-600 rounded w-full py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors  ease-in"
+              className="bg-inherit appearance-none border border-gray-600 rounded w-full py-2 px-4  leading-tight focus:ring-0 focus:outline-none  transition-colors  ease-in"
               onChange={(event) => handleChange(index, event)}
               value={formState.exercises[index].reps}
             ></input>
@@ -88,25 +88,25 @@ export default function ExerciseForm({
           <input
             type="number"
             name="sets"
-            className="bg-background appearance-none border border-gray-600 rounded w-full py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors  ease-in"
+            className="bg-inherit appearance-none border border-gray-600 rounded w-full py-2 px-4  leading-tight focus:ring-0 focus:outline-none  transition-colors  ease-in"
             onChange={(event) => handleChange(index, event)}
             value={formState.exercises[index].sets}
           />
         </div>
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between bg-inherit">
         <select
           onChange={(event) => handleChange(index, event)}
           name="type"
-          className="w-6/12 bg-background appearance-none border border-gray-600 rounded py-2 px-4 text-white leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in mr-5"
+          className="w-6/12 bg-inherit appearance-none border border-gray-600 rounded py-2 px-4  leading-tight focus:ring-0 focus:outline-none  transition-colors ease-in mr-5"
           defaultValue={"Barbell"}
           value={formState.exercises[index].type}
         >
-          <option disabled hidden className="text-gray-600">
+          <option disabled hidden className="text-gray-600 bg-inherit">
             Type
           </option>
-          <option value="Barbell">Barbell</option>
+          <option className="bg-inherit" value="Barbell">Barbell</option>
           <option value="Dumbell">Dumbell</option>
           <option value="Machine">Machine</option>
           <option value="Cable">Cable</option>

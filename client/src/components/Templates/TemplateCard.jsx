@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { capitalizeFirstLetter } from "../../utils/helpers/functions";
-import WorkoutModal from "../workout/WorkoutModal";
 import TemplateMenu from "./TemplateMenu";
+import TemplateModal from "./TemplateModal";
 
 export default function TemplateCard({ template, handleTemplateDelete }) {
-  const [isWorkoutModalOpen, setIsWorkoutModalOpen] = useState(false);
-
+  const [opened, setOpened] = useState(false);
   return (
     <>
       <motion.div
@@ -16,8 +15,8 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
           scale: 1,
           opacity: 1,
         }}
-        className="template-item w-96 p-3 border rounded-lg border-gray-600 hover:bg-primary_faded hover:bg-opacity-10 cursor-pointer transition-colors duration-100"
-        onClick={() => setIsWorkoutModalOpen(!isWorkoutModalOpen)}
+        className="template-item w-96 p-3 border rounded-lg border-gray-600  cursor-pointer "
+        onClick={() => setOpened(!opened)}
       >
         <div className="flex items-center justify-between relative">
           <h4 className="custom-ellipsis-title font-bold text-2xl mr-2">
@@ -32,10 +31,7 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
         <div className="mt-5 mr-2">
           <div className="font-semibold custom-ellipsis z-10 text-ellipsis">
             {template.exercises.map((exercise, i) => (
-              <span
-                className="text-primary_faded mr-2"
-                key={exercise.exerciseName}
-              >
+              <span className=" mr-2" key={exercise.exerciseName}>
                 {template.exercises.length - 1 === i
                   ? capitalizeFirstLetter(exercise.exerciseName)
                   : capitalizeFirstLetter(exercise.exerciseName) + ","}
@@ -45,10 +41,10 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
         </div>
       </motion.div>
 
-      <WorkoutModal
-        isWorkoutModalOpen={isWorkoutModalOpen}
-        setIsWorkoutModalOpen={setIsWorkoutModalOpen}
+      <TemplateModal
         template={template}
+        opened={opened}
+        setOpened={setOpened}
       />
     </>
   );

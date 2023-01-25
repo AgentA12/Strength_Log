@@ -1,7 +1,8 @@
 import { useQuery } from "@apollo/client";
 import { GET_EXERCISE_PROGRESS } from "../../utils/graphql/queries";
 import auth from "../../utils/auth/auth";
-import {ExerciseChart} from "../chart/ExerciseChart";
+import { ExerciseChart } from "../chart/ExerciseChart";
+import { Skeleton } from "@mantine/core";
 
 const ExerciseListContainer = ({ templates }) => {
   return (
@@ -33,17 +34,31 @@ export const ExerciseContainer = ({ loadOneTemplateData }) => {
     },
   });
 
-  if (loading) return <div>loading...</div>;
+  if (loading)
+    return (
+      <div className="flex gap-5 mt-5">
+        <Skeleton width={900} height={350} />
+        <div className="flex flex-col gap-5">
+          <Skeleton width={400} height={150} />
+          <Skeleton width={400} height={150} />
+          <Skeleton width={400} height={150} />
+        </div>
+      </div>
+    );
   return (
     <div className="flex">
-      <div className="w-6/12 bg-overlay rounded-3xl h-fit p-5">
+      <div className="w-6/12  rounded-3xl h-fit p-5">
         <ExerciseChart exerciseData={data?.getExerciseProgress} />
       </div>
 
       <div>
-        <p className="text-primary_faded text-xl mb-2">Exercises</p>
         {loadOneTemplateData?.getProgress ? (
-          <ExerciseListContainer templates={loadOneTemplateData.getProgress} />
+          <>
+            <p className="text-primary_faded text-xl mb-2">Exercises</p>
+            <ExerciseListContainer
+              templates={loadOneTemplateData.getProgress}
+            />
+          </>
         ) : null}
       </div>
     </div>

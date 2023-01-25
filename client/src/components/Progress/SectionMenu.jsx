@@ -1,26 +1,30 @@
-export const SectionMenu = ({activeSection, setActiveSection}) => {
+import { Tabs } from "@mantine/core";
+import { BiStats } from "react-icons/bi";
+import { TbBarbell } from "react-icons/tb";
+import { BsTools } from "react-icons/bs";
+
+export const SectionMenu = ({  setActiveSection }) => {
   return (
-    <ul className="flex gap-10">
-      <li>
-        <p
+    <Tabs defaultValue="Summary" color={"grape"} onTabChange={setActiveSection}>
+      <Tabs.List>
+        <Tabs.Tab
+          value="Summary"
+          icon={<BiStats size={14} />}
           onClick={() => setActiveSection("Summary")}
-          className={`${
-            activeSection === "Summary" ? "text-primary" : null
-          } cursor-pointer`}
         >
           Summary
-        </p>
-      </li>
-      <li>
-        <p
+        </Tabs.Tab>
+        <Tabs.Tab
+          value="Exercises"
+          icon={<TbBarbell size={14} />}
           onClick={() => setActiveSection("Exercises")}
-          className={`${
-            activeSection === "Exercises" ? "text-primary" : null
-          } cursor-pointer`}
         >
-          Exercises
-        </p>
-      </li>
-    </ul>
+          Exercises{" "}
+        </Tabs.Tab>
+        <Tabs.Tab value="settings" icon={<BsTools size={14} />}  disabled>
+          Utilities
+        </Tabs.Tab>
+      </Tabs.List>
+    </Tabs>
   );
 };

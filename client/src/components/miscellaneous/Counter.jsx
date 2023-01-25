@@ -8,7 +8,7 @@ export default function Counter() {
   if (hours >= 4) pause();
 
   return (
-    <div className="text-bold text-white_faded text-lg my-1">
+    <div className="text-bold _faded text-lg my-1">
       <span>{hours >= 1 && hours + ":"}</span>
       <span>{minutes}</span>:
       <span>

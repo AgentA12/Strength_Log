@@ -172,7 +172,7 @@ export default function ProgressContainer() {
     //             ))}
     //           </Slider>
 
-    //           <p className="text-white text-center text-3xl font-extrabold mb-5">
+    //           <p className=" text-center text-3xl font-extrabold mb-5">
     //             {activeTemplate}
     //           </p>
 

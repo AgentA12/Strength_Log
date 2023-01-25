@@ -42,9 +42,9 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-userSchema.methods.getProgress = function (templateID) {
+userSchema.methods.getProgress = function (templateName) {
   let r = this.progress.filter((progressObj) => {
-    return progressObj.templateId.toString() === templateID;
+    return progressObj.templateName.toString() === templateName;
   });
 
   const result = [...r];
@@ -77,10 +77,6 @@ userSchema.methods.ExerciseProgress = function (templateID) {
 
   let exercises = result[0].exercises.map((exercise) => exercise.exerciseName);
 
-  labels.forEach((label, i) => {
-    console.log(result[i].exercises);
-  });
-
   const data = result.map((r) => {
     let obj = {};
 
@@ -101,6 +97,10 @@ userSchema.methods.ExerciseProgress = function (templateID) {
   });
 
   return data;
+};
+
+userSchema.methods.getTemplateModalProgress = function (templateId) {
+  console.log(this.progress);
 };
 
 const User = mongoose.model("User", userSchema);

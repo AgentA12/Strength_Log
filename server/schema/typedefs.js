@@ -88,13 +88,14 @@ const typeDefs = gql`
     getExercise: [Exercise]
     getUserById(_id: ID!): User
     getTemplatesForUser(userId: ID!, offset: Int, limit: Int): [Template]
-    getProgress(templateID: ID!, userID: ID!): [Progress]
+    getProgress(templateName: String!, userID: ID!): [Progress]
     getAllUsers: [User]
     getAllTemplates: [Template]
     getAllExercises: [Exercise]
     getTemplateProgressForUser: [Template]
     getExerciseProgress(templateID: ID!, userID: ID!): [ExerciseProgress]
     getChartData(templateName: String!, userId: ID!): Chart
+    getTemplateModalProgress(templateId: ID, userId: ID): [ExerciseProgress]
   }
 
   type Mutation {

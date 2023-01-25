@@ -26,7 +26,7 @@ export default function Pagination({
                     number === currentPage
                       ? "bg-primary text-background border-background"
                       : null
-                  } rounded py-2 px-3 ml-0 leading-tight text-gray-500 bg-background border border-gray-600 hover:border-background hover:bg-primary hover:text-background ease-in-out`}
+                  } rounded py-2 px-3 ml-0 leading-tight text-gray-500  border border-gray-600 hover:border-background hover:bg-primary hover:text-background ease-in-out`}
                 >
                   {number}
                 </a>

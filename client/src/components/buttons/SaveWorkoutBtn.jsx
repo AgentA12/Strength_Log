@@ -1,26 +1,34 @@
-import Spinner from "../miscellaneous/Spinner";
-import { useState } from "react";
+import { Button } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
+import { AiOutlineCheck } from "react-icons/ai";
 
-export default function SaveWorkoutBtn({ handleSaveWorkout, loading, data }) {
-  const [buttonText, setButtonText] = useState("Save as complete");
-
+export default function SaveWorkoutBtn({
+  handleSaveWorkout,
+  loading,
+  data,
+  setOpened,
+}) {
   return (
-    <button onClick={handleSaveWorkout} className="save-workout-btn w-full">
-      <span
-        className={`${
-          buttonText === "Saved!"
-            ? "cursor-not-allowed bg-opacity-0 group-hover:bg-none"
-            : "group-hover:bg-opacity-0"
-        } flex gap-5 w-full justify-center items-center relative px-5 py-2.5 transition-all ease-in duration-75 rounded-md `}
-      >
-        {loading ? (
-          <Spinner color={"green-500"} className="pl-4" />
-        ) : data?.saveWorkout?.username ? (
-          "saved!"
-        ) : (
-          "Save as complete"
-        )}
-      </span>
-    </button>
+    <Button
+      onClick={() => {
+        // async await was buggy
+        // clicking the button would save the template but not close modal or show Notification
+        handleSaveWorkout().then(() => {
+          if (data?.saveWorkout.username) {
+            setOpened(false);
+            showNotification({
+              title: `${data.saveWorkout.username} your template was saved!`,
+              message: "Your template will be recorded. 🥳",
+              autoClose: 3000,
+              icon: <AiOutlineCheck />,
+            });
+          }
+        });
+      }}
+      loading={loading}
+      variant="outline"
+    >
+      Save Workout
+    </Button>
   );
 }
