@@ -127,18 +127,23 @@ const resolvers = {
       const progress = user.getSortedProgress(templateId, "asc");
 
       function getRecentComparison(aryOfRecents, progressId) {
-        // get current and previously saved workouts
         let variable = [];
 
         aryOfRecents.forEach((recentObj, i) => {
           if (recentObj._id.toString() === progressId) {
             // if true we are at the first progressObj in array and there is no recent to compare
-            if (aryOfRecents[i - 1] === undefined) return recentObj;
-
-            variable.push(recentObj);
-            variable.push(aryOfRecents[i + 1]);
+            // so only push the current recentbj data
+            if (aryOfRecents.length - 1 === i) {
+              variable.push(recentObj);
+            } else {
+              // else push the current and previous
+              variable.push(recentObj);
+              variable.push(aryOfRecents[i + 1]);
+            }
           }
         });
+        // if length is 1 we are only getting the first saved template so we dont need to get the difference
+        if (variable.length <= 1) return variable;
 
         // compare exercise weight and add difference
         variable[0].exercises.forEach((exercise, i) => {
