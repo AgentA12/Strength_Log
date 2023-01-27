@@ -39,10 +39,26 @@ root.render(
     <MantineProvider
       withNormalizeCSS
       withGlobalStyles
-      // theme={{ colorScheme: "dark" }}
+      theme={{
+        colorScheme: "dark",
+        colors: {
+          grape: [
+            "#EDE7F6",
+            "#D1C4E9",
+            "#B39DDB",
+            "#9575CD",
+            "#7E57C2",
+            "#673AB7",
+            "#5E35B1",
+            "#7B1FA2",
+            "#6A1B9A",
+            "#311B92",
+          ],
+        },
+      }}
     >
       <ModalsProvider>
-        <NotificationsProvider position="top-right" limit={5}>
+        <NotificationsProvider position="bottom-right" limit={5}>
           <ApolloProvider client={client}>
             <BrowserRouter>
               <App />

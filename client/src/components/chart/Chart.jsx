@@ -50,7 +50,7 @@ export const Chart = ({ loadChartSummaryData }) => {
 
   if (loadChartSummaryData?.getChartData.labels.length) {
     return (
-      <div className="w-full xl:w-7/12 rounded-3xl h-fit p-5 bg-gray-100 mt-4">
+      <div className="w-full xl:w-7/12 rounded-3xl h-fit p-5 bg-overlay_two mt-4">
         <Line options={options} data={data} />
       </div>
     );

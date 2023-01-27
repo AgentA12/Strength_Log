@@ -7,7 +7,7 @@ export default function ProgressCard({ progressInfo, handleSummary, }) {
   return (
     <motion.div
       whileHover={{ translateY: -5 }}
-      onClick={() => handleSummary(progressInfo.templateId)}
+      onClick={() => handleSummary(progressInfo)}
       className="border border-white rounded-lg p-5 shadow-sm shadow-black cursor-pointer group"
     >
       <div className="flex justify-between gap-5">

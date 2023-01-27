@@ -3,5 +3,6 @@
 @tailwind utilities;
 
 .exercise-container-scroll-h {
-  max-height: 425px;
+  max-height: 495px;
+  overflow-x: hidden;
 }

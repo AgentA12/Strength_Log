@@ -139,8 +139,8 @@ export default function CreateTemplateContainer() {
         </h1>
       </div>
 
-      <div className="flex gap-6 mt-12 mb-10 mx-5 ">
-        <div className=" w-fit">
+      <div className="flex gap-6 mt-12 mb-10 mx-5">
+        <div className="w-fit">
           <div className="mb-5">
             <input
               onChange={(event) => handleChange(null, event)}
@@ -175,7 +175,7 @@ export default function CreateTemplateContainer() {
 
           <div className="exercise-container-scroll-h overflow-scroll pr-2 pt-3 border-t border-gray-600">
             <form className="" onSubmit={(event) => handleSubmit(event)}>
-              {formState?.exercises.map((exercise, index) => (
+              {formState?.exercises.map((_, index) => (
                 <ExerciseForm
                   key={index}
                   handleChange={handleChange}

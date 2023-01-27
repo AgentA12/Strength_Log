@@ -19,10 +19,8 @@ export const TemplateSelect = (args) => {
       searchable
       placeholder="Select a template"
       description="Select a template to view your progress"
-      withAsterisk
       value={value}
       onChange={(e) => {
-        console.log(e);
         setValue();
 
         args.handleQuery(e.toString());

@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
-import { GET_EXERCISE_PROGRESS } from "../../utils/graphql/queries";
-import auth from "../../utils/auth/auth";
-import { ExerciseChart } from "../chart/ExerciseChart";
+import { GET_EXERCISE_PROGRESS } from "../../../utils/graphql/queries";
+import auth from "../../../utils/auth/auth";
+import { ExerciseChart } from "../../chart/ExerciseChart";
 import { Skeleton } from "@mantine/core";
 
 const ExerciseListContainer = ({ templates }) => {

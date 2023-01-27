@@ -49,6 +49,7 @@ export const GET_TEMPLATES = gql`
 export const GET_TEMPLATES_PROGRESS = gql`
   query ($templateName: String!, $userID: ID!) {
     getProgress(templateName: $templateName, userID: $userID) {
+      _id
       templateName
       templateId
       exercises {
@@ -99,6 +100,28 @@ export const GET_TEMPLATE_MODAL_PROGRESS = gql`
         borderColor
         backgroundColor
       }
+    }
+  }
+`;
+
+export const GET_SUMMARY = gql`
+  query ($templateId: ID!, $userId: ID!, $progressId: ID!) {
+    getSummary(templateId: $templateId, userId: $userId, progressId: $progressId) {
+      _id
+      templateName
+      templateId
+      exercises {
+        _id
+        exerciseName
+        sets
+        reps
+        weight
+        type
+        dif
+      }
+      timeToComplete
+      totalWeight
+      dateCompleted
     }
   }
 `;

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useRef } from "react";
 import { Fragment } from "react";
+import { Input } from "@mantine/core";
 
 export default function WorkoutState({ templateState, handleChange, opened }) {
   const value = useRef();
@@ -27,7 +28,7 @@ export default function WorkoutState({ templateState, handleChange, opened }) {
                   value={exercise.sets}
                   onChange={(event) => handleChange(event, index)}
                   ref={value}
-                  className="rounded-lg px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none bg-gray-200"
+                  className="rounded-lg px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none "
                 />
               ) : (
                 <input
@@ -35,17 +36,18 @@ export default function WorkoutState({ templateState, handleChange, opened }) {
                   name="sets"
                   value={exercise.sets}
                   onChange={(event) => handleChange(event, index)}
-                  className="rounded-lg px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none bg-gray-200"
+                  className="rounded-lg px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none "
                 />
               )}{" "}
               x
             </span>
+           
             <input
               type="text"
               name="reps"
               value={exercise.reps}
               onChange={(event) => handleChange(event, index)}
-              className="rounded-lg px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none bg-gray-200"
+              className="rounded-lg px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none bg-inherit"
             />
             <span className="_faded">
               {exercise.weight !== "Body weight" ? (
@@ -54,7 +56,7 @@ export default function WorkoutState({ templateState, handleChange, opened }) {
                   name="weight"
                   value={exercise.weight}
                   onChange={(event) => handleChange(event, index)}
-                  className="rounded-lg px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none bg-gray-200"
+                  className="rounded-lg px-2 w-12 text-center outline-none border-none focus:border-none focus:outline-none "
                 />
               ) : null}
             </span>

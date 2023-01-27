@@ -26,7 +26,7 @@ module.exports = withMT({
         secondary: "#03DAC6",
         background: "#121212",
         overlay: "#1A1A1A",
-        overlay_two: "#1F1F1F",
+        overlay_two: "#141517",
         error: "#CF6679",
         white: "#FFFFFF",
         white_faded: "#BABABA",

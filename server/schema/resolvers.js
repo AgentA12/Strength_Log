@@ -110,23 +110,48 @@ const resolvers = {
     },
 
     async getExerciseProgress(_, { templateID, userID }) {
-      const user = await User.findById(userID);
-
-      const exerciseProgress = user.ExerciseProgress(templateID);
-
-      return exerciseProgress;
+      await User.findById(userID);
     },
 
     async getTemplateModalProgress(_, { templateId, userId }) {
-      const progress = await User.findById(userId).where({
-        "progress.templateId": templateId,
-      });
+      const user = await User.findById(userId);
 
-      //quering the user by userId, then in that user I want to query the progress array and filter by the property templateId
-
-      console.log(progress);
+      user.getSortedProgress(templateId, "asc");
 
       return null;
+    },
+
+    async getSummary(_, { userId, templateId, progressId }) {
+      const user = await User.findById(userId);
+
+      const progress = user.getSortedProgress(templateId, "asc");
+
+      function getRecentComparison(aryOfRecents, progressId) {
+        // get current and previously saved workouts
+        let variable = [];
+
+        aryOfRecents.forEach((recentObj, i) => {
+          if (recentObj._id.toString() === progressId) {
+            // if true we are at the first progressObj in array and there is no recent to compare
+            if (aryOfRecents[i - 1] === undefined) return recentObj;
+
+            variable.push(recentObj);
+            variable.push(aryOfRecents[i + 1]);
+          }
+        });
+
+        // compare exercise weight and add difference
+        variable[0].exercises.forEach((exercise, i) => {
+          variable[1].exercises[i].dif =
+            exercise.weight - variable[1].exercises[i].weight;
+        });
+
+        return variable;
+      }
+
+      const summary = getRecentComparison(progress, progressId);
+
+      return summary;
     },
   },
 

@@ -21,6 +21,7 @@ const typeDefs = gql`
     reps: String
     weight: String
     type: String
+    dif: Int
   }
 
   input exerciseInput {
@@ -39,6 +40,7 @@ const typeDefs = gql`
     reps: String
     weight: String
     type: String
+   
   }
 
   type Template {
@@ -54,6 +56,7 @@ const typeDefs = gql`
   }
 
   type Progress {
+    _id: ID
     templateName: String
     templateId: String
     exercises: [Exercise]
@@ -96,6 +99,7 @@ const typeDefs = gql`
     getExerciseProgress(templateID: ID!, userID: ID!): [ExerciseProgress]
     getChartData(templateName: String!, userId: ID!): Chart
     getTemplateModalProgress(templateId: ID, userId: ID): [ExerciseProgress]
+    getSummary(templateId: ID!, userId: ID!, progressId: ID!): [Progress]
   }
 
   type Mutation {

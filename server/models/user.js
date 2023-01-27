@@ -30,10 +30,10 @@ const userSchema = mongoose.Schema({
   progress: [progressSchema],
 });
 
-userSchema.pre("save", function (next) {
+userSchema.pre("save", async function (next) {
   if (this.isNew || this.isModified("password")) {
     const saltRounds = 10;
-    this.password = bcrypt.hash(this.password, saltRounds);
+    this.password = await bcrypt.hash(this.password, saltRounds);
   }
   next();
 });
@@ -61,7 +61,30 @@ userSchema.methods.getProgress = function (templateName) {
   });
 
   result.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
+
   return result;
+};
+
+userSchema.methods.getSortedProgress = function (templateID, sorted) {
+  const progress = this.progress.filter((progressObj) => {
+    return progressObj.templateId.toString() === templateID.toString();
+  });
+
+  let sortedProgress;
+
+  if (sorted === "asc") {
+    sortedProgress = progress.sort((a, b) =>
+      a.createdAt > b.createdAt ? -1 : 1
+    );
+  }
+
+  if (sorted === "desc") {
+    sortedProgress = progress.sort((a, b) =>
+      a.createdAt < b.createdAt ? -1 : 1
+    );
+  }
+
+  return sortedProgress;
 };
 
 userSchema.methods.ExerciseProgress = function (templateID) {
@@ -99,9 +122,7 @@ userSchema.methods.ExerciseProgress = function (templateID) {
   return data;
 };
 
-userSchema.methods.getTemplateModalProgress = function (templateId) {
-  console.log(this.progress);
-};
+userSchema.methods.getTemplateModalProgress = function (templateId) {};
 
 const User = mongoose.model("User", userSchema);
 

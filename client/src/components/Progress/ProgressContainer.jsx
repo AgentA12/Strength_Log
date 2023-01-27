@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import ProgressCard from "./ProgressCard";
+import ProgressCard from "./Summary/ProgressCard";
 import { useQuery, useLazyQuery } from "@apollo/client";
 // import SummaryModal from "../summary/SummaryModal";
 import {

@@ -4,7 +4,7 @@ import { FcSearch } from "react-icons/fc";
 export default function SearchTemplates({ templates, handleFilterTemplates }) {
   return (
     <Input
-    icon={<FcSearch/>}
+      icon={<FcSearch />}
       onChange={(event) => handleFilterTemplates(event, templates)}
       placeholder="Search templates..."
       radius="md"

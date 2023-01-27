@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { useQuery, useLazyQuery } from "@apollo/client";
-
 import auth from "../utils/auth/auth";
 import Spinner from "../components/miscellaneous/Spinner";
-import { TemplateSearchBar } from "../components/progress/TemplateSearchBar";
 import { SectionMenu } from "../components/progress/SectionMenu";
-import { SummaryContainer } from "../components/progress/SummaryContainer";
-import { ExerciseContainer } from "../components/progress/ExerciseContainer";
+import { SummaryContainer } from "../components/progress/Summary/SummaryContainer";
+import { ExerciseContainer } from "../components/progress/Exercises/ExerciseContainer";
 import { TemplateSelect } from "../components/progress/TemplateSelect";
+import { Title } from "@mantine/core";
 
 import {
   GET_TEMPLATES,
@@ -75,9 +74,9 @@ export const ProgressPage = () => {
   return (
     <section className="ml-44 mt-5">
       <div className="mb-5">
-        <h2 className="text-5xl font-black text-primary mb-5">
+        <Title color={"grape"} className="font-black mb-5">
           {activeTemplate ? activeTemplate : "Select a template"}
-        </h2>
+        </Title>
 
         <TemplateSelect
           data={data}

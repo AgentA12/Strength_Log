@@ -15,6 +15,7 @@ export const SectionMenu = ({  setActiveSection }) => {
           Summary
         </Tabs.Tab>
         <Tabs.Tab
+        disabled
           value="Exercises"
           icon={<TbBarbell size={14} />}
           onClick={() => setActiveSection("Exercises")}

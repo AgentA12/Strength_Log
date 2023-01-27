@@ -13,7 +13,9 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: authMiddleWare,
+  cache: "bounded",
   formatError: (error) => {
+    console.log(error)
     if (error.message.startsWith("Exercise")) {
       return new Error("You must fill in all Exercise fields");
     }

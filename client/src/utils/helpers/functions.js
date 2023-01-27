@@ -21,9 +21,10 @@ function formatDate(date) {
  */
 
 function getOneRepMax(weight, repetitions) {
+  if (weight <= 0) return "NA";
   const oneRepMax = weight / [1.0278 - 0.0278 * repetitions];
 
   return `${Math.round(oneRepMax * 10) / 10} Lbs`;
 }
 
-export {formatDate, getOneRepMax, capitalizeFirstLetter}
+export { formatDate, getOneRepMax, capitalizeFirstLetter };

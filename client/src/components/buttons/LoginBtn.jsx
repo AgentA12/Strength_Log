@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
+import { Button } from "@mantine/core";
 
 export default function LoginBtn() {
   return (
     <Link to={"/Login"}>
-      <button className="add-template-btn">Login</button>
+      <Button variant="outline" color={'grape'}>Login</Button>
     </Link>
   );
 }
