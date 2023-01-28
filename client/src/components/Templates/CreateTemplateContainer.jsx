@@ -8,6 +8,8 @@ import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import AddExerciseBtn from "../buttons/AddExerciseBtn";
 import SaveTemplateBtn from "../buttons/SaveTemplateBtn";
 import { useNavigate } from "react-router-dom";
+import { ScrollArea } from "@mantine/core";
+
 
 export default function CreateTemplateContainer() {
   const navigate = useNavigate();
@@ -174,7 +176,7 @@ export default function CreateTemplateContainer() {
             </div>
           </div>
 
-          <div className="exercise-container-scroll-h overflow-scroll pr-2 pt-3 border-t border-gray-600">
+          <ScrollArea style={{height: 500}}  offsetScrollbars scrollbarSize={4} scrollHideDelay={1500} className="pr-2 pt-3 border-t border-gray-600">
             <form className="" onSubmit={(event) => handleSubmit(event)}>
               {formState?.exercises.map((_, index) => (
                 <ExerciseForm
@@ -188,7 +190,7 @@ export default function CreateTemplateContainer() {
 
               <div ref={bottomRef}></div>
             </form>
-          </div>
+          </ScrollArea>
         </div>
 
         <div className="hidden md:block flex-col w-96">

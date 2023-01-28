@@ -6,8 +6,7 @@ import { Skeleton } from "@mantine/core";
 import { useLazyQuery } from "@apollo/client";
 import auth from "../../../utils/auth/auth";
 import { GET_SUMMARY } from "../../../utils/graphql/queries";
-import RenderExercises from "./RenderExercises";
-import { GiConsoleController } from "react-icons/gi";
+import { ScrollArea } from "@mantine/core";
 
 export const SummaryContainer = ({
   loadChartSummaryData,
@@ -57,10 +56,10 @@ export const SummaryContainer = ({
       />
 
       {loadChartSummaryData || loadOneTemplateData ? (
-        <div className="xl:w-4/12 mt-5 p-5">
+        <div className="xl:w-4/12 mt-5 p-5 ">
           <h6 className="">Recently Saved</h6>
 
-          <div className="flex flex-wrap xl:flex-nowrap xl:flex-col gap-5 exercise-container-scroll-h mt-5 w-fit p-5">
+          <ScrollArea style={{height: 570}}  type="always" className="flex flex-wrap xl:flex-nowrap xl:flex-col gap-5 mt-5 p-10 border rounded-sm shadow-md w-fit">
             {loadOneTemplateData?.getProgress.length ? (
               loadOneTemplateData.getProgress.map((progressInfo) => (
                 <ProgressCard
@@ -77,7 +76,7 @@ export const SummaryContainer = ({
                 <span className="text-primary">'{activeTemplate}'</span>
               </p>
             ) : null}
-          </div>
+          </ScrollArea>
         </div>
       ) : null}
 
