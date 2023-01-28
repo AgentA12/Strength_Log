@@ -41,7 +41,7 @@ export const Chart = ({ loadChartSummaryData }) => {
         {
           label: "Total Volume",
           data: loadChartSummaryData?.getChartData.totalWeights,
-          borderColor: "#BB86FC",
+          borderColor: "#BE4BDB",
           backgroundColor: "#121212",
         },
       ],

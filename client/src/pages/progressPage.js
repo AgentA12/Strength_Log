@@ -34,6 +34,7 @@ export const ProgressPage = () => {
       loading: loadOneTemplateLoading,
       error: loadOneTemplateError,
       data: loadOneTemplateData,
+      refetch,
     },
   ] = useLazyQuery(GET_TEMPLATES_PROGRESS);
 
@@ -71,8 +72,11 @@ export const ProgressPage = () => {
       </div>
     );
 
+  // recent progress list does not update unless refetch here, look in to configuring apollo cache
+  refetch();
+
   return (
-    <section className="ml-44 mt-5">
+    <section className="mx-5 my-10 md:ml-52">
       <div className="mb-5">
         <Title color={"grape"} className="font-black mb-5">
           {activeTemplate ? activeTemplate : "Select a template"}

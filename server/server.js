@@ -16,6 +16,11 @@ const server = new ApolloServer({
   cache: "bounded",
   formatError: (error) => {
     console.log(error)
+
+    if(error.message === "Expected Iterable, but did not find one for field \"Mutation.createTemplate\".") {
+      return new Error("You must fill out all fields.")
+    }
+
     if (error.message.startsWith("Exercise")) {
       return new Error("You must fill in all Exercise fields");
     }

@@ -6,8 +6,8 @@ import LoginBtn from "../buttons/LoginBtn";
 import SignupBtn from "../buttons/SignupBtn";
 import TemplateNavBtn from "../buttons/TemplateNavBtn";
 import ProgressNavBtn from "../buttons/ProgressNavBtn";
-import SettingsBtn from "../buttons/SettingsBtn";
 import LogoutBtn from "../buttons/LogoutBtn";
+import { Drawer, Burger } from "@mantine/core";
 
 export function Nav({ activeNav }) {
   const [openNav, setOpenNav] = useState(false);
@@ -30,11 +30,6 @@ export function Nav({ activeNav }) {
       componentName: ProgressNavBtn,
       link: "/Progress",
       name: "Progress",
-    },
-    {
-      componentName: SettingsBtn,
-      link: "/Settings",
-      name: "Settings",
     },
   ];
 
@@ -66,8 +61,30 @@ export function Nav({ activeNav }) {
   );
 
   return (
-    <nav className="absolute min-h-screen top-0 left-0 border-r border-r-gray-600 p-8 z-10 test">
-      {navItems}
-    </nav>
+    <>
+      <nav className="hidden z-0  md:absolute md:block min-h-screen top-0 left-0 border-r border-r-gray-600 p-8 md:z-10 test">
+        {navItems}
+      </nav>
+
+      <div className="md:hidden ">
+        <Burger
+          onClick={() => setOpenNav(!openNav)}
+          opened={openNav}
+          className="ml-5 mt-2"
+        />
+
+        <Drawer
+          onClose={() => setOpenNav(false)}
+          opened={openNav}
+          transition="rotate-left"
+          transitionDuration={250}
+          transitionTimingFunction="ease"
+          overlayOpacity={0.55}
+          overlayBlur={3}
+        >
+          {navItems}
+        </Drawer>
+      </div>
+    </>
   );
 }

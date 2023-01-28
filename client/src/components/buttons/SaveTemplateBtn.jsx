@@ -1,14 +1,8 @@
-import { motion } from "framer-motion";
-
+import { Button } from "@mantine/core";
 export default function SaveTemplateBtn({ handleSubmit }) {
   return (
-    <motion.button
-      onClick={handleSubmit}
-      whileTap={{ scale: 0.8 }}
-      type="button"
-      className="add-exercise-btn"
-    >
+    <Button variant="outline" color={"grape"} onClick={handleSubmit}>
       Save Template
-    </motion.button>
+    </Button>
   );
 }

@@ -52,6 +52,22 @@ export default function EditTemplate() {
     try {
       event.preventDefault();
 
+      if (!formState.templateName.trim()) {
+        setErrorMessage("You must enter a template name");
+        return;
+      }
+
+      for (let i = 0; i < formState.exercises.length; i++) {
+        if (
+          !formState.exercises[i].exerciseName ||
+          !formState.exercises[i].sets ||
+          !formState.exercises[i].reps
+        ) {
+          setErrorMessage("You must fill in all exercise fields");
+          return;
+        }
+      }
+
       const mutationRes = await EditTemplate({
         variables: {
           ...formState,
@@ -100,7 +116,7 @@ export default function EditTemplate() {
   }
 
   return (
-    <main className="ml-40">
+    <main className="md:ml-40">
       <div className="py-10  md:pl-10 border-b border-gray-600">
         <h1 className="font-bold text-3xl text-center md:text-left">
           <span className="mr-3">Edit</span>

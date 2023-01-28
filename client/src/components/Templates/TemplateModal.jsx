@@ -5,6 +5,8 @@ import { useMutation } from "@apollo/client";
 import SaveWorkoutBtn from "../buttons/SaveWorkoutBtn.jsx";
 import auth from "../../utils/auth/auth";
 import WorkoutState from "./WorkoutState";
+import { showNotification } from "@mantine/notifications";
+import { AiOutlineCheck } from "react-icons/ai";
 
 export default function TemplateModal({ template, opened, setOpened }) {
   const [templateState, setTemplateState] = useState(template);
@@ -16,18 +18,25 @@ export default function TemplateModal({ template, opened, setOpened }) {
     data: { _id: userID },
   } = auth.getInfo();
 
-  async function handleSaveWorkout() {
-    try {
-      await saveWorkoutFunction({
-        variables: {
-          templateId: template._id,
-          userID: userID,
-          exercises: templateState.exercises,
-        },
-      });
-    } catch (error) {
-      
-    }
+  function handleSaveWorkout() {
+    saveWorkoutFunction({
+      variables: {
+        templateId: template._id,
+        userID: userID,
+        exercises: templateState.exercises,
+      },
+    }).then((res) => {
+      console.log(res)
+      if (res.data?.saveWorkout.username && !loading) {
+        setOpened(false);
+        showNotification({
+          title: `${res.data.saveWorkout.username} your template was saved!`,
+          message: "Your template will be recorded. 🥳",
+          autoClose: 3000,
+          icon: <AiOutlineCheck />,
+        }).catch((err) => console.log(err));
+      }
+    });
   }
 
   function handleChange({ target }, index) {
@@ -40,8 +49,7 @@ export default function TemplateModal({ template, opened, setOpened }) {
 
   return (
     <Modal
-    lockScroll={false}
-
+      lockScroll={false}
       opened={opened}
       onClose={() => setOpened(false)}
       title={template.templateName}

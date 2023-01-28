@@ -1,14 +1,10 @@
 import { motion } from "framer-motion";
+import { Button } from "@mantine/core";
 
 export default function AddExerciseBtn({ addExercise }) {
   return (
-    <motion.button
-      whileTap={{ scale: 0.8 }}
-      onClick={addExercise}
-      type="button"
-      className="add-template-btn"
-    >
+    <Button variant="outline" color={'grape'} onClick={addExercise}>
       Add Exercise
-    </motion.button>
+    </Button>
   );
 }

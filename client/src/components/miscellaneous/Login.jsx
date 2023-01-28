@@ -59,6 +59,7 @@ export default function Login() {
             icon={<AiFillLock size={16} />}
             label="Password"
             withAsterisk
+            style={{ backgroundColor: '#121212', }}
           />
 
           <p className="mt-3 py-1  text-error">{error && error.message}</p>

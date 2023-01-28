@@ -5,7 +5,7 @@ import { Button } from "@mantine/core";
 export default function AddTemplateBtn({ setOpenNav }) {
   return (
     <Link to={"Create-Template"} onClick={() => setOpenNav(false)}>
-      <Button leftIcon={<HiPlus size={30} />} variant={"outline"}>
+      <Button leftIcon={<HiPlus size={30} />} variant={"outline"} color={'grape'}>
         Template
       </Button>
     </Link>

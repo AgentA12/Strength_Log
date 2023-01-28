@@ -66,13 +66,13 @@ export default function RenderExercises({ summaryObj, summaryNum }) {
                     <td>
                       {exercise.dif > 0 ? (
                         <span className="text-green-500 flex items-center gap-1">
-                          <BiTrendingUp size={16} /> + {exercise.dif}
+                          <BiTrendingUp size={16} /> + {exercise.dif} Lbs
                         </span>
                       ) : exercise.dif < 0 ? (
                         <span className="text-red-500 flex items-center gap-1">
-                          <BiTrendingDown size={16} /> {exercise.dif}
+                          <BiTrendingDown size={16} /> {exercise.dif} Lbs
                         </span>
-                      ) : null}
+                      ) : "- no change"}
                     </td>
                   </tr>
                 </tbody>

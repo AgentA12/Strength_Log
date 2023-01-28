@@ -8,8 +8,9 @@ import AddTemplateBtn from "../components/buttons/AddTemplateBtn";
 import errorImg from "../utils/images/error-img.png";
 import SearchTemplate from "../components/miscellaneous/SearchTemplates";
 import { useEffect, useState } from "react";
-import { Title } from "@mantine/core";
+import { Title, Text, Tooltip } from "@mantine/core";
 import { Skeleton } from "@mantine/core";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 
 export const TemplatePage = () => {
   const [templates, setTemplates] = useState([]);
@@ -60,7 +61,6 @@ export const TemplatePage = () => {
     }
   }
 
-
   function displayQueryState() {
     // is the query loading? display spinner
     return loading ? (
@@ -83,13 +83,31 @@ export const TemplatePage = () => {
           key={template._id}
         />
       ))
-    ) : null;
+    ) : (
+      <Text size={"xl"}>😮 You have no templates.</Text>
+    );
   }
 
   return (
-    <main className="mx-3 my-10 ml-56">
+    <main className="mx-5 my-10 md:ml-56">
       <div className="flex flex-wrap gap-5 items-center">
-        <Title>Your Templates</Title>
+        <div className="flex gap-2">
+          <Title>Your Templates</Title>
+
+          <Tooltip
+            multiline
+            width={220}
+            withArrow
+            transition="fade"
+            transitionDuration={200}
+            label="A template is an outline of the exercises for a given workout. You can create one by clicking on the add template button"
+            position="right-end"
+          >
+            <p>
+              <AiOutlineInfoCircle size={23} />
+            </p>
+          </Tooltip>
+        </div>
 
         <div className="flex items-center justify-start flex-wrap gap-5">
           <SearchTemplate

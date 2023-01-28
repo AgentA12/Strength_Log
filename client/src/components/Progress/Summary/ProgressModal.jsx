@@ -35,7 +35,7 @@ export default function ProgressModal({
                 <BiTimeFive /> NA
               </span>
               <span className="flex gap-1 items-center">
-                <FaWeightHanging /> {data?.getSummary[0].totalWeight} lb
+                <FaWeightHanging /> {data?.getSummary[0].totalWeight} lbs
               </span>
               <span className="flex gap-1 items-center">
                 <AiFillTrophy /> 0 PRs

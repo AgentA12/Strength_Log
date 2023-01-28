@@ -204,11 +204,7 @@ const resolvers = {
     //create a template then push the new template ids to the User model
     createTemplate: async function (_, args) {
       try {
-        const exercisesData = await Exercise.create(args.exercises);
-
-        const exerciseIds = exercisesData.map((exercise) => {
-          return exercise._id;
-        });
+        await Exercise.create(args.exercises);
 
         const templatePayload = {
           exercises: args.exercises,

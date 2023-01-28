@@ -9,11 +9,9 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
         event.stopPropagation();
       }}
     >
-      <Menu.Item icon={<FaEdit size={14} />}>
-        <Link to={"/Edit-template"} state={{ template: template }}>
-          Edit
-        </Link>
-      </Menu.Item>
+      <Link to={"/Edit-template"} state={{ template: template }}>
+        <Menu.Item icon={<FaEdit size={14} />}>Edit</Menu.Item>
+      </Link>
 
       <Menu.Item
         onClick={() => handleTemplateDelete(template._id)}

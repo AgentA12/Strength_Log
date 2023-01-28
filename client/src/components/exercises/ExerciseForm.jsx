@@ -20,11 +20,13 @@ export default function ExerciseForm({
         opacity: 0,
       }}
       transition={{ type: "", damping: 40, stiffness: 900 }}
-      className="border border-gray-600 rounded-lg p-5 mb-7"
+      className="border border-gray-600 rounded-lg px-5 pb-5 pt-2 mb-7"
     >
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
+        <p className="mb-2 font-bold text-lg">{index + 1}</p>
           <div className="flex items-center justify-between mb-2">
+           
             <label
               className="block uppercase tracking-wide text-grey-400 text-xs font-bold "
               htmlFor="grid-password"
@@ -106,7 +108,9 @@ export default function ExerciseForm({
           <option disabled hidden className="text-gray-600 bg-inherit">
             Type
           </option>
-          <option className="bg-inherit" value="Barbell">Barbell</option>
+          <option className="bg-inherit" value="Barbell">
+            Barbell
+          </option>
           <option value="Dumbell">Dumbell</option>
           <option value="Machine">Machine</option>
           <option value="Cable">Cable</option>

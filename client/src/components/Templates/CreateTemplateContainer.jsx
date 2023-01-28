@@ -81,6 +81,7 @@ export default function CreateTemplateContainer() {
     try {
       event.preventDefault();
 
+
       const mutationRes = await addTemplate({
         variables: {
           ...formState,
@@ -132,7 +133,7 @@ export default function CreateTemplateContainer() {
   }
 
   return (
-    <main className="ml-40">
+    <main className="md:ml-40">
       <div className="py-10  md:pl-10 border-b border-gray-600 ">
         <h1 className="font-bold text-3xl text-center md:text-left">
           Create A Template
@@ -145,7 +146,7 @@ export default function CreateTemplateContainer() {
             <input
               onChange={(event) => handleChange(null, event)}
               name="templateName"
-              className="bg-inherit h-20 text-3xl appearance-none border border-gray-600 rounded w-full py-2 px-4  leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in"
+              className="bg-inherit h-20 text-3xl appearance-none border border-gray-600 rounded w-full py-2 px-4  leading-tight focus:ring-0 focus:outline-none  transition-colors ease-in"
               type="text"
               value={formState?.templateName}
               placeholder="Template Name"
@@ -193,7 +194,7 @@ export default function CreateTemplateContainer() {
         <div className="hidden md:block flex-col w-96">
           <textarea
             onChange={(event) => handleChange(null, event)}
-            className="text-xl bg-inherit appearance-none border border-gray-600 rounded w-full p-4  leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in resize-none"
+            className="text-xl bg-inherit appearance-none border border-gray-600 rounded w-full p-4  leading-tight focus:ring-0 focus:outline-none  transition-colors ease-in resize-none"
             name="templateNotes"
             cols="30"
             rows="10"
