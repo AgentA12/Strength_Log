@@ -6,7 +6,7 @@ import { DELETE_TEMPLATE } from "../utils/graphql/mutations";
 import { useMutation } from "@apollo/client";
 import AddTemplateBtn from "../components/buttons/AddTemplateBtn";
 import errorImg from "../utils/images/error-img.png";
-import SearchTemplate from "../components/miscellaneous/SearchTemplates";
+import SearchTemplate from "../components/templates/SearchTemplates";
 import { useEffect, useState } from "react";
 import { Title, Text, Tooltip } from "@mantine/core";
 import { Skeleton } from "@mantine/core";
@@ -39,7 +39,6 @@ export const TemplatePage = () => {
         templateId: templateId,
       },
     });
-
     refetch();
   }
 

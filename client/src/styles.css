@@ -6,3 +6,7 @@
   max-height: 495px;
   overflow-x: hidden;
 }
+
+.landing-img {
+  height: 700px;
+}

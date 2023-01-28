@@ -23,14 +23,20 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
   );
 
   return (
-    <Menu shadow="md" width={200}>
+    <Menu
+      shadow="md"
+      width={200}
+      trigger="hover"
+      closeDelay={200}
+      transition="fade"
+    >
       <Menu.Target>
         <button
           onClick={(event) => {
             event.stopPropagation();
           }}
           data-dropdown-toggle="dropdownDotsHorizontal"
-          className="border  inline-flex items-center py-1 px-2 text-sm font-medium text-center  rounded-lg"
+          className="border inline-flex items-center py-1 px-2 text-sm font-medium text-center  rounded-lg"
           type="button"
         >
           <svg

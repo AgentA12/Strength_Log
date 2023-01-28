@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { capitalizeFirstLetter } from "../../utils/helpers/functions";
 import TemplateMenu from "./TemplateMenu";
 import TemplateModal from "./TemplateModal";
+import { Text } from "@mantine/core";
 
 export default function TemplateCard({ template, handleTemplateDelete }) {
   const [opened, setOpened] = useState(false);
@@ -29,15 +30,15 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
         </div>
 
         <div className="mt-5 mr-2">
-          <div className="font-semibold custom-ellipsis z-10 text-ellipsis">
+          <Text lineClamp={1} color={"grape"} className="font-semiboldz-10">
             {template.exercises.map((exercise, i) => (
-              <span className=" mr-2" key={exercise.exerciseName}>
+              <span key={exercise.exerciseName}>
                 {template.exercises.length - 1 === i
                   ? capitalizeFirstLetter(exercise.exerciseName)
-                  : capitalizeFirstLetter(exercise.exerciseName) + ","}
+                  : capitalizeFirstLetter(exercise.exerciseName) + ", "}
               </span>
             ))}
-          </div>
+          </Text>
         </div>
       </motion.div>
 

@@ -40,7 +40,7 @@ export default function Signup() {
 
   return (
     <div className="flex h-90 justify-center items-start">
-      <div className="w-96  mx-2 p-8 rounded-lg border-r-gray-600  bg-overlay_two border-r-4  mt-20">
+      <div className="w-96  mx-2 p-8 rounded-lg border-r-4  mt-20 shadow-sm shadow-gray-500">
         <form onSubmit={(event) => handleSubmit(event)}>
           <Title order={3} className="mb-4">
             ACCOUNT SIGNUP

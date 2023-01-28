@@ -44,6 +44,7 @@ export const ProgressPage = () => {
       loading: loadChartSummaryDataLoading,
       error: loadChartSummaryDataError,
       data: loadChartSummaryData,
+      refetch: refetchChartData,
     },
   ] = useLazyQuery(GET_TEMPLATE_CHART_DATA);
 
@@ -72,8 +73,9 @@ export const ProgressPage = () => {
       </div>
     );
 
-  // recent progress list does not update unless refetch here, look in to configuring apollo cache
+  // query doesnt update data, cache issue
   refetch();
+  refetchChartData();
 
   return (
     <section className="mx-5 my-10 md:ml-52">

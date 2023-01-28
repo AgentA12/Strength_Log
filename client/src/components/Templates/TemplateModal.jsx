@@ -25,18 +25,20 @@ export default function TemplateModal({ template, opened, setOpened }) {
         userID: userID,
         exercises: templateState.exercises,
       },
-    }).then((res) => {
-      console.log(res)
-      if (res.data?.saveWorkout.username && !loading) {
-        setOpened(false);
-        showNotification({
-          title: `${res.data.saveWorkout.username} your template was saved!`,
-          message: "Your template will be recorded. 🥳",
-          autoClose: 3000,
-          icon: <AiOutlineCheck />,
-        }).catch((err) => console.log(err));
-      }
-    });
+    })
+      .then((res) => {
+        if (res.data?.saveWorkout.username && !loading) {
+          setOpened(false);
+          showNotification({
+            title: `${res.data.saveWorkout.username} your template was saved!`,
+            message: "Your workout will be recorded. 🥳",
+            autoClose: 3000,
+            icon: <AiOutlineCheck />,
+            color: "grape",
+          });
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   function handleChange({ target }, index) {
@@ -56,6 +58,7 @@ export default function TemplateModal({ template, opened, setOpened }) {
       overlayOpacity={0.55}
       overlayBlur={3}
       transition={"rotate-left"}
+      size="lg"
     >
       <div className="mt-4">
         {template.templateNotes.trim() ? "- " : null} {template.templateNotes}

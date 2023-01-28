@@ -42,7 +42,8 @@ export default function Login() {
 
   return (
     <div className="flex h-90 justify-center items-start">
-      <div className="w-96 mx-2 p-8 rounded-lg border-r-gray-600 bg-overlay_two border-r-4  mt-20">
+      {/* <img src={`${landingImage}`} alt="electric wieght lifter" className="absolute landing-img left-16 " /> */}
+      <div className="w-96  mx-2 p-8 rounded-lg border-r-4  mt-20 shadow-sm shadow-gray-500">
         <form onSubmit={(event) => handleSubmit(event)}>
           <Title order={3} className="mb-4">
             ACCOUNT LOGIN
@@ -56,10 +57,9 @@ export default function Login() {
             onChange={handleChange}
             name="password"
             required
-            icon={<AiFillLock size={16} />}
             label="Password"
             withAsterisk
-            style={{ backgroundColor: '#121212', }}
+            icon={<AiFillLock />}
           />
 
           <p className="mt-3 py-1  text-error">{error && error.message}</p>

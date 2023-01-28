@@ -105,7 +105,7 @@ export default function ExerciseForm({
           defaultValue={"Barbell"}
           value={formState.exercises[index].type}
         >
-          <option disabled hidden className="text-gray-600 bg-inherit">
+          <option  hidden className="text-gray-600 bg-inherit">
             Type
           </option>
           <option className="bg-inherit" value="Barbell">

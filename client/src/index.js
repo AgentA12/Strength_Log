@@ -8,7 +8,6 @@ import { ModalsProvider } from "@mantine/modals";
 import { NotificationsProvider } from "@mantine/notifications";
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import theme from "tailwindcss/defaultTheme";
 
 const client = new ApolloClient({
   uri: "/graphql",
@@ -40,14 +39,16 @@ root.render(
     <MantineProvider
       withNormalizeCSS
       withGlobalStyles
+      inherit
       theme={{
-        colorScheme: "dark",
+        colorScheme: "light",
 
         focusRingStyles: {
-          // focus styles applied to components that are based on Input
-          // styled are added with &:focus selector
+          resetStyles: () => ({ outline: 'none' }),
+          
           inputStyles: (theme) => ({
-            outline: `1px solid ${theme.colors.grape[5]}`,
+            outline: `1px solid ${theme.colors.grape[6]}`,
+            ":focus-within": `1px solid ${theme.colors.grape[6]}`,
           }),
         },
       }}
