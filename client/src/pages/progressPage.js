@@ -73,7 +73,7 @@ export const ProgressPage = () => {
       </div>
     );
 
-  // query doesnt update data, cache issue
+  // query doesn't update templates that were saved, cache issue I think
   refetch();
   refetchChartData();
 

@@ -99,7 +99,7 @@ export const TemplatePage = () => {
             withArrow
             transition="fade"
             transitionDuration={200}
-            label="A template is an outline of the exercises for a given workout. You can create one by clicking on the add template button"
+            label="A template is an outline of exercises for a given workout. You can create one by clicking on the add template button"
             position="right-end"
           >
             <p>
