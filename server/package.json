@@ -3,9 +3,8 @@
     "start": "nodemon server"
   },
   "dependencies": {
-    "apollo-server": "^3.10.2",
+    "apollo-server": "^3.11.1",
     "apollo-server-core": "^3.10.2",
-    "apollo-server-express": "^3.10.2",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "date-fns": "^2.29.2",
