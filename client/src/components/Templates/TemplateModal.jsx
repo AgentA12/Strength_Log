@@ -38,7 +38,7 @@ export default function TemplateModal({ template, opened, setOpened }) {
           });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   }
 
   function handleChange({ target }, index) {

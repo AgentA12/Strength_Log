@@ -5,7 +5,6 @@ import { NumberInput, Input } from "@mantine/core";
 
 export default function WorkoutState({ templateState, handleChange, opened }) {
   const value = useRef();
-  templateState.exercises.forEach((exercise) => console.log(exercise));
   // only works when chrome dev tools are open???
   // should refocus the element every time a model opens
   useEffect(() => {
