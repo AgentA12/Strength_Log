@@ -7,7 +7,6 @@ import { Fragment } from "react";
 // second table with just weight and rm and flex box them beside each other
 
 export default function RenderExercises({ summaryObj, summaryNum }) {
-  console.log(summaryObj);
   return (
     <>
       <div className="w-fit whitespace-nowrap">
