@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../../utils/graphql/mutations";
 import Auth from "../../utils/auth/auth";
 import { Button, Input, Title, PasswordInput } from "@mantine/core";
-import { AiFillLock } from "react-icons/ai";
+import { AiFillLock, AiOutlineThunderbolt } from "react-icons/ai";
 
 export default function Signup() {
   const [addUser, { error }] = useMutation(ADD_USER, {
@@ -42,8 +42,9 @@ export default function Signup() {
     <div className="flex h-90 justify-center items-start">
       <div className="w-96  mx-2 p-8 rounded-lg border-r-4  mt-20 shadow-sm shadow-gray-500">
         <form onSubmit={(event) => handleSubmit(event)}>
-          <Title order={3} className="mb-4">
+        <Title order={3} className="mb-4 flex gap-1">
             ACCOUNT SIGNUP
+            <AiOutlineThunderbolt size={20}/>
           </Title>
 
           <Input.Wrapper withAsterisk label="Username">
@@ -70,7 +71,7 @@ export default function Signup() {
           </Button>
         </form>
 
-        <Link to="/Login" className="underline">
+        <Link to="/Login" className="underline ">
           Login
         </Link>
       </div>

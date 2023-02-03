@@ -57,6 +57,8 @@ export default function ExerciseForm({
             name="weight"
             className="bg-inherit appearance-none border border-gray-600 rounded w-full py-2 px-4  leading-tight focus:ring-0 focus:outline-none  transition-colors  ease-in"
             type="number"
+            // the character 'e' is a valid number input for exponents and '.' for decimals, this logic with prevent that.
+            onkeydown="return event.keyCode !== 69"
             onChange={(event) => handleChange(index, event)}
             value={formState.exercises[index].weight}
           />

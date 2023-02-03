@@ -96,10 +96,6 @@ userSchema.methods.ExerciseProgress = function (templateID) {
 
   result.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
 
-  let labels = result.map((r) => r.dateCompleted);
-
-  let exercises = result[0].exercises.map((exercise) => exercise.exerciseName);
-
   const data = result.map((r) => {
     let obj = {};
 
@@ -122,7 +118,6 @@ userSchema.methods.ExerciseProgress = function (templateID) {
   return data;
 };
 
-userSchema.methods.getTemplateModalProgress = function (templateId) {};
 
 const User = mongoose.model("User", userSchema);
 
