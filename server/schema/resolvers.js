@@ -110,7 +110,11 @@ const resolvers = {
     },
 
     async getExerciseProgress(_, { templateID, userID }) {
-      await User.findById(userID);
+      const user = await User.findById(userID);
+      const chartData = user.ExerciseProgress(templateID);
+
+      console.log(chartData);
+      return chartData;
     },
 
     async getTemplateModalProgress(_, { templateId, userId }) {

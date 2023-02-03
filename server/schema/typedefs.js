@@ -40,7 +40,6 @@ const typeDefs = gql`
     reps: String
     weight: String
     type: String
-   
   }
 
   type Template {
@@ -76,15 +75,13 @@ const typeDefs = gql`
   }
 
   type ExerciseProgress {
-    label: String
-    dataSet: [DataSet]
+    dataSets: [DataSet]
+    labels: [String]
   }
 
   type DataSet {
     label: String
-    data: Int
-    borderColor: String
-    backgroundColor: String
+    data: [Int]
   }
 
   type Query {
@@ -96,7 +93,7 @@ const typeDefs = gql`
     getAllTemplates: [Template]
     getAllExercises: [Exercise]
     getTemplateProgressForUser: [Template]
-    getExerciseProgress(templateID: ID!, userID: ID!): [ExerciseProgress]
+    getExerciseProgress(templateID: ID!, userID: ID!): ExerciseProgress
     getChartData(templateName: String!, userId: ID!): Chart
     getTemplateModalProgress(templateId: ID, userId: ID): [ExerciseProgress]
     getSummary(templateId: ID!, userId: ID!, progressId: ID!): [Progress]

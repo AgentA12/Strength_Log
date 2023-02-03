@@ -7,7 +7,7 @@ import { Button, Input, Title, PasswordInput } from "@mantine/core";
 import { AiFillLock, AiOutlineThunderbolt } from "react-icons/ai";
 
 export default function Signup() {
-  const [addUser, { error }] = useMutation(ADD_USER, {
+  const [addUser, { loading, error }] = useMutation(ADD_USER, {
     variables: {
       username: "",
       password: "",
@@ -22,7 +22,7 @@ export default function Signup() {
   function handleChange({ target }) {
     setFormState({
       ...formState,
-      [target.name]: target.value,
+      [target.name]: target.value.trim(),
     });
   }
 
@@ -42,9 +42,9 @@ export default function Signup() {
     <div className="flex h-90 justify-center items-start">
       <div className="w-96  mx-2 p-8 rounded-lg border-r-4  mt-20 shadow-sm shadow-gray-500">
         <form onSubmit={(event) => handleSubmit(event)}>
-        <Title order={3} className="mb-4 flex gap-1">
+          <Title order={3} className="mb-4 flex gap-1">
             ACCOUNT SIGNUP
-            <AiOutlineThunderbolt size={20}/>
+            <AiOutlineThunderbolt size={20} />
           </Title>
 
           <Input.Wrapper withAsterisk label="Username">

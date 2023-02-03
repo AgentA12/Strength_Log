@@ -96,6 +96,23 @@ userSchema.methods.ExerciseProgress = function (templateID) {
 
   result.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
 
+  const labels = result.map((progressObject) => {
+    return progressObject.dateCompleted;
+  });
+
+  const aryOfExercises = result[0].exercises.map((exercise) => {
+    return { label: exercise.exerciseName, data: [] };
+  });
+
+  result.map((r) => {
+    r.exercises.map((e) => {
+      aryOfExercises.map((exercise) => {
+        exercise.label === e.exerciseName ? exercise.data.push(e.weight) : null;
+      });
+    });
+  });
+
+
   const data = result.map((r) => {
     let obj = {};
 
@@ -115,9 +132,10 @@ userSchema.methods.ExerciseProgress = function (templateID) {
     return obj;
   });
 
-  return data;
-};
+  // console.log({ dataSets: aryOfExercises, labels: labels })
 
+  return { dataSets: aryOfExercises, labels: labels };
+};
 
 const User = mongoose.model("User", userSchema);
 

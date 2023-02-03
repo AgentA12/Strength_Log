@@ -7,12 +7,14 @@ import { Button, Input, Title, PasswordInput } from "@mantine/core";
 import { AiFillLock, AiOutlineThunderbolt } from "react-icons/ai";
 
 export default function Login() {
-  const [loginUser, { error }] = useMutation(LOGIN_USER, {
+  const [loginUser, { error, loading }] = useMutation(LOGIN_USER, {
     variables: {
       username: "",
       password: "",
     },
   });
+
+  console.log(loading)
 
   const [formState, setFormState] = useState({
     username: "",
@@ -22,7 +24,7 @@ export default function Login() {
   function handleChange({ target }) {
     setFormState({
       ...formState,
-      [target.name]: target.value,
+      [target.name]: target.value.trim(),
     });
   }
 
@@ -39,7 +41,7 @@ export default function Login() {
       Auth.login(mutationResponse.data.login.token);
     } catch (error) {}
   }
-
+console.log(error)
   return (
     <div className="flex h-90 justify-center items-start">
       {/* <img src={`${landingImage}`} alt="electric wieght lifter" className="absolute landing-img left-16 " /> */}

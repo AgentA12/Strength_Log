@@ -23,19 +23,25 @@ export default function AuthorizationPage() {
 // type is a string, either login or signup. used to determine either login  or signup request
 function AuthorizationComponent({ type }) {
   const [errorMessage, setErrorMessage] = useState();
-  const [addUser, { error: signupError }] = useMutation(ADD_USER, {
-    variables: {
-      username: "",
-      password: "",
-    },
-  });
+  const [addUser, { loading: signupLoading, error: signupError }] = useMutation(
+    ADD_USER,
+    {
+      variables: {
+        username: "",
+        password: "",
+      },
+    }
+  );
 
-  const [loginUser, { error: loginError }] = useMutation(LOGIN_USER, {
-    variables: {
-      username: "",
-      password: "",
-    },
-  });
+  const [loginUser, { loading: loginLoading, error: loginError }] = useMutation(
+    LOGIN_USER,
+    {
+      variables: {
+        username: "",
+        password: "",
+      },
+    }
+  );
 
   const [formState, setFormState] = useState({
     username: "",
@@ -69,7 +75,7 @@ function AuthorizationComponent({ type }) {
         Auth.login(mutationResponse.data.createUser.token);
       }
     } catch (error) {
-        setErrorMessage('incorrect credentails')
+      setErrorMessage("incorrect credentials");
     }
   }
 
@@ -101,6 +107,7 @@ function AuthorizationComponent({ type }) {
             variant="outline"
             className="my-3"
             color={"grape"}
+            loading={loginLoading}
           >
             {type}
           </Button>

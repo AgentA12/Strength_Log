@@ -79,12 +79,10 @@ export const GET_TEMPLATE_CHART_DATA = gql`
 export const GET_EXERCISE_PROGRESS = gql`
   query ($templateID: ID!, $userID: ID!) {
     getExerciseProgress(templateID: $templateID, userID: $userID) {
-      label
-      dataSet {
-        data
+      labels
+      dataSets {
         label
-        borderColor
-        backgroundColor
+        data
       }
     }
   }
@@ -106,7 +104,11 @@ export const GET_TEMPLATE_MODAL_PROGRESS = gql`
 
 export const GET_SUMMARY = gql`
   query ($templateId: ID!, $userId: ID!, $progressId: ID!) {
-    getSummary(templateId: $templateId, userId: $userId, progressId: $progressId) {
+    getSummary(
+      templateId: $templateId
+      userId: $userId
+      progressId: $progressId
+    ) {
       _id
       templateName
       templateId

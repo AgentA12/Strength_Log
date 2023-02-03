@@ -41,7 +41,7 @@ root.render(
       withGlobalStyles
       inherit
       theme={{
-        colorScheme: "light",
+        colorScheme: "dark",
 
         focusRingStyles: {
           resetStyles: () => ({ outline: 'none' }),

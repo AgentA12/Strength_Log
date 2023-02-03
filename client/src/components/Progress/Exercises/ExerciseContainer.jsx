@@ -45,6 +45,7 @@ export const ExerciseContainer = ({ loadOneTemplateData }) => {
         </div>
       </div>
     );
+    console.log(data)
   return (
     <div className="flex">
       <div className="w-6/12  rounded-3xl h-fit p-5">
