@@ -9,7 +9,7 @@ import ProgressNavBtn from "../buttons/ProgressNavBtn";
 import LogoutBtn from "../buttons/LogoutBtn";
 import { Drawer, Burger } from "@mantine/core";
 
-export function Nav({ activeNav }) {
+export function Nav() {
   const [openNav, setOpenNav] = useState(false);
 
   // close the hambuger menu if the screen width is to large
@@ -34,7 +34,7 @@ export function Nav({ activeNav }) {
   ];
 
   const navItems = (
-    <ul className="flex flex-col items-center">
+    <ul className="flex flex-col items-center list-none">
       <li>
         <AiOutlineThunderbolt size={90} />
       </li>
@@ -53,7 +53,7 @@ export function Nav({ activeNav }) {
       {navData.map((item) => (
         <li className="mb-5" key={item.link}>
           <Link onClick={() => setOpenNav(false)} to={item.link}>
-            <item.componentName activeNav={activeNav} />
+            <item.componentName />
           </Link>
         </li>
       ))}
@@ -62,11 +62,11 @@ export function Nav({ activeNav }) {
 
   return (
     <>
-      <nav className="hidden z-0  md:absolute md:block min-h-screen top-0 left-0 border-r border-r-gray-600 p-8 md:z-10 test">
+      <nav className="hidden z-0 md:absolute md:block min-h-screen top-0 left-0 p-8 md:z-10 border-r-2">
         {navItems}
       </nav>
 
-      <div className="md:hidden ">
+      <div className="md:hidden">
         <Burger
           onClick={() => setOpenNav(!openNav)}
           opened={openNav}

@@ -113,7 +113,6 @@ const resolvers = {
       const user = await User.findById(userID);
       const chartData = user.ExerciseProgress(templateID);
 
-      console.log(chartData);
       return chartData;
     },
 

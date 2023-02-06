@@ -1,5 +1,6 @@
 import { IoMdRemove } from "react-icons/io";
 import { motion } from "framer-motion";
+import { TextInput, NumberInput, Select, Text, Button } from "@mantine/core";
 
 export default function ExerciseForm({
   handleChange,
@@ -20,94 +21,90 @@ export default function ExerciseForm({
         opacity: 0,
       }}
       transition={{ type: "", damping: 40, stiffness: 900 }}
-      className="border border-gray-600 rounded-lg px-5 pb-5 pt-2 mb-7"
     >
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
-        <p className="mb-2 font-bold text-lg">{index + 1}</p>
-          <div className="flex items-center justify-between mb-2">
-           
-            <label
-              className="block uppercase tracking-wide text-grey-400 text-xs font-bold "
-              htmlFor="grid-password"
-            >
-              Exercise Name
-            </label>
-          </div>
+      <div className="w-full">
+        <Text>{index + 1}</Text>
 
-          <input
-            onChange={(event) => handleChange(index, event)}
-            name="exerciseName"
-            className=" bg-inherit appearance-none border border-gray-600 rounded w-full py-2 px-4  leading-tight focus:ring-0 focus:outline-none  transition-colors ease-in"
-            type="text"
-            value={formState.exercises[index].exerciseName}
-          />
-        </div>
+        <TextInput
+          onChange={(event) => handleChange(index, event)}
+          name="exerciseName"
+          type="text"
+          value={formState.exercises[index].exerciseName}
+        />
       </div>
 
-      <div className="flex flex-wrap -mx-3 mb-3 pb-4 border-b border-gray-600">
+      <div className="flex flex-wrap -mx-3 mb-3 pb-4 ">
         <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-          <label
-            className="block uppercase tracking-wide text-grey-400 text-xs font-bold mb-2"
-            htmlFor="weight"
-          >
-            Weight <span className="lowercase">(lbs)</span>
-          </label>
-          <input
-            name="weight"
-            className="bg-inherit appearance-none border border-gray-600 rounded w-full py-2 px-4  leading-tight focus:ring-0 focus:outline-none  transition-colors  ease-in"
-            type="number"
+          <NumberInput
             // the character 'e' is a valid number input for exponents and '.' for decimals, this logic with prevent that.
-            onkeydown="return event.keyCode !== 69"
-            onChange={(event) => handleChange(index, event)}
-            value={formState.exercises[index].weight}
+            onKeyDown="return event.keyCode !== 69"
+            // Mantine onChange events dont use "event" but extract the "value" prop out of event, so I needed to create a sudo target object for number inputs (this only happens with number inputs)
+            onChange={(value) =>
+              handleChange(index, { target: { name: "weight", value: value } })
+            }
+            value={parseInt(formState.exercises[index].weight)}
           />
         </div>
 
         <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-          <label
-            className="block uppercase tracking-wide text-grey-400 text-xs font-bold mb-2"
-            htmlFor="grid-state"
-          >
-            Reps
-          </label>
           <div className="relative">
-            <input
-              type="number"
-              name="reps"
-              className="bg-inherit appearance-none border border-gray-600 rounded w-full py-2 px-4  leading-tight focus:ring-0 focus:outline-none  transition-colors  ease-in"
-              onChange={(event) => handleChange(index, event)}
-              value={formState.exercises[index].reps}
-            ></input>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-grey-400"></div>
+            <NumberInput
+              onChange={(value) =>
+                handleChange(index, { target: { name: "reps", value: value } })
+              }
+              value={parseInt(formState.exercises[index].reps)}
+            />
           </div>
         </div>
-        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0 ">
-          <label
-            className="block uppercase tracking-wide text-grey-400 text-xs font-bold mb-2"
-            htmlFor="grid-zip"
-          >
-            Sets
-          </label>
-          <input
-            type="number"
-            name="sets"
-            className="bg-inherit appearance-none border border-gray-600 rounded w-full py-2 px-4  leading-tight focus:ring-0 focus:outline-none  transition-colors  ease-in"
-            onChange={(event) => handleChange(index, event)}
-            value={formState.exercises[index].sets}
+        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+          <NumberInput
+            onChange={(value) =>
+              handleChange(index, { target: { name: "sets", value: value } })
+            }
+            value={parseInt(formState.exercises[index].sets)}
           />
         </div>
       </div>
 
       <div className="flex items-center justify-between bg-inherit">
-        <select
+        <Select
+          defaultValue={"Barbell"}
+          value={formState.exercises[index].type}
+          onChange={(value) =>
+            handleChange(index, { target: { name: "type", value: value } })
+          }
+          data={[
+            { value: "Barbell", label: "Barbell" },
+            { value: "Dumbell", label: "Dumbell" },
+            { value: "Cable", label: "Cable" },
+            { value: "Body Weight", label: "Body Weight" },
+            { value: "Other", label: "Other" },
+          ]}
+        />
+
+        {/* if rendering the first exercise, dont show the remove exercise button */}
+        {index !== 0 ? (
+          <Button
+            onClick={(event) => removeExercise(event, index)}
+            rightIcon={<IoMdRemove color="white" />}
+            variant="outline"
+            color={"red"}
+          >
+            Remove Exercise
+          </Button>
+        ) : null}
+      </div>
+    </motion.div>
+  );
+}
+
+/* <select
           onChange={(event) => handleChange(index, event)}
           name="type"
-          className="w-6/12 bg-inherit appearance-none border border-gray-600 rounded py-2 px-4  leading-tight focus:ring-0 focus:outline-none  transition-colors ease-in mr-5"
           defaultValue={"Barbell"}
           value={formState.exercises[index].type}
         >
-          <option  hidden className="text-gray-600 bg-inherit">
+          <option hidden className="text-gray-600 bg-inherit">
             Type
           </option>
           <option className="bg-inherit" value="Barbell">
@@ -118,19 +115,4 @@ export default function ExerciseForm({
           <option value="Cable">Cable</option>
           <option value="Body weight">Body weight</option>
           <option value="Other">Other</option>
-        </select>
-        {/* if rendering the first exercise, dont show the remove exercise button */}
-        {index !== 0 ? (
-          <button
-            onClick={(event) => removeExercise(event, index)}
-            type="button"
-            className="flex items-center bg-transparent py-2 px-4 border border-error hover:border-opacity-10 hover:bg-opacity-10 hover:bg-error rounded transition-colors ease-in"
-          >
-            <span className="pr-2">Remove Exercise</span>{" "}
-            <IoMdRemove color={"white"} />
-          </button>
-        ) : null}
-      </div>
-    </motion.div>
-  );
-}
+        </select> **/

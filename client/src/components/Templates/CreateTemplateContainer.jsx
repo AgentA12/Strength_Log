@@ -8,8 +8,7 @@ import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import AddExerciseBtn from "../buttons/AddExerciseBtn";
 import SaveTemplateBtn from "../buttons/SaveTemplateBtn";
 import { useNavigate } from "react-router-dom";
-import { ScrollArea } from "@mantine/core";
-
+import { ScrollArea, TextInput, Textarea, Divider } from "@mantine/core";
 
 export default function CreateTemplateContainer() {
   const navigate = useNavigate();
@@ -21,9 +20,9 @@ export default function CreateTemplateContainer() {
     exercises: [
       {
         exerciseName: "",
-        sets: "",
-        reps: "",
-        weight: "",
+        sets: 5,
+        reps: 5,
+        weight: 135,
         type: "Barbell",
       },
     ],
@@ -48,7 +47,8 @@ export default function CreateTemplateContainer() {
     bottomRef.current.scrollIntoView();
   });
 
-  const [addTemplate] = useMutation(CREATE_TEMPLATE);
+  const [addTemplate, { loading: createTemplateLoading }] =
+    useMutation(CREATE_TEMPLATE);
 
   function handleChange(index, { target }) {
     let data = { ...formState };
@@ -70,9 +70,9 @@ export default function CreateTemplateContainer() {
       exercises: [
         {
           exerciseName: "",
-          sets: "",
-          reps: "",
-          weight: "",
+          sets: 5,
+          reps: 5,
+          weight: 135,
           type: "Barbell",
         },
       ],
@@ -82,7 +82,6 @@ export default function CreateTemplateContainer() {
   async function handleSubmit(event) {
     try {
       event.preventDefault();
-
 
       const mutationRes = await addTemplate({
         variables: {
@@ -136,37 +135,39 @@ export default function CreateTemplateContainer() {
 
   return (
     <main className="md:ml-40">
-      <div className="py-10  md:pl-10 border-b border-gray-600 ">
-        <h1 className="font-bold text-3xl text-center md:text-left">
-          Create A Template
-        </h1>
-      </div>
+      <Divider
+        my="sm"
+        variant="dashed"
+        label={
+          <h1 className="font-bold text-3xl text-center md:text-left">
+            Create A Template
+          </h1>
+        }
+      />
 
       <div className="flex gap-6 mt-12 mb-10 mx-5">
         <div className="w-fit">
           <div className="mb-5">
-            <input
+            <TextInput
               onChange={(event) => handleChange(null, event)}
               name="templateName"
-              className="bg-inherit h-20 text-3xl appearance-none border border-gray-600 rounded w-full py-2 px-4  leading-tight focus:ring-0 focus:outline-none  transition-colors ease-in"
-              type="text"
               value={formState?.templateName}
               placeholder="Template Name"
+              size="xl"
             />
           </div>
 
           <div className="block md:hidden flex-col  items-center">
-            <textarea
+            <Textarea
+              minRows={10}
               onChange={(event) => handleChange(null, event)}
-              className="text-xl  appearance-none border border-gray-600 rounded w-full p-4  leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in resize-none"
+              color={"grape"}
               name="templateNotes"
-              cols="30"
-              rows="5"
               placeholder="Template notes"
               value={formState?.templateNotes}
-            ></textarea>
+            ></Textarea>
 
-            <div className="flex justify-between">
+            <div className="flex justify-between mt-2">
               <AddExerciseBtn addExercise={addExercise} />
               <SaveTemplateBtn loading={loading} handleSubmit={handleSubmit} />
             </div>
@@ -176,8 +177,13 @@ export default function CreateTemplateContainer() {
             </div>
           </div>
 
-          <ScrollArea style={{height: 500}}  offsetScrollbars scrollbarSize={4} scrollHideDelay={1500} className="pr-2 pt-3 border-t border-gray-600">
-            <form className="" onSubmit={(event) => handleSubmit(event)}>
+          <ScrollArea
+            style={{ height: 500 }}
+            offsetScrollbars
+            scrollbarSize={4}
+            scrollHideDelay={1500}
+          >
+            <form onSubmit={(event) => handleSubmit(event)}>
               {formState?.exercises.map((_, index) => (
                 <ExerciseForm
                   key={index}
@@ -194,19 +200,21 @@ export default function CreateTemplateContainer() {
         </div>
 
         <div className="hidden md:block flex-col w-96">
-          <textarea
+          <Textarea
+            minRows={10}
             onChange={(event) => handleChange(null, event)}
-            className="text-xl bg-inherit appearance-none border border-gray-600 rounded w-full p-4  leading-tight focus:ring-0 focus:outline-none  transition-colors ease-in resize-none"
+            color={"grape"}
             name="templateNotes"
-            cols="30"
-            rows="10"
             placeholder="Template notes"
-            value={formState.templateNotes}
-          ></textarea>
+            value={formState?.templateNotes}
+          ></Textarea>
 
-          <div className="flex justify-between">
+          <div className="flex justify-between mt-2">
             <AddExerciseBtn addExercise={addExercise} />
-            <SaveTemplateBtn loading={loading} handleSubmit={handleSubmit} />
+            <SaveTemplateBtn
+              loading={createTemplateLoading}
+              handleSubmit={handleSubmit}
+            />
           </div>
 
           <div className="text-center text-red-400 text-lg mt-5">

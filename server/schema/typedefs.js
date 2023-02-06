@@ -17,9 +17,9 @@ const typeDefs = gql`
   type Exercise {
     _id: ID
     exerciseName: String
-    sets: String
-    reps: String
-    weight: String
+    sets: Int
+    reps: Int
+    weight: Int
     type: String
     dif: Int
   }
@@ -27,9 +27,9 @@ const typeDefs = gql`
   input exerciseInput {
     _id: ID
     exerciseName: String
-    sets: String
-    reps: String
-    weight: String
+    sets: Int
+    reps: Int
+    weight: Int
     type: String
   }
 

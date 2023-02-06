@@ -56,10 +56,10 @@ export const SummaryContainer = ({
       />
 
       {loadChartSummaryData || loadOneTemplateData ? (
-        <div className="xl:w-4/12 mt-5 p-5 ">
-          <h6 className="">Recently Saved</h6>
+        <div className="xl:w-4/12">
+          <h6 className="text-xl">Recently Saved</h6>
 
-          <ScrollArea style={{height: 570}}  type="always" className="flex flex-wrap xl:flex-nowrap xl:flex-col gap-5 mt-5 p-10 border rounded-sm shadow-md w-fit">
+          <ScrollArea style={{height: 550}}  type="always" className="flex flex-wrap xl:flex-nowrap xl:flex-col gap-10 mt-5 px-10 border border-gray-600 rounded-sm shadow-md w-fit">
             {loadOneTemplateData?.getProgress.length ? (
               loadOneTemplateData.getProgress.map((progressInfo) => (
                 <ProgressCard

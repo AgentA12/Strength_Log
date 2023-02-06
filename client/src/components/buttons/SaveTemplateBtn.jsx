@@ -1,7 +1,7 @@
 import { Button } from "@mantine/core";
-export default function SaveTemplateBtn({ handleSubmit }) {
+export default function SaveTemplateBtn({ handleSubmit, loading }) {
   return (
-    <Button variant="outline" color={"grape"} onClick={handleSubmit}>
+    <Button  loading={loading} variant="outline" color={"grape"} onClick={handleSubmit}>
       Save Template
     </Button>
   );

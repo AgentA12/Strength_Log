@@ -1,6 +1,4 @@
 import { Nav } from "./components/navbar/Nav";
-import Login from "./components/miscellaneous/Login";
-import Signup from "./components/miscellaneous/Signup";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { ProgressPage } from "./pages/progressPage";
 import CreateTemplate from "./components/templates/CreateTemplateContainer";
@@ -8,7 +6,9 @@ import EditTemplate from "./components/templates/EditTemplateContainer";
 import Protected from "./components/ProtectedRoute";
 import auth from "./utils/auth/auth";
 import { TemplatePage } from "./pages/templatesPage";
-import AuthorizationPage from "./pages/authorizationPage";
+import LandingPage from "./pages/landingPage";
+import { NotFound } from "./pages/notFound";
+
 
 export default function App() {
   const isLoggedIn = auth.isLoggedIn();
@@ -17,17 +17,8 @@ export default function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<AuthorizationPage />} />
-      <Route
-        path="/Login"
-        element={
-          <Protected isLoggedIn={isLoggedIn}>
-            <Nav activeNav={pathname.replace("/", "")} />
-            <TemplatePage />
-          </Protected>
-        }
-      />
-      <Route path="/Signup" element={<Signup />} />
+      <Route path="/" index element={<LandingPage isLoggedIn={isLoggedIn}/>} />
+
       <Route
         path="/Templates"
         element={
@@ -66,6 +57,7 @@ export default function App() {
           </Protected>
         }
       />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

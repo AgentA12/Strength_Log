@@ -22,6 +22,7 @@ export const ProgressPage = () => {
     data: { _id: userID },
   } = auth.getInfo();
 
+  // fetch templates for select templates input
   const { loading, error, data } = useQuery(GET_TEMPLATES, {
     variables: {
       userId: userID,
@@ -37,6 +38,7 @@ export const ProgressPage = () => {
       refetch,
     },
   ] = useLazyQuery(GET_TEMPLATES_PROGRESS);
+
 
   const [
     loadChartSummary,

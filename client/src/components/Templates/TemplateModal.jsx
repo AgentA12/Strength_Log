@@ -19,6 +19,7 @@ export default function TemplateModal({ template, opened, setOpened }) {
   } = auth.getInfo();
 
   function handleSaveWorkout() {
+    // async await is very inconsistent here
     saveWorkoutFunction({
       variables: {
         templateId: template._id,
@@ -44,7 +45,7 @@ export default function TemplateModal({ template, opened, setOpened }) {
   function handleChange({ target }, index) {
     let data = JSON.parse(JSON.stringify(templateState));
 
-    data.exercises[index][target.name] = target.value;
+    data.exercises[index][target.name] = parseInt(target.value);
 
     setTemplateState({ ...data });
   }
@@ -70,19 +71,17 @@ export default function TemplateModal({ template, opened, setOpened }) {
           opened={opened}
         />
       </div>
-      <div className="flex flex-wrap md:flex-nowrap justify-center gap-3">
+      <div className="flex flex-col md:flex-nowrap justify-center gap-3 w-fit mx-auto">
         <SaveWorkoutBtn
           loading={loading}
           handleSaveWorkout={handleSaveWorkout}
           data={data}
           setOpened={setOpened}
         />
-
-        {error ? (
-          <p className="text-error my-2 text-center">{error.message}</p>
-        ) : null}
       </div>
-      {error ? <div className="text-error">{error.message}</div> : null}
+      {error ? (
+        <div className="text-error text-center mt-5">{error.message}</div>
+      ) : null}
     </Modal>
   );
 }

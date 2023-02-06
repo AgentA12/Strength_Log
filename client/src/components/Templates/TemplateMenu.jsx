@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
-import { Menu } from "@mantine/core";
+import { Menu, Button } from "@mantine/core";
 import { FaTrash, FaEdit } from "react-icons/fa";
 
 export default function TemplateMenu({ template, handleTemplateDelete }) {
   const menuList = (
     <Menu.Dropdown
+    positon="right"
+
       onClick={(event) => {
         event.stopPropagation();
       }}
@@ -24,6 +26,7 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
 
   return (
     <Menu
+      positon="right"
       shadow="md"
       width={200}
       trigger="hover"
@@ -31,13 +34,14 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
       transition="fade"
     >
       <Menu.Target>
-        <button
+        <Button
           onClick={(event) => {
             event.stopPropagation();
           }}
           data-dropdown-toggle="dropdownDotsHorizontal"
-          className="border inline-flex items-center py-1 px-2 text-sm font-medium text-center  rounded-lg"
-          type="button"
+          color={"grape"}
+          variant="outline"
+          p={"sm"}
         >
           <svg
             className="w-6 h-6"
@@ -48,19 +52,10 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
           >
             <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
           </svg>
-        </button>
+        </Button>
       </Menu.Target>
 
       {menuList}
     </Menu>
-
-    /* <Menu placement="bottom-end" className="shadow-none">
-      <MenuHandler
-        
-      >
-      
-      </MenuHandler>
-      {menuList}
-    </Menu> */
   );
 }

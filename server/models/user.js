@@ -112,28 +112,6 @@ userSchema.methods.ExerciseProgress = function (templateID) {
     });
   });
 
-
-  const data = result.map((r) => {
-    let obj = {};
-
-    obj.label = r.dateCompleted;
-
-    obj.dataSet = {};
-
-    obj.dataSet = r.exercises.map((exercise) => {
-      let dataSetObject = {};
-      dataSetObject.label = exercise.exerciseName;
-      dataSetObject.data = exercise.weight;
-      dataSetObject.borderColor = "#BB86FC";
-      dataSetObject.backgroundColor = "#121212";
-      return { ...dataSetObject };
-    });
-
-    return obj;
-  });
-
-  // console.log({ dataSets: aryOfExercises, labels: labels })
-
   return { dataSets: aryOfExercises, labels: labels };
 };
 

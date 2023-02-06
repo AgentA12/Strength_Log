@@ -8,7 +8,7 @@ import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import AddExerciseBtn from "../buttons/AddExerciseBtn";
 import SaveTemplateBtn from "../buttons/SaveTemplateBtn";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ScrollArea } from "@mantine/core";
+import { ScrollArea, TextInput, Textarea, Divider } from "@mantine/core";
 
 export default function EditTemplate() {
   const navigate = useNavigate();
@@ -118,40 +118,37 @@ export default function EditTemplate() {
 
   return (
     <main className="md:ml-40">
-      <div className="py-10  md:pl-10 border-b border-gray-600">
-        <h1 className="font-bold text-3xl text-center md:text-left">
-          <span className="mr-3">Edit</span>
-          <span className="text-primary ml-1">
-            {state.template.templateName}
-          </span>
-        </h1>
-      </div>
+      <Divider
+        variant="dashed"
+        label={
+          <h1 className="font-bold text-3xl text-center md:text-left">
+            Edit {formState.templateName}
+          </h1>
+        }
+      />
 
       <div className="flex gap-6 mt-12 mb-10 mx-5">
         <div className="w-fit">
           <div className="mb-5">
-            <input
+            <TextInput
+              size="xl"
               onChange={(event) => handleChange(null, event)}
               name="templateName"
-              className="h-20 text-3xl bg-inherit  appearance-none border border-gray-600 rounded w-full py-2 px-4  leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in"
-              type="text"
               value={formState?.templateName}
               placeholder="Template Name"
             />
           </div>
 
           <div className="block md:hidden flex-col  items-center">
-            <textarea
+            <Textarea
               onChange={(event) => handleChange(null, event)}
-              className="text-xl  appearance-none border border-gray-600 rounded w-full p-4  leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in resize-none"
               name="templateNotes"
-              cols="30"
-              rows="5"
+              minRows={10}
               placeholder="Template notes"
               value={formState?.templateNotes}
-            ></textarea>
+            />
 
-            <div className="flex justify-between">
+            <div className="flex justify-between mt-2">
               <AddExerciseBtn addExercise={addExercise} />
               <SaveTemplateBtn loading={loading} handleSubmit={handleSubmit} />
             </div>
@@ -186,17 +183,15 @@ export default function EditTemplate() {
         </div>
 
         <div className="hidden md:block flex-col w-96">
-          <textarea
+          <Textarea
             onChange={(event) => handleChange(null, event)}
-            className="text-xl  bg-inherit appearance-none border border-gray-600 rounded w-full p-4  leading-tight focus:ring-0 focus:outline-none focus:border-primary transition-colors ease-in resize-none"
             name="templateNotes"
-            cols="30"
-            rows="10"
+            minRows={10}
             placeholder="Template notes"
-            value={formState.templateNotes}
-          ></textarea>
+            value={formState?.templateNotes}
+          />
 
-          <div className="flex justify-between">
+          <div className="flex justify-between mt-2">
             <AddExerciseBtn addExercise={addExercise} />
             <SaveTemplateBtn loading={loading} handleSubmit={handleSubmit} />
           </div>

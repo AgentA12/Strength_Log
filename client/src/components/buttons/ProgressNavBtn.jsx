@@ -1,19 +1,18 @@
 import { SiProgress } from "react-icons/si";
-import { Tooltip } from "@material-tailwind/react";
+import { Tooltip } from "@mantine/core";
 
 export default function ProgressNavBtn() {
   return (
     <Tooltip
-      content="Progress"
-      placement="right-start"
-      animate={{
-        mount: { scale: 1, x: 0 },
-        unmount: { scale: 0, x: -35 },
-      }}
+      label="Progress"
+      color="grape"
+      position="right-start"
+      withArrow
+      arrowPosition="center"
     >
-      <button className={` nav-link`}>
+      <p  className="inline">
         <SiProgress size={30} />
-      </button>
+      </p>
     </Tooltip>
   );
 }

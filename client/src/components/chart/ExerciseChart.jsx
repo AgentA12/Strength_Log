@@ -6,7 +6,8 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend, Colors
+  Legend,
+  Colors,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 
@@ -35,10 +36,9 @@ const options = {
 };
 
 export const ExerciseChart = ({ exerciseData }) => {
-  // console.log(exerciseData);
-  // // const labels = ["monday", "tuesday", "wednesday", "thursday", "friday"];
-  const labels = exerciseData.labels
+  const labels = exerciseData.labels;
   const dataSets = exerciseData.dataSets;
+  
   var data = {
     labels,
     datasets: dataSets,

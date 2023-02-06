@@ -1,13 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import "./styles.css";
 import { BrowserRouter } from "react-router-dom";
 import { MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { NotificationsProvider } from "@mantine/notifications";
-
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import "./styles.css";
 
 const client = new ApolloClient({
   uri: "/graphql",
@@ -44,11 +43,15 @@ root.render(
         colorScheme: "dark",
 
         focusRingStyles: {
-          resetStyles: () => ({ outline: 'none' }),
-          
-          inputStyles: (theme) => ({
+          resetStyles: () => ({ outline: "none" }),
+
+          PasswordInputStyles: (theme) => ({
             outline: `1px solid ${theme.colors.grape[6]}`,
             ":focus-within": `1px solid ${theme.colors.grape[6]}`,
+          }),
+          inputStyles: (theme) => ({
+            outline: `1px solid ${theme.colors.grape[6]}`,
+           
           }),
         },
       }}

@@ -3,18 +3,19 @@ import { GET_EXERCISE_PROGRESS } from "../../../utils/graphql/queries";
 import auth from "../../../utils/auth/auth";
 import { ExerciseChart } from "../../chart/ExerciseChart";
 import { Skeleton } from "@mantine/core";
+import { Title, Text } from "@mantine/core";
 
 const ExerciseListContainer = ({ templates }) => {
   return (
-    <div className="">
+    <div className="p-5">
       {templates.length ? (
-        <div>
+        <ul className="list-none">
           {templates[0].exercises.map((exercise) => (
-            <div key={exercise._id} className="cursor-pointer">
-              {exercise.exerciseName}
-            </div>
+            <li key={exercise._id} className="">
+              <Text className="mb-1" tt="capitalize" fz='lg'>{exercise.exerciseName}</Text>
+            </li>
           ))}
-        </div>
+        </ul>
       ) : (
         <p>You have not saved any workouts &#128169;</p>
       )}
@@ -45,17 +46,18 @@ export const ExerciseContainer = ({ loadOneTemplateData }) => {
         </div>
       </div>
     );
-    console.log(data)
   return (
     <div className="flex">
       <div className="w-6/12  rounded-3xl h-fit p-5">
-        <ExerciseChart exerciseData={data?.getExerciseProgress} />
+        {data?.getExerciseProgress ? (
+          <ExerciseChart exerciseData={data.getExerciseProgress} />
+        ) : null}
       </div>
 
       <div>
         {loadOneTemplateData?.getProgress ? (
           <>
-            <p className="text-primary_faded text-xl mb-2">Exercises</p>
+            <Title size={40} color="grape" className="my-2">Exercises</Title>
             <ExerciseListContainer
               templates={loadOneTemplateData.getProgress}
             />
