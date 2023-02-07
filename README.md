@@ -1,6 +1,6 @@
 # Strength Tracker
 
-## Strength Tracker is a web application that allows users to track their progress in gym.
+## Strength Tracker is a web application that allows users to track their progress in the gym.
 
 # Usage
 
