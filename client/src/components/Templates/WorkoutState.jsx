@@ -16,11 +16,11 @@ export default function WorkoutState({ templateState, handleChange, opened }) {
     <div>
       {templateState.exercises.map((exercise, index) => (
         <Fragment key={exercise.exerciseName}>
-          <p className="font-semibold text-xl text-center mb-1">
+          <p className="font-bold text-3xl text-center m-0">
             {exercise.exerciseName}
-            <span className="text-xs text-gray-500">({exercise.type})</span>
+            <span className="text-xs ml-2 text-gray-500">({exercise.type})</span>
           </p>
-          <div className="flex flex-wrap md:flex-nowrap justify-center gap-2 mb-2 text-xl">
+          <div className="flex flex-wrap md:flex-nowrap justify-center gap-2 mb-5 text-xl">
             <span>
               {index === 0 ? (
                 <NumberInput

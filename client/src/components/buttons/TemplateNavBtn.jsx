@@ -5,12 +5,13 @@ export default function TemplateNavBtn() {
   return (
     <Tooltip
       label="Templates"
-      color="grape"
       position="right-start"
       withArrow
       arrowPosition="center"
     >
-    <p className="inline"> <HiOutlineTemplate size={30} /></p> 
+      <p className="inline">
+        <HiOutlineTemplate size={30} />
+      </p>
     </Tooltip>
   );
 }

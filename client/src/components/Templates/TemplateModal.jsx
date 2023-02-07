@@ -55,11 +55,12 @@ export default function TemplateModal({ template, opened, setOpened }) {
       lockScroll={false}
       opened={opened}
       onClose={() => setOpened(false)}
-      title={template.templateName}
+      title={template.templateName.toUpperCase()}
       overlayOpacity={0.55}
       overlayBlur={3}
       transition={"rotate-left"}
       size="lg"
+      className="text-2xl font-black"
     >
       <div className="mt-4">
         {template.templateNotes.trim() ? "- " : null} {template.templateNotes}

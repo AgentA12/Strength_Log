@@ -7,10 +7,18 @@ import SignupBtn from "../buttons/SignupBtn";
 import TemplateNavBtn from "../buttons/TemplateNavBtn";
 import ProgressNavBtn from "../buttons/ProgressNavBtn";
 import LogoutBtn from "../buttons/LogoutBtn";
-import { Drawer, Burger } from "@mantine/core";
+import { BsMoon, BsSun } from "react-icons/bs";
+import {
+  Drawer,
+  Burger,
+  ActionIcon,
+  useMantineColorScheme,
+} from "@mantine/core";
 
 export function Nav() {
   const [openNav, setOpenNav] = useState(false);
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const dark = colorScheme === "dark";
 
   // close the hambuger menu if the screen width is to large
   useEffect(() => {
@@ -57,12 +65,28 @@ export function Nav() {
           </Link>
         </li>
       ))}
+
+      <li>
+        {" "}
+        <ActionIcon
+          className="mt-5"
+          variant="outline"
+          color={dark ? "yellow" : "blue"}
+          onClick={() => toggleColorScheme()}
+          title="Toggle color scheme"
+        >
+          {dark ? <BsSun size={18} /> : <BsMoon size={18} />}
+        </ActionIcon>
+      </li>
     </ul>
   );
 
   return (
     <>
-      <nav className="hidden z-0 md:absolute md:block min-h-screen top-0 left-0 md:z-10" style={{borderRight: "1px gray dotted"}}>
+      <nav
+        className="hidden z-0 md:absolute md:block min-h-screen top-0 left-0 md:z-10"
+        style={{ borderRight: "1px gray dotted" }}
+      >
         {navItems}
       </nav>
 

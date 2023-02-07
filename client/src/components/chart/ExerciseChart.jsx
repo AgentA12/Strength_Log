@@ -47,7 +47,7 @@ export const ExerciseChart = ({ exerciseData }) => {
 
   if (exerciseData) {
     return (
-      <Paper  className=" xl:w-7/12 rounded-3xl h-fit w-full p-5 mt-4 bg-overlay_two">
+      <Paper  className=" xl:w-7/12 rounded-3xl h-fit w-full p-5 mt-4">
         <Line options={options} data={data} />
       </Paper>
     );

@@ -5,12 +5,11 @@ export default function ProgressNavBtn() {
   return (
     <Tooltip
       label="Progress"
-      color="grape"
       position="right-start"
       withArrow
       arrowPosition="center"
     >
-      <p  className="inline">
+      <p className="inline">
         <SiProgress size={30} />
       </p>
     </Tooltip>

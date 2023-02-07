@@ -51,7 +51,7 @@ export const Chart = ({ loadChartSummaryData }) => {
 
   if (loadChartSummaryData?.getChartData.labels.length) {
     return (
-      <Paper className="w-full xl:w-7/12 rounded-3xl h-fit p-5 mt-4 bg-overlay_two">
+      <Paper className="w-full xl:w-7/12 rounded-3xl h-fit p-5 mt-4 ">
         <Line options={options} data={data} />
       </Paper>
     );
