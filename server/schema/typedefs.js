@@ -36,9 +36,9 @@ const typeDefs = gql`
   input editExerciseInput {
     _id: ID
     exerciseName: String
-    sets: String
-    reps: String
-    weight: String
+    sets: Int
+    reps: Int
+    weight: Int
     type: String
   }
 

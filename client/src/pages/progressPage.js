@@ -39,14 +39,12 @@ export const ProgressPage = () => {
     },
   ] = useLazyQuery(GET_TEMPLATES_PROGRESS);
 
-
   const [
     loadChartSummary,
     {
       loading: loadChartSummaryDataLoading,
       error: loadChartSummaryDataError,
       data: loadChartSummaryData,
-      refetch: refetchChartData,
     },
   ] = useLazyQuery(GET_TEMPLATE_CHART_DATA);
 
@@ -74,10 +72,6 @@ export const ProgressPage = () => {
         <Spinner />
       </div>
     );
-
-  // query doesn't update templates that were saved, cache issue I think
-  refetch();
-  refetchChartData();
 
   return (
     <section className="mx-5 my-10 md:ml-52">
@@ -112,6 +106,7 @@ export const ProgressPage = () => {
         <ExerciseContainer
           loadChartSummaryData={loadChartSummaryData}
           loadOneTemplateData={loadOneTemplateData}
+          activeTemplate={activeTemplate}
         />
       )}
     </section>

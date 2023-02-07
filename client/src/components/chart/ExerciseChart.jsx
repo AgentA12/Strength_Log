@@ -1,3 +1,4 @@
+import { Paper } from "@mantine/core";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -38,13 +39,17 @@ const options = {
 export const ExerciseChart = ({ exerciseData }) => {
   const labels = exerciseData.labels;
   const dataSets = exerciseData.dataSets;
-  
+
   var data = {
     labels,
     datasets: dataSets,
   };
 
   if (exerciseData) {
-    return <Line options={options} data={data} />;
+    return (
+      <Paper  className=" xl:w-7/12 rounded-3xl h-fit w-full p-5 mt-4 bg-overlay_two">
+        <Line options={options} data={data} />
+      </Paper>
+    );
   }
 };

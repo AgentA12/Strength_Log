@@ -8,7 +8,7 @@ import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import AddExerciseBtn from "../buttons/AddExerciseBtn";
 import SaveTemplateBtn from "../buttons/SaveTemplateBtn";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ScrollArea, TextInput, Textarea, Divider } from "@mantine/core";
+import { ScrollArea, TextInput, Textarea, Divider, Text } from "@mantine/core";
 
 export default function EditTemplate() {
   const navigate = useNavigate();
@@ -91,9 +91,9 @@ export default function EditTemplate() {
   function addExercise() {
     const exercise = {
       exerciseName: "",
-      sets: "",
-      reps: "",
-      weight: "",
+      sets: 5,
+      reps: 5,
+      weight: 135,
       type: "",
     };
 
@@ -119,12 +119,13 @@ export default function EditTemplate() {
   return (
     <main className="md:ml-40">
       <Divider
-        variant="dashed"
-        label={
-          <h1 className="font-bold text-3xl text-center md:text-left">
-            Edit {formState.templateName}
-          </h1>
-        }
+         my="sm"
+         variant="dashed"
+         label={
+           <h1 className="font-bold text-4xl text-center md:text-left ml-5">
+            Edit <Text color={'grape'} className="inline-block">{formState.templateName}</Text>
+           </h1>
+         }
       />
 
       <div className="flex gap-6 mt-12 mb-10 mx-5">
@@ -139,7 +140,7 @@ export default function EditTemplate() {
             />
           </div>
 
-          <div className="block md:hidden flex-col  items-center">
+          <div className="block lg:hidden flex-col  items-center">
             <Textarea
               onChange={(event) => handleChange(null, event)}
               name="templateNotes"
@@ -182,7 +183,7 @@ export default function EditTemplate() {
           </ScrollArea>
         </div>
 
-        <div className="hidden md:block flex-col w-96">
+        <div className="hidden lg:block flex-col w-96">
           <Textarea
             onChange={(event) => handleChange(null, event)}
             name="templateNotes"

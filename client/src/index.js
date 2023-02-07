@@ -8,11 +8,24 @@ import { NotificationsProvider } from "@mantine/notifications";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import "./styles.css";
 
+// on updating / saving a workout then navigating to progress, apollo keeps old progress results unless refresh
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'ignore',
+  },
+  query: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'all',
+  },
+};
+
 const client = new ApolloClient({
   uri: "/graphql",
   cache: new InMemoryCache({
     addTypename: false,
   }),
+  defaultOptions: defaultOptions,
   typePolicies: {
     Query: {
       fields: {
@@ -51,7 +64,6 @@ root.render(
           }),
           inputStyles: (theme) => ({
             outline: `1px solid ${theme.colors.grape[6]}`,
-           
           }),
         },
       }}

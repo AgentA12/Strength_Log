@@ -94,7 +94,7 @@ userSchema.methods.ExerciseProgress = function (templateID) {
 
   const result = [...r];
 
-  result.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
+  result.sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1));
 
   const labels = result.map((progressObject) => {
     return progressObject.dateCompleted;

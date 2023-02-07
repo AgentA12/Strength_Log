@@ -12,7 +12,9 @@ const ExerciseListContainer = ({ templates }) => {
         <ul className="list-none">
           {templates[0].exercises.map((exercise) => (
             <li key={exercise._id} className="">
-              <Text className="mb-1" tt="capitalize" fz='lg'>{exercise.exerciseName}</Text>
+              <Text className="mb-1" tt="capitalize" fz="lg">
+                {exercise.exerciseName}
+              </Text>
             </li>
           ))}
         </ul>
@@ -23,7 +25,7 @@ const ExerciseListContainer = ({ templates }) => {
   );
 };
 
-export const ExerciseContainer = ({ loadOneTemplateData }) => {
+export const ExerciseContainer = ({ loadOneTemplateData , activeTemplate}) => {
   const {
     data: { _id: userID },
   } = auth.getInfo();
@@ -47,23 +49,27 @@ export const ExerciseContainer = ({ loadOneTemplateData }) => {
       </div>
     );
   return (
-    <div className="flex">
-      <div className="w-6/12  rounded-3xl h-fit p-5">
-        {data?.getExerciseProgress ? (
-          <ExerciseChart exerciseData={data.getExerciseProgress} />
-        ) : null}
-      </div>
+    <>
+      {activeTemplate ? (
+        <div className="flex flex-wrap flex-col xl:flex-row w-full justify-center items-center xl:justify-start xl:items-start gap-4">
+          {data?.getExerciseProgress ? (
+            <ExerciseChart exerciseData={data.getExerciseProgress} />
+          ) : null}
 
-      <div>
-        {loadOneTemplateData?.getProgress ? (
-          <>
-            <Title size={40} color="grape" className="my-2">Exercises</Title>
-            <ExerciseListContainer
-              templates={loadOneTemplateData.getProgress}
-            />
-          </>
-        ) : null}
-      </div>
-    </div>
+          {loadOneTemplateData?.getProgress ? (
+            <div className="xl:w-4/12">
+              <Title size={40} color="grape" className="my-2">
+                Exercises
+              </Title>
+              <ExerciseListContainer
+                templates={loadOneTemplateData.getProgress}
+              />
+            </div>
+          ) : null}
+        </div>
+      ) : (
+        <Title className="mt-5">Select a template</Title>
+      )}
+    </>
   );
 };

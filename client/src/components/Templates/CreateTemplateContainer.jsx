@@ -108,9 +108,9 @@ export default function CreateTemplateContainer() {
   function addExercise() {
     const exercise = {
       exerciseName: "",
-      sets: "",
-      reps: "",
-      weight: "",
+      sets: 5,
+      reps: 5,
+      weight: 135,
       type: "Barbell",
     };
 
@@ -139,7 +139,7 @@ export default function CreateTemplateContainer() {
         my="sm"
         variant="dashed"
         label={
-          <h1 className="font-bold text-3xl text-center md:text-left">
+          <h1 className="font-bold text-3xl text-center md:text-left ml-5">
             Create A Template
           </h1>
         }
@@ -157,7 +157,7 @@ export default function CreateTemplateContainer() {
             />
           </div>
 
-          <div className="block md:hidden flex-col  items-center">
+          <div className="block lg:hidden flex-col  items-center">
             <Textarea
               minRows={10}
               onChange={(event) => handleChange(null, event)}
@@ -199,7 +199,7 @@ export default function CreateTemplateContainer() {
           </ScrollArea>
         </div>
 
-        <div className="hidden md:block flex-col w-96">
+        <div className="hidden lg:block flex-col w-96">
           <Textarea
             minRows={10}
             onChange={(event) => handleChange(null, event)}

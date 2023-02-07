@@ -1,4 +1,4 @@
-import { Chart } from "../../chart/Chart";
+import { Chart } from "../../chart/TemplateChart";
 import ProgressCard from "./ProgressCard";
 import { useState } from "react";
 import ProgressModal from "./ProgressModal";
@@ -7,13 +7,13 @@ import { useLazyQuery } from "@apollo/client";
 import auth from "../../../utils/auth/auth";
 import { GET_SUMMARY } from "../../../utils/graphql/queries";
 import { ScrollArea } from "@mantine/core";
+import { Title } from "@mantine/core";
 
 export const SummaryContainer = ({
   loadChartSummaryData,
   activeTemplate,
   loadOneTemplateData,
   handleSummary,
-  loadChartSummaryDataLoading,
   loadOneTemplateLoading,
 }) => {
   var {
@@ -36,7 +36,7 @@ export const SummaryContainer = ({
     });
   }
 
-  if (loadOneTemplateLoading || loadChartSummaryDataLoading)
+  if (loadOneTemplateLoading)
     return (
       <div className="flex gap-20 mt-5">
         <Skeleton width={1000} height={350} />
@@ -49,44 +49,54 @@ export const SummaryContainer = ({
     );
 
   return (
-    <div className="flex flex-wrap flex-col xl:flex-row w-full justify-center items-center xl:justify-start xl:items-start gap-4">
-      <Chart
-        loadChartSummaryData={loadChartSummaryData}
-        activeTemplate={activeTemplate}
-      />
+    <>
+      {activeTemplate ? (
+        <div className="flex flex-wrap flex-col xl:flex-row w-full justify-center items-center xl:justify-start xl:items-start gap-4">
+          <Chart
+            loadChartSummaryData={loadChartSummaryData}
+            activeTemplate={activeTemplate}
+          />
 
-      {loadChartSummaryData || loadOneTemplateData ? (
-        <div className="xl:w-4/12">
-          <h6 className="text-xl">Recently Saved</h6>
+          {loadChartSummaryData || loadOneTemplateData ? (
+            <div className="xl:w-4/12">
+              <h6 className="text-3xl my-2">Recently Saved</h6>
 
-          <ScrollArea style={{height: 550}}  type="always" className="flex flex-wrap xl:flex-nowrap xl:flex-col gap-10 mt-5 px-10 border border-gray-600 rounded-sm shadow-md w-fit">
-            {loadOneTemplateData?.getProgress.length ? (
-              loadOneTemplateData.getProgress.map((progressInfo) => (
-                <ProgressCard
-                  handleSummary={handleSummary}
-                  progressInfo={progressInfo}
-                  key={progressInfo._id}
-                  isOpen={isOpen}
-                  setIsOpen={setIsOpen}
-                />
-              ))
-            ) : activeTemplate?.length ? (
-              <p className="text-lg">
-                You haven't saved workouts for{" "}
-                <span className="text-primary">'{activeTemplate}'</span>
-              </p>
-            ) : null}
-          </ScrollArea>
+              <ScrollArea
+                style={{ height: 550 }}
+                type="always"
+                className="flex flex-wrap xl:flex-nowrap xl:flex-col gap-10 mt-5 px-10 border  rounded-sm shadow-md w-fit"
+              >
+                {loadOneTemplateData?.getProgress.length ? (
+                  loadOneTemplateData.getProgress.map((progressInfo) => (
+                    <ProgressCard
+                      handleSummary={handleSummary}
+                      progressInfo={progressInfo}
+                      key={progressInfo._id}
+                      isOpen={isOpen}
+                      setIsOpen={setIsOpen}
+                    />
+                  ))
+                ) : activeTemplate?.length ? (
+                  <p className="text-lg">
+                    You haven't saved workouts for{" "}
+                    <span className="text-primary">'{activeTemplate}'</span>
+                  </p>
+                ) : null}
+              </ScrollArea>
+            </div>
+          ) : null}
+
+          <ProgressModal
+            loading={loading}
+            data={data}
+            error={error}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+          />
         </div>
-      ) : null}
-
-      <ProgressModal
-        loading={loading}
-        data={data}
-        error={error}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-      />
-    </div>
+      ) : (
+        <Title className="mt-5">Select a template</Title>
+      )}
+    </>
   );
 };

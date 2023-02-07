@@ -71,7 +71,6 @@ export default function WorkoutState({ templateState, handleChange, opened }) {
                     )
                   }
                 />
-                <span>lbs</span>
               </div>
             ) : null}
           </div>

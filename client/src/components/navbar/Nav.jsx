@@ -34,7 +34,7 @@ export function Nav() {
   ];
 
   const navItems = (
-    <ul className="flex flex-col items-center list-none">
+    <ul className="flex flex-col items-center item-center list-none p-5">
       <li>
         <AiOutlineThunderbolt size={90} />
       </li>
@@ -62,7 +62,7 @@ export function Nav() {
 
   return (
     <>
-      <nav className="hidden z-0 md:absolute md:block min-h-screen top-0 left-0 p-8 md:z-10 border-r-2">
+      <nav className="hidden z-0 md:absolute md:block min-h-screen top-0 left-0 md:z-10" style={{borderRight: "1px gray dotted"}}>
         {navItems}
       </nav>
 

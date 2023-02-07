@@ -1,7 +1,5 @@
-// import { Option } from "@material-tailwind/react";
-// import { Autocomplete } from "@mantine/core";
 import { Select } from "@mantine/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 export const TemplateSelect = (args) => {
   const templates = args.data?.getTemplatesForUser.map((template) => {
     let data = {};
