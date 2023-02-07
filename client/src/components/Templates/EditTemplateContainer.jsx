@@ -94,7 +94,7 @@ export default function EditTemplate() {
       sets: 5,
       reps: 5,
       weight: 135,
-      type: "",
+      type: "Barbell",
     };
 
     const data = { ...formState };

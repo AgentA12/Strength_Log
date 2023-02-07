@@ -8,13 +8,9 @@ import auth from "./utils/auth/auth";
 import { TemplatePage } from "./pages/templatesPage";
 import LandingPage from "./pages/landingPage";
 import { NotFound } from "./pages/notFound";
-import {
-  ColorScheme,
-  ColorSchemeProvider,
-  MantineProvider,
-} from "@mantine/core";
-import { useHotkeys, useLocalStorage } from '@mantine/hooks';
-import { useState } from "react";
+import { ColorSchemeProvider, MantineProvider } from "@mantine/core";
+import { useHotkeys, useLocalStorage } from "@mantine/hooks";
+import { NotificationsProvider } from "@mantine/notifications";
 
 export default function App() {
   const [colorScheme, setColorScheme] = useLocalStorage({
@@ -57,53 +53,55 @@ export default function App() {
           },
         }}
       >
-        <Routes>
-          <Route
-            path="/"
-            index
-            element={<LandingPage isLoggedIn={isLoggedIn} />}
-          />
+        <NotificationsProvider position="bottom-right" limit={5}>
+          <Routes>
+            <Route
+              path="/"
+              index
+              element={<LandingPage isLoggedIn={isLoggedIn} />}
+            />
 
-          <Route
-            path="/Templates"
-            element={
-              <Protected isLoggedIn={isLoggedIn}>
-                <Nav activeNav={pathname.replace("/", "")} />
-                <TemplatePage />
-              </Protected>
-            }
-          />
+            <Route
+              path="/Templates"
+              element={
+                <Protected isLoggedIn={isLoggedIn}>
+                  <Nav activeNav={pathname.replace("/", "")} />
+                  <TemplatePage />
+                </Protected>
+              }
+            />
 
-          <Route
-            path="Templates/Create-Template"
-            element={
-              <Protected isLoggedIn={isLoggedIn}>
-                <Nav activeNav={pathname.replace("/", "")} />
-                <CreateTemplate />
-              </Protected>
-            }
-          />
+            <Route
+              path="Templates/Create-Template"
+              element={
+                <Protected isLoggedIn={isLoggedIn}>
+                  <Nav activeNav={pathname.replace("/", "")} />
+                  <CreateTemplate />
+                </Protected>
+              }
+            />
 
-          <Route
-            path="/Edit-Template"
-            element={
-              <Protected isLoggedIn={isLoggedIn}>
-                <Nav activeNav={pathname.replace("/", "")} />
-                <EditTemplate />
-              </Protected>
-            }
-          />
-          <Route
-            path="/Progress"
-            element={
-              <Protected isLoggedIn={isLoggedIn}>
-                <Nav activeNav={pathname.replace("/", "")} />
-                <ProgressPage />
-              </Protected>
-            }
-          />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+            <Route
+              path="/Edit-Template"
+              element={
+                <Protected isLoggedIn={isLoggedIn}>
+                  <Nav activeNav={pathname.replace("/", "")} />
+                  <EditTemplate />
+                </Protected>
+              }
+            />
+            <Route
+              path="/Progress"
+              element={
+                <Protected isLoggedIn={isLoggedIn}>
+                  <Nav activeNav={pathname.replace("/", "")} />
+                  <ProgressPage />
+                </Protected>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </NotificationsProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   );

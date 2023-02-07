@@ -50,6 +50,8 @@ export default function TemplateModal({ template, opened, setOpened }) {
     setTemplateState({ ...data });
   }
 
+  console.log(template)
+
   return (
     <Modal
       lockScroll={false}
@@ -62,7 +64,7 @@ export default function TemplateModal({ template, opened, setOpened }) {
       size="lg"
       className="text-2xl font-black"
     >
-      <div className="mt-4">
+      <div className="mt-4 font-thin  text-[17px] mr-5">
         {template.templateNotes.trim() ? "- " : null} {template.templateNotes}
       </div>
       <div className="p-5">

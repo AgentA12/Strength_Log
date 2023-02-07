@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { ModalsProvider } from "@mantine/modals";
-import { NotificationsProvider } from "@mantine/notifications";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import "./styles.css";
 
@@ -48,13 +47,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ModalsProvider>
-      <NotificationsProvider position="bottom-right" limit={5}>
-        <ApolloProvider client={client}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </ApolloProvider>
-      </NotificationsProvider>
+      <ApolloProvider client={client}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ApolloProvider>
     </ModalsProvider>
   </React.StrictMode>
 );
