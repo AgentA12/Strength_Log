@@ -9,10 +9,10 @@ export default function ProgressCard({ progressInfo, handleSummary }) {
     <motion.div
       whileHover={{ translateY: -5 }}
       onClick={() => handleSummary(progressInfo)}
-      className="my-5 whitespace-nowrap cursor-pointer group w-fit"
+      className="my-5 cursor-pointer group w-fit"
     >
       <Card shadow="sm" withBorder p="lg" radius="md">
-        <div className="flex justify-between items-center gap-5">
+        <div className="flex justify-between items-center gap-1 sm:gap-5 flex-wrap-reverse md:flex-nowrap whitespace-wrap sm:whitespace-nowrap">
           <p className="text-2xl font-bold tracking-tight m-0">
             {progressInfo.dateCompleted}
           </p>
@@ -21,7 +21,7 @@ export default function ProgressCard({ progressInfo, handleSummary }) {
           </span>
         </div>
 
-        <div className="flex gap-2 justify-between font-normal text-gray-400 mt-5">
+        <div className="flex gap-2 flex-wrap  sm:flex-nowrap justify-between font-normal text-gray-400 mt-5">
           <div className="flex gap-2">
             <span className="flex items-center gap-1 mr-5">
               <FaWeightHanging /> Total Weight: {progressInfo.totalWeight} (lbs)

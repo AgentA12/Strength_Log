@@ -4,8 +4,8 @@ import Auth from "../../utils/auth/auth";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import LoginBtn from "../buttons/LoginBtn";
 import SignupBtn from "../buttons/SignupBtn";
-import TemplateNavBtn from "../buttons/TemplateNavBtn";
-import ProgressNavBtn from "../buttons/ProgressNavBtn";
+import TemplateNavBtn from "./TemplateNavBtn";
+import ProgressNavBtn from "./ProgressNavBtn";
 import LogoutBtn from "../buttons/LogoutBtn";
 import { BsMoon, BsSun } from "react-icons/bs";
 import {
@@ -42,32 +42,20 @@ export function Nav() {
   ];
 
   const navItems = (
-    <ul className="flex flex-col items-center item-center list-none p-5">
-      <li>
+    <ul className="m-0 flex flex-col items-center item-center list-none p-5 h-screen">
+      <li className="mb-10">
         <AiOutlineThunderbolt size={90} />
-      </li>
-
-      <li className="my-10">
-        {Auth.isLoggedIn() ? (
-          <LogoutBtn setOpenNav={setOpenNav} openNav={openNav} />
-        ) : (
-          <div className="flex flex-col gap-1 items-center mt-2">
-            <LoginBtn />
-            <SignupBtn />
-          </div>
-        )}
       </li>
 
       {navData.map((item) => (
         <li className="mb-5" key={item.link}>
-          <Link onClick={() => setOpenNav(false)} to={item.link}>
+          <Link className="font-bold no-underline text-inherit" onClick={() => setOpenNav(false)} to={item.link}>
             <item.componentName />
           </Link>
         </li>
       ))}
 
-      <li>
-        {" "}
+      <li className="mt-auto">
         <ActionIcon
           className="mt-5"
           variant="outline"
@@ -77,6 +65,10 @@ export function Nav() {
         >
           {dark ? <BsSun size={18} /> : <BsMoon size={18} />}
         </ActionIcon>
+      </li>
+
+      <li className="my-10">
+        <LogoutBtn setOpenNav={setOpenNav} openNav={openNav} />
       </li>
     </ul>
   );

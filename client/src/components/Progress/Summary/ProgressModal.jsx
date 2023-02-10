@@ -5,13 +5,7 @@ import { AiFillTrophy } from "react-icons/ai";
 import RenderExercises from "./RenderExercises";
 import { Loader } from "@mantine/core";
 
-export default function ProgressModal({
-  isOpen,
-  setIsOpen,
-  loading,
-  error,
-  data,
-}) {
+export default function ProgressModal({ isOpen, setIsOpen, loading, data }) {
   return (
     <Modal
       lockScroll={false}
@@ -19,9 +13,10 @@ export default function ProgressModal({
       overlayOpacity={0.55}
       overlayBlur={3}
       opened={isOpen}
+      title={data?.getSummary[0].dateCompleted.toUpperCase()}
       onClose={() => setIsOpen(false)}
-      size="fit"
-      
+      className="mx-5 font-black"
+      size={"lg"}
     >
       <div className="pb-10 px-10 flex items-center justify-center">
         {loading ? (
@@ -30,7 +25,6 @@ export default function ProgressModal({
           </div>
         ) : (
           <div>
-            <p>{data?.getSummary[0].dateCompleted.toUpperCase()}</p>
             <div className="flex gap-10 my-3">
               <span className="flex gap-1 items-center">
                 <BiTimeFive /> NA

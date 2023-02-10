@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 import { GET_TEMPLATES } from "../utils/graphql/queries";
 import { DELETE_TEMPLATE } from "../utils/graphql/mutations";
 import { useMutation } from "@apollo/client";
-import AddTemplateBtn from "../components/buttons/AddTemplateBtn";
+import AddTemplateBtn from "../components/templates/AddTemplateBtn";
 import errorImg from "../utils/images/error-img.png";
 import SearchTemplate from "../components/templates/SearchTemplates";
 import { useEffect, useState } from "react";
@@ -68,9 +68,6 @@ export const TemplatePage = () => {
         <Skeleton height={150} width={384} />
         <Skeleton height={150} width={384} />
         <Skeleton height={150} width={384} />
-        <Skeleton height={150} width={384} />
-        <Skeleton height={150} width={384} />
-        <Skeleton height={150} width={384} />
       </>
     ) : // does the array of templates have length? display the template cards
     templates.length ? (
@@ -88,10 +85,10 @@ export const TemplatePage = () => {
   }
 
   return (
-    <main className="mx-5 my-10 md:ml-56">
+    <main className="mx-5 my-10 md:ml-48 max-w-fit">
       <div className="flex flex-wrap gap-5 items-center">
-        <div className="flex gap-2">
-          <Title>Your Templates</Title>
+        <div className="flex gap-2 ">
+          <Title className="text-2xl sm:text-4xl whitespace-nowrap">Your Templates</Title>
 
           <Tooltip
             multiline
@@ -100,9 +97,9 @@ export const TemplatePage = () => {
             transition="fade"
             transitionDuration={200}
             label="A template is an outline of exercises for a given workout. You can create one by clicking on the add template button"
-            position="right-end"
+            position="bottom"
           >
-            <p>
+            <p className="m-0">
               <AiOutlineInfoCircle size={23} />
             </p>
           </Tooltip>

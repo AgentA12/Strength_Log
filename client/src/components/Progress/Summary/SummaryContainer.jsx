@@ -62,7 +62,7 @@ export const SummaryContainer = ({
               <h6 className="text-3xl my-2">Recently Saved</h6>
 
               <ScrollArea
-                style={{ height: 550 }}
+                style={{ height: 550}}
                 type="always"
                 className="flex flex-wrap xl:flex-nowrap xl:flex-col gap-10 mt-5 px-10 border  rounded-sm shadow-md w-fit"
               >
