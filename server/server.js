@@ -26,6 +26,7 @@ const server = new ApolloServer({
   context: authMiddleWare,
   cache: "bounded",
   formatError: (error) => {
+    console.log(error)
     if (
       error.message ===
       "User validation failed: username: Path `username` is required., password: Path `password` is required."

@@ -74,7 +74,7 @@ export const ProgressPage = () => {
     );
 
   return (
-    <section className="mx-5 my-10 md:ml-48">
+    <section className="mx-5 md:ml-16">
       <div className="mb-5">
         <Title color={"grape"} className="font-black mb-5">
           {activeTemplate ? activeTemplate : "Select a template"}

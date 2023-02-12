@@ -295,6 +295,16 @@ const resolvers = {
         return error.message;
       }
     },
+
+    deleteAccount: async function (_, { userID }) {
+      const user = await User.findByIdAndDelete(userID);
+
+      if (user) {
+        return { confirm: true };
+      } else {
+        return { confirm: false };
+      }
+    },
   },
 };
 

@@ -85,7 +85,7 @@ export const TemplatePage = () => {
   }
 
   return (
-    <main className="mx-5 my-10 md:ml-48 max-w-fit">
+    <main className="mx-5 md:ml-16 max-w-fit">
       <div className="flex flex-wrap gap-5 items-center">
         <div className="flex gap-2 ">
           <Title className="text-2xl sm:text-4xl whitespace-nowrap">Your Templates</Title>

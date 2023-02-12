@@ -117,9 +117,10 @@ export default function EditTemplate() {
   }
 
   return (
-    <main className="md:ml-40">
+    <main className="md:ml-12">
       <Divider
          my="sm"
+         className="m-0"
          variant="dashed"
          label={
            <h1 className="font-bold text-4xl text-center md:text-left ml-5">
@@ -128,7 +129,7 @@ export default function EditTemplate() {
          }
       />
 
-      <div className="flex gap-6 mt-12 mb-10 mx-5">
+      <div className="flex gap-6 mb-10 mx-5">
         <div className="w-fit">
           <div className="mb-5">
             <TextInput

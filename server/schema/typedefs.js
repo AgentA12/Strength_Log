@@ -69,6 +69,10 @@ const typeDefs = gql`
     deleteCount: Int
   }
 
+  type Confirm {
+    confirm: Boolean
+  }
+
   type Chart {
     labels: [String]
     totalWeights: [Int]
@@ -121,6 +125,7 @@ const typeDefs = gql`
       userID: ID!
       exerciseInput: [exerciseInput!]
     ): User
+    deleteAccount(userID: ID!): Confirm
   }
 `;
 

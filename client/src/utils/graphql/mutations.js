@@ -132,3 +132,11 @@ export const SAVE_WORKOUT = gql`
     }
   }
 `;
+
+export const DELETE_ACCOUNT = gql`
+  mutation ($userID: ID!) {
+    deleteAccount(userID: $userID) {
+      confirm
+    }
+  }
+`;

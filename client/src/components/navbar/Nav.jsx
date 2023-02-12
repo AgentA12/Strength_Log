@@ -1,24 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Auth from "../../utils/auth/auth";
 import { AiOutlineThunderbolt } from "react-icons/ai";
-import LoginBtn from "../buttons/LoginBtn";
-import SignupBtn from "../buttons/SignupBtn";
 import TemplateNavBtn from "./TemplateNavBtn";
 import ProgressNavBtn from "./ProgressNavBtn";
-import LogoutBtn from "../buttons/LogoutBtn";
-import { BsMoon, BsSun } from "react-icons/bs";
-import {
-  Drawer,
-  Burger,
-  ActionIcon,
-  useMantineColorScheme,
-} from "@mantine/core";
+import SettingsNavBtn from "./SettingsBtn";
+import { Drawer, Burger } from "@mantine/core";
 
 export function Nav() {
   const [openNav, setOpenNav] = useState(false);
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
-  const dark = colorScheme === "dark";
 
   // close the hambuger menu if the screen width is to large
   useEffect(() => {
@@ -39,48 +28,43 @@ export function Nav() {
       link: "/Progress",
       name: "Progress",
     },
+    {
+      componentName: SettingsNavBtn,
+      name: "Settings",
+    },
   ];
 
   const navItems = (
-    <ul className="m-0 flex flex-col items-center item-center list-none p-5 h-screen">
-      <li className="mb-10">
-        <AiOutlineThunderbolt size={90} />
+    <ul className="m-0 flex flex-col md:flex-row items-center justify-between list-none p-0 md:p-6 ">
+      <li className="">
+        <AiOutlineThunderbolt size={60} />
       </li>
 
-      {navData.map((item) => (
-        <li className="mb-5" key={item.link}>
-          <Link className="font-bold no-underline text-inherit" onClick={() => setOpenNav(false)} to={item.link}>
-            <item.componentName />
-          </Link>
-        </li>
-      ))}
-
-      <li className="mt-auto">
-        <ActionIcon
-          className="mt-5"
-          variant="outline"
-          color={dark ? "yellow" : "blue"}
-          onClick={() => toggleColorScheme()}
-          title="Toggle color scheme"
-        >
-          {dark ? <BsSun size={18} /> : <BsMoon size={18} />}
-        </ActionIcon>
-      </li>
-
-      <li className="my-10">
-        <LogoutBtn setOpenNav={setOpenNav} openNav={openNav} />
+      <li className="">
+        <ul className="p-0 flex items-center justify-center list-none md:mr-5">
+          <li className="flex flex-col items-center  md:block">
+            {navData.map((item) =>
+              item.name === "Settings" ? (
+                <item.componentName key={item.name} className="" />
+              ) : (
+                <Link
+                  key={item.link}
+                  onClick={() => setOpenNav(false)}
+                  to={item.link}
+                >
+                  <item.componentName />
+                </Link>
+              )
+            )}
+          </li>
+        </ul>
       </li>
     </ul>
   );
 
   return (
     <>
-      <nav
-        className="hidden z-0 md:absolute md:block min-h-screen top-0 left-0 md:z-10"
-        style={{ borderRight: "1px gray dotted" }}
-      >
-        {navItems}
-      </nav>
+      <nav className="hidden z-0 md:block">{navItems}</nav>
 
       <div className="md:hidden">
         <Burger
@@ -97,6 +81,7 @@ export function Nav() {
           transitionTimingFunction="ease"
           overlayOpacity={0.55}
           overlayBlur={3}
+          size="sm"
         >
           {navItems}
         </Drawer>
