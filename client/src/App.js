@@ -7,7 +7,7 @@ import Protected from "./components/ProtectedRoute";
 import auth from "./utils/auth/auth";
 import { TemplatePage } from "./pages/templatesPage";
 import LandingPage from "./pages/landingPage";
-import { NotFound } from "./pages/notFound";
+import NotFound from "./pages/notFound";
 import { ColorSchemeProvider, MantineProvider } from "@mantine/core";
 import { useHotkeys, useLocalStorage } from "@mantine/hooks";
 import { NotificationsProvider } from "@mantine/notifications";

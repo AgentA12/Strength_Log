@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-export const NotFound = () => {
+export default function NotFound() {
   return (
     <div className="flex flex-col gap-5 items-center justify-center mt-52 text-3xl font-black text-center">
       <h1 className="text-error">404 Error!</h1>
