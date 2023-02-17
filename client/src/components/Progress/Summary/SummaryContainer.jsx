@@ -95,7 +95,7 @@ export const SummaryContainer = ({
           />
         </div>
       ) : (
-        <Title className="mt-5">Select a template</Title>
+        null
       )}
     </>
   );

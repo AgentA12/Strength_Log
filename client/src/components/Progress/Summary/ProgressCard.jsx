@@ -9,7 +9,7 @@ export default function ProgressCard({ progressInfo, handleSummary }) {
     <motion.div
       whileHover={{ translateY: -5 }}
       onClick={() => handleSummary(progressInfo)}
-      className="my-5 cursor-pointer group w-fit"
+      className="my-5 cursor-pointer group max-w-3xl"
     >
       <Card shadow="sm" withBorder p="lg" radius="md">
         <div className="flex justify-between items-center gap-1 sm:gap-5 flex-wrap-reverse md:flex-nowrap whitespace-wrap sm:whitespace-nowrap">

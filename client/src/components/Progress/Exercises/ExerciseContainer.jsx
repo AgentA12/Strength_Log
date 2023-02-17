@@ -25,7 +25,7 @@ const ExerciseListContainer = ({ templates }) => {
   );
 };
 
-export const ExerciseContainer = ({ loadOneTemplateData , activeTemplate}) => {
+export const ExerciseContainer = ({ loadOneTemplateData, activeTemplate }) => {
   const {
     data: { _id: userID },
   } = auth.getInfo();
@@ -67,9 +67,7 @@ export const ExerciseContainer = ({ loadOneTemplateData , activeTemplate}) => {
             </div>
           ) : null}
         </div>
-      ) : (
-        <Title className="mt-5">Select a template</Title>
-      )}
+      ) : null}
     </>
   );
 };

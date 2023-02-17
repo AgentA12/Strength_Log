@@ -9,7 +9,8 @@ import {
 import { IoMdArrowDropdown } from "react-icons/io";
 import { GiMineExplosion } from "react-icons/gi";
 // import { FiSettings } from "react-icons/fi";
-import { BsMoon, BsSun, BsPower } from "react-icons/bs";
+import { BsMoon, BsSun } from "react-icons/bs";
+import { FiLogOut } from "react-icons/fi";
 import { useState } from "react";
 import LogoutBtn from "./LogoutBtn";
 import { useMutation } from "@apollo/client";
@@ -48,13 +49,13 @@ export default function SettingsNavBtn() {
 
   if (data?.deleteAccount?.confirm === true) {
     auth.logout();
-    return  <Navigate to="/" replace />;
+    return <Navigate to="/" replace />;
   }
 
   const dark = colorScheme === "dark";
 
   return (
-    <Menu shadow="md" width={200} position="bottom-end">
+    <Menu shadow="md" width={200} position="bottom-end" trigger="hover">
       <Menu.Target>
         <Button
           rightIcon={<IoMdArrowDropdown size={20} />}
@@ -75,7 +76,7 @@ export default function SettingsNavBtn() {
           Change Theme
         </Menu.Item>
 
-        <Menu.Item icon={<BsPower />}>
+        <Menu.Item icon={<FiLogOut />}>
           <LogoutBtn />
         </Menu.Item>
 

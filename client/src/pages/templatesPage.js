@@ -8,7 +8,7 @@ import AddTemplateBtn from "../components/templates/AddTemplateBtn";
 import errorImg from "../utils/images/error-img.png";
 import SearchTemplate from "../components/templates/SearchTemplates";
 import { useEffect, useState } from "react";
-import { Title, Text, Tooltip } from "@mantine/core";
+import { Title, Text, Tooltip, Divider } from "@mantine/core";
 import { Skeleton } from "@mantine/core";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 
@@ -34,12 +34,14 @@ export const TemplatePage = () => {
   }, [data]);
 
   async function handleTemplateDelete(templateId) {
-    await deleteTemplate({
-      variables: {
-        templateId: templateId,
-      },
-    });
-    refetch();
+    try {
+      await deleteTemplate({
+        variables: {
+          templateId: templateId,
+        },
+      });
+      refetch();
+    } catch (error) {}
   }
 
   function handleFilterTemplates(event) {
@@ -61,7 +63,7 @@ export const TemplatePage = () => {
   }
 
   function displayQueryState() {
-    // is the query loading? display spinner
+    // is the query loading?
     return loading ? (
       <>
         <Skeleton height={150} width={384} />
@@ -88,7 +90,9 @@ export const TemplatePage = () => {
     <main className="mx-5 md:ml-16 max-w-fit">
       <div className="flex flex-wrap gap-5 items-center">
         <div className="flex gap-2 ">
-          <Title className="text-2xl sm:text-4xl whitespace-nowrap">Your Templates</Title>
+          <Title className="text-2xl sm:text-4xl whitespace-nowrap font-black">
+            Your Templates
+          </Title>
 
           <Tooltip
             multiline
@@ -114,6 +118,8 @@ export const TemplatePage = () => {
           <AddTemplateBtn />
         </div>
       </div>
+
+      <Divider my="sm" variant="dashed" />
 
       {error ? (
         <div className="flex flex-col items-center justify-center gap-1 text-error text-xl mt-20 ml-5">
