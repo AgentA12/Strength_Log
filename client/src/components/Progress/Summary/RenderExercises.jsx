@@ -1,8 +1,6 @@
 import { BiTrendingUp, BiTrendingDown } from "react-icons/bi";
-import { Table, Text, Title } from "@mantine/core";
+import { Table } from "@mantine/core";
 import { getOneRepMax } from "../../../utils/helpers/functions";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import { Fragment } from "react";
 
 // second table with just weight and rm and flex box them beside each other
 
@@ -76,19 +74,4 @@ export default function RenderExercises({ summaryObj, summaryNum }) {
       </div>
     </>
   );
-}
-
-{
-  /* <Text size={"lg"} color="grape">
-{exercise.exerciseName.toUpperCase()}
-</Text> */
-}
-
-{
-  /* <div className="flex items-center gap-2">
-<Text>
-  Previous{" "}
-  {i === 0 && <span>- {summaryObj.dateCompleted}</span>}{" "}
-</Text>
-</div> */
 }

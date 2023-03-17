@@ -30,7 +30,7 @@ export const ExerciseContainer = ({ loadOneTemplateData, activeTemplate }) => {
     data: { _id: userID },
   } = auth.getInfo();
 
-  const { loading, error, data } = useQuery(GET_EXERCISE_PROGRESS, {
+  const { loading, data } = useQuery(GET_EXERCISE_PROGRESS, {
     variables: {
       templateID: loadOneTemplateData?.getProgress[0].templateId,
       userID: userID,

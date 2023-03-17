@@ -8,7 +8,6 @@ import {
 } from "@mantine/core";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { GiMineExplosion } from "react-icons/gi";
-// import { FiSettings } from "react-icons/fi";
 import { BsMoon, BsSun } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
 import { useState } from "react";
@@ -22,7 +21,7 @@ export default function SettingsNavBtn() {
   const [opened, setOpened] = useState(false);
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const [deleteAllowed, setDeleteAllowed] = useState(false);
-  const [removeAccount, { data, loading, error }] = useMutation(DELETE_ACCOUNT);
+  const [removeAccount, { data, loading }] = useMutation(DELETE_ACCOUNT);
 
   //getting user info
   if (auth.isLoggedIn()) {
@@ -68,7 +67,6 @@ export default function SettingsNavBtn() {
 
       <Menu.Dropdown>
         <Menu.Label>Application</Menu.Label>
-        {/* <Menu.Item icon={<FiSettings size={14} />}>Settings</Menu.Item> */}
         <Menu.Item
           onClick={() => toggleColorScheme()}
           icon={dark ? <BsSun size={14} /> : <BsMoon size={14} />}

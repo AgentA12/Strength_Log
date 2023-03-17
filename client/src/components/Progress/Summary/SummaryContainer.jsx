@@ -7,13 +7,12 @@ import { useLazyQuery } from "@apollo/client";
 import auth from "../../../utils/auth/auth";
 import { GET_SUMMARY } from "../../../utils/graphql/queries";
 import { ScrollArea } from "@mantine/core";
-import { Title } from "@mantine/core";
 
 export const SummaryContainer = ({
   loadChartSummaryData,
   activeTemplate,
   loadOneTemplateData,
-  handleSummary,
+  
   loadOneTemplateLoading,
 }) => {
   var {

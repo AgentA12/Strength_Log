@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Button } from "@mantine/core";
 
 export default function AddExerciseBtn({ addExercise }) {

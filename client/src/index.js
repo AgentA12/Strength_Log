@@ -6,7 +6,8 @@ import { ModalsProvider } from "@mantine/modals";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import "./styles.css";
 
-// on updating / saving a workout then navigating to progress, apollo keeps old progress results unless refresh
+// on updating/saving a workout and then navigating to progress, apollo keeps old progress results unless the page is refreshed,
+// so for a quick fix set the cache to 'no-cache'
 const defaultOptions = {
   watchQuery: {
     fetchPolicy: "no-cache",
@@ -32,8 +33,7 @@ const client = new ApolloClient({
           // any of this field's arguments.
           keyArgs: false,
 
-          // Concatenate the incoming list items with
-          // the existing list items.
+          // Concatenate the incoming list items with the existing list items.
           merge(existing = [], incoming) {
             return [...existing, ...incoming];
           },
@@ -44,14 +44,15 @@ const client = new ApolloClient({
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <React.StrictMode>
-    <ModalsProvider>
-      <ApolloProvider client={client}>
-        <BrowserRouter>
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <ModalsProvider>
           <App />
-        </BrowserRouter>
-      </ApolloProvider>
-    </ModalsProvider>
+        </ModalsProvider>
+      </BrowserRouter>
+    </ApolloProvider>
   </React.StrictMode>
 );

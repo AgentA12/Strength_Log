@@ -1,13 +1,6 @@
 import { IoMdRemove } from "react-icons/io";
 import { motion } from "framer-motion";
-import {
-  TextInput,
-  NumberInput,
-  Select,
-  Card,
-  Text,
-  Button,
-} from "@mantine/core";
+import { TextInput, NumberInput, Select, Card, Button } from "@mantine/core";
 
 export default function ExerciseForm({
   handleChange,
@@ -103,7 +96,7 @@ export default function ExerciseForm({
               onClick={(event) => removeExercise(event, index)}
               rightIcon={<IoMdRemove color="white" />}
               variant="outline"
-             className="text-red-400 border-red-400"
+              className="text-red-400 border-red-400"
             >
               Remove Exercise
             </Button>

@@ -1,5 +1,5 @@
 import { Select } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 export const TemplateSelect = (args) => {
   const templates = args.data?.getTemplatesForUser.map((template) => {
     let data = {};
@@ -20,7 +20,6 @@ export const TemplateSelect = (args) => {
       value={value}
       onChange={(e) => {
         setValue();
-
         args.handleQuery(e.toString());
         args.setActiveTemplate(e.toString());
         args.getChartData(e.toString());

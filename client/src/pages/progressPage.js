@@ -23,7 +23,7 @@ export const ProgressPage = () => {
   } = auth.getInfo();
 
   // fetch templates for select templates input
-  const { loading, error, data } = useQuery(GET_TEMPLATES, {
+  const { loading, data } = useQuery(GET_TEMPLATES, {
     variables: {
       userId: userID,
     },
@@ -31,21 +31,12 @@ export const ProgressPage = () => {
 
   const [
     loadOneTemplate,
-    {
-      loading: loadOneTemplateLoading,
-      error: loadOneTemplateError,
-      data: loadOneTemplateData,
-      refetch,
-    },
+    { loading: loadOneTemplateLoading, data: loadOneTemplateData },
   ] = useLazyQuery(GET_TEMPLATES_PROGRESS);
 
   const [
     loadChartSummary,
-    {
-      loading: loadChartSummaryDataLoading,
-      error: loadChartSummaryDataError,
-      data: loadChartSummaryData,
-    },
+    { loading: loadChartSummaryDataLoading, data: loadChartSummaryData },
   ] = useLazyQuery(GET_TEMPLATE_CHART_DATA);
 
   async function handleQuery(templateName) {
