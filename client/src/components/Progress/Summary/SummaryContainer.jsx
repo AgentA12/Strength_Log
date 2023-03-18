@@ -7,12 +7,13 @@ import { useLazyQuery } from "@apollo/client";
 import auth from "../../../utils/auth/auth";
 import { GET_SUMMARY } from "../../../utils/graphql/queries";
 import { ScrollArea } from "@mantine/core";
+import CalendarComponent from "../../calendar/Calendar";
 
 export const SummaryContainer = ({
   loadChartSummaryData,
   activeTemplate,
   loadOneTemplateData,
-  
+
   loadOneTemplateLoading,
 }) => {
   var {
@@ -55,13 +56,12 @@ export const SummaryContainer = ({
             loadChartSummaryData={loadChartSummaryData}
             activeTemplate={activeTemplate}
           />
-
           {loadChartSummaryData || loadOneTemplateData ? (
             <div className="xl:w-4/12">
               <h6 className="text-3xl my-2">Recently Saved</h6>
 
               <ScrollArea
-                style={{ height: 550}}
+                style={{ height: 550 }}
                 type="always"
                 className="flex flex-wrap xl:flex-nowrap xl:flex-col gap-10 mt-5 px-10 border  rounded-sm shadow-md w-fit"
               >
@@ -93,9 +93,7 @@ export const SummaryContainer = ({
             setIsOpen={setIsOpen}
           />
         </div>
-      ) : (
-        null
-      )}
+      ) : null}
     </>
   );
 };
