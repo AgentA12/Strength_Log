@@ -3,8 +3,12 @@ import { ColorSchemeProvider, MantineProvider } from "@mantine/core";
 import { useHotkeys, useLocalStorage } from "@mantine/hooks";
 import { NotificationsProvider } from "@mantine/notifications";
 import { routes } from "./routes/routes";
+import { createContext } from "react";
+import auth from "./utils/auth/auth";
 
-export default function App() {
+export const UserContext = createContext();
+
+export function App() {
   const [colorScheme, setColorScheme] = useLocalStorage({
     key: "mantine-color-scheme",
     defaultValue: "dark",
@@ -44,9 +48,11 @@ export default function App() {
         theme={themeStyles}
       >
         <NotificationsProvider position="bottom-right" limit={5}>
-          <Routes>
-            {routes.map((route, index) => route.component(index))}
-          </Routes>
+          <UserContext.Provider value={auth.getInfo()}>
+            <Routes>
+              {routes.map((route, index) => route.component(index))}
+            </Routes>
+          </UserContext.Provider>
         </NotificationsProvider>
       </MantineProvider>
     </ColorSchemeProvider>

@@ -1,7 +1,7 @@
 import { Route } from "react-router-dom";
 import { ProgressPage } from "../pages/progressPage";
-import CreateTemplate from "../components/templates/CreateTemplateContainer";
-import EditTemplate from "../components/templates/EditTemplateContainer";
+import CreateTemplate from "../components/template_page_components/CreateTemplateContainer";
+import EditTemplate from "../components/template_page_components/EditTemplateContainer";
 import Protected from "../components/ProtectedRoute";
 import { TemplatePage } from "../pages/templatesPage";
 import LandingPage from "../pages/landingPage";

@@ -18,7 +18,9 @@ export default function WorkoutState({ templateState, handleChange, opened }) {
         <Fragment key={exercise.exerciseName}>
           <p className="font-bold text-3xl text-center m-0">
             {exercise.exerciseName}
-            <span className="text-xs ml-2 text-gray-500">({exercise.type})</span>
+            <span className="text-xs ml-2 text-gray-500">
+              ({exercise.type})
+            </span>
           </p>
           <div className="flex flex-wrap md:flex-nowrap justify-center gap-2 mb-5 text-xl">
             <span>
@@ -63,6 +65,7 @@ export default function WorkoutState({ templateState, handleChange, opened }) {
                 <NumberInput
                   className="w-24"
                   label="weight"
+                  step={5}
                   defaultValue={parseInt(exercise.weight)}
                   onChange={(value) =>
                     handleChange(

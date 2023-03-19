@@ -67,6 +67,7 @@ const typeDefs = gql`
   type isDeleted {
     acknowledged: Boolean
     deleteCount: Int
+    templateName: String
   }
 
   type Confirm {

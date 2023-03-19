@@ -90,6 +90,7 @@ export const DELETE_TEMPLATE = gql`
     deleteTemplate(templateId: $templateId) {
       acknowledged
       deleteCount
+      templateName
     }
   }
 `;

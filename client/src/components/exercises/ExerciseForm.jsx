@@ -38,6 +38,7 @@ export default function ExerciseForm({
           <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <NumberInput
               label="Weight (Lbs)"
+              step={5}
               // the character 'e' is a valid number input for exponents and '.' for decimals, this logic with prevent that.
               onKeyDown={(event) => event.keyCode !== 69}
               // Mantine onChange events dont use "event" but extract the "value" prop out of event, so I needed to create a sudo target object for number inputs (this only happens with number inputs)

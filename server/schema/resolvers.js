@@ -260,13 +260,15 @@ const resolvers = {
 
     deleteTemplate: async function (_, { templateId }) {
       try {
+        const template = await Template.findById(templateId);
+
         const res = await Template.deleteOne({ _id: templateId });
 
         await User.updateOne({
           $pull: { templates: templateId },
         });
 
-        return res;
+        return { ...res, templateName: template.templateName };
       } catch (error) {
         return error.message;
       }
