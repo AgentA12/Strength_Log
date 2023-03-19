@@ -13,13 +13,6 @@ function formatDate(date) {
   return formattedDate;
 }
 
-/**
- * Gets the 1RM for given lift and formats into string
- * @param {Number} weight
- * @param {Number} repetitions
- * @returns String
- */
-
 function getOneRepMax(weight, repetitions) {
   if (weight <= 0) return "NA";
   const oneRepMax = weight / [1.0278 - 0.0278 * repetitions];
