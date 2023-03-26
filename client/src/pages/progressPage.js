@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { useQuery, useLazyQuery } from "@apollo/client";
-import auth from "../utils/auth/auth";
-import Spinner from "../components/miscellaneous/Spinner";
-import { SectionMenu } from "../components/progress/SectionMenu";
-import { SummaryContainer } from "../components/progress/Summary/SummaryContainer";
-import { ExerciseContainer } from "../components/progress/Exercises/ExerciseContainer";
-import { TemplateSelect } from "../components/progress/TemplateSelect";
-import { Title } from "@mantine/core";
+import {
+  SectionMenu,
+  SummaryContainer,
+  ExerciseContainer,
+  TemplateSelect,
+} from "../components/progress_page_components/index";
 
 import {
   GET_TEMPLATES,
   GET_TEMPLATES_PROGRESS,
   GET_TEMPLATE_CHART_DATA,
 } from "../utils/graphql/queries";
+import auth from "../utils/auth/auth";
 
 export const ProgressPage = () => {
   const [activeTemplate, setActiveTemplate] = useState();
@@ -23,7 +23,7 @@ export const ProgressPage = () => {
   } = auth.getInfo();
 
   // fetch templates for select templates input
-  const { loading, data } = useQuery(GET_TEMPLATES, {
+  const { data } = useQuery(GET_TEMPLATES, {
     variables: {
       userId: userID,
     },
@@ -57,49 +57,37 @@ export const ProgressPage = () => {
     });
   }
 
-  if (loading)
+  if (data)
     return (
-      <div className="mt-60 flex items-center justify-center">
-        <Spinner />
-      </div>
-    );
-
-  return (
-    <section className="mx-5 md:ml-16">
-      <div className="mb-2">
-        <Title className="font-black mb-1">
-          {activeTemplate ? activeTemplate : "Select a template"}
-        </Title>
-
+      <section className="mx-5 md:ml-16">
         <TemplateSelect
-          data={data}
-          handleQuery={handleQuery}
-          activeTemplate={activeTemplate}
-          setActiveTemplate={setActiveTemplate}
-          getChartData={getChartData}
-        />
-      </div>
-
-      <SectionMenu
-        activeSection={activeSection}
-        setActiveSection={setActiveSection}
+        data={data}
+        handleQuery={handleQuery}
+        activeTemplate={activeTemplate}
+        setActiveTemplate={setActiveTemplate}
+        getChartData={getChartData}
       />
 
-      {activeSection === "Summary" ? (
-        <SummaryContainer
-          loadChartSummaryData={loadChartSummaryData}
-          activeTemplate={activeTemplate}
-          loadOneTemplateData={loadOneTemplateData}
-          loadChartSummaryDataLoading={loadChartSummaryDataLoading}
-          loadOneTemplateLoading={loadOneTemplateLoading}
+        <SectionMenu
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
         />
-      ) : (
-        <ExerciseContainer
-          loadChartSummaryData={loadChartSummaryData}
-          loadOneTemplateData={loadOneTemplateData}
-          activeTemplate={activeTemplate}
-        />
-      )}
-    </section>
-  );
+
+        {activeSection === "Summary" ? (
+          <SummaryContainer
+            loadChartSummaryData={loadChartSummaryData}
+            activeTemplate={activeTemplate}
+            loadOneTemplateData={loadOneTemplateData}
+            loadChartSummaryDataLoading={loadChartSummaryDataLoading}
+            loadOneTemplateLoading={loadOneTemplateLoading}
+          />
+        ) : (
+          <ExerciseContainer
+            loadChartSummaryData={loadChartSummaryData}
+            loadOneTemplateData={loadOneTemplateData}
+            activeTemplate={activeTemplate}
+          />
+        )}
+      </section>
+    );
 };

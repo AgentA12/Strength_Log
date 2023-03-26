@@ -1,4 +1,4 @@
-import { Chart } from "../../chart/TemplateChart";
+import { Chart } from "./TemplateChart";
 import ProgressCard from "./ProgressCard";
 import { useState } from "react";
 import ProgressModal from "./ProgressModal";
@@ -7,15 +7,13 @@ import { useLazyQuery } from "@apollo/client";
 import auth from "../../../utils/auth/auth";
 import { GET_SUMMARY } from "../../../utils/graphql/queries";
 import { ScrollArea } from "@mantine/core";
-import CalendarComponent from "../../calendar/Calendar";
 
-export const SummaryContainer = ({
+export default function SummaryContainer({
   loadChartSummaryData,
   activeTemplate,
   loadOneTemplateData,
-
   loadOneTemplateLoading,
-}) => {
+}) {
   var {
     data: { _id: userID },
   } = auth.getInfo();
@@ -96,4 +94,4 @@ export const SummaryContainer = ({
       ) : null}
     </>
   );
-};
+}

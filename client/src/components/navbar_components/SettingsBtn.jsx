@@ -5,10 +5,12 @@ import {
   Modal,
   Text,
   TextInput,
+  Badge,
+  Flex,
 } from "@mantine/core";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { GiMineExplosion } from "react-icons/gi";
-import { BsMoon, BsSun } from "react-icons/bs";
+import { BsCommand, BsMoon, BsSun } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
 import { useState } from "react";
 import LogoutBtn from "./LogoutBtn";
@@ -54,7 +56,7 @@ export default function SettingsNavBtn() {
   const dark = colorScheme === "dark";
 
   return (
-    <Menu shadow="md" width={200} position="bottom-end" trigger="hover">
+    <Menu shadow="md" width={230} position="bottom-end" trigger="hover">
       <Menu.Target>
         <Button
           rightIcon={<IoMdArrowDropdown size={20} />}
@@ -66,12 +68,17 @@ export default function SettingsNavBtn() {
       </Menu.Target>
 
       <Menu.Dropdown>
-        <Menu.Label>Application</Menu.Label>
+        
         <Menu.Item
           onClick={() => toggleColorScheme()}
           icon={dark ? <BsSun size={14} /> : <BsMoon size={14} />}
         >
-          Change Theme
+          Change Theme {"  "}
+          <Badge color="grape" style={{marginLeft: 5}}>
+            <Flex align="center" gap="sm">
+              <BsCommand /> K
+            </Flex>
+          </Badge>
         </Menu.Item>
 
         <Menu.Item icon={<FiLogOut />}>

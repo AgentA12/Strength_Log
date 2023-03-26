@@ -4,6 +4,7 @@ import { AiOutlineThunderbolt } from "react-icons/ai";
 import TemplateNavBtn from "./TemplateNavBtn";
 import ProgressNavBtn from "./ProgressNavBtn";
 import SettingsNavBtn from "./SettingsBtn";
+import WorkoutNavBtn from "./WorkoutNavBtn";
 import { Drawer, Burger } from "@mantine/core";
 
 export function Nav() {
@@ -27,6 +28,11 @@ export function Nav() {
       componentName: ProgressNavBtn,
       link: "/Progress",
       name: "Progress",
+    },
+    {
+      componentName: WorkoutNavBtn,
+      link: "/Workouts",
+      name: "Workouts",
     },
     {
       componentName: SettingsNavBtn,

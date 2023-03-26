@@ -8,6 +8,7 @@ import LandingPage from "../pages/landingPage";
 import { Nav } from "../components/navbar/Nav";
 import NotFound from "../pages/notFound";
 import auth from "../utils/auth/auth";
+import WorkoutPage from "../pages/workoutPage";
 
 const isLoggedIn = auth.isLoggedIn();
 
@@ -19,6 +20,22 @@ export const routes = [
         path="/"
         index
         element={<LandingPage isLoggedIn={isLoggedIn} />}
+      />
+    ),
+  },
+
+  {
+    component: (key) => (
+      <Route
+        key={key}
+        path="/Workouts"
+        index
+        element={
+          <Protected isLoggedIn={isLoggedIn}>
+            <Nav />
+            <WorkoutPage />
+          </Protected>
+        }
       />
     ),
   },

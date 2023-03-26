@@ -1,12 +1,12 @@
-import ExerciseForm from "../exercises/ExerciseForm";
+import ExerciseForm from "./ExerciseForm";
 import { useState, useEffect, useRef } from "react";
 import { useMutation } from "@apollo/client";
 import { EDIT_TEMPLATE } from "../../utils/graphql/mutations";
 import auth from "../../utils/auth/auth";
 import { useQuery } from "@apollo/client";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
-import AddExerciseBtn from "../buttons/AddExerciseBtn";
-import SaveTemplateBtn from "../buttons/SaveTemplateBtn";
+import AddExerciseBtn from "./AddExerciseBtn";
+import SaveTemplateBtn from "./SaveTemplateBtn";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ScrollArea, TextInput, Textarea, Divider, Text } from "@mantine/core";
 
@@ -119,14 +119,17 @@ export default function EditTemplate() {
   return (
     <main className="md:ml-12">
       <Divider
-         my="sm"
-         className="m-0"
-         variant="dashed"
-         label={
-           <h1 className="font-bold text-4xl text-center md:text-left ml-5">
-            Edit <Text color={'grape'} className="inline-block">{formState.templateName}</Text>
-           </h1>
-         }
+        my="sm"
+        className="m-0"
+        variant="dashed"
+        label={
+          <h1 className="font-bold text-4xl text-center md:text-left ml-5">
+            Edit{" "}
+            <Text color={"grape"} className="inline-block">
+              {formState.templateName}
+            </Text>
+          </h1>
+        }
       />
 
       <div className="flex gap-6 mb-10 mx-5">

@@ -47,7 +47,7 @@ export const ExerciseChart = ({ exerciseData }) => {
 
   if (exerciseData) {
     return (
-      <Paper  className=" xl:w-7/12 rounded-3xl h-fit w-full mt-4 p-0">
+      <Paper className=" xl:w-7/12 rounded-3xl h-fit w-full mt-4 p-5">
         <Line options={options} data={data} />
       </Paper>
     );

@@ -2,7 +2,7 @@ import { Modal } from "@mantine/core";
 import { useState } from "react";
 import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
 import { useMutation } from "@apollo/client";
-import SaveWorkoutBtn from "../buttons/SaveWorkoutBtn.jsx";
+import SaveWorkoutBtn from "./SaveWorkoutBtn.jsx";
 import auth from "../../utils/auth/auth";
 import WorkoutState from "./WorkoutState";
 import { showNotification } from "@mantine/notifications";

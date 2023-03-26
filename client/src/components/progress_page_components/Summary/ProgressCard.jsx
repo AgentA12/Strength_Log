@@ -3,6 +3,7 @@ import { FaWeightHanging } from "react-icons/fa";
 import { BiTime } from "react-icons/bi";
 import { motion } from "framer-motion";
 import { Card } from "@mantine/core";
+import { AiOutlineArrowRight } from "react-icons/ai";
 
 export default function ProgressCard({ progressInfo, handleSummary }) {
   return (
@@ -33,8 +34,8 @@ export default function ProgressCard({ progressInfo, handleSummary }) {
               </span>
             ) : null}
           </div>
-          <motion.span className="text-primary text-sm justify-self-end self-end opacity-0 group-hover:opacity-100 transition-all duration-150 group-hover:-translate-x-2">
-            Show Summary
+          <motion.span className="text-primary text-sm flex gap-1 items-center self-end opacity-0 group-hover:opacity-100 transition-all duration-150 group-hover:-translate-x-10">
+            View Summary <AiOutlineArrowRight />
           </motion.span>
         </div>
       </Card>

@@ -15,8 +15,6 @@ export default function CalendarComponent(props) {
     // when a user clicks on a date
     // if the date is already selected => show saved workout
     // if the date is not selected => show model to save workout
-    console.log(dates);
-    console.log(values);
   }
 
   return (

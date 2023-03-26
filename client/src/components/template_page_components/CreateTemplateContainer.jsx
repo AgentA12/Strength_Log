@@ -1,12 +1,12 @@
-import ExerciseForm from "../exercises/ExerciseForm";
+import ExerciseForm from "./ExerciseForm";
 import { useState, useEffect, useRef } from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_TEMPLATE } from "../../utils/graphql/mutations";
 import auth from "../../utils/auth/auth";
 import { useQuery } from "@apollo/client";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
-import AddExerciseBtn from "../buttons/AddExerciseBtn";
-import SaveTemplateBtn from "../buttons/SaveTemplateBtn";
+import AddExerciseBtn from "./AddExerciseBtn";
+import SaveTemplateBtn from "./SaveTemplateBtn";
 import { useNavigate } from "react-router-dom";
 import { ScrollArea, TextInput, Textarea, Divider } from "@mantine/core";
 

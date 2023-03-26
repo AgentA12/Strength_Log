@@ -3,7 +3,7 @@ import { BiStats } from "react-icons/bi";
 import { TbBarbell } from "react-icons/tb";
 import { BsTools } from "react-icons/bs";
 
-export const SectionMenu = ({ setActiveSection }) => {
+export default function SectionMenu({ setActiveSection }) {
   return (
     <Tabs defaultValue="Summary" color={"grape"} onTabChange={setActiveSection}>
       <Tabs.List>
@@ -27,4 +27,4 @@ export const SectionMenu = ({ setActiveSection }) => {
       </Tabs.List>
     </Tabs>
   );
-};
+}

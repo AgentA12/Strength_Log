@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { GET_EXERCISE_PROGRESS } from "../../../utils/graphql/queries";
 import auth from "../../../utils/auth/auth";
-import { ExerciseChart } from "../../chart/ExerciseChart";
+import { ExerciseChart } from "./ExerciseChart"
 import { Skeleton } from "@mantine/core";
 import { Title, Text } from "@mantine/core";
 
@@ -25,7 +25,10 @@ const ExerciseListContainer = ({ templates }) => {
   );
 };
 
-export const ExerciseContainer = ({ loadOneTemplateData, activeTemplate }) => {
+export default function ExerciseContainer({
+  loadOneTemplateData,
+  activeTemplate,
+}) {
   const {
     data: { _id: userID },
   } = auth.getInfo();
@@ -70,4 +73,4 @@ export const ExerciseContainer = ({ loadOneTemplateData, activeTemplate }) => {
       ) : null}
     </>
   );
-};
+}

@@ -1,6 +1,6 @@
 import { FcSearch } from "react-icons/fc";
 
-export const TemplateSearchBar = () => {
+export default function TemplateSearchBar() {
   return (
     <label className="relative inline-block w-64">
       <span className="sr-only">Search</span>
@@ -15,4 +15,4 @@ export const TemplateSearchBar = () => {
       />
     </label>
   );
-};
+}

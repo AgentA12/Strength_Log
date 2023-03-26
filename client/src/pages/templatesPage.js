@@ -144,7 +144,6 @@ export const TemplatePage = () => {
             templates={templates}
             filterTemplates={filterTemplates}
           />
-
           <AddTemplateBtn />
         </Flex>
       </Flex>
