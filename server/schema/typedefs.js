@@ -90,14 +90,8 @@ const typeDefs = gql`
   }
 
   type Query {
-    getExercise: [Exercise]
-    getUserById(_id: ID!): User
     getTemplatesForUser(userId: ID!, offset: Int, limit: Int): [Template]
     getProgress(templateName: String!, userID: ID!): [Progress]
-    getAllUsers: [User]
-    getAllTemplates: [Template]
-    getAllExercises: [Exercise]
-    getTemplateProgressForUser: [Template]
     getExerciseProgress(templateID: ID!, userID: ID!): ExerciseProgress
     getChartData(templateName: String!, userId: ID!): Chart
     getTemplateModalProgress(templateId: ID, userId: ID): [ExerciseProgress]

@@ -5,7 +5,7 @@ import EditTemplate from "../components/template_page_components/EditTemplateCon
 import Protected from "../components/ProtectedRoute";
 import { TemplatePage } from "../pages/templatesPage";
 import LandingPage from "../pages/landingPage";
-import { Nav } from "../components/navbar/Nav";
+import { Nav } from "../components/navbar_components/Nav";
 import NotFound from "../pages/notFound";
 import auth from "../utils/auth/auth";
 import WorkoutPage from "../pages/workoutPage";

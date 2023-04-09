@@ -4,50 +4,22 @@ const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    getAllUsers: async function () {
-      return User.find({}).populate({
-        path: "templates",
-        populate: {
-          path: "exercises",
-          model: "Exercise",
-        },
-      });
-    },
-
-    getAllTemplates: async function () {
-      return Template.find().populate("exercises");
-    },
-
-    getAllExercises: async function () {
-      return Exercise.find();
-    },
-
-    getUserById: async function (_, { _id }) {
-      const user = await User.findById(_id)
-        .select("-password")
-        .populate({
-          path: "templates",
-          populate: {
-            path: "exercises",
-            model: "Exercise",
-          },
-        });
-
-      return user;
-    },
-
     getTemplatesForUser: async function (_, { userId }) {
-      const user = await User.findById(userId)
-        .select("-password")
-        .populate({
-          path: "templates",
-          populate: {
-            path: "exercises",
-            model: "Exercise",
-          },
-        });
+      try {
+        const user = await User.findById(userId)
+          .select("-password")
+          .populate({
+            path: "templates",
+            populate: {
+              path: "exercises",
+              model: "Exercise",
+            },
+          });
 
-      return user.templates;
+        return user.templates;
+      } catch (error) {
+        return error;
+      }
     },
 
     getProgress: async function (_, { templateName, userID }) {
@@ -62,36 +34,22 @@ const resolvers = {
       }
     },
 
-    getTemplateProgressForUser: async function (_, { userId }) {
-      const user = await User.findById(userId)
-        .select("-password")
-        .populate({
-          path: "templates",
-          populate: {
-            path: "exercises",
-            model: "Exercise",
-          },
-        });
-
-      return user.templates;
-    },
-
     getChartData: async function (_, args) {
       const { progress } = await User.findById(args.userId).select("progress");
 
-      const test = progress.filter((p) => {
+      const userProgress = progress.filter((p) => {
         return p.templateName === args.templateName;
       });
 
-      test.sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1));
+      userProgress.sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1));
 
-      const labels = test.map((progressObject) => {
+      const labels = userProgress.map((progressObject) => {
         return progressObject.dateCompleted;
       });
 
-      let copy = [...test];
+      let copyUserProgress = [...userProgress];
 
-      copy.forEach((resultObj, i) => {
+      copyUserProgress.forEach((resultObj, i) => {
         let total = resultObj.exercises.reduce(
           (accumulator, { weight, reps, sets }) => {
             return (accumulator += weight * reps * sets);
@@ -99,10 +57,10 @@ const resolvers = {
           0
         );
 
-        copy[i].totalWeight = total;
+        copyUserProgress[i].totalWeight = total;
       });
 
-      let totalWeight = copy.map((c) => {
+      let totalWeight = copyUserProgress.map((c) => {
         return c.totalWeight;
       });
 
@@ -114,14 +72,6 @@ const resolvers = {
       const chartData = user.ExerciseProgress(templateID);
 
       return chartData;
-    },
-
-    async getTemplateModalProgress(_, { templateId, userId }) {
-      const user = await User.findById(userId);
-
-      user.getSortedProgress(templateId, "asc");
-
-      return null;
     },
 
     async getSummary(_, { userId, templateId, progressId }) {
@@ -204,7 +154,6 @@ const resolvers = {
       return { token, user };
     },
 
-    //create a template then push the new template ids to the User model
     createTemplate: async function (_, args) {
       try {
         await Exercise.create(args.exercises);

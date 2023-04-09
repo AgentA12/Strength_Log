@@ -1,14 +1,4 @@
 import { gql } from "@apollo/client";
-export const GET_EXERCISE = gql`
-  query {
-    getExercise {
-      name
-      reps
-      sets
-      _id
-    }
-  }
-`;
 
 export const GET_TEMPLATE_BY_ID = gql`
   query ($id: ID!) {
@@ -82,20 +72,6 @@ export const GET_EXERCISE_PROGRESS = gql`
       dataSets {
         label
         data
-      }
-    }
-  }
-`;
-
-export const GET_TEMPLATE_MODAL_PROGRESS = gql`
-  query ($templateId: ID!, $userId: ID!) {
-    getTemplateModalProgress(templateId: $templateId, userId: $userId) {
-      label
-      dataSet {
-        data
-        label
-        borderColor
-        backgroundColor
       }
     }
   }

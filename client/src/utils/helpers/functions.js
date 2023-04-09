@@ -1,8 +1,8 @@
-function capitalizeFirstLetter(string) {
+const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
-}
+};
 
-function formatDate(date) {
+const formatDate = (date) => {
   const options = {
     weekday: "long",
     month: "long",
@@ -11,13 +11,18 @@ function formatDate(date) {
   const formattedDate = date.toLocaleDateString("en-US", options);
 
   return formattedDate;
-}
+};
 
-function getOneRepMax(weight, repetitions) {
+const getOneRepMax = (weight, repetitions) => {
   if (weight <= 0) return "NA";
   const oneRepMax = weight / [1.0278 - 0.0278 * repetitions];
 
   return `${Math.round(oneRepMax * 10) / 10} Lbs`;
-}
+};
 
-export { formatDate, getOneRepMax, capitalizeFirstLetter };
+const compareDatesByDay = (firstDate, secondDate) =>
+  firstDate.getFullYear() === secondDate.getFullYear() &&
+  firstDate.getMonth() === secondDate.getMonth() &&
+  firstDate.getDate() === secondDate.getDate();
+
+export { formatDate, getOneRepMax, capitalizeFirstLetter, compareDatesByDay };

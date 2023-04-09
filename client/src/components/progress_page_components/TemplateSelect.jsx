@@ -1,5 +1,6 @@
 import { Select } from "@mantine/core";
 import { useState } from "react";
+
 export default function TemplateSelect(args) {
   const templates = args.data?.getTemplatesForUser.map((template) => {
     let data = {};
