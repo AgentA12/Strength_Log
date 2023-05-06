@@ -2,8 +2,6 @@ import { BiTrendingUp, BiTrendingDown } from "react-icons/bi";
 import { Table } from "@mantine/core";
 import { getOneRepMax } from "../../../utils/helpers/functions";
 
-// second table with just weight and rm and flex box them beside each other
-
 export default function RenderExercises({ summaryObj, summaryNum }) {
   return (
     <>

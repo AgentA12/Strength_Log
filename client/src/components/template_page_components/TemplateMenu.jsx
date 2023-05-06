@@ -39,7 +39,7 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
             event.stopPropagation();
           }}
           data-dropdown-toggle="dropdownDotsHorizontal"
-          color={"grape"}
+          
           variant="outline"
           p='xs'
         >

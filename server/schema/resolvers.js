@@ -4,6 +4,29 @@ const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
+    getProgressTimeStamps: async function (_, { userId }) {
+      try {
+        const { progress } = await User.findById(userId)
+          .select("-password")
+          .populate({
+            path: "templates",
+            populate: {
+              path: "exercises",
+              model: "Exercise",
+            },
+          });
+
+        const dates = progress.map((p) => {
+          return {
+            date: p.createdAt,
+            templateId: p._id,
+          };
+        });
+
+        return { dates: dates };
+      } catch (error) {}
+    },
+
     getTemplatesForUser: async function (_, { userId }) {
       try {
         const user = await User.findById(userId)

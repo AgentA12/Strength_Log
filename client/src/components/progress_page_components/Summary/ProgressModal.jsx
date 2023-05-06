@@ -21,7 +21,7 @@ export default function ProgressModal({ isOpen, setIsOpen, loading, data }) {
       <div className="pb-10 px-10 flex items-center justify-center">
         {loading ? (
           <div className="h-48 flex items-center justify-center">
-            <Loader variant="bars" color={"grape"} />
+            <Loader variant="bars" />
           </div>
         ) : (
           <div>

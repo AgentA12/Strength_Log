@@ -88,11 +88,11 @@ userSchema.methods.getSortedProgress = function (templateID, sorted) {
 };
 
 userSchema.methods.ExerciseProgress = function (templateID) {
-  let r = this.progress.filter((progressObj) => {
+  let progressArr = this.progress.filter((progressObj) => {
     return progressObj.templateId.toString() === templateID;
   });
 
-  const result = [...r];
+  const result = [...progressArr];
 
   result.sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1));
 

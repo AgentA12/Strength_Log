@@ -2,7 +2,7 @@ import { Button } from "@mantine/core";
 
 export default function ProgressNavBtn() {
   return (
-    <Button color={"grape"} variant="subtle">
+    <Button  variant="subtle">
       Progress
     </Button>
   );

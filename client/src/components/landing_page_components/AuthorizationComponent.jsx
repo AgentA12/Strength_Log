@@ -119,7 +119,7 @@ export default function AuthorizationComponent() {
         <Button
           type="submit"
           variant="outline"
-          color={"grape"}
+          
           loading={loginLoading ? loginLoading : signupLoading}
         >
           {type.toUpperCase()}

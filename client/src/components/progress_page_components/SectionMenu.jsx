@@ -5,7 +5,7 @@ import { BsTools } from "react-icons/bs";
 
 export default function SectionMenu({ setActiveSection }) {
   return (
-    <Tabs defaultValue="Summary" color={"grape"} onTabChange={setActiveSection}>
+    <Tabs defaultValue="Summary" onTabChange={setActiveSection}>
       <Tabs.List>
         <Tabs.Tab
           value="Summary"

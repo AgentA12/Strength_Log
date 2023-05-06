@@ -21,13 +21,7 @@ export function App() {
     focusRingStyles: {
       resetStyles: () => ({ outline: "none" }),
 
-      PasswordInputStyles: (theme) => ({
-        outline: `1px solid ${theme.colors.grape[6]}`,
-        ":focus-within": `1px solid ${theme.colors.grape[6]}`,
-      }),
-      inputStyles: (theme) => ({
-        outline: `1px solid ${theme.colors.grape[6]}`,
-      }),
+      
     },
   };
 

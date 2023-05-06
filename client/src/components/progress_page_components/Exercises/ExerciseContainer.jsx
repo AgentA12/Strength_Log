@@ -1,29 +1,10 @@
 import { useQuery } from "@apollo/client";
 import { GET_EXERCISE_PROGRESS } from "../../../utils/graphql/queries";
 import auth from "../../../utils/auth/auth";
-import { ExerciseChart } from "./ExerciseChart"
+import { ExerciseChart } from "./ExerciseChart";
 import { Skeleton } from "@mantine/core";
-import { Title, Text } from "@mantine/core";
-
-const ExerciseListContainer = ({ templates }) => {
-  return (
-    <div className="p-5">
-      {templates.length ? (
-        <ul className="list-none">
-          {templates[0].exercises.map((exercise) => (
-            <li key={exercise._id} className="">
-              <Text className="mb-1" tt="capitalize" fz="lg">
-                {exercise.exerciseName}
-              </Text>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>You have not saved any workouts &#128169;</p>
-      )}
-    </div>
-  );
-};
+import { Title } from "@mantine/core";
+import { ExerciseListContainer } from "./ExerciseListContainer";
 
 export default function ExerciseContainer({
   loadOneTemplateData,
@@ -51,6 +32,7 @@ export default function ExerciseContainer({
         </div>
       </div>
     );
+
   return (
     <>
       {activeTemplate ? (
@@ -61,7 +43,7 @@ export default function ExerciseContainer({
 
           {loadOneTemplateData?.getProgress ? (
             <div className="xl:w-4/12">
-              <Title size={40} color="grape" className="my-2">
+              <Title size={40} className="my-2">
                 Exercises
               </Title>
               <ExerciseListContainer

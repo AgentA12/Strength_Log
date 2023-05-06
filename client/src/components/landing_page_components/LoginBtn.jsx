@@ -4,7 +4,7 @@ import { Button } from "@mantine/core";
 export default function LoginBtn() {
   return (
     <Link to={"/Login"}>
-      <Button variant="outline" color={'grape'}>Login</Button>
+      <Button variant="outline">Login</Button>
     </Link>
   );
 }

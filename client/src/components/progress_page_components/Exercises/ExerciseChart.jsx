@@ -40,6 +40,12 @@ export const ExerciseChart = ({ exerciseData }) => {
   const labels = exerciseData.labels;
   const dataSets = exerciseData.dataSets;
 
+  function getDateRange(startDate, endDate) {
+    console.log(startDate, endDate)
+  }
+
+  getDateRange(labels[0], labels[labels.length - 1]);
+
   var data = {
     labels,
     datasets: dataSets,
@@ -47,7 +53,7 @@ export const ExerciseChart = ({ exerciseData }) => {
 
   if (exerciseData) {
     return (
-      <Paper className=" xl:w-7/12 rounded-3xl h-fit w-full mt-4 p-5">
+      <Paper className="xl:w-7/12 rounded-3xl h-fit w-full mt-4 p-5">
         <Line options={options} data={data} />
       </Paper>
     );

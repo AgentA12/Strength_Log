@@ -1,7 +1,7 @@
 import { Button } from "@mantine/core";
 export default function SettingsNavBtn() {
   return (
-    <Button color={"grape"} variant="subtle">
+    <Button variant="subtle">
       Settings
     </Button>
   );

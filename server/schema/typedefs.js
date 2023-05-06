@@ -89,6 +89,15 @@ const typeDefs = gql`
     data: [Int]
   }
 
+  type dateType {
+    date: String,
+    templateId: ID
+  }
+
+  type CalendarDates {
+    dates: [dateType]
+  }
+
   type Query {
     getTemplatesForUser(userId: ID!, offset: Int, limit: Int): [Template]
     getProgress(templateName: String!, userID: ID!): [Progress]
@@ -96,6 +105,7 @@ const typeDefs = gql`
     getChartData(templateName: String!, userId: ID!): Chart
     getTemplateModalProgress(templateId: ID, userId: ID): [ExerciseProgress]
     getSummary(templateId: ID!, userId: ID!, progressId: ID!): [Progress]
+    getProgressTimeStamps(userId: ID!): CalendarDates
   }
 
   type Mutation {

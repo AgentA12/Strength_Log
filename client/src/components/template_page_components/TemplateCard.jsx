@@ -31,7 +31,7 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
           </div>
 
           <div className="mt-5 mr-2">
-            <Text lineClamp={1} color={"grape"} className="font-semiboldz-10">
+            <Text lineClamp={1} className="font-semiboldz-10">
               {template.exercises.map((exercise, i) => (
                 <span key={exercise.exerciseName}>
                   {template.exercises.length - 1 === i

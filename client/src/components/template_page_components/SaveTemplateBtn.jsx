@@ -4,7 +4,7 @@ export default function SaveTemplateBtn({ handleSubmit, loading }) {
     <Button
       loading={loading}
       variant="outline"
-      color={"grape"}
+      
       onClick={handleSubmit}
     >
       Save Template

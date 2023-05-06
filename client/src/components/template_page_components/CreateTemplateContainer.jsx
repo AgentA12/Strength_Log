@@ -138,7 +138,6 @@ export default function CreateTemplateContainer() {
       <Divider
         my="sm"
         className="m-0"
-
         variant="dashed"
         label={
           <h1 className="font-bold text-3xl text-center md:text-left ml-5">
@@ -163,7 +162,6 @@ export default function CreateTemplateContainer() {
             <Textarea
               minRows={10}
               onChange={(event) => handleChange(null, event)}
-              color={"grape"}
               name="templateNotes"
               placeholder="Template notes"
               value={formState?.templateNotes}
@@ -205,7 +203,6 @@ export default function CreateTemplateContainer() {
           <Textarea
             minRows={10}
             onChange={(event) => handleChange(null, event)}
-            color={"grape"}
             name="templateNotes"
             placeholder="Template notes"
             value={formState?.templateNotes}

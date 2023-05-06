@@ -7,6 +7,7 @@ import auth from "../../utils/auth/auth";
 import WorkoutState from "./WorkoutState";
 import { showNotification } from "@mantine/notifications";
 import { AiOutlineCheck } from "react-icons/ai";
+import { BiErrorCircle } from "react-icons/bi";
 
 export default function TemplateModal({ template, opened, setOpened }) {
   const [templateState, setTemplateState] = useState(template);
@@ -35,11 +36,18 @@ export default function TemplateModal({ template, opened, setOpened }) {
             message: "Your workout will be recorded. 🥳",
             autoClose: 3000,
             icon: <AiOutlineCheck />,
-            color: "grape",
           });
         }
       })
-      .catch((err) => {});
+      .catch((error) => {
+        showNotification({
+          title: `Oops, there was an error while saving your template`,
+          message: error.message,
+          autoClose: 3000,
+          icon: <BiErrorCircle />,
+          color: "red",
+        });
+      });
   }
 
   function handleChange({ target }, index) {
@@ -50,13 +58,12 @@ export default function TemplateModal({ template, opened, setOpened }) {
     setTemplateState({ ...data });
   }
 
-
   return (
     <Modal
       lockScroll={false}
       opened={opened}
       onClose={() => setOpened(false)}
-      title={template.templateName.toUpperCase()}
+      title={template?.templateName.toUpperCase()}
       overlayOpacity={0.55}
       overlayBlur={3}
       transition={"rotate-left"}
@@ -64,7 +71,7 @@ export default function TemplateModal({ template, opened, setOpened }) {
       className="text-2xl font-black"
     >
       <div className="mt-4 font-thin text-[17px] mr-5">
-        {template.templateNotes.trim() ? "- " : null} {template.templateNotes}
+        {template?.templateNotes.trim() ? "- " : null} {template?.templateNotes}
       </div>
       <div className="p-5">
         <WorkoutState

@@ -125,7 +125,7 @@ export default function EditTemplate() {
         label={
           <h1 className="font-bold text-4xl text-center md:text-left ml-5">
             Edit{" "}
-            <Text color={"grape"} className="inline-block">
+            <Text  className="inline-block">
               {formState.templateName}
             </Text>
           </h1>

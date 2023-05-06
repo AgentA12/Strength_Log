@@ -43,14 +43,14 @@ export const TemplatePage = () => {
         title: `Template was deleted.`,
         message: (
           <>
-            <Text span={true} color="grape" size="xl" weight="bold">
+            <Text span={true} size="xl" weight="bold">
               {res.data.deleteTemplate.templateName}
             </Text>{" "}
             was successfully deleted
           </>
         ),
         autoClose: 3000,
-        color: "grape",
+        
       });
     } catch (error) {
       showNotification({

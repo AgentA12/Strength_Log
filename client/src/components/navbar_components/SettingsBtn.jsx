@@ -61,7 +61,7 @@ export default function SettingsNavBtn() {
         <Button
           rightIcon={<IoMdArrowDropdown size={20} />}
           variant="subtle"
-          color={"grape"}
+          
         >
           Account
         </Button>
@@ -74,7 +74,7 @@ export default function SettingsNavBtn() {
           icon={dark ? <BsSun size={14} /> : <BsMoon size={14} />}
         >
           Change Theme {"  "}
-          <Badge color="grape" style={{marginLeft: 5}}>
+          <Badge style={{marginLeft: 5}}>
             <Flex align="center" gap="sm">
               <BsCommand /> K
             </Flex>
