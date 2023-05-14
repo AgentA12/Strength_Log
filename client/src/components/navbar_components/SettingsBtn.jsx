@@ -5,12 +5,11 @@ import {
   Modal,
   Text,
   TextInput,
-  Badge,
   Flex,
 } from "@mantine/core";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { GiMineExplosion } from "react-icons/gi";
-import { BsCommand, BsMoon, BsSun } from "react-icons/bs";
+import { BsMoon, BsSun } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
 import { useState } from "react";
 import LogoutBtn from "./LogoutBtn";
@@ -58,27 +57,17 @@ export default function SettingsNavBtn() {
   return (
     <Menu shadow="md" width={230} position="bottom-end" trigger="hover">
       <Menu.Target>
-        <Button
-          rightIcon={<IoMdArrowDropdown size={20} />}
-          variant="subtle"
-          
-        >
+        <Button rightIcon={<IoMdArrowDropdown size={15} />}  variant="subtle">
           Account
         </Button>
       </Menu.Target>
 
       <Menu.Dropdown>
-        
         <Menu.Item
           onClick={() => toggleColorScheme()}
           icon={dark ? <BsSun size={14} /> : <BsMoon size={14} />}
         >
-          Change Theme {"  "}
-          <Badge style={{marginLeft: 5}}>
-            <Flex align="center" gap="sm">
-              <BsCommand /> K
-            </Flex>
-          </Badge>
+          Change Theme
         </Menu.Item>
 
         <Menu.Item icon={<FiLogOut />}>
@@ -99,33 +88,31 @@ export default function SettingsNavBtn() {
       <Modal
         onClose={() => [setDeleteAllowed(false), setOpened(false)]}
         title="Delete Account"
-        className="text-2xl font-semibold"
         opened={opened}
         size={"lg"}
       >
-        <Text className="text-base font-light mb-2">
+        <Text sx={{ marginBottom: 4 }}>
           Are you sure you want to delete your account? Deleting your account is
           permanent and will delete all your templates and progress forever.
         </Text>
-        <Text className="text-base font-light">
+        <Text>
           Type
-          <Text className="font-black inline mx-1">
+          <Text fw={900} component="span" sx={{ margin: 5 }}>
             I confirm that I am about to delete my account
           </Text>
           to confirm
         </Text>
 
-        <div className="my-3">
-          <TextInput onChange={handleChange}></TextInput>
-        </div>
-        <div className="flex justify-end gap-3">
+        <TextInput sx={{marginBottom: 10, marginTop:10}} onChange={handleChange}></TextInput>
+
+        <Flex justify="end" gap={10}>
           <Button
             color={"gray"}
             variant="outline"
             onClick={() => setOpened(false)}
           >
             Cancel
-          </Button>{" "}
+          </Button>
           <Button
             color={"red"}
             variant="outline"
@@ -136,7 +123,7 @@ export default function SettingsNavBtn() {
           >
             Yes remove my account
           </Button>
-        </div>
+        </Flex>
       </Modal>
     </Menu>
   );

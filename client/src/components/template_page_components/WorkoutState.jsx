@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useRef } from "react";
 import { Fragment } from "react";
-import { NumberInput } from "@mantine/core";
+import { Container, Flex, NumberInput, Text } from "@mantine/core";
 
 export default function WorkoutState({ templateState, handleChange, opened }) {
   const defaultValue = useRef();
@@ -13,47 +13,40 @@ export default function WorkoutState({ templateState, handleChange, opened }) {
   }, [opened]);
 
   return (
-    <div>
+    <>
       {templateState.exercises.map((exercise, index) => (
-        <Fragment key={exercise.exerciseName}>
-          <p className="font-bold text-3xl text-center m-0">
-            {exercise.exerciseName}
-            <span className="text-xs ml-2 text-gray-500">
-              ({exercise.type})
-            </span>
-          </p>
-          <div className="flex flex-wrap md:flex-nowrap justify-center gap-2 mb-5 text-xl">
-            <span>
-              {index === 0 ? (
-                <NumberInput
-                  className="w-24"
-                  label="sets"
-                  value={parseInt(exercise.sets)}
-                  onChange={(value) =>
-                    handleChange(
-                      { target: { name: "sets", value: value } },
-                      index
-                    )
-                  }
-                  ref={defaultValue}
-                />
-              ) : (
-                <NumberInput
-                  className="w-24"
-                  label="sets"
-                  defaultValue={parseInt(exercise.sets)}
-                  onChange={(value) =>
-                    handleChange(
-                      { target: { name: "sets", value: value } },
-                      index
-                    )
-                  }
-                />
-              )}
-            </span>
+        <Container key={exercise.exerciseName}>
+          <Text>
+            {exercise.exerciseName}({exercise.type})
+          </Text>
+          <Flex wrap={true}>
+            {index === 0 ? (
+              <NumberInput
+                label="sets"
+                value={parseInt(exercise.sets)}
+                onChange={(value) =>
+                  handleChange(
+                    { target: { name: "sets", value: value } },
+                    index
+                  )
+                }
+                ref={defaultValue}
+              />
+            ) : (
+              <NumberInput
+                label="sets"
+                defaultValue={parseInt(exercise.sets)}
+                onChange={(value) =>
+                  handleChange(
+                    { target: { name: "sets", value: value } },
+                    index
+                  )
+                }
+              />
+            )}
+
             <NumberInput
               label="reps"
-              className="w-24"
               defaultValue={parseInt(exercise.reps)}
               onChange={(value) =>
                 handleChange({ target: { name: "reps", value: value } }, index)
@@ -61,24 +54,21 @@ export default function WorkoutState({ templateState, handleChange, opened }) {
             />
 
             {exercise.weight !== "Body weight" ? (
-              <div className="flex items-center justify-center gap-1">
-                <NumberInput
-                  className="w-24"
-                  label="weight"
-                  step={5}
-                  defaultValue={parseInt(exercise.weight)}
-                  onChange={(value) =>
-                    handleChange(
-                      { target: { name: "weight", value: value } },
-                      index
-                    )
-                  }
-                />
-              </div>
+              <NumberInput
+                label="weight"
+                step={5}
+                defaultValue={parseInt(exercise.weight)}
+                onChange={(value) =>
+                  handleChange(
+                    { target: { name: "weight", value: value } },
+                    index
+                  )
+                }
+              />
             ) : null}
-          </div>
-        </Fragment>
+          </Flex>
+        </Container>
       ))}
-    </div>
+    </>
   );
 }

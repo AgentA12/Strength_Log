@@ -45,17 +45,23 @@ export default function CalendarComponent() {
   if (error) return error;
 
   return (
-    <>
-      <DatePicker
-        type="multiple"
-        size={"md"}
-        value={data?.getProgressTimeStamps?.dates.map(
-          (d) => new Date(parseInt(d.date))
-        )}
-        getDayProps={(date) => ({
-          onClick: () => handleDateClick(date),
-        })}
-      />
-    </>
+    <DatePicker
+      styles={(theme) => ({
+        day: {
+          color:
+            theme.colorScheme === "dark"
+              ? theme.colors.gray[0]
+              : theme.colors.dark[9],
+        },
+      })}
+      type="multiple"
+      size={"md"}
+      value={data?.getProgressTimeStamps?.dates.map(
+        (d) => new Date(parseInt(d.date))
+      )}
+      getDayProps={(date) => ({
+        onClick: () => handleDateClick(date),
+      })}
+    />
   );
 }

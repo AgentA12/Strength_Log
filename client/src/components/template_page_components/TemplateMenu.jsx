@@ -10,7 +10,7 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
         event.stopPropagation();
       }}
     >
-      <Link to={"/Edit-template"} state={{ template: template }} className="no-underline">
+      <Link to={"/Edit-template"} state={{ template: template }}>
         <Menu.Item icon={<FaEdit size={14} />}>Edit</Menu.Item>
       </Link>
 
@@ -39,12 +39,12 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
             event.stopPropagation();
           }}
           data-dropdown-toggle="dropdownDotsHorizontal"
-          
           variant="outline"
-          p='xs'
+          p="xs"
         >
           <svg
-            className="w-6 h-6"
+            width={20}
+            height={20}
             aria-hidden="true"
             fill="currentColor"
             viewBox="0 0 20 20"

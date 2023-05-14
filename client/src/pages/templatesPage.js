@@ -7,7 +7,16 @@ import {
 } from "../components/template_page_components/index";
 import { GET_TEMPLATES } from "../utils/graphql/queries";
 import { DELETE_TEMPLATE } from "../utils/graphql/mutations";
-import { Title, Text, Tooltip, Divider, Skeleton, Flex } from "@mantine/core";
+import {
+  Title,
+  Text,
+  Tooltip,
+  Divider,
+  Flex,
+  Loader,
+  Center,
+  Container,
+} from "@mantine/core";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { UserContext } from "../App";
 import { showNotification } from "@mantine/notifications";
@@ -26,9 +35,7 @@ export const TemplatePage = () => {
   });
 
   useEffect(() => {
-    if (data) {
-      setTemplates(data.getTemplatesForUser);
-    }
+    if (data) setTemplates(data.getTemplatesForUser);
   }, [data]);
 
   async function handleTemplateDelete(templateId) {
@@ -50,7 +57,6 @@ export const TemplatePage = () => {
           </>
         ),
         autoClose: 3000,
-        
       });
     } catch (error) {
       showNotification({
@@ -83,12 +89,9 @@ export const TemplatePage = () => {
   function displayQueryState() {
     // is the query loading?
     return loading ? (
-      <>
-        <Skeleton height={150} width={384} />
-        <Skeleton height={150} width={384} />
-        <Skeleton height={150} width={384} />
-        <Skeleton height={150} width={384} />
-      </>
+      <Center mx="auto" h={200}>
+        <Loader size="xl" />
+      </Center>
     ) : // does the array of templates have length? display the template cards
     templates.length ? (
       templates.map((template) => (
@@ -105,7 +108,7 @@ export const TemplatePage = () => {
   }
 
   return (
-    <main className="mx-5 md:ml-16 max-w-fit">
+    <Container>
       <Flex
         gap="lg"
         justify="flex-start"
@@ -114,9 +117,7 @@ export const TemplatePage = () => {
         wrap="wrap"
       >
         <Flex gap={"md"}>
-          <Title className="text-2xl sm:text-4xl whitespace-nowrap font-black">
-            Your Templates
-          </Title>
+          <Title>Your Templates</Title>
 
           <Tooltip
             multiline
@@ -127,9 +128,9 @@ export const TemplatePage = () => {
             label="A template is an outline of exercises for a given workout."
             position="bottom"
           >
-            <p className="m-0">
+            <Text>
               <AiOutlineInfoCircle size={23} />
-            </p>
+            </Text>
           </Tooltip>
         </Flex>
 
@@ -151,14 +152,12 @@ export const TemplatePage = () => {
       <Divider my="md" variant="dashed" style={{ width: "90vw" }} />
 
       {error ? (
-        <div className="text-error text-xl mt-20 ml-5">
-          <p>{error.message}</p>
-        </div>
+        <Text>{error.message}</Text>
       ) : (
-        <Flex wrap={"wrap"} gap="md" className="mt-6">
+        <Flex wrap={"wrap"} gap="md">
           {displayQueryState()}
         </Flex>
       )}
-    </main>
+    </Container>
   );
 };

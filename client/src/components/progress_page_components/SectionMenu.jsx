@@ -1,7 +1,6 @@
 import { Tabs } from "@mantine/core";
 import { BiStats } from "react-icons/bi";
 import { TbBarbell } from "react-icons/tb";
-import { BsTools } from "react-icons/bs";
 
 export default function SectionMenu({ setActiveSection }) {
   return (
@@ -19,10 +18,7 @@ export default function SectionMenu({ setActiveSection }) {
           icon={<TbBarbell size={14} />}
           onClick={() => setActiveSection("Exercises")}
         >
-          Exercises{" "}
-        </Tabs.Tab>
-        <Tabs.Tab value="settings" icon={<BsTools size={14} />} disabled>
-          Utilities
+          Exercises
         </Tabs.Tab>
       </Tabs.List>
     </Tabs>

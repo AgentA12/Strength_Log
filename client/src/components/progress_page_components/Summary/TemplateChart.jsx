@@ -1,4 +1,3 @@
-import { Paper } from "@mantine/core";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -50,10 +49,6 @@ export const Chart = ({ loadChartSummaryData }) => {
   }
 
   if (loadChartSummaryData?.getChartData.labels.length) {
-    return (
-      <Paper className="w-full xl:w-7/12 rounded-3xl h-fit mt-4 ">
-        <Line options={options} data={data} />
-      </Paper>
-    );
+    return <Line options={options} data={data} />;
   }
 };

@@ -9,6 +9,8 @@ import {
   TextInput,
   Card,
   Flex,
+  Text,
+  Center,
 } from "@mantine/core";
 import { AiOutlineThunderbolt, AiFillLock } from "react-icons/ai";
 
@@ -61,6 +63,7 @@ export default function AuthorizationComponent() {
             ...formState,
           },
         });
+
         Auth.login(data.login.token);
       } else {
         const { data } = await addUser({
@@ -78,12 +81,10 @@ export default function AuthorizationComponent() {
 
   return (
     <Card
-      className={`sm:w-96 max-w-96 mx-5 sm:mx-auto mt-20 transition-all duration-75 ${
-        errorMessage && "border-error shadow-md shadow-error"
-      }`}
-      shadow="sm"
+      shadow="lg"
       radius="md"
       withBorder
+      sx={{ maxWidth: 450, margin: "auto", marginTop: 120 }}
     >
       <Flex justify={"space-between"}>
         <Title order={2}>ACCOUNT {type.toUpperCase()}</Title>
@@ -92,6 +93,7 @@ export default function AuthorizationComponent() {
 
       <form onSubmit={(event) => handleSubmit(event)}>
         <TextInput
+          autoFocus
           withAsterisk
           label="Username"
           onChange={handleFormChange}
@@ -112,35 +114,40 @@ export default function AuthorizationComponent() {
           onFocus={() => setErrorMessage(null)}
         />
 
-        <p className="text-error font-bold transition-all duration-75">
+        <Text
+          sx={(theme) => ({
+            color: theme.colors.red[6],
+            marginTop: 5,
+          })}
+        >
           {errorMessage && errorMessage}
-        </p>
+        </Text>
 
         <Button
+          mt={10}
           type="submit"
           variant="outline"
-          
           loading={loginLoading ? loginLoading : signupLoading}
         >
           {type.toUpperCase()}
         </Button>
       </form>
 
-      {type === "Login" ? (
-        <p
-          className="cursor-pointer w-fit hover:underline"
-          onClick={() => handleTypeSwitch("Signup")}
-        >
-          Signup instead
-        </p>
-      ) : (
-        <p
-          className="cursor-pointer w-fit hover:underline"
-          onClick={() => handleTypeSwitch("Login")}
-        >
-          Login
-        </p>
-      )}
+      <Text
+        span
+        sx={(theme) => ({
+          marginTop: 12,
+          display: "inline-block",
+          "&:hover": {
+            cursor: "pointer",
+            color: theme.colors.blue[5],
+          },
+        })}
+        td="underline"
+        onClick={() => handleTypeSwitch(type === "Login" ? "Signup" : "Login")}
+      >
+        {type === "Login" ? "Signup instead" : "Login"}
+      </Text>
     </Card>
   );
 }

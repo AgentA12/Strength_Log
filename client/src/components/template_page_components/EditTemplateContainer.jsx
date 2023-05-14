@@ -8,8 +8,16 @@ import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import AddExerciseBtn from "./AddExerciseBtn";
 import SaveTemplateBtn from "./SaveTemplateBtn";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ScrollArea, TextInput, Textarea, Divider, Text } from "@mantine/core";
-
+import {
+  ScrollArea,
+  TextInput,
+  Textarea,
+  Divider,
+  Text,
+  Container,
+  Title,
+  Flex,
+} from "@mantine/core";
 export default function EditTemplate() {
   const navigate = useNavigate();
 
@@ -117,95 +125,77 @@ export default function EditTemplate() {
   }
 
   return (
-    <main className="md:ml-12">
+    <Container component="main" fluid={true}>
       <Divider
-        my="sm"
-        className="m-0"
+        my="lg"
         variant="dashed"
         label={
-          <h1 className="font-bold text-4xl text-center md:text-left ml-5">
+          <Title>
             Edit{" "}
-            <Text  className="inline-block">
+            <Text component="span" color="blue">
               {formState.templateName}
             </Text>
-          </h1>
+          </Title>
         }
       />
 
-      <div className="flex gap-6 mb-10 mx-5">
-        <div className="w-fit">
-          <div className="mb-5">
-            <TextInput
-              size="xl"
-              onChange={(event) => handleChange(null, event)}
-              name="templateName"
-              value={formState?.templateName}
-              placeholder="Template Name"
-            />
-          </div>
+      <Flex gap={12} mx={10} mb={15}>
+        <TextInput
+          size="xl"
+          onChange={(event) => handleChange(null, event)}
+          name="templateName"
+          value={formState?.templateName}
+          placeholder="Template Name"
+        />
 
-          <div className="block lg:hidden flex-col  items-center">
-            <Textarea
-              onChange={(event) => handleChange(null, event)}
-              name="templateNotes"
-              minRows={10}
-              placeholder="Template notes"
-              value={formState?.templateNotes}
-            />
+        <Textarea
+          onChange={(event) => handleChange(null, event)}
+          name="templateNotes"
+          minRows={10}
+          placeholder="Template notes"
+          value={formState?.templateNotes}
+        />
 
-            <div className="flex justify-between mt-2">
-              <AddExerciseBtn addExercise={addExercise} />
-              <SaveTemplateBtn loading={loading} handleSubmit={handleSubmit} />
-            </div>
+        <AddExerciseBtn addExercise={addExercise} />
+        <SaveTemplateBtn loading={loading} handleSubmit={handleSubmit} />
 
-            <div className="text-center text-red-400 text-lg mt-5">
-              {errorMessage ? errorMessage : null}
-            </div>
-          </div>
+        {errorMessage ? errorMessage : null}
+        <ScrollArea
+          ScrollArea
+          style={{ height: 500 }}
+          offsetScrollbars
+          scrollbarSize={4}
+          scrollHideDelay={1500}
+        
+        >
+          <form onSubmit={(event) => handleSubmit(event)}>
+            {formState?.exercises.map((exercise, index) => (
+              <ExerciseForm
+                key={index}
+                handleChange={handleChange}
+                index={index}
+                formState={formState}
+                removeExercise={removeExercise}
+              />
+            ))}
 
-          <ScrollArea
-            ScrollArea
-            style={{ height: 500 }}
-            offsetScrollbars
-            scrollbarSize={4}
-            scrollHideDelay={1500}
-            className="pr-2 pt-3 border-t border-gray-600"
-          >
-            <form className="" onSubmit={(event) => handleSubmit(event)}>
-              {formState?.exercises.map((exercise, index) => (
-                <ExerciseForm
-                  key={index}
-                  handleChange={handleChange}
-                  index={index}
-                  formState={formState}
-                  removeExercise={removeExercise}
-                />
-              ))}
+            <div ref={bottomRef}></div>
+          </form>
+        </ScrollArea>
+      </Flex>
 
-              <div ref={bottomRef}></div>
-            </form>
-          </ScrollArea>
-        </div>
+      <Textarea
+        onChange={(event) => handleChange(null, event)}
+        name="templateNotes"
+        minRows={10}
+        placeholder="Template notes"
+        value={formState?.templateNotes}
+      />
 
-        <div className="hidden lg:block flex-col w-96">
-          <Textarea
-            onChange={(event) => handleChange(null, event)}
-            name="templateNotes"
-            minRows={10}
-            placeholder="Template notes"
-            value={formState?.templateNotes}
-          />
+      <AddExerciseBtn addExercise={addExercise} />
+      <SaveTemplateBtn loading={loading} handleSubmit={handleSubmit} />
 
-          <div className="flex justify-between mt-2">
-            <AddExerciseBtn addExercise={addExercise} />
-            <SaveTemplateBtn loading={loading} handleSubmit={handleSubmit} />
-          </div>
-
-          <div className="text-center text-red-400 text-lg mt-5">
-            {errorMessage ? errorMessage : null}
-          </div>
-        </div>
-      </div>
-    </main>
+      {errorMessage ? errorMessage : null}
+    </Container>
   );
 }

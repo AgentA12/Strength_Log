@@ -16,31 +16,25 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
           scale: 1,
           opacity: 1,
         }}
-        className="w-96"
         onClick={() => setOpened(!opened)}
       >
-        <Card shadow="sm" radius="md" withBorder className="cursor-pointer overflow-visible">
-          <div className="flex items-start justify-between">
-            <h4 className="font-bold text-xl m-0">
-              {template.templateName.toLocaleUpperCase()}
-            </h4>
-            <TemplateMenu
-              template={template}
-              handleTemplateDelete={handleTemplateDelete}
-            />
-          </div>
+        <Card shadow="sm" radius="md" withBorder>
+          {template.templateName.toLocaleUpperCase()}
 
-          <div className="mt-5 mr-2">
-            <Text lineClamp={1} className="font-semiboldz-10">
-              {template.exercises.map((exercise, i) => (
-                <span key={exercise.exerciseName}>
-                  {template.exercises.length - 1 === i
-                    ? capitalizeFirstLetter(exercise.exerciseName)
-                    : capitalizeFirstLetter(exercise.exerciseName) + ", "}
-                </span>
-              ))}
-            </Text>
-          </div>
+          <TemplateMenu
+            template={template}
+            handleTemplateDelete={handleTemplateDelete}
+          />
+
+          <Text lineClamp={1} >
+            {template.exercises.map((exercise, i) => (
+              <Text component="span" key={exercise.exerciseName}>
+                {template.exercises.length - 1 === i
+                  ? capitalizeFirstLetter(exercise.exerciseName)
+                  : capitalizeFirstLetter(exercise.exerciseName) + ", "}
+              </Text>
+            ))}
+          </Text>
         </Card>
       </motion.div>
 

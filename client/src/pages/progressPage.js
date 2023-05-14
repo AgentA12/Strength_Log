@@ -12,6 +12,7 @@ import {
   GET_TEMPLATES_PROGRESS,
   GET_TEMPLATE_CHART_DATA,
 } from "../utils/graphql/queries";
+import { Container } from "@mantine/core";
 import auth from "../utils/auth/auth";
 
 export const ProgressPage = () => {
@@ -59,14 +60,14 @@ export const ProgressPage = () => {
 
   if (data)
     return (
-      <section className="mx-5 md:ml-16">
+      <Container>
         <TemplateSelect
-        data={data}
-        handleQuery={handleQuery}
-        activeTemplate={activeTemplate}
-        setActiveTemplate={setActiveTemplate}
-        getChartData={getChartData}
-      />
+          data={data}
+          handleQuery={handleQuery}
+          activeTemplate={activeTemplate}
+          setActiveTemplate={setActiveTemplate}
+          getChartData={getChartData}
+        />
 
         <SectionMenu
           activeSection={activeSection}
@@ -88,6 +89,6 @@ export const ProgressPage = () => {
             activeTemplate={activeTemplate}
           />
         )}
-      </section>
+      </Container>
     );
 };

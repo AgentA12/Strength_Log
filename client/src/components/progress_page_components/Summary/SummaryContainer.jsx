@@ -2,7 +2,7 @@ import { Chart } from "./TemplateChart";
 import ProgressCard from "./ProgressCard";
 import { useState } from "react";
 import ProgressModal from "./ProgressModal";
-import { Skeleton } from "@mantine/core";
+import { Center, Container, Loader, Text, Title } from "@mantine/core";
 import { useLazyQuery } from "@apollo/client";
 import auth from "../../../utils/auth/auth";
 import { GET_SUMMARY } from "../../../utils/graphql/queries";
@@ -36,33 +36,23 @@ export default function SummaryContainer({
 
   if (loadOneTemplateLoading)
     return (
-      <div className="flex gap-20 mt-5">
-        <Skeleton width={1000} height={350} />
-        <div className="flex flex-col gap-5">
-          <Skeleton width={400} height={150} />
-          <Skeleton width={400} height={150} />
-          <Skeleton width={400} height={150} />
-        </div>
-      </div>
+      <Center>
+        <Loader size="xl" height={200} />
+      </Center>
     );
 
   return (
     <>
       {activeTemplate ? (
-        <div className="flex flex-wrap flex-col xl:flex-row w-full justify-center items-center xl:justify-start xl:items-start gap-4">
+        <Container size="xl">
           <Chart
             loadChartSummaryData={loadChartSummaryData}
             activeTemplate={activeTemplate}
           />
           {loadChartSummaryData || loadOneTemplateData ? (
-            <div className="xl:w-4/12">
-              <h6 className="text-3xl my-2">Recently Saved</h6>
-
-              <ScrollArea
-                style={{ height: 550 }}
-                type="always"
-                className="flex flex-wrap xl:flex-nowrap xl:flex-col gap-10 mt-5 px-10 border  rounded-sm shadow-md w-fit"
-              >
+            <>
+              <Title>Recently saved</Title>
+              <ScrollArea style={{ height: 550 }} type="always">
                 {loadOneTemplateData?.getProgress.length ? (
                   loadOneTemplateData.getProgress.map((progressInfo) => (
                     <ProgressCard
@@ -74,13 +64,10 @@ export default function SummaryContainer({
                     />
                   ))
                 ) : activeTemplate?.length ? (
-                  <p className="text-lg">
-                    You haven't saved workouts for{" "}
-                    <span className="text-primary">'{activeTemplate}'</span>
-                  </p>
+                  <Text>You haven't saved workouts for '{activeTemplate}'</Text>
                 ) : null}
               </ScrollArea>
-            </div>
+            </>
           ) : null}
 
           <ProgressModal
@@ -90,7 +77,7 @@ export default function SummaryContainer({
             isOpen={isOpen}
             setIsOpen={setIsOpen}
           />
-        </div>
+        </Container>
       ) : null}
     </>
   );

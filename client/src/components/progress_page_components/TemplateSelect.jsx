@@ -2,6 +2,8 @@ import { Select } from "@mantine/core";
 import { useState } from "react";
 
 export default function TemplateSelect(args) {
+  const [value, setValue] = useState("Select a template");
+
   const templates = args.data?.getTemplatesForUser.map((template) => {
     let data = {};
 
@@ -9,11 +11,10 @@ export default function TemplateSelect(args) {
     data.value = template.templateName;
     return data;
   });
-  const [value, setValue] = useState("Select a template");
 
   return (
     <Select
-      className="w-fit text-black"
+      sx={{ width: "fit-content" }}
       data={templates}
       searchable
       placeholder="Select a template"

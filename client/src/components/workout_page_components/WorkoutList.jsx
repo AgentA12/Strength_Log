@@ -17,7 +17,7 @@ export default function WorkoutList(props) {
     </tr>
   ));
   return (
-    <section>
+    <>
       <Anchor component="h1">
         {new Date().toLocaleDateString("en-US", {
           weekday: "long",
@@ -37,6 +37,6 @@ export default function WorkoutList(props) {
         </thead>
         <tbody>{rows}</tbody>
       </Table>
-    </section>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import { Modal } from "@mantine/core";
+import { Modal, Text } from "@mantine/core";
 import { useState } from "react";
 import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
 import { useMutation } from "@apollo/client";
@@ -68,29 +68,20 @@ export default function TemplateModal({ template, opened, setOpened }) {
       overlayBlur={3}
       transition={"rotate-left"}
       size="lg"
-      className="text-2xl font-black"
     >
-      <div className="mt-4 font-thin text-[17px] mr-5">
-        {template?.templateNotes.trim() ? "- " : null} {template?.templateNotes}
-      </div>
-      <div className="p-5">
-        <WorkoutState
-          templateState={templateState}
-          handleChange={handleChange}
-          opened={opened}
-        />
-      </div>
-      <div className="flex flex-col md:flex-nowrap justify-center gap-3 w-fit mx-auto">
-        <SaveWorkoutBtn
-          loading={loading}
-          handleSaveWorkout={handleSaveWorkout}
-          data={data}
-          setOpened={setOpened}
-        />
-      </div>
-      {error ? (
-        <div className="text-error text-center mt-5">{error.message}</div>
-      ) : null}
+      {template?.templateNotes.trim() ? "- " : null} {template?.templateNotes}
+      <WorkoutState
+        templateState={templateState}
+        handleChange={handleChange}
+        opened={opened}
+      />
+      <SaveWorkoutBtn
+        loading={loading}
+        handleSaveWorkout={handleSaveWorkout}
+        data={data}
+        setOpened={setOpened}
+      />
+      {error ? <Text>{error.message}</Text> : null}
     </Modal>
   );
 }

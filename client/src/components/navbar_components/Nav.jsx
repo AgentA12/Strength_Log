@@ -1,97 +1,160 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import {
+  createStyles,
+  Header,
+  Container,
+  Group,
+  Burger,
+  Paper,
+  Transition,
+  Text,
+  Flex,
+} from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import { Link } from "react-router-dom";
 import { AiOutlineThunderbolt } from "react-icons/ai";
-import TemplateNavBtn from "./TemplateNavBtn";
-import ProgressNavBtn from "./ProgressNavBtn";
 import SettingsNavBtn from "./SettingsBtn";
-import WorkoutNavBtn from "./WorkoutNavBtn";
-import { Drawer, Burger } from "@mantine/core";
+
+const HEADER_HEIGHT = "45px";
+
+const useStyles = createStyles((theme) => ({
+  root: {
+    position: "relative",
+    zIndex: 1,
+    marginBottom: 20,
+  },
+
+  dropdown: {
+    position: "absolute",
+    top: HEADER_HEIGHT,
+    left: 0,
+    right: 0,
+    zIndex: 0,
+    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
+    borderTopWidth: 0,
+    overflow: "hidden",
+
+    [theme.fn.largerThan("sm")]: {
+      display: "none",
+    },
+  },
+  header: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: "100%",
+    marginBottom: 20,
+  },
+
+  links: {
+    [theme.fn.smallerThan("xs")]: {
+      display: "none",
+    },
+  },
+
+  burger: {
+    [theme.fn.largerThan("xs")]: {
+      display: "none",
+    },
+  },
+
+  link: {
+    display: "block",
+    lineHeight: 1,
+    margin: `10px 12px`,
+
+    textDecoration: "none",
+    color:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[0]
+        : theme.colors.gray[7],
+    fontSize: theme.fontSizes.sm,
+    fontWeight: 500,
+
+    "&:hover": {
+      color: theme.colors.blue[5],
+    },
+  },
+
+  linkActive: {
+    "&, &:hover": {
+      color: theme.colors.blue[5],
+    },
+  },
+}));
+
+const links = [
+  {
+    link: "/Templates",
+    name: "Templates",
+  },
+  {
+    link: "/Progress",
+    name: "Progress",
+  },
+  {
+    link: "/Workouts",
+    name: "Workouts",
+  },
+  {
+    componentName: SettingsNavBtn,
+    name: "Settings",
+  },
+];
 
 export function Nav() {
-  const [openNav, setOpenNav] = useState(false);
+  const [opened, { toggle }] = useDisclosure(false);
+  const [active, setActive] = useState(links[0].name);
+  const { classes, cx } = useStyles();
 
-  // close the hambuger menu if the screen width is to large
-  useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => window.innerWidth >= 960 && setOpenNav(false)
-    );
-  }, []);
-
-  const navData = [
-    {
-      componentName: TemplateNavBtn,
-      link: "/Templates",
-      name: "Templates",
-    },
-    {
-      componentName: ProgressNavBtn,
-      link: "/Progress",
-      name: "Progress",
-    },
-    {
-      componentName: WorkoutNavBtn,
-      link: "/Workouts",
-      name: "Workouts",
-    },
-    {
-      componentName: SettingsNavBtn,
-      name: "Settings",
-    },
-  ];
-
-  const navItems = (
-    <ul className="m-0 flex flex-col md:flex-row items-center justify-between list-none p-0 md:p-6 ">
-      <li className="">
-        <AiOutlineThunderbolt size={60} />
-      </li>
-
-      <li className="">
-        <ul className="p-0 flex items-center justify-center list-none md:mr-5">
-          <li className="flex flex-col items-center  md:block">
-            {navData.map((item) =>
-              item.name === "Settings" ? (
-                <item.componentName key={item.name} className="" />
-              ) : (
-                <Link
-                  key={item.link}
-                  onClick={() => setOpenNav(false)}
-                  to={item.link}
-                >
-                  <item.componentName />
-                </Link>
-              )
-            )}
-          </li>
-        </ul>
-      </li>
-    </ul>
+  const items = links.map((link) =>
+    link.name === "Settings" ? (
+      <link.componentName key={link.name} />
+    ) : (
+      <Link
+        key={link.name}
+        to={link.link}
+        className={cx(classes.link, {
+          [classes.linkActive]: active === link.name,
+        })}
+        onClick={() => {
+          setActive(link.name);
+        }}
+      >
+        {link.name}
+      </Link>
+    )
   );
 
   return (
-    <>
-      <nav className="hidden z-0 md:block">{navItems}</nav>
+    <Header height={HEADER_HEIGHT} py={30} className={classes.root}>
+      <Container className={classes.header}>
+        <Flex align="center">
+          <AiOutlineThunderbolt size={32} />
+          <Text italic color="blue" fw={900}>
+            Strength Log
+          </Text>
+        </Flex>
+        <Group spacing={5} className={classes.links}>
+          {items}
+        </Group>
 
-      <div className="md:hidden">
         <Burger
-          onClick={() => setOpenNav(!openNav)}
-          opened={openNav}
-          className="ml-5 mt-2"
+          opened={opened}
+          onClick={toggle}
+          className={classes.burger}
+          size="sm"
         />
 
-        <Drawer
-          onClose={() => setOpenNav(false)}
-          opened={openNav}
-          transition="rotate-left"
-          transitionDuration={250}
-          transitionTimingFunction="ease"
-          overlayOpacity={0.55}
-          overlayBlur={3}
-          size="sm"
-        >
-          {navItems}
-        </Drawer>
-      </div>
-    </>
+        <Transition transition="pop-top-right" duration={200} mounted={opened}>
+          {(styles) => (
+            <Paper className={classes.dropdown} withBorder style={styles}>
+              {items}
+            </Paper>
+          )}
+        </Transition>
+      </Container>
+    </Header>
   );
 }

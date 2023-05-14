@@ -1,16 +1,31 @@
+import { Flex, Title, Text } from "@mantine/core";
 import { Link } from "react-router-dom";
+
 export default function NotFound() {
   return (
-    <div className="flex flex-col gap-5 items-center justify-center mt-52 text-3xl font-black text-center">
-      <h1 className="text-error">404 Error!</h1>
-      <p className="text-4xl">¯\_(ツ)_/¯</p>
-      <p className="">The page your looking for does not exist.</p>
-      <Link
-        to="/templates"
-        className="font-light text-2xl underline hover:text-gray-600"
+    <Flex
+      mih={50}
+      gap="xs"
+      justify="center"
+      align="center"
+      direction="column"
+      wrap="nowrap"
+      mt={75}
+    >
+      <Title
+        order={1}
+        size={50}
+        sx={(theme) => ({
+          color: theme.colors.red[6],
+        })}
       >
-        Go back home
+        404 Error!
+      </Title>
+      <Text size={25}>¯\_(ツ)_/¯</Text>
+      <Text>The page your looking for does not exist.</Text>
+      <Link to="/templates">
+        <Text td="underline" sx={(theme) => ({color: theme.colors.blue[6]})}>Go back home</Text>
       </Link>
-    </div>
+    </Flex>
   );
-};
+}

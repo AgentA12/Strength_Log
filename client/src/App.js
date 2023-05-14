@@ -11,18 +11,10 @@ export const UserContext = createContext();
 export function App() {
   const [colorScheme, setColorScheme] = useLocalStorage({
     key: "mantine-color-scheme",
-    defaultValue: "dark",
-    getInitialValueInEffect: true,
   });
 
   const themeStyles = {
     colorScheme: colorScheme,
-
-    focusRingStyles: {
-      resetStyles: () => ({ outline: "none" }),
-
-      
-    },
   };
 
   useHotkeys([["ctrl+K", () => toggleColorScheme()]]);
@@ -35,12 +27,7 @@ export function App() {
       colorScheme={colorScheme}
       toggleColorScheme={toggleColorScheme}
     >
-      <MantineProvider
-        withNormalizeCSS
-        withGlobalStyles
-        inherit
-        theme={themeStyles}
-      >
+      <MantineProvider withNormalizeCSS withGlobalStyles theme={themeStyles}>
         <NotificationsProvider position="bottom-right" limit={5}>
           <UserContext.Provider value={auth.getInfo()}>
             <Routes>
