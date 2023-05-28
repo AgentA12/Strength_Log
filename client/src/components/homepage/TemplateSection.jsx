@@ -4,24 +4,23 @@ import {
   SearchTemplates,
   TemplateCard,
   AddTemplateBtn,
-} from "../components/template_page_components/index";
-import { GET_TEMPLATES } from "../utils/graphql/queries";
-import { DELETE_TEMPLATE } from "../utils/graphql/mutations";
+} from "../template_page_components/index";
+import { GET_TEMPLATES } from "../../utils/graphql/queries";
+import { DELETE_TEMPLATE } from "../../utils/graphql/mutations";
 import {
   Title,
   Text,
-  Tooltip,
   Divider,
   Flex,
   Loader,
   Center,
-  Container,
+  Group,
 } from "@mantine/core";
-import { AiOutlineInfoCircle } from "react-icons/ai";
-import { UserContext } from "../App";
+import { UserContext } from "../../App";
 import { showNotification } from "@mantine/notifications";
+import StartWorkoutBtn from "./StartWorkoutBtn";
 
-export const TemplatePage = () => {
+export default function TemplateSection() {
   const userInfo = useContext(UserContext);
 
   const [templates, setTemplates] = useState([]);
@@ -50,7 +49,7 @@ export const TemplatePage = () => {
         title: `Template was deleted.`,
         message: (
           <>
-            <Text span={true} size="xl" weight="bold">
+            <Text span={true} size="md" weight="bold">
               {res.data.deleteTemplate.templateName}
             </Text>{" "}
             was successfully deleted
@@ -108,31 +107,16 @@ export const TemplatePage = () => {
   }
 
   return (
-    <Container>
+    <>
       <Flex
         gap="lg"
         justify="flex-start"
         align="center"
         direction="row"
         wrap="wrap"
+        mt={20}
       >
-        <Flex gap={"md"}>
-          <Title>Your Templates</Title>
-
-          <Tooltip
-            multiline
-            width={220}
-            withArrow
-            transition="fade"
-            transitionDuration={200}
-            label="A template is an outline of exercises for a given workout."
-            position="bottom"
-          >
-            <Text>
-              <AiOutlineInfoCircle size={23} />
-            </Text>
-          </Tooltip>
-        </Flex>
+        <Title>Your Templates</Title>
 
         <Flex
           gap="lg"
@@ -145,19 +129,26 @@ export const TemplatePage = () => {
             templates={templates}
             filterTemplates={filterTemplates}
           />
-          <AddTemplateBtn />
+          <Group>
+            <AddTemplateBtn />
+            <StartWorkoutBtn />
+          </Group>
         </Flex>
       </Flex>
 
-      <Divider my="md" variant="dashed" style={{ width: "90vw" }} />
+      <Divider my="md" variant="dashed" />
 
       {error ? (
-        <Text>{error.message}</Text>
+        <Center>
+          <Text color="red" size="lg" fw={500}>
+            {error.message}
+          </Text>
+        </Center>
       ) : (
         <Flex wrap={"wrap"} gap="md">
           {displayQueryState()}
         </Flex>
       )}
-    </Container>
+    </>
   );
-};
+}

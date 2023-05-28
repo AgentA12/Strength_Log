@@ -12,11 +12,12 @@ import {
   GET_TEMPLATES_PROGRESS,
   GET_TEMPLATE_CHART_DATA,
 } from "../utils/graphql/queries";
-import { Container } from "@mantine/core";
+import { Container, Title, Group, Text } from "@mantine/core";
 import auth from "../utils/auth/auth";
+import RangeSelect from "../components/progress_page_components/SelectRange";
 
 export const ProgressPage = () => {
-  const [activeTemplate, setActiveTemplate] = useState();
+  const [activeTemplate, setActiveTemplate] = useState(null);
   const [activeSection, setActiveSection] = useState("Summary");
 
   const {
@@ -60,20 +61,32 @@ export const ProgressPage = () => {
 
   if (data)
     return (
-      <Container>
-        <TemplateSelect
-          data={data}
-          handleQuery={handleQuery}
-          activeTemplate={activeTemplate}
-          setActiveTemplate={setActiveTemplate}
-          getChartData={getChartData}
-        />
-
+      <Container fluid>
+        {activeTemplate ? (
+          <Title>
+            <Text color="blue" fw={900} component="span">
+              {activeTemplate}
+            </Text>{" "}
+            Summary
+          </Title>
+        ) : (
+          <Title>Select a template</Title>
+        )}
         <SectionMenu
           activeSection={activeSection}
           setActiveSection={setActiveSection}
         />
 
+        <Group>
+          <TemplateSelect
+            data={data}
+            handleQuery={handleQuery}
+            activeTemplate={activeTemplate}
+            setActiveTemplate={setActiveTemplate}
+            getChartData={getChartData}
+          />
+          <RangeSelect />
+        </Group>
         {activeSection === "Summary" ? (
           <SummaryContainer
             loadChartSummaryData={loadChartSummaryData}

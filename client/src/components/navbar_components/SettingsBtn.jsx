@@ -49,15 +49,15 @@ export default function SettingsNavBtn() {
 
   if (data?.deleteAccount?.confirm === true) {
     auth.logout();
-    return <Navigate to="/" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   const dark = colorScheme === "dark";
 
   return (
-    <Menu shadow="md" width={230} position="bottom-end" trigger="hover">
+    <Menu shadow="md" width={230} position="bottom-right" trigger="hover">
       <Menu.Target>
-        <Button rightIcon={<IoMdArrowDropdown size={15} />}  variant="subtle">
+        <Button color="blue" rightIcon={<IoMdArrowDropdown size={15} />}  variant="subtle" compact>
           Account
         </Button>
       </Menu.Target>

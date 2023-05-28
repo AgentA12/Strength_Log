@@ -3,23 +3,47 @@ import { ProgressPage } from "../pages/progressPage";
 import CreateTemplate from "../components/template_page_components/CreateTemplateContainer";
 import EditTemplate from "../components/template_page_components/EditTemplateContainer";
 import Protected from "../components/ProtectedRoute";
-import { TemplatePage } from "../pages/templatesPage";
-import LandingPage from "../pages/landingPage";
-import { Nav } from "../components/navbar_components/Nav";
+import AuthPage from "../pages/authPage";
 import NotFound from "../pages/notFound";
 import auth from "../utils/auth/auth";
-import WorkoutPage from "../pages/workoutPage";
+import SettingsPage from "../pages/settingsPage";
+import LandingPage from "../pages/landingPage";
+import HomePage from "../pages/Home";
+import Layout from "../components/Layout";
+import { SideNav } from "../components/navbar_components/SideNav";
 
 const isLoggedIn = auth.isLoggedIn();
 
 export const routes = [
   {
     component: (key) => (
+      <Route key={key} path="/" index element={<LandingPage />} />
+    ),
+  },
+
+  {
+    component: (key) => (
       <Route
         key={key}
-        path="/"
+        path="/Home"
+        element={
+          <Layout>
+            <Protected isLoggedIn={isLoggedIn}>
+              <SideNav />
+              <HomePage />
+            </Protected>
+          </Layout>
+        }
+      />
+    ),
+  },
+  {
+    component: (key) => (
+      <Route
+        key={key}
+        path="/login"
         index
-        element={<LandingPage isLoggedIn={isLoggedIn} />}
+        element={<AuthPage isLoggedIn={isLoggedIn} />}
       />
     ),
   },
@@ -28,13 +52,15 @@ export const routes = [
     component: (key) => (
       <Route
         key={key}
-        path="/Workouts"
+        path="/Settings"
         index
         element={
-          <Protected isLoggedIn={isLoggedIn}>
-            <Nav />
-            <WorkoutPage />
-          </Protected>
+          <Layout>
+            <Protected isLoggedIn={isLoggedIn}>
+              <SideNav />
+              <SettingsPage />
+            </Protected>
+          </Layout>
         }
       />
     ),
@@ -44,27 +70,14 @@ export const routes = [
     component: (key) => (
       <Route
         key={key}
-        path="/Templates"
+        path="Home/Create-Template"
         element={
-          <Protected isLoggedIn={isLoggedIn}>
-            <Nav />
-            <TemplatePage />
-          </Protected>
-        }
-      />
-    ),
-  },
-
-  {
-    component: (key) => (
-      <Route
-        key={key}
-        path="Templates/Create-Template"
-        element={
-          <Protected isLoggedIn={isLoggedIn}>
-            <Nav />
-            <CreateTemplate />
-          </Protected>
+          <Layout>
+            <Protected isLoggedIn={isLoggedIn}>
+              <SideNav />
+              <CreateTemplate />
+            </Protected>
+          </Layout>
         }
       />
     ),
@@ -73,12 +86,14 @@ export const routes = [
     component: (key) => (
       <Route
         key={key}
-        path="/Edit-Template"
+        path="Home/Edit-Template"
         element={
-          <Protected isLoggedIn={isLoggedIn}>
-            <Nav />
-            <EditTemplate />
-          </Protected>
+          <Layout>
+            <Protected isLoggedIn={isLoggedIn}>
+              <SideNav />
+              <EditTemplate />
+            </Protected>
+          </Layout>
         }
       />
     ),
@@ -89,10 +104,12 @@ export const routes = [
         key={key}
         path="/Progress"
         element={
-          <Protected isLoggedIn={isLoggedIn}>
-            <Nav />
-            <ProgressPage />
-          </Protected>
+          <Layout>
+            <Protected isLoggedIn={isLoggedIn}>
+              <SideNav />
+              <ProgressPage />
+            </Protected>
+          </Layout>
         }
       />
     ),

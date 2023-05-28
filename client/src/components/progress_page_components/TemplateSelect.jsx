@@ -2,7 +2,7 @@ import { Select } from "@mantine/core";
 import { useState } from "react";
 
 export default function TemplateSelect(args) {
-  const [value, setValue] = useState("Select a template");
+  const [currentTemplate, setCurrentTemplate] = useState("Select a template");
 
   const templates = args.data?.getTemplatesForUser.map((template) => {
     let data = {};
@@ -11,20 +11,19 @@ export default function TemplateSelect(args) {
     data.value = template.templateName;
     return data;
   });
-
   return (
     <Select
       sx={{ width: "fit-content" }}
       data={templates}
       searchable
       placeholder="Select a template"
-      description="Select a template to view your progress"
-      value={value}
-      onChange={(e) => {
-        setValue();
-        args.handleQuery(e.toString());
-        args.setActiveTemplate(e.toString());
-        args.getChartData(e.toString());
+      description="Templates"
+      value={currentTemplate}
+      onChange={(value) => {
+        args.handleQuery(value);
+        args.setActiveTemplate(value);
+        args.getChartData(value);
+        setCurrentTemplate(value);
       }}
     />
   );

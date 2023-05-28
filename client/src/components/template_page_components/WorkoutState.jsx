@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import { useRef } from "react";
 import { Fragment } from "react";
-import { Container, Flex, NumberInput, Text } from "@mantine/core";
+import { Flex, Group, NumberInput, Text } from "@mantine/core";
 
 export default function WorkoutState({ templateState, handleChange, opened }) {
   const defaultValue = useRef();
-  // should refocus the element every time a model opens
-  // but only works when chrome dev tools are open?
 
+  console.log(templateState)
+
+  // refocus the first input on modal open
   useEffect(() => {
     defaultValue.current.focus();
   }, [opened]);
@@ -15,14 +16,16 @@ export default function WorkoutState({ templateState, handleChange, opened }) {
   return (
     <>
       {templateState.exercises.map((exercise, index) => (
-        <Container key={exercise.exerciseName}>
-          <Text>
-            {exercise.exerciseName}({exercise.type})
-          </Text>
-          <Flex wrap={true}>
+        <Fragment key={exercise.exerciseName}>
+          <Group mt={5}>
+            <Text size="xl" color="blue" fw={600}>
+              {exercise.exerciseName}
+            </Text>
+          </Group>
+          <Flex wrap={true} gap={10}>
             {index === 0 ? (
               <NumberInput
-                label="sets"
+                label="Sets"
                 value={parseInt(exercise.sets)}
                 onChange={(value) =>
                   handleChange(
@@ -34,7 +37,7 @@ export default function WorkoutState({ templateState, handleChange, opened }) {
               />
             ) : (
               <NumberInput
-                label="sets"
+                label="Sets"
                 defaultValue={parseInt(exercise.sets)}
                 onChange={(value) =>
                   handleChange(
@@ -46,7 +49,7 @@ export default function WorkoutState({ templateState, handleChange, opened }) {
             )}
 
             <NumberInput
-              label="reps"
+              label="Reps"
               defaultValue={parseInt(exercise.reps)}
               onChange={(value) =>
                 handleChange({ target: { name: "reps", value: value } }, index)
@@ -55,7 +58,7 @@ export default function WorkoutState({ templateState, handleChange, opened }) {
 
             {exercise.weight !== "Body weight" ? (
               <NumberInput
-                label="weight"
+                label="Weight"
                 step={5}
                 defaultValue={parseInt(exercise.weight)}
                 onChange={(value) =>
@@ -67,7 +70,7 @@ export default function WorkoutState({ templateState, handleChange, opened }) {
               />
             ) : null}
           </Flex>
-        </Container>
+        </Fragment>
       ))}
     </>
   );

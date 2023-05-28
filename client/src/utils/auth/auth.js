@@ -4,7 +4,7 @@ class Auth {
   login(token) {
     window.localStorage.setItem("token", token);
 
-    window.location.assign("/Templates");
+    window.location.assign("/Home");
   }
 
   isLoggedIn() {
@@ -24,10 +24,10 @@ class Auth {
     }
   }
 
-  logout() {
+  logout(page) {
     window.localStorage.removeItem("token");
 
-    window.location.assign("/");
+    window.location.assign(page ? page : "/");
   }
 
   getToken() {

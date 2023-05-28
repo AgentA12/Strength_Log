@@ -15,6 +15,8 @@ import {
   Divider,
   Container,
   Title,
+  Grid,
+  Text,
   Flex,
 } from "@mantine/core";
 
@@ -43,7 +45,7 @@ export default function CreateTemplateContainer() {
     } = auth.getInfo();
   }
 
-  const { loading, refetch } = useQuery(GET_TEMPLATES, {
+  const { refetch } = useQuery(GET_TEMPLATES, {
     variables: {
       userId: userID,
     },
@@ -53,7 +55,7 @@ export default function CreateTemplateContainer() {
   const bottomRef = useRef(null);
   useEffect(() => {
     bottomRef.current.scrollIntoView();
-  });
+  }, [formState.exercises.length]);
 
   const [addTemplate, { loading: createTemplateLoading }] =
     useMutation(CREATE_TEMPLATE);
@@ -142,71 +144,63 @@ export default function CreateTemplateContainer() {
   }
 
   return (
-    <Container component="main" fluid={true}>
+    <Container component="main" fluid ml={20}>
       <Divider
         my="lg"
         variant="dashed"
         label={<Title>Create A Template</Title>}
       />
-      <Flex gap={12} mx={10} mb={15}>
-        <TextInput
-          onChange={(event) => handleChange(null, event)}
-          name="templateName"
-          value={formState?.templateName}
-          placeholder="Template Name"
-          size="xl"
-        />
 
-        <Textarea
-          minRows={10}
-          onChange={(event) => handleChange(null, event)}
-          name="templateNotes"
-          placeholder="Template notes"
-          value={formState?.templateNotes}
-        />
+      <Grid columns={4} gutter="sm" w={"85%"}>
+        <Grid.Col span={1}>
+          <TextInput
+            onChange={(event) => handleChange(null, event)}
+            name="templateName"
+            value={formState?.templateName}
+            placeholder="Template Name"
+            size="xl"
+            mb={15}
+          />
 
-        <AddExerciseBtn addExercise={addExercise} />
-        <SaveTemplateBtn loading={loading} handleSubmit={handleSubmit} />
+          <ScrollArea
+            sx={{ height: 600 }}
+            offsetScrollbars
+            scrollbarSize={4}
+            scrollHideDelay={1500}
+          >
+            <form onSubmit={(event) => handleSubmit(event)}>
+              {formState?.exercises.map((_, index) => (
+                <ExerciseForm
+                  key={index}
+                  handleChange={handleChange}
+                  index={index}
+                  formState={formState}
+                  removeExercise={removeExercise}
+                />
+              ))}
 
-        {errorMessage ? errorMessage : null}
+              <div ref={bottomRef} />
+            </form>
+          </ScrollArea>
+        </Grid.Col>
 
-        <ScrollArea
-          style={{ height: 1000 }}
-          offsetScrollbars
-          scrollbarSize={4}
-          scrollHideDelay={1500}
-        >
-          <form onSubmit={(event) => handleSubmit(event)}>
-            {formState?.exercises.map((_, index) => (
-              <ExerciseForm
-                key={index}
-                handleChange={handleChange}
-                index={index}
-                formState={formState}
-                removeExercise={removeExercise}
-              />
-            ))}
-
-            <div ref={bottomRef}></div>
-          </form>
-        </ScrollArea>
-      </Flex>
-
-      <Textarea
-        minRows={10}
-        onChange={(event) => handleChange(null, event)}
-        name="templateNotes"
-        placeholder="Template notes"
-        value={formState?.templateNotes}
-      ></Textarea>
-
-      <AddExerciseBtn addExercise={addExercise} />
-      <SaveTemplateBtn
-        loading={createTemplateLoading}
-        handleSubmit={handleSubmit}
-      />
-
-      {errorMessage ? errorMessage : null}
+        <Grid.Col orderSm={2} span={2}>
+          <Textarea
+            minRows={10}
+            onChange={(event) => handleChange(null, event)}
+            name="templateNotes"
+            placeholder="Template notes"
+            value={formState?.templateNotes}
+          />
+          <Flex mt={5} justify={"space-between"}>
+            <AddExerciseBtn addExercise={addExercise} />
+            <SaveTemplateBtn
+              loading={createTemplateLoading}
+              handleSubmit={handleSubmit}
+            />
+          </Flex>
+        </Grid.Col>
+      </Grid>
     </Container>
   );
 }

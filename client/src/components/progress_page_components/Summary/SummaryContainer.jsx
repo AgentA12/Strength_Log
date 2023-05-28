@@ -49,10 +49,10 @@ export default function SummaryContainer({
             loadChartSummaryData={loadChartSummaryData}
             activeTemplate={activeTemplate}
           />
-          {loadChartSummaryData || loadOneTemplateData ? (
+          {/* {loadChartSummaryData || loadOneTemplateData ? (
             <>
               <Title>Recently saved</Title>
-              <ScrollArea style={{ height: 550 }} type="always">
+              <ScrollArea style={{ height: 550, width: "fit-content", padding: 20 }} type="always" >
                 {loadOneTemplateData?.getProgress.length ? (
                   loadOneTemplateData.getProgress.map((progressInfo) => (
                     <ProgressCard
@@ -76,7 +76,7 @@ export default function SummaryContainer({
             error={error}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-          />
+          /> */}
         </Container>
       ) : null}
     </>

@@ -1,31 +1,22 @@
 import { DatePicker } from "@mantine/dates";
 import { compareDatesByDay } from "../../utils/helpers/functions";
 import { useNavigate } from "react-router-dom";
-import { gql, useQuery } from "@apollo/client";
-import auth from "../../utils/auth/auth";
+import { useQuery } from "@apollo/client";
+import { GET_CALENDAR_DATA } from "../../utils/graphql/queries";
+import { useContext } from "react";
+import { UserContext } from "../../App";
+import { Loader, Center, Text } from "@mantine/core";
 
-export default function CalendarComponent() {
+export default function Calendar() {
   const {
     data: { _id: userID },
-  } = auth.getInfo();
+  } = useContext(UserContext);
 
-  const { data, loading, error } = useQuery(
-    gql`
-      query ($userId: ID!) {
-        getProgressTimeStamps(userId: $userId) {
-          dates {
-            date
-            templateId
-          }
-        }
-      }
-    `,
-    {
-      variables: {
-        userId: userID,
-      },
-    }
-  );
+  const { data, loading, error } = useQuery(GET_CALENDAR_DATA, {
+    variables: {
+      userId: userID,
+    },
+  });
 
   const navigate = useNavigate();
 
@@ -40,9 +31,19 @@ export default function CalendarComponent() {
     }
   }
 
-  if (loading) return "loading calendar";
+  if (loading)
+    return (
+      <Center w={343}>
+        <Loader />
+      </Center>
+    );
 
-  if (error) return error;
+  if (error)
+    return (
+      <Center w={343}>
+        <Text color="red">{error}</Text>
+      </Center>
+    );
 
   return (
     <DatePicker
@@ -55,7 +56,8 @@ export default function CalendarComponent() {
         },
       })}
       type="multiple"
-      size={"md"}
+      weekendDays={[]}
+      size="lg"
       value={data?.getProgressTimeStamps?.dates.map(
         (d) => new Date(parseInt(d.date))
       )}

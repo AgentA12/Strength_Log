@@ -1,8 +1,8 @@
-import AddTemplateBtn from "./AddTemplateBtn";
+import AddTemplateBtn from "../homepage/AddTemplateBtn";
 import CreateTemplateContainer from "./CreateTemplateContainer";
 import EditTemplate from "./EditTemplateContainer";
-import SearchTemplates from "./SearchTemplates";
-import TemplateCard from "./TemplateCard";
+import SearchTemplates from "../homepage/SearchTemplates";
+import TemplateCard from "../homepage/TemplateCard";
 import TemplateMenu from "./TemplateMenu";
 import TemplateModal from "./TemplateModal";
 

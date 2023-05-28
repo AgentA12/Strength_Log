@@ -5,7 +5,6 @@ import { FaTrash, FaEdit } from "react-icons/fa";
 export default function TemplateMenu({ template, handleTemplateDelete }) {
   const menuList = (
     <Menu.Dropdown
-      positon="right"
       onClick={(event) => {
         event.stopPropagation();
       }}
@@ -15,7 +14,7 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
       </Link>
 
       <Menu.Item
-        color={"red"}
+        color="red"
         onClick={() => handleTemplateDelete(template._id)}
         icon={<FaTrash size={14} />}
       >
@@ -26,11 +25,12 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
 
   return (
     <Menu
-      positon="right"
+      position="bottom-end"
+      zindex={99}
       shadow="md"
       width={175}
       trigger="hover"
-      closeDelay={200}
+      closeDelay={100}
       transition="fade"
     >
       <Menu.Target>

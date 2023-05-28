@@ -102,3 +102,16 @@ export const GET_SUMMARY = gql`
     }
   }
 `;
+
+export const GET_CALENDAR_DATA = gql`
+  query ($userId: ID!) {
+    getProgressTimeStamps(userId: $userId) {
+      dates {
+        date
+        templateId
+      }
+    }
+  }
+`;
+
+// export const GET_RECENT_CAROUSEL_DATA = gql``;

@@ -1,4 +1,4 @@
-import { Modal, Text } from "@mantine/core";
+import { Container, Modal, Text, Title } from "@mantine/core";
 import { useState } from "react";
 import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
 import { useMutation } from "@apollo/client";
@@ -63,25 +63,30 @@ export default function TemplateModal({ template, opened, setOpened }) {
       lockScroll={false}
       opened={opened}
       onClose={() => setOpened(false)}
-      title={template?.templateName.toUpperCase()}
-      overlayOpacity={0.55}
-      overlayBlur={3}
+      title={<Title order={2}>{template?.templateName.toUpperCase()}</Title>}
+      overlayopacity={0.55}
+      overlayblur={3}
       transition={"rotate-left"}
       size="lg"
     >
-      {template?.templateNotes.trim() ? "- " : null} {template?.templateNotes}
-      <WorkoutState
-        templateState={templateState}
-        handleChange={handleChange}
-        opened={opened}
-      />
-      <SaveWorkoutBtn
-        loading={loading}
-        handleSaveWorkout={handleSaveWorkout}
-        data={data}
-        setOpened={setOpened}
-      />
-      {error ? <Text>{error.message}</Text> : null}
+      <Container>
+        <Text mb={10}>
+          {template?.templateNotes.trim() ? "- " : null}{" "}
+          {template?.templateNotes}
+        </Text>
+        <WorkoutState
+          templateState={templateState}
+          handleChange={handleChange}
+          opened={opened}
+        />
+        <SaveWorkoutBtn
+          loading={loading}
+          handleSaveWorkout={handleSaveWorkout}
+          data={data}
+          setOpened={setOpened}
+        />
+        {error ? <Text color="red" mt={5}>{error.message}</Text> : null}
+      </Container>
     </Modal>
   );
 }

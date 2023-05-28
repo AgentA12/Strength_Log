@@ -11,16 +11,16 @@ import {
   Flex,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { Link } from "react-router-dom";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import SettingsNavBtn from "./SettingsBtn";
+import { Link } from "react-router-dom";
 
 const HEADER_HEIGHT = "45px";
 
 const useStyles = createStyles((theme) => ({
   root: {
     position: "relative",
-    zIndex: 1,
+   
     marginBottom: 20,
   },
 
@@ -130,12 +130,18 @@ export function Nav() {
   return (
     <Header height={HEADER_HEIGHT} py={30} className={classes.root}>
       <Container className={classes.header}>
-        <Flex align="center">
+        <Flex
+          align="center"
+          component={Link}
+          to="/"
+          sx={{ textDecoration: "none", color: "inherit" }}
+        >
           <AiOutlineThunderbolt size={32} />
           <Text italic color="blue" fw={900}>
             Strength Log
           </Text>
         </Flex>
+
         <Group spacing={5} className={classes.links}>
           {items}
         </Group>

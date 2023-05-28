@@ -4,7 +4,6 @@ import { App } from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { ModalsProvider } from "@mantine/modals";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import "./styles.css";
 
 // on updating/saving a workout and then navigating to progress, apollo keeps old progress results unless the page is refreshed,
 // so for a quick fix set the cache to 'no-cache'

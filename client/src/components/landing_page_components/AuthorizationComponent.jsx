@@ -10,7 +10,6 @@ import {
   Card,
   Flex,
   Text,
-  Center,
 } from "@mantine/core";
 import { AiOutlineThunderbolt, AiFillLock } from "react-icons/ai";
 
@@ -21,7 +20,6 @@ export default function AuthorizationComponent() {
     username: "",
     password: "",
   });
-
   const [errorMessage, setErrorMessage] = useState("");
   const [addUser, { loading: signupLoading }] = useMutation(ADD_USER, {
     variables: {
@@ -29,7 +27,6 @@ export default function AuthorizationComponent() {
       password: "",
     },
   });
-
   const [loginUser, { loading: loginLoading }] = useMutation(LOGIN_USER, {
     variables: {
       username: "",
@@ -107,7 +104,6 @@ export default function AuthorizationComponent() {
           icon={<AiFillLock size={16} />}
           onChange={handleFormChange}
           name="password"
-          placeholder="Password"
           value={formState.password}
           label="Password"
           withAsterisk
