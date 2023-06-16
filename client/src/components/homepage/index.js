@@ -6,6 +6,15 @@ import StatsCard from "./StatsCard";
 import TemplateCard from "./TemplateCard";
 import TemplateSection from "./TemplateSection";
 import RecentCarousel from "./RecentCarousel";
+import AddExerciseBtn from "./AddExerciseBtn";
+import CreateTemplateContainer from "./CreateTemplateContainer";
+import EditTemplateContainer from "./EditTemplateContainer";
+import ExerciseForm from "./ExerciseForm";
+import SaveTemplateBtn from "./SaveTemplateBtn";
+import SaveWorkoutBtn from "./SaveWorkoutBtn";
+import TemplateMenu from "./TemplateMenu";
+import TemplateModal from "./TemplateModal";
+import WorkoutState from "./WorkoutState";
 
 export {
   AddTemplateBtn,
@@ -15,5 +24,14 @@ export {
   StatsCard,
   TemplateCard,
   TemplateSection,
-  RecentCarousel
+  RecentCarousel,
+  AddExerciseBtn,
+  CreateTemplateContainer,
+  EditTemplateContainer,
+  ExerciseForm,
+  SaveTemplateBtn,
+  SaveWorkoutBtn,
+  TemplateMenu,
+  TemplateModal,
+  WorkoutState,
 };
