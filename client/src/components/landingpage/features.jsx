@@ -77,7 +77,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export default function FeaturesCards() {
+export default function Features() {
   const { classes, theme } = useStyles();
   const features = mockdata.map((feature) => (
     <Card
