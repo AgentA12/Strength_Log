@@ -5,7 +5,7 @@ import {
   SummaryContainer,
   ExerciseContainer,
   TemplateSelect,
-} from "../components/progress_page_components/index";
+} from "../components/progresspage/index";
 
 import {
   GET_TEMPLATES,
@@ -14,9 +14,9 @@ import {
 } from "../utils/graphql/queries";
 import { Container, Title, Group, Text } from "@mantine/core";
 import auth from "../utils/auth/auth";
-import RangeSelect from "../components/progress_page_components/SelectRange";
+import RangeSelect from "../components/progresspage/SelectRange";
 
-export const ProgressPage = () => {
+export default function ProgressPage() {
   const [activeTemplate, setActiveTemplate] = useState(null);
   const [activeSection, setActiveSection] = useState("Summary");
 
@@ -104,4 +104,4 @@ export const ProgressPage = () => {
         )}
       </Container>
     );
-};
+}

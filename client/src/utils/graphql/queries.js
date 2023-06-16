@@ -114,4 +114,19 @@ export const GET_CALENDAR_DATA = gql`
   }
 `;
 
-// export const GET_RECENT_CAROUSEL_DATA = gql``;
+export const GET_RECENTLY_COMPLETED_CAROUSEL_DATA = gql`
+  query ($userID: ID!) {
+    getRecentlyCompletedCarouselData(userID: $userID) {
+      templateName
+      dateCompleted
+      date
+      totalVolume
+      diff
+      prs {
+        sets
+        weight
+        reps
+      }
+    }
+  }
+`;

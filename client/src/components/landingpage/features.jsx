@@ -77,7 +77,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function FeaturesCards() {
+export default function FeaturesCards() {
   const { classes, theme } = useStyles();
   const features = mockdata.map((feature) => (
     <Card
@@ -98,7 +98,7 @@ export function FeaturesCards() {
   ));
 
   return (
-    <Container size="lg" py="xl" >
+    <Container size="lg" py="xl" mb={300} >
       <Group position="center">
         <Badge variant="filled" size="lg">
           Best company ever

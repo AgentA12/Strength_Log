@@ -1,5 +1,10 @@
 import { Carousel } from "@mantine/carousel";
 import { StatsCard } from "./index";
+import { GET_RECENTLY_COMPLETED_CAROUSEL_DATA } from "../../utils/graphql/queries";
+import { useQuery } from "@apollo/client";
+import { Center, Loader, Text } from "@mantine/core";
+import { UserContext } from "../../App";
+import { useContext } from "react";
 
 let testData = [
   {
@@ -19,80 +24,32 @@ let testData = [
     diff: 50,
     prs: [],
   },
-  {
-    title: "Arms",
-    date: "March 24 2023",
-    totalVolume: "1,500",
-    diff: 0,
-    prs: [],
-  },
-  {
-    title: "Upper Body",
-    date: "March 19 2023",
-    totalVolume: "2,500",
-    diff: 25,
-    prs: [],
-  },
-  {
-    title: "Upper Body",
-    date: "March 27 2023",
-    totalVolume: "5,500",
-    diff: -60,
-    prs: [],
-  },
-  {
-    title: "Lower Body",
-    date: "March 23 2023",
-    totalVolume: "5,500",
-    diff: 50,
-    prs: [],
-  },
-  {
-    title: "Arms",
-    date: "March 24 2023",
-    totalVolume: "1,500",
-    diff: 0,
-    prs: [],
-  },
-  {
-    title: "Upper Body",
-    date: "March 19 2023",
-    totalVolume: "2,500",
-    diff: 25,
-    prs: [],
-  },
-  {
-    title: "Upper Body",
-    date: "March 27 2023",
-    totalVolume: "5,500",
-    diff: -60,
-    prs: [],
-  },
-  {
-    title: "Lower Body",
-    date: "March 23 2023",
-    totalVolume: "5,500",
-    diff: 50,
-    prs: [],
-  },
-  {
-    title: "Arms",
-    date: "March 24 2023",
-    totalVolume: "1,500",
-
-    diff: 0,
-    prs: [],
-  },
-  {
-    title: "Upper Body",
-    date: "March 19 2023",
-    totalVolume: "2,500",
-    diff: 25,
-    prs: [],
-  },
 ];
 
 export default function RecentCarousel() {
+  const {
+    data: { _id: userID },
+  } = useContext(UserContext);
+
+  const { data, loading, error } = useQuery(
+    GET_RECENTLY_COMPLETED_CAROUSEL_DATA,
+    { variables: { userID: userID } }
+  );
+
+  if (loading)
+    return (
+      <Center h={270}>
+        <Loader />
+      </Center>
+    );
+
+  if (error)
+    return (
+      <Text color="red" fw={600} size="lg">
+        {error.message}
+      </Text>
+    );
+
   return (
     <Carousel
       slideSize="57%"

@@ -6,7 +6,7 @@ import {
 } from "@mantine/core";
 import { BsSun, BsMoon } from "react-icons/bs";
 
-export function ToggleTheme() {
+export default function ToggleTheme() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const theme = useMantineTheme();
 
@@ -16,15 +16,8 @@ export function ToggleTheme() {
         checked={colorScheme === "dark"}
         onChange={() => toggleColorScheme()}
         size="md"
-        onLabel={
-          <BsSun color={theme.white} size={14} stroke={1.5} />
-        }
-        offLabel={
-          <BsMoon
-            size={14}
-            stroke={1.5}
-          />
-        }
+        onLabel={<BsSun color={theme.white} size={14} stroke={1.5} />}
+        offLabel={<BsMoon size={14} stroke={1.5} />}
       />
     </Group>
   );

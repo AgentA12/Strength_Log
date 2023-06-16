@@ -23,6 +23,7 @@ export function App() {
   const toggleColorScheme = () =>
     setColorScheme(colorScheme === "dark" ? "light" : "dark");
 
+  //stops useless annoying error when resizing browser
   useEffect(() => {
     window.addEventListener("error", (e) => {
       if (e.message === "ResizeObserver loop limit exceeded") {

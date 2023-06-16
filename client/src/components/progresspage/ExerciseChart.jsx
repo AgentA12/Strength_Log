@@ -36,15 +36,9 @@ const options = {
   },
 };
 
-export const ExerciseChart = ({ exerciseData }) => {
+export default function ExerciseChart({ exerciseData }) {
   const labels = exerciseData.labels;
   const dataSets = exerciseData.dataSets;
-
-  function getDateRange(startDate, endDate) {
-    console.log(startDate, endDate)
-  }
-
-  getDateRange(labels[0], labels[labels.length - 1]);
 
   var data = {
     labels,
@@ -58,4 +52,4 @@ export const ExerciseChart = ({ exerciseData }) => {
       </Paper>
     );
   }
-};
+}

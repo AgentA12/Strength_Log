@@ -6,8 +6,6 @@ import { Flex, Group, NumberInput, Text } from "@mantine/core";
 export default function WorkoutState({ templateState, handleChange, opened }) {
   const defaultValue = useRef();
 
-  console.log(templateState)
-
   // refocus the first input on modal open
   useEffect(() => {
     defaultValue.current.focus();

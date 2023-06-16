@@ -1,6 +1,6 @@
 import { BiTrendingUp, BiTrendingDown } from "react-icons/bi";
 import { Table, Text } from "@mantine/core";
-import { getOneRepMax } from "../../../utils/helpers/functions";
+import { getOneRepMax } from "../../utils/helpers/functions";
 
 export default function RenderExercises({ summaryObj, summaryNum }) {
   return (

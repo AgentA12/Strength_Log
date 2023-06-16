@@ -105,7 +105,7 @@ export default function CreateTemplateContainer() {
         resetFormState();
         refetch();
         setErrorMessage(null);
-        navigate("/Templates");
+        navigate("/Home");
       }
     } catch (error) {
       if (error.message) {
@@ -199,6 +199,7 @@ export default function CreateTemplateContainer() {
               handleSubmit={handleSubmit}
             />
           </Flex>
+          <Text>{errorMessage && errorMessage}</Text>
         </Grid.Col>
       </Grid>
     </Container>

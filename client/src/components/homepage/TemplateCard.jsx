@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { capitalizeFirstLetter } from "../../utils/helpers/functions";
-import TemplateMenu from "../template_page_components/TemplateMenu";
-import TemplateModal from "../template_page_components/TemplateModal";
+import TemplateMenu from "./TemplateMenu";
+import TemplateModal from "./TemplateModal";
 import { Text, Card, Flex, Title } from "@mantine/core";
 
 export default function TemplateCard({ template, handleTemplateDelete }) {

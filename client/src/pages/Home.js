@@ -9,7 +9,7 @@ import {
 import {
   Calendar,
   TemplateSection,
-  RecentCarousel
+  RecentCarousel,
 } from "../components/homepage/index";
 
 const useStyles = createStyles((theme) => ({
@@ -28,6 +28,8 @@ const useStyles = createStyles((theme) => ({
 
 export default function HomePage() {
   const { classes } = useStyles();
+
+  console.dir(document.location);
 
   return (
     <Container component="main" fluid className={classes.container}>

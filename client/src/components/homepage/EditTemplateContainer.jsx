@@ -87,7 +87,7 @@ export default function EditTemplate() {
 
       if (mutationRes) {
         refetch();
-        navigate("/Templates");
+        navigate("/Home");
       }
     } catch (error) {
       if (error.message) {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { ADD_USER, LOGIN_USER } from "../../utils/graphql/mutations";
-import Auth from "../../utils/auth/auth";
+import { ADD_USER, LOGIN_USER } from "../utils/graphql/mutations";
+import Auth from "../utils/auth/auth";
 import {
   Button,
   Title,
@@ -21,6 +21,7 @@ export default function AuthorizationComponent() {
     password: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
+
   const [addUser, { loading: signupLoading }] = useMutation(ADD_USER, {
     variables: {
       username: "",

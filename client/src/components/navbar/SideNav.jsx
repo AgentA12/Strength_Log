@@ -15,10 +15,10 @@ import {
 } from "react-icons/ai";
 import { HiLogout } from "react-icons/hi";
 import { IoMdSwap } from "react-icons/io";
-import { ToggleTheme } from "../ToggleTheme.jsx";
+import { ToggleTheme } from "./index.js";
 import { Link } from "react-router-dom";
 import auth from "../../utils/auth/auth.js";
-import { useNavigate } from "react-router-dom";
+
 const useStyles = createStyles((theme) => ({
   link: {
     width: 45,
@@ -71,13 +71,11 @@ function NavbarLink({ icon: Icon, label, active, onClick, link }) {
 
 const mockdata = [
   { icon: AiFillHome, label: "Home", link: "/Home" },
-  { icon: AiOutlineLineChart, label: "Progress", link: "/progress" },
-  { icon: AiFillSetting, label: "Settings", link: "/settings" },
+  { icon: AiOutlineLineChart, label: "Progress", link: "/Progress" },
+  { icon: AiFillSetting, label: "Settings", link: "/Settings" },
 ];
 
-export function SideNav() {
-  function handleAccountChange() {}
-
+export default function SideNav() {
   const [active, setActive] = useState(0);
 
   const links = mockdata.map((link, index) => (

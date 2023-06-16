@@ -33,7 +33,7 @@ const options = {
   },
 };
 
-export const Chart = ({ loadChartSummaryData }) => {
+export default function TemplateChart({ loadChartSummaryData }) {
   if (loadChartSummaryData) {
     var data = {
       labels: loadChartSummaryData?.getChartData.labels,
@@ -51,4 +51,4 @@ export const Chart = ({ loadChartSummaryData }) => {
   if (loadChartSummaryData?.getChartData.labels.length) {
     return <Line options={options} data={data} />;
   }
-};
+}

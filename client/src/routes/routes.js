@@ -1,16 +1,18 @@
 import { Route } from "react-router-dom";
-import { ProgressPage } from "../pages/progressPage";
-import CreateTemplate from "../components/template_page_components/CreateTemplateContainer";
-import EditTemplate from "../components/template_page_components/EditTemplateContainer";
+import {
+  ProgressPage,
+  AuthPage,
+  HomePage,
+  LandingPage,
+  NotFoundPage,
+  SettingsPage,
+} from "../pages/index";
+import CreateTemplateContainer from "../components/homepage/CreateTemplateContainer";
+import EditTemplateContainer from "../components/homepage/EditTemplateContainer";
 import Protected from "../components/ProtectedRoute";
-import AuthPage from "../pages/authPage";
-import NotFound from "../pages/notFound";
 import auth from "../utils/auth/auth";
-import SettingsPage from "../pages/settingsPage";
-import LandingPage from "../pages/landingPage";
-import HomePage from "../pages/Home";
 import Layout from "../components/Layout";
-import { SideNav } from "../components/navbar_components/SideNav";
+import SideNav from "../components/navbar/SideNav";
 
 const isLoggedIn = auth.isLoggedIn();
 
@@ -75,7 +77,7 @@ export const routes = [
           <Layout>
             <Protected isLoggedIn={isLoggedIn}>
               <SideNav />
-              <CreateTemplate />
+              <CreateTemplateContainer />
             </Protected>
           </Layout>
         }
@@ -91,7 +93,7 @@ export const routes = [
           <Layout>
             <Protected isLoggedIn={isLoggedIn}>
               <SideNav />
-              <EditTemplate />
+              <EditTemplateContainer />
             </Protected>
           </Layout>
         }
@@ -114,5 +116,7 @@ export const routes = [
       />
     ),
   },
-  { component: (key) => <Route key={key} path="*" element={<NotFound />} /> },
+  {
+    component: (key) => <Route key={key} path="*" element={<NotFoundPage />} />,
+  },
 ];

@@ -108,7 +108,7 @@ const resolvers = {
         aryOfRecents.forEach((recentObj, i) => {
           if (recentObj._id.toString() === progressId) {
             // if true we are at the first progressObj in array and there is no recent to compare
-            // so only push the current recentbj data
+            // so only push the current recentObj data
             if (aryOfRecents.length - 1 === i) {
               variable.push(recentObj);
             } else {
@@ -133,6 +133,74 @@ const resolvers = {
       const summary = getRecentComparison(progress, progressId);
 
       return summary;
+    },
+
+    getRecentlyCompletedCarouselData: async function (_, { userID }) {
+      const { progress } = await User.findById(userID)
+        .select("progress")
+        .sort("-date");
+
+      let sortedProgress = progress.sort((a, b) =>
+        a.createdAt > b.createdAt ? -1 : 1
+      );
+
+      // const userTemplates = await User.findById(userID)
+      //   .select("templates")
+      //   .populate({
+      //     path: "templates",
+      //     populate: {
+      //       path: "exercises",
+      //       model: "Exercise",
+      //     },
+      //   });
+
+      // for (let i = 0; i < progress.length; i++) {
+
+      // }
+
+      // const twoMostRecentWorkout = sortedProgress
+      //   .filter((workout) => {
+      //     if (
+      //       sortedProgress[0].templateId.toString() ===
+      //       workout.templateId.toString()
+      //     )
+      //       return workout;
+      //   })
+
+      //   .slice(0, 2);
+
+      // compareExercises(
+
+      //   twoMostRecentWorkout[0].exercises,
+      //   twoMostRecentWorkout[1].exercises
+      // );
+
+      return [
+        {
+          dateCompleted: "",
+          templateName: "lower body",
+          date: "",
+          totalVolume: "",
+          diff: "",
+          prs: [{ reps: "", sets: "", weight: "" }],
+        },
+        {
+          dateCompleted: "",
+          templateName: "upper body",
+          date: "",
+          totalVolume: "",
+          diff: "",
+          prs: [{ reps: "", sets: "", weight: "" }],
+        },
+        {
+          dateCompleted: "",
+          templateName: "legs",
+          date: "",
+          totalVolume: "",
+          diff: "",
+          prs: [{ reps: "", sets: "", weight: "" }],
+        },
+      ];
     },
   },
 

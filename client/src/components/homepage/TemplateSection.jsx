@@ -4,7 +4,7 @@ import {
   SearchTemplates,
   TemplateCard,
   AddTemplateBtn,
-} from "../template_page_components/index";
+} from "./index";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import { DELETE_TEMPLATE } from "../../utils/graphql/mutations";
 import {

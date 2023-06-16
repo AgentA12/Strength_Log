@@ -90,12 +90,27 @@ const typeDefs = gql`
   }
 
   type dateType {
-    date: String,
+    date: String
     templateId: ID
   }
 
   type CalendarDates {
     dates: [dateType]
+  }
+
+  type RecentCarousel {
+    templateName: String
+    dateCompleted: String
+    date: String
+    totalVolume: Int
+    diff: Int
+    prs: [PersonalRecords]
+  }
+
+  type PersonalRecords {
+    sets: Int
+    weight: Int
+    reps: Int
   }
 
   type Query {
@@ -106,6 +121,7 @@ const typeDefs = gql`
     getTemplateModalProgress(templateId: ID, userId: ID): [ExerciseProgress]
     getSummary(templateId: ID!, userId: ID!, progressId: ID!): [Progress]
     getProgressTimeStamps(userId: ID!): CalendarDates
+    getRecentlyCompletedCarouselData(userID: ID!): [RecentCarousel]
   }
 
   type Mutation {
