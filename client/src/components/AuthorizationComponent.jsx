@@ -132,12 +132,11 @@ export default function AuthorizationComponent() {
 
       <Text
         span
-        sx={(theme) => ({
+        sx={() => ({
           marginTop: 12,
           display: "inline-block",
           "&:hover": {
             cursor: "pointer",
-            color: theme.colors.blue[5],
           },
         })}
         td="underline"

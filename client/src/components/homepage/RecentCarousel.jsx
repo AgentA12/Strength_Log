@@ -31,10 +31,9 @@ export default function RecentCarousel() {
     data: { _id: userID },
   } = useContext(UserContext);
 
-  const { loading, error } = useQuery(
-    GET_RECENTLY_COMPLETED_CAROUSEL_DATA,
-    { variables: { userID: userID } }
-  );
+  const { loading, error } = useQuery(GET_RECENTLY_COMPLETED_CAROUSEL_DATA, {
+    variables: { userID: userID },
+  });
 
   if (loading)
     return (

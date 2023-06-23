@@ -14,7 +14,7 @@ export default function SummaryContainer({
     );
 
   return (
-    <Container size="xl">
+    <Container fluid>
       {activeTemplate && (
         <TemplateChart
           loadChartSummaryData={loadChartSummaryData}

@@ -38,12 +38,12 @@ const useStyles = createStyles((theme) => ({
   title: {
     fontWeight: 700,
     textTransform: "uppercase",
+    color: [theme.colors["hot-pink"][6]],
   },
 }));
 
 export default function StatsCard({ stat }) {
   const { classes } = useStyles();
-
   return (
     <Paper
       withBorder
@@ -53,7 +53,7 @@ export default function StatsCard({ stat }) {
       className={classes.root}
     >
       <Flex justify="space-between" align="center">
-        <Text size="lg" color="blue" className={classes.title}>
+        <Text size="lg" className={classes.title}>
           {stat.title}
         </Text>
         <Text size="sm" color="dimmed">
@@ -93,8 +93,13 @@ export default function StatsCard({ stat }) {
           <ScrollArea h={125} offsetScrollbars type="auto" scrollbarSize={8}>
             {stat.prs.length ? (
               stat.prs.map((prObj, i) => (
-                <Flex key={i} direction="column" justify="center" align="center">
-                  <Text mb={-5} color="blue" fw={700}>
+                <Flex
+                  key={i}
+                  direction="column"
+                  justify="center"
+                  align="center"
+                >
+                  <Text mb={-5} color="hot-pink" fw={700}>
                     {prObj.exerciseName}
                   </Text>
                   <Text color="dimmed">

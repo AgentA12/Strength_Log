@@ -1,24 +1,17 @@
-import {
-  Switch,
-  Group,
-  useMantineColorScheme,
-  useMantineTheme,
-} from "@mantine/core";
+import { useMantineColorScheme, ActionIcon } from "@mantine/core";
 import { BsSun, BsMoon } from "react-icons/bs";
 
 export default function ToggleTheme() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
-  const theme = useMantineTheme();
-
+  const dark = colorScheme === "dark";
   return (
-    <Group position="center" mb={30}>
-      <Switch
-        checked={colorScheme === "dark"}
-        onChange={() => toggleColorScheme()}
-        size="md"
-        onLabel={<BsSun color={theme.white} size={14} stroke={1.5} />}
-        offLabel={<BsMoon size={14} stroke={1.5} />}
-      />
-    </Group>
+    <ActionIcon
+      variant="outline"
+      color={dark ? "yellow" : "hot-pink"}
+      onClick={() => toggleColorScheme()}
+      title="Toggle color scheme"
+    >
+      {dark ? <BsSun size="1.1rem" /> : <BsMoon size="1.1rem" />}
+    </ActionIcon>
   );
 }

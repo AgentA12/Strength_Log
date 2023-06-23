@@ -12,34 +12,42 @@ import {
   RecentCarousel,
 } from "../components/homepage/index";
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
   container: {
     marginBottom: 50,
-  },
-  flex: {
-    flexDirection: "row",
-    [theme.fn.smallerThan("lg")]: {
-      flexDirection: "column",
-      justifyContent: "center",
-      alignContent: "center",
-    },
   },
 }));
 
 export default function HomePage() {
   const { classes } = useStyles();
 
-  console.dir(document.location);
-
   return (
-    <Container component="main" fluid className={classes.container}>
-      <Flex className={classes.flex} gap={30}>
+    <Container
+      sx={(theme) => ({
+        [theme.fn.smallerThan("sm")]: {
+          margin: "auto",
+        },
+      })}
+      component="main"
+      fluid
+      className={classes.container}
+    >
+      <Flex direction={{ base: "column", md: "row" }} gap={30}>
+
         <Calendar />
 
         <Divider orientation="vertical" variant="dotted" />
 
-        <Box>
-          <Title order={2} mb={15}>
+        <Box >
+          <Title
+            sx={(theme) => ({
+              [theme.fn.smallerThan("sm")]: {
+                textAlign: "center",
+              },
+            })}
+            order={2}
+            mb={15}
+          >
             Recently Completed
           </Title>
           <RecentCarousel />

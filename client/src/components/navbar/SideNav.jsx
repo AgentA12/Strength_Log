@@ -1,11 +1,10 @@
 import { useState } from "react";
 import {
   Navbar,
-  Center,
   Tooltip,
   UnstyledButton,
   createStyles,
-  Stack,
+  Flex,
 } from "@mantine/core";
 import {
   AiFillThunderbolt,
@@ -20,6 +19,39 @@ import { Link } from "react-router-dom";
 import auth from "../../utils/auth/auth.js";
 
 const useStyles = createStyles((theme) => ({
+  container: {
+    position: "fixed",
+    width: 80,
+    [theme.fn.smallerThan("sm")]: {
+      right: 0,
+      bottom: 0,
+      height: "auto",
+      width: "100%",
+      borderTopStyle: "solid",
+      borderTopWidth: 1,
+      borderTopColor: "gray",
+    },
+
+  },
+
+  linkContainer: {
+    direction: "column",
+    height: "100%",
+    justifyContent: "space-between",
+    flexDirection: "column",
+    [theme.fn.smallerThan("sm")]: {
+      flexDirection: "row",
+      justifyContent: "space-around",
+      flexWrap: "wrap"
+    },
+  },
+
+  flexItems: {
+    direction: "column",
+    justify: "center",
+    align: "center",
+  },
+
   link: {
     width: 45,
     height: 45,
@@ -76,6 +108,8 @@ const mockdata = [
 ];
 
 export default function SideNav() {
+  const { classes } = useStyles();
+
   const [active, setActive] = useState(0);
 
   const links = mockdata.map((link, index) => (
@@ -88,30 +122,65 @@ export default function SideNav() {
   ));
 
   return (
-    <Navbar sx={{ position: "fixed" }} width={{ base: 80 }} p="md">
-      <Center>
-        <AiFillThunderbolt type="mark" size={30} />
-      </Center>
-      <Navbar.Section grow mt={50}>
-        <Stack justify="center" spacing={1}>
-          {links}
-        </Stack>
-      </Navbar.Section>
-      <Navbar.Section>
-        <Stack justify="center" spacing={0}>
-          <ToggleTheme />
-          <NavbarLink
-            icon={IoMdSwap}
-            label="Change account"
-            onClick={() => auth.logout("/login")}
-          />
-          <NavbarLink
-            icon={HiLogout}
-            label="Logout"
-            onClick={() => auth.logout()}
-          />
-        </Stack>
-      </Navbar.Section>
+    <Navbar className={classes.container} p="md">
+      <Flex className={classes.linkContainer}>
+        <Flex
+          sx={(theme) => ({
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            [theme.fn.smallerThan("sm")]: {
+              flexDirection: "row",
+              display: "none",
+            },
+          })}
+        >
+          <AiFillThunderbolt size={30} />
+        </Flex>
+
+        <Navbar.Section>
+          <Flex
+            sx={(theme) => ({
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              [theme.fn.smallerThan("sm")]: {
+                flexDirection: "row",
+                gap: 20,
+              },
+            })}
+          >
+            {links}
+          </Flex>
+        </Navbar.Section>
+
+        <Navbar.Section className={classes.innerSection}>
+          <Flex
+            sx={(theme) => ({
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              [theme.fn.smallerThan("sm")]: {
+                flexDirection: "row",
+                gap: 20,
+              },
+            })}
+          >
+            <ToggleTheme />
+
+            <NavbarLink
+              icon={IoMdSwap}
+              label="Change account"
+              onClick={() => auth.logout("/login")}
+            />
+            <NavbarLink
+              icon={HiLogout}
+              label="Logout"
+              onClick={() => auth.logout()}
+            />
+          </Flex>
+        </Navbar.Section>
+      </Flex>
     </Navbar>
   );
 }

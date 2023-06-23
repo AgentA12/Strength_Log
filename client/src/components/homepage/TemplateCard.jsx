@@ -3,9 +3,16 @@ import { motion } from "framer-motion";
 import { capitalizeFirstLetter } from "../../utils/helpers/functions";
 import TemplateMenu from "./TemplateMenu";
 import TemplateModal from "./TemplateModal";
-import { Text, Card, Flex, Title } from "@mantine/core";
+import { Text, Card, Flex, Title, createStyles } from "@mantine/core";
+
+const useStyles = createStyles((theme) => ({
+  exercise: {
+    color: theme.colors["hot-pink"][5],
+  },
+}));
 
 export default function TemplateCard({ template, handleTemplateDelete }) {
+  const { classes } = useStyles();
   const [opened, setOpened] = useState(false);
   return (
     <>
@@ -38,7 +45,7 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
               handleTemplateDelete={handleTemplateDelete}
             />
           </Flex>
-          <Text lineClamp={1} color="blue">
+          <Text lineClamp={1} className={classes.exercise}>
             {template.exercises.map((exercise, i) => (
               <Text component="span" key={exercise.exerciseName}>
                 {template.exercises.length - 1 === i

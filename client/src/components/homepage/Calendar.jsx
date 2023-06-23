@@ -47,17 +47,14 @@ export default function Calendar() {
 
   return (
     <DatePicker
-      styles={(theme) => ({
-        day: {
-          color:
-            theme.colorScheme === "dark"
-              ? theme.colors.gray[0]
-              : theme.colors.dark[9],
+      sx={(theme) => ({
+        [theme.fn.smallerThan("sm")]: {
+          margin: "auto",
         },
       })}
       type="multiple"
       weekendDays={[]}
-      size="lg"
+      size="md"
       value={data?.getProgressTimeStamps?.dates.map(
         (d) => new Date(parseInt(d.date))
       )}

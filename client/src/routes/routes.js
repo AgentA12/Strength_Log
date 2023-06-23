@@ -11,7 +11,6 @@ import CreateTemplateContainer from "../components/homepage/CreateTemplateContai
 import EditTemplateContainer from "../components/homepage/EditTemplateContainer";
 import Protected from "../components/ProtectedRoute";
 import auth from "../utils/auth/auth";
-import Layout from "../components/Layout";
 import SideNav from "../components/navbar/SideNav";
 
 const isLoggedIn = auth.isLoggedIn();
@@ -29,12 +28,10 @@ export const routes = [
         key={key}
         path="/Home"
         element={
-          <Layout>
-            <Protected isLoggedIn={isLoggedIn}>
-              <SideNav />
-              <HomePage />
-            </Protected>
-          </Layout>
+          <Protected isLoggedIn={isLoggedIn}>
+            <SideNav />
+            <HomePage />
+          </Protected>
         }
       />
     ),
@@ -57,12 +54,10 @@ export const routes = [
         path="/Settings"
         index
         element={
-          <Layout>
-            <Protected isLoggedIn={isLoggedIn}>
-              <SideNav />
-              <SettingsPage />
-            </Protected>
-          </Layout>
+          <Protected isLoggedIn={isLoggedIn}>
+            <SideNav />
+            <SettingsPage />
+          </Protected>
         }
       />
     ),
@@ -74,12 +69,10 @@ export const routes = [
         key={key}
         path="Home/Create-Template"
         element={
-          <Layout>
-            <Protected isLoggedIn={isLoggedIn}>
-              <SideNav />
-              <CreateTemplateContainer />
-            </Protected>
-          </Layout>
+          <Protected isLoggedIn={isLoggedIn}>
+            <SideNav />
+            <CreateTemplateContainer />
+          </Protected>
         }
       />
     ),
@@ -90,12 +83,10 @@ export const routes = [
         key={key}
         path="Home/Edit-Template"
         element={
-          <Layout>
-            <Protected isLoggedIn={isLoggedIn}>
-              <SideNav />
-              <EditTemplateContainer />
-            </Protected>
-          </Layout>
+          <Protected isLoggedIn={isLoggedIn}>
+            <SideNav />
+            <EditTemplateContainer />
+          </Protected>
         }
       />
     ),
@@ -106,12 +97,10 @@ export const routes = [
         key={key}
         path="/Progress"
         element={
-          <Layout>
-            <Protected isLoggedIn={isLoggedIn}>
-              <SideNav />
-              <ProgressPage />
-            </Protected>
-          </Layout>
+          <Protected isLoggedIn={isLoggedIn}>
+            <SideNav />
+            <ProgressPage />
+          </Protected>
         }
       />
     ),

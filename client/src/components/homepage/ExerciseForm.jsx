@@ -15,7 +15,7 @@ export default function ExerciseForm({
   removeExercise,
 }) {
   return (
-    <Card withBorder>
+    <Card withBorder my={10}>
       <Title order={2}>Exercise {index + 1}</Title>
       <TextInput
         onChange={(event) => handleChange(index, event)}

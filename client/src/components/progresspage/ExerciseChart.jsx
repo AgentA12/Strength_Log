@@ -46,10 +46,6 @@ export default function ExerciseChart({ exerciseData }) {
   };
 
   if (exerciseData) {
-    return (
-      <Paper>
-        <Line options={options} data={data} />
-      </Paper>
-    );
+    return <Line options={options} data={data} />;
   }
 }

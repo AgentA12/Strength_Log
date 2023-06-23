@@ -15,9 +15,9 @@ import {
   Divider,
   Container,
   Title,
-  Grid,
   Text,
   Flex,
+  Box,
 } from "@mantine/core";
 
 export default function CreateTemplateContainer() {
@@ -144,64 +144,54 @@ export default function CreateTemplateContainer() {
   }
 
   return (
-    <Container component="main" fluid ml={20}>
+    <Container component="main" fluid>
       <Divider
         my="lg"
         variant="dashed"
         label={<Title>Create A Template</Title>}
       />
 
-      <Grid columns={4} gutter="sm" w={"85%"}>
-        <Grid.Col span={1}>
-          <TextInput
-            onChange={(event) => handleChange(null, event)}
-            name="templateName"
-            value={formState?.templateName}
-            placeholder="Template Name"
-            size="xl"
-            mb={15}
+      <TextInput
+        onChange={(event) => handleChange(null, event)}
+        name="templateName"
+        value={formState?.templateName}
+        placeholder="Template Name"
+        size="xl"
+      />
+
+      <Box>
+        <Textarea
+          minRows={10}
+          onChange={(event) => handleChange(null, event)}
+          name="templateNotes"
+          placeholder="Template notes"
+          value={formState?.templateNotes}
+        />
+        <Flex mt={10} justify={"space-between"}>
+          <AddExerciseBtn addExercise={addExercise} />
+          <SaveTemplateBtn
+            loading={createTemplateLoading}
+            handleSubmit={handleSubmit}
           />
+        </Flex>
+        <Text>{errorMessage && errorMessage}</Text>
+      </Box>
 
-          <ScrollArea
-            sx={{ height: 600 }}
-            offsetScrollbars
-            scrollbarSize={4}
-            scrollHideDelay={1500}
-          >
-            <form onSubmit={(event) => handleSubmit(event)}>
-              {formState?.exercises.map((_, index) => (
-                <ExerciseForm
-                  key={index}
-                  handleChange={handleChange}
-                  index={index}
-                  formState={formState}
-                  removeExercise={removeExercise}
-                />
-              ))}
-
-              <div ref={bottomRef} />
-            </form>
-          </ScrollArea>
-        </Grid.Col>
-
-        <Grid.Col orderSm={2} span={2}>
-          <Textarea
-            minRows={10}
-            onChange={(event) => handleChange(null, event)}
-            name="templateNotes"
-            placeholder="Template notes"
-            value={formState?.templateNotes}
-          />
-          <Flex mt={5} justify={"space-between"}>
-            <AddExerciseBtn addExercise={addExercise} />
-            <SaveTemplateBtn
-              loading={createTemplateLoading}
-              handleSubmit={handleSubmit}
+      <ScrollArea offsetScrollbars scrollbarSize={4} scrollHideDelay={1500}>
+        <form onSubmit={(event) => handleSubmit(event)}>
+          {formState?.exercises.map((_, index) => (
+            <ExerciseForm
+              key={index}
+              handleChange={handleChange}
+              index={index}
+              formState={formState}
+              removeExercise={removeExercise}
             />
-          </Flex>
-          <Text>{errorMessage && errorMessage}</Text>
-        </Grid.Col>
-      </Grid>
+          ))}
+
+          <div ref={bottomRef} />
+        </form>
+      </ScrollArea>
     </Container>
   );
 }

@@ -1,13 +1,10 @@
 import { useEffect, useState, useContext } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import {
-  SearchTemplates,
-  TemplateCard,
-  AddTemplateBtn,
-} from "./index";
+import { SearchTemplates, TemplateCard, AddTemplateBtn } from "./index";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import { DELETE_TEMPLATE } from "../../utils/graphql/mutations";
 import {
+  Box,
   Title,
   Text,
   Divider,
@@ -107,10 +104,10 @@ export default function TemplateSection() {
   }
 
   return (
-    <>
+    <Box component="section">
       <Flex
         gap="lg"
-        justify="flex-start"
+        justify={{ base: "center", sm: "flex-start" }}
         align="center"
         direction="row"
         wrap="wrap"
@@ -120,7 +117,7 @@ export default function TemplateSection() {
 
         <Flex
           gap="lg"
-          justify="flex-start"
+          justify={{ base: "center", sm: "flex-start" }}
           align="center"
           direction="row"
           wrap="wrap"
@@ -145,10 +142,12 @@ export default function TemplateSection() {
           </Text>
         </Center>
       ) : (
-        <Flex wrap={"wrap"} gap="md">
-          {displayQueryState()}
-        </Flex>
+     
+          <Flex wrap={"wrap"} justify={{base: "center", sm: "flex-start"}} gap="md">
+            {displayQueryState()}
+          </Flex>
+       
       )}
-    </>
+    </Box>
   );
 }

@@ -140,9 +140,9 @@ const resolvers = {
         .select("progress")
         .sort("-date");
 
-      let sortedProgress = progress.sort((a, b) =>
-        a.createdAt > b.createdAt ? -1 : 1
-      );
+      let sortedProgress = progress
+        .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
+        .slice(0, 8);
 
       // const userTemplates = await User.findById(userID)
       //   .select("templates")

@@ -27,7 +27,7 @@ export default function ExerciseContainer({
     );
 
   return (
-    <Container size="xl">
+    <Container fluid>
       {activeTemplate ? (
         <>
           {data?.getExerciseProgress ? (

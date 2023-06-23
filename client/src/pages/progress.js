@@ -12,7 +12,7 @@ import {
   GET_TEMPLATES_PROGRESS,
   GET_TEMPLATE_CHART_DATA,
 } from "../utils/graphql/queries";
-import { Container, Title, Group, Text } from "@mantine/core";
+import { Container, Title, Flex, Text } from "@mantine/core";
 import auth from "../utils/auth/auth";
 import RangeSelect from "../components/progresspage/SelectRange";
 
@@ -61,10 +61,14 @@ export default function ProgressPage() {
 
   if (data)
     return (
-      <Container fluid>
+      <Container sx={(theme) => ({
+        [theme.fn.smallerThan("sm")]: {
+          textAlign: 'center'
+        }
+      })} fluid>
         {activeTemplate ? (
           <Title>
-            <Text color="blue" fw={900} component="span">
+            <Text color="hot-pink" fw={900} component="span">
               {activeTemplate}
             </Text>{" "}
             Summary
@@ -77,7 +81,7 @@ export default function ProgressPage() {
           setActiveSection={setActiveSection}
         />
 
-        <Group>
+        <Flex wrap="wrap" gap={20} justify={{base: "center", sm: "left"}}>
           <TemplateSelect
             data={data}
             handleQuery={handleQuery}
@@ -86,7 +90,7 @@ export default function ProgressPage() {
             getChartData={getChartData}
           />
           <RangeSelect />
-        </Group>
+        </Flex>
         {activeSection === "Summary" ? (
           <SummaryContainer
             loadChartSummaryData={loadChartSummaryData}
