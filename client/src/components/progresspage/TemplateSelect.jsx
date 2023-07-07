@@ -1,29 +1,34 @@
 import { Select } from "@mantine/core";
 import { useState } from "react";
 
-export default function TemplateSelect(args) {
-  const [currentTemplate, setCurrentTemplate] = useState("Select a template");
-
-  const templates = args.data?.getTemplatesForUser.map((template) => {
+export default function TemplateSelect({
+  templates,
+  handleQuery,
+  setActiveTemplate,
+  getChartData,
+  activeTemplate,
+}) {
+  const templateData = templates.map((template) => {
     let data = {};
 
     data.label = template.templateName;
     data.value = template.templateName;
     return data;
   });
+
+  templateData.push({ label: "All templates", value: "All templates" });
+
   return (
     <Select
-      sx={{ width: "fit-content" }}
-      data={templates}
+      data={templateData}
       searchable
       placeholder="Select a template"
-      description="Templates"
-      value={currentTemplate}
+      description="Template(s)"
+      value={activeTemplate}
       onChange={(value) => {
-        args.handleQuery(value);
-        args.setActiveTemplate(value);
-        args.getChartData(value);
-        setCurrentTemplate(value);
+        handleQuery(value);
+        setActiveTemplate(value);
+        getChartData(value);
       }}
     />
   );

@@ -1,23 +1,23 @@
-import { Box, Container } from "@mantine/core";
+import { AppShell, createStyles } from "@mantine/core";
+import { SideNav } from "./navbar";
+
+const useStyles = createStyles((theme) => ({
+  container: {
+    marginLeft: 80,
+    marginTop: 25,
+    [theme.fn.smallerThan("sm")]: {
+      margin: "auto",
+      marginBottom: 150,
+      padding: 0,
+    },
+  },
+}));
 
 export default function AppLayout({ children }) {
+  const { classes } = useStyles();
   return (
-    <>
-      <Container fluid>
-        <Box
-          sx={(theme) => ({
-            marginLeft: 80,
-            marginTop: 25,
-            [theme.fn.smallerThan("sm")]: {
-              margin: "auto",
-              marginBottom: 150,
-              padding: 0
-            },
-          })}
-        >
-          {children}
-        </Box>
-      </Container>
-    </>
+    <AppShell className={classes.container} navbar={<SideNav />}>
+      {children}
+    </AppShell>
   );
 }

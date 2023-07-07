@@ -1,8 +1,9 @@
 import { useQuery } from "@apollo/client";
 import { GET_EXERCISE_PROGRESS } from "../../utils/graphql/queries";
-import auth from "../../utils/auth/auth";
 import { ExerciseChart } from "./index";
 import { Loader, Center, Container } from "@mantine/core";
+import { useContext } from "react";
+import { UserContext } from "../../App";
 
 export default function ExerciseContainer({
   loadOneTemplateData,
@@ -10,7 +11,7 @@ export default function ExerciseContainer({
 }) {
   const {
     data: { _id: userID },
-  } = auth.getInfo();
+  } = useContext(UserContext);
 
   const { loading, data } = useQuery(GET_EXERCISE_PROGRESS, {
     variables: {
@@ -26,6 +27,7 @@ export default function ExerciseContainer({
       </Center>
     );
 
+    
   return (
     <Container fluid>
       {activeTemplate ? (

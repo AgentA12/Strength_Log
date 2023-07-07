@@ -66,7 +66,6 @@ export default function TemplateModal({ template, opened, setOpened }) {
       title={<Title order={2}>{template?.templateName.toUpperCase()}</Title>}
       overlayopacity={0.55}
       overlayblur={3}
-      transition={"rotate-left"}
       size="lg"
     >
       <Container>

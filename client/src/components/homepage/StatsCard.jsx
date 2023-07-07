@@ -38,7 +38,6 @@ const useStyles = createStyles((theme) => ({
   title: {
     fontWeight: 700,
     textTransform: "uppercase",
-    color: [theme.colors["hot-pink"][6]],
   },
 }));
 
@@ -99,7 +98,7 @@ export default function StatsCard({ stat }) {
                   justify="center"
                   align="center"
                 >
-                  <Text mb={-5} color="hot-pink" fw={700}>
+                  <Text mb={-5}  fw={700}>
                     {prObj.exerciseName}
                   </Text>
                   <Text color="dimmed">

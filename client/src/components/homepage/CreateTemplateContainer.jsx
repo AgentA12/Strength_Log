@@ -1,8 +1,7 @@
 import ExerciseForm from "./ExerciseForm";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_TEMPLATE } from "../../utils/graphql/mutations";
-import auth from "../../utils/auth/auth";
 import { useQuery } from "@apollo/client";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import AddExerciseBtn from "./AddExerciseBtn";
@@ -17,10 +16,26 @@ import {
   Title,
   Text,
   Flex,
+  createStyles,
   Box,
 } from "@mantine/core";
+import { UserContext } from "../../App";
+
+const useStyles = createStyles(() => ({
+  container: {
+    display: "grid",
+  },
+  itemOne: {},
+  itemTwo: {},
+  itemThree: {},
+}));
 
 export default function CreateTemplateContainer() {
+  const {
+    data: { _id: userID },
+  } = useContext(UserContext);
+
+  const { classes } = useStyles();
   const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = useState(null);
@@ -37,13 +52,6 @@ export default function CreateTemplateContainer() {
       },
     ],
   });
-
-  //getting user info
-  if (auth.isLoggedIn()) {
-    var {
-      data: { _id: userID },
-    } = auth.getInfo();
-  }
 
   const { refetch } = useQuery(GET_TEMPLATES, {
     variables: {
@@ -131,7 +139,7 @@ export default function CreateTemplateContainer() {
     setFormState(data);
   }
 
-  function removeExercise(event, index) {
+  function removeExercise(_, index) {
     let data = { ...formState };
 
     const filteredExercises = formState.exercises.filter((_, i) => {
@@ -151,47 +159,48 @@ export default function CreateTemplateContainer() {
         label={<Title>Create A Template</Title>}
       />
 
-      <TextInput
-        onChange={(event) => handleChange(null, event)}
-        name="templateName"
-        value={formState?.templateName}
-        placeholder="Template Name"
-        size="xl"
-      />
-
-      <Box>
-        <Textarea
-          minRows={10}
+      <Box className={classes.container}>
+        <TextInput
           onChange={(event) => handleChange(null, event)}
-          name="templateNotes"
-          placeholder="Template notes"
-          value={formState?.templateNotes}
+          name="templateName"
+          value={formState?.templateName}
+          placeholder="Template Name"
+          size="xl"
         />
-        <Flex mt={10} justify={"space-between"}>
-          <AddExerciseBtn addExercise={addExercise} />
-          <SaveTemplateBtn
-            loading={createTemplateLoading}
-            handleSubmit={handleSubmit}
+        <Box>
+          <Textarea
+            minRows={10}
+            onChange={(event) => handleChange(null, event)}
+            name="templateNotes"
+            placeholder="Template notes"
+            value={formState?.templateNotes}
           />
-        </Flex>
-        <Text>{errorMessage && errorMessage}</Text>
-      </Box>
-
-      <ScrollArea offsetScrollbars scrollbarSize={4} scrollHideDelay={1500}>
-        <form onSubmit={(event) => handleSubmit(event)}>
-          {formState?.exercises.map((_, index) => (
-            <ExerciseForm
-              key={index}
-              handleChange={handleChange}
-              index={index}
-              formState={formState}
-              removeExercise={removeExercise}
+          <Flex mt={10} justify={"space-between"}>
+            <AddExerciseBtn addExercise={addExercise} />
+            <SaveTemplateBtn
+              loading={createTemplateLoading}
+              handleSubmit={handleSubmit}
             />
-          ))}
+          </Flex>
+          <Text>{errorMessage && errorMessage}</Text>
+        </Box>
 
-          <div ref={bottomRef} />
-        </form>
-      </ScrollArea>
+        <ScrollArea offsetScrollbars scrollbarSize={4} scrollHideDelay={1500}>
+          <form onSubmit={(event) => handleSubmit(event)}>
+            {formState?.exercises.map((_, index) => (
+              <ExerciseForm
+                key={index}
+                handleChange={handleChange}
+                index={index}
+                formState={formState}
+                removeExercise={removeExercise}
+              />
+            ))}
+
+            <Box component="span" ref={bottomRef} />
+          </form>
+        </ScrollArea>
+      </Box>
     </Container>
   );
 }

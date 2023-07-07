@@ -16,7 +16,11 @@ export default function WorkoutState({ templateState, handleChange, opened }) {
       {templateState.exercises.map((exercise, index) => (
         <Fragment key={exercise.exerciseName}>
           <Group mt={5}>
-            <Text size="xl" color="hot-pink" fw={600}>
+            <Text
+              size="xl"
+              sx={(theme) => ({ color: theme.colors.violet[5] })}
+              fw={700}
+            >
               {exercise.exerciseName}
             </Text>
           </Group>

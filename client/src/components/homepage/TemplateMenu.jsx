@@ -11,7 +11,7 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
         event.stopPropagation();
       }}
     >
-      <Link to={"/Home/Edit-template"} state={{ template: template }}>
+      <Link to={"/Edit-template"} state={{ template: template }}>
         <Menu.Item icon={<FaEdit size={14} />}>Edit</Menu.Item>
       </Link>
 

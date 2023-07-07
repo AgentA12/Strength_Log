@@ -57,7 +57,7 @@ export default function SettingsNavBtn() {
   return (
     <Menu shadow="md" width={230} position="bottom-right" trigger="hover">
       <Menu.Target>
-        <Button color="hot-pink" rightIcon={<IoMdArrowDropdown size={15} />}  variant="subtle" compact>
+        <Button  rightIcon={<IoMdArrowDropdown size={15} />}  variant="subtle" compact>
           Account
         </Button>
       </Menu.Target>

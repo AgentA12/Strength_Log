@@ -4,9 +4,15 @@ export default function RangeSelect() {
   return (
     <Select
       sx={{ width: "fit-content" }}
-      data={["Last three months", "Last six months", "Last twelve months", "All time"]}
+      data={[
+        "Last three months",
+        "Last six months",
+        "Last twelve months",
+        "All time",
+      ]}
       searchable
       placeholder="Select a range"
+      defaultValue={"All time"}
       description="Range"
     />
   );

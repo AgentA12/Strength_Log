@@ -5,7 +5,7 @@ import { useQuery } from "@apollo/client";
 import { GET_CALENDAR_DATA } from "../../utils/graphql/queries";
 import { useContext } from "react";
 import { UserContext } from "../../App";
-import { Loader, Center, Text } from "@mantine/core";
+import { Loader, Center, Text, LoadingOverlay, Box } from "@mantine/core";
 
 export default function Calendar() {
   const {
@@ -21,28 +21,42 @@ export default function Calendar() {
   const navigate = useNavigate();
 
   function handleDateClick(date) {
-    const dateSelected = data?.getProgressTimeStamps.dates.filter((d) =>
+    const dateSelected = data.getProgressTimeStamps.dates.filter((d) =>
       compareDatesByDay(date, new Date(parseInt(d.date)))
     );
 
     if (dateSelected.length > 0) {
-      // route to summary page
-      navigate("/Progress");
+      // route to summary page with template data and date
+      navigate("/Progress", {
+        state: { viewCurrentTemplate: dateSelected },
+      });
     }
   }
 
   if (loading)
     return (
-      <Center w={343}>
-        <Loader />
-      </Center>
+      <Box pos="relative">
+        <LoadingOverlay visible={true} />
+        <DatePicker
+          sx={(theme) => ({
+            [theme.fn.smallerThan("sm")]: {
+              margin: "auto",
+            },
+          })}
+          type="multiple"
+          weekendDays={[]}
+          size="md"
+        />
+      </Box>
     );
 
   if (error)
     return (
-      <Center w={343}>
-        <Text color="red">{error}</Text>
-      </Center>
+      <Box height={400}>
+        <Center w={343}>
+          <Text color="red">error message</Text>
+        </Center>
+      </Box>
     );
 
   return (

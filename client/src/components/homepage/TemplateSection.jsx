@@ -12,6 +12,7 @@ import {
   Loader,
   Center,
   Group,
+  Skeleton,
 } from "@mantine/core";
 import { UserContext } from "../../App";
 import { showNotification } from "@mantine/notifications";
@@ -31,7 +32,7 @@ export default function TemplateSection() {
   });
 
   useEffect(() => {
-    if (data) setTemplates(data.getTemplatesForUser);
+    if (data) setTemplates(data.getTemplates);
   }, [data]);
 
   async function handleTemplateDelete(templateId) {
@@ -78,16 +79,21 @@ export default function TemplateSection() {
     }
 
     if (event.target.value.trim().length === 0) {
-      setTemplates(data.getTemplatesForUser);
+      setTemplates(data.getTemplates);
     }
   }
 
   function displayQueryState() {
     // is the query loading?
     return loading ? (
-      <Center mx="auto" h={200}>
-        <Loader size="xl" />
-      </Center>
+      <>
+        <Skeleton height={97} width={300}/> 
+        <Skeleton height={97} width={300}/> 
+        <Skeleton height={97} width={300}/> 
+        <Skeleton height={97} width={300}/> 
+        <Skeleton height={97} width={300}/> 
+        </>
+     
     ) : // does the array of templates have length? display the template cards
     templates.length ? (
       templates.map((template) => (
@@ -106,7 +112,7 @@ export default function TemplateSection() {
   return (
     <Box component="section">
       <Flex
-        gap="lg"
+        gap="lg" 
         justify={{ base: "center", sm: "flex-start" }}
         align="center"
         direction="row"
@@ -142,11 +148,13 @@ export default function TemplateSection() {
           </Text>
         </Center>
       ) : (
-     
-          <Flex wrap={"wrap"} justify={{base: "center", sm: "flex-start"}} gap="md">
-            {displayQueryState()}
-          </Flex>
-       
+        <Flex
+          wrap={"wrap"}
+          justify={{ base: "center", sm: "flex-start" }}
+          gap="md"
+        >
+          {displayQueryState()}
+        </Flex>
       )}
     </Box>
   );

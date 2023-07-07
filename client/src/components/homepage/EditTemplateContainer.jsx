@@ -19,6 +19,9 @@ import {
   Flex,
   Box,
 } from "@mantine/core";
+import { UserContext } from "../../App";
+import { useContext } from "react";
+
 export default function EditTemplate() {
   const navigate = useNavigate();
 
@@ -27,17 +30,16 @@ export default function EditTemplate() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [formState, setFormState] = useState(state.template);
 
-  var {
+  const {
     data: { _id: userID },
-  } = auth.getInfo();
+  } = useContext(UserContext);
 
-  const { loading, refetch } = useQuery(GET_TEMPLATES, {
+  const { data, error, loading, refetch } = useQuery(GET_TEMPLATES, {
     variables: {
       userId: userID,
     },
   });
 
-  //ref on error message to scroll to bottom of exercise container when an exercise is added
   const bottomRef = useRef(null);
   useEffect(() => {
     bottomRef.current.scrollIntoView();
@@ -96,7 +98,6 @@ export default function EditTemplate() {
     }
   }
 
-  //adds an exercise to the form
   function addExercise() {
     const exercise = {
       exerciseName: "",
@@ -113,12 +114,10 @@ export default function EditTemplate() {
     setFormState(data);
   }
 
-  function removeExercise(event, index) {
+  function removeExercise(_, index) {
     let data = { ...formState };
 
-    const filteredExercises = formState.exercises.filter((_, i) => {
-      return i !== index;
-    });
+    const filteredExercises = formState.exercises.filter((_, i) => i !== index);
 
     data.exercises = filteredExercises;
 
@@ -132,10 +131,7 @@ export default function EditTemplate() {
         variant="dashed"
         label={
           <Title>
-            Edit{" "}
-            <Text component="span" color="hotpink">
-              {formState.templateName}
-            </Text>
+            Edit <Text component="span">{formState.templateName}</Text>
           </Title>
         }
       />

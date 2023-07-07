@@ -6,10 +6,26 @@ import TemplateModal from "./TemplateModal";
 import { Text, Card, Flex, Title, createStyles } from "@mantine/core";
 
 const useStyles = createStyles((theme) => ({
-  exercise: {
-    color: theme.colors["hot-pink"][5],
+  card: {
+    width: 300,
+    overflow: "visible",
+    "&:hover": { cursor: "pointer" },
+    [theme.fn.smallerThan("sm")]: {
+      width: 240,
+    },
+  },
+  exercises: {
+    color: theme.colors.violet[5],
   },
 }));
+
+const cardAnimation = {
+  initial: { scale: 0.9, opacity: 0 },
+  animate: {
+    scale: 1,
+    opacity: 1,
+  },
+};
 
 export default function TemplateCard({ template, handleTemplateDelete }) {
   const { classes } = useStyles();
@@ -18,11 +34,7 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
     <>
       <motion.div
         layout
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{
-          scale: 1,
-          opacity: 1,
-        }}
+        animate={cardAnimation}
         onClick={() => setOpened(!opened)}
       >
         <Card
@@ -30,11 +42,7 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
           radius="md"
           p="sm"
           withBorder
-          sx={{
-            width: 300,
-            overflow: "visible",
-            "&:hover": { cursor: "pointer" },
-          }}
+          className={classes.card}
         >
           <Flex justify="space-between" align="center" mb={10}>
             <Title order={3} span fw={600}>
@@ -45,7 +53,7 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
               handleTemplateDelete={handleTemplateDelete}
             />
           </Flex>
-          <Text lineClamp={1} className={classes.exercise}>
+          <Text lineClamp={1} className={classes.exercises}>
             {template.exercises.map((exercise, i) => (
               <Text component="span" key={exercise.exerciseName}>
                 {template.exercises.length - 1 === i

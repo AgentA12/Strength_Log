@@ -19,7 +19,7 @@ export const GET_TEMPLATE_BY_ID = gql`
 
 export const GET_TEMPLATES = gql`
   query ($userId: ID!) {
-    getTemplatesForUser(userId: $userId) {
+    getTemplates(userId: $userId) {
       _id
       templateName
       templateNotes

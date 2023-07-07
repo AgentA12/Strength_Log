@@ -27,7 +27,7 @@ const resolvers = {
       } catch (error) {}
     },
 
-    getTemplatesForUser: async function (_, { userId }) {
+    getTemplates: async function (_, { userId }) {
       try {
         const user = await User.findById(userId)
           .select("-password")
@@ -143,37 +143,6 @@ const resolvers = {
       let sortedProgress = progress
         .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
         .slice(0, 8);
-
-      // const userTemplates = await User.findById(userID)
-      //   .select("templates")
-      //   .populate({
-      //     path: "templates",
-      //     populate: {
-      //       path: "exercises",
-      //       model: "Exercise",
-      //     },
-      //   });
-
-      // for (let i = 0; i < progress.length; i++) {
-
-      // }
-
-      // const twoMostRecentWorkout = sortedProgress
-      //   .filter((workout) => {
-      //     if (
-      //       sortedProgress[0].templateId.toString() ===
-      //       workout.templateId.toString()
-      //     )
-      //       return workout;
-      //   })
-
-      //   .slice(0, 2);
-
-      // compareExercises(
-
-      //   twoMostRecentWorkout[0].exercises,
-      //   twoMostRecentWorkout[1].exercises
-      // );
 
       return [
         {
