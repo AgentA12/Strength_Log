@@ -1,9 +1,18 @@
 import { Button } from "@mantine/core";
 
-export default function SaveWorkoutBtn({ handleSaveWorkout, loading }) {
+export default function SaveWorkoutBtn({
+  handleSaveWorkout,
+  loading,
+  templateState,
+}) {
   return (
-    <Button onClick={handleSaveWorkout} loading={loading} variant="outline" mt={15}>
-      Save Workout
+    <Button
+      onClick={() => handleSaveWorkout(templateState)}
+      loading={loading}
+      variant="outline"
+   
+    >
+      Quick Save
     </Button>
   );
 }

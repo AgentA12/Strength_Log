@@ -1,6 +1,7 @@
 const { User, Template, Exercise } = require("../models/index");
 const { AuthenticationError } = require("apollo-server");
 const { signToken } = require("../utils/auth");
+const { getDaysArray } = require("../utils/helpers");
 
 const resolvers = {
   Query: {
@@ -24,12 +25,14 @@ const resolvers = {
         });
 
         return { dates: dates };
-      } catch (error) {}
+      } catch (error) {
+        return error;
+      }
     },
 
     getTemplates: async function (_, { userId }) {
       try {
-        const user = await User.findById(userId)
+        const { templates } = await User.findById(userId)
           .select("-password")
           .populate({
             path: "templates",
@@ -39,55 +42,136 @@ const resolvers = {
             },
           });
 
-        return user.templates;
+        return templates;
       } catch (error) {
         return error;
       }
     },
 
-    getProgress: async function (_, { templateName, userID }) {
+    getTemplateDataForProgressPage: async function (
+      _,
+      { templateId, userId, range, metric, exercise }
+    ) {
       try {
-        const user = await User.findById(userID);
+        console.log(templateId, userId, exercise, range, metric);
 
-        const progress = user.getProgress(templateName);
+        const { progress } = await User.findById(userId);
 
-        return progress;
+        // getting the most recently saved workouts date "2023-05-20"
+        const mostRecentlySavedDate = progress.sort((a, b) =>
+          a.createdAt > b.createdAt ? -1 : 1
+        )[0].createdAt;
+
+        let dateArray = getRangeArray(range, mostRecentlySavedDate);
+        console.log(a(progress, dateArray));
+
+        function getRangeArray(range, mostRecentlySavedDate) {
+          //depending on the range generate a range of dates
+          switch (range) {
+            case "Last 12 months":
+              return getDaysArray(
+                new Date(
+                  mostRecentlySavedDate.setFullYear(
+                    mostRecentlySavedDate.getFullYear() - 1
+                  )
+                ),
+                new Date()
+              ).map((d) => d);
+
+            case "Last 6 months":
+              return getDaysArray(
+                new Date(
+                  mostRecentlySavedDate.setMonth(
+                    mostRecentlySavedDate.getMonth() - 6
+                  )
+                ),
+                new Date()
+              ).map((d) => d);
+
+            case "Last 3 months":
+              return getDaysArray(
+                new Date(
+                  mostRecentlySavedDate.setMonth(
+                    mostRecentlySavedDate.getMonth() - 3
+                  )
+                ),
+                new Date()
+              ).map((d) => d);
+
+            case "Last month":
+              return getDaysArray(
+                new Date(
+                  mostRecentlySavedDate.setMonth(
+                    mostRecentlySavedDate.getMonth() - 1
+                  )
+                ),
+                new Date()
+              ).map((d) => d);
+
+            default:
+              return getDaysArray(
+                new Date(mostRecentlySavedDate),
+                new Date()
+              ).map((d) => d);
+          }
+        }
+
+        function a(progressAry, dateAry) {
+          const b = [];
+
+          for (let i = 0; i < dateAry.length; i++) {
+            for (let x = 0; x < progressAry.length; x++) {
+              if (checkIfSameDay(dateAry[i], progressAry[x].createdAt)) {
+                const { exercises } = progress[x];
+                b.push({ labels: dateAry[i], data: [...exercises] });
+              } else {
+                b.push({ labels: dateAry[i], data: null });
+              }
+            }
+          }
+          return b;
+        }
+
+        function checkIfSameDay(date1, date2) {
+          return date1.getMonth() === date2.getMonth() &&
+            date1.getFullYear() === date2.getFullYear() &&
+            date1.getDay() === date2.getDay()
+            ? true
+            : false;
+        }
+
+        return [{}];
       } catch (error) {
         return error;
       }
     },
 
-    getChartData: async function (_, args) {
-      const { progress } = await User.findById(args.userId).select("progress");
+    async getMostRecentlySavedTemplateData(_, { templateId, userId }) {
+      const { progress } = await User.findById(userId);
 
-      const userProgress = progress.filter((p) => {
-        return p.templateName === args.templateName;
-      });
+      const mostRecent = progress
+        .filter(
+          (progressObj) => progressObj.templateId.toString() === templateId
+        )
+        .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))[0];
 
-      userProgress.sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1));
-
-      const labels = userProgress.map((progressObject) => {
-        return progressObject.dateCompleted;
-      });
-
-      let copyUserProgress = [...userProgress];
-
-      copyUserProgress.forEach((resultObj, i) => {
-        let total = resultObj.exercises.reduce(
-          (accumulator, { weight, reps, sets }) => {
-            return (accumulator += weight * reps * sets);
+      // if mostRecent is is null or undefined the user hasn't save a workout with that template
+      // so query the users templates instead
+      if (mostRecent != null && mostRecent != undefined) {
+        return mostRecent;
+      } else {
+        const { templates } = await User.findById(userId).populate({
+          path: "templates",
+          populate: {
+            path: "exercises",
+            model: "Exercise",
           },
-          0
-        );
+        });
 
-        copyUserProgress[i].totalWeight = total;
-      });
-
-      let totalWeight = copyUserProgress.map((c) => {
-        return c.totalWeight;
-      });
-
-      return { labels: labels, totalWeights: totalWeight };
+        return templates
+          .filter((template) => template._id.toString() === templateId)
+          .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))[0];
+      }
     },
 
     async getExerciseProgress(_, { templateID, userID }) {
@@ -133,43 +217,6 @@ const resolvers = {
       const summary = getRecentComparison(progress, progressId);
 
       return summary;
-    },
-
-    getRecentlyCompletedCarouselData: async function (_, { userID }) {
-      const { progress } = await User.findById(userID)
-        .select("progress")
-        .sort("-date");
-
-      let sortedProgress = progress
-        .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
-        .slice(0, 8);
-
-      return [
-        {
-          dateCompleted: "",
-          templateName: "lower body",
-          date: "",
-          totalVolume: "",
-          diff: "",
-          prs: [{ reps: "", sets: "", weight: "" }],
-        },
-        {
-          dateCompleted: "",
-          templateName: "upper body",
-          date: "",
-          totalVolume: "",
-          diff: "",
-          prs: [{ reps: "", sets: "", weight: "" }],
-        },
-        {
-          dateCompleted: "",
-          templateName: "legs",
-          date: "",
-          totalVolume: "",
-          diff: "",
-          prs: [{ reps: "", sets: "", weight: "" }],
-        },
-      ];
     },
   },
 
@@ -276,6 +323,8 @@ const resolvers = {
         await User.updateOne({
           $pull: { templates: templateId },
         });
+
+        // remove deleted template from user.progress schema
 
         return { ...res, templateName: template.templateName };
       } catch (error) {

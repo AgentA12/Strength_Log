@@ -16,7 +16,6 @@ import {
 } from "@mantine/core";
 import { UserContext } from "../../App";
 import { showNotification } from "@mantine/notifications";
-import StartWorkoutBtn from "./StartWorkoutBtn";
 
 export default function TemplateSection() {
   const userInfo = useContext(UserContext);
@@ -86,14 +85,10 @@ export default function TemplateSection() {
   function displayQueryState() {
     // is the query loading?
     return loading ? (
-      <>
-        <Skeleton height={97} width={300}/> 
-        <Skeleton height={97} width={300}/> 
-        <Skeleton height={97} width={300}/> 
-        <Skeleton height={97} width={300}/> 
-        <Skeleton height={97} width={300}/> 
-        </>
-     
+      <Flex direction="column" align="center">
+        <Loader />
+        <Text>Loading...</Text>
+      </Flex>
     ) : // does the array of templates have length? display the template cards
     templates.length ? (
       templates.map((template) => (
@@ -134,7 +129,6 @@ export default function TemplateSection() {
           />
           <Group>
             <AddTemplateBtn />
-            <StartWorkoutBtn />
           </Group>
         </Flex>
       </Flex>

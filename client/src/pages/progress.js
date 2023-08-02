@@ -11,14 +11,14 @@ import {
 
 import {
   GET_TEMPLATES,
-  GET_TEMPLATES_PROGRESS,
-  GET_TEMPLATE_CHART_DATA,
+  GET_TEMPLATE_PROGRESS,
+  GET_CALENDAR_DATA,
 } from "../utils/graphql/queries";
 import {
   Container,
-  Loader,
   Title,
   Flex,
+  Loader,
   Text,
   createStyles,
 } from "@mantine/core";
@@ -38,6 +38,9 @@ const useStyles = createStyles((theme) => ({
 export default function ProgressPage() {
   const [activeTemplate, setActiveTemplate] = useState("All templates");
   const [activeSection, setActiveSection] = useState("Templates");
+  const [metric, setMetric] = useState("Total weight");
+  const [exercises, setExercises] = useState("All");
+  const [range, setRange] = useState("All time");
 
   const { classes } = useStyles();
 
@@ -56,12 +59,12 @@ export default function ProgressPage() {
   const [
     loadOneTemplate,
     { loading: loadOneTemplateLoading, data: loadOneTemplateData },
-  ] = useLazyQuery(GET_TEMPLATES_PROGRESS);
+  ] = useLazyQuery(GET_TEMPLATE_PROGRESS);
 
   const [
     loadChartSummary,
     { loading: loadChartSummaryDataLoading, data: loadChartSummaryData },
-  ] = useLazyQuery(GET_TEMPLATE_CHART_DATA);
+  ] = useLazyQuery(GET_CALENDAR_DATA);
 
   async function handleQuery(templateName) {
     await loadOneTemplate({
@@ -81,6 +84,26 @@ export default function ProgressPage() {
     });
   }
   if (error) return <Title color="red">{error.message}</Title>;
+  if (loading)
+    return (
+      <Container fluid className={classes.container}>
+        <Title>
+          <Text
+            sx={(theme) => ({ color: theme.colors.violet[5] })}
+            fw={800}
+            component="span"
+          >
+            {activeTemplate && activeTemplate}
+          </Text>{" "}
+          Summary
+        </Title>
+
+        <SectionMenu
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+        />
+      </Container>
+    );
 
   return (
     <Container fluid className={classes.container}>
@@ -104,7 +127,7 @@ export default function ProgressPage() {
         <Loader />
       ) : (
         <>
-          <Flex wrap="wrap" gap={20} justify={{ base: "center", sm: "left" }}>
+          <Flex wrap="wrap" gap={5} justify={{ base: "center", sm: "left" }}>
             <TemplateSelect
               templates={data.getTemplates}
               handleQuery={handleQuery}

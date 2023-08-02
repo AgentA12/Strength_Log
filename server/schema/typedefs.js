@@ -115,13 +115,18 @@ const typeDefs = gql`
 
   type Query {
     getTemplates(userId: ID!, offset: Int, limit: Int): [Template]
-    getProgress(templateName: String!, userID: ID!): [Progress]
+    getTemplateDataForProgressPage(
+      templateId: ID
+      userId: ID!
+      range: String
+      metric: String
+      exercise: String
+    ): [Progress]
     getExerciseProgress(templateID: ID!, userID: ID!): ExerciseProgress
-    getChartData(templateName: String!, userId: ID!): Chart
     getTemplateModalProgress(templateId: ID, userId: ID): [ExerciseProgress]
     getSummary(templateId: ID!, userId: ID!, progressId: ID!): [Progress]
     getProgressTimeStamps(userId: ID!): CalendarDates
-    getRecentlyCompletedCarouselData(userID: ID!): [RecentCarousel]
+    getMostRecentlySavedTemplateData(templateId: ID, userId: ID!): ModalProgress
   }
 
   type Mutation {

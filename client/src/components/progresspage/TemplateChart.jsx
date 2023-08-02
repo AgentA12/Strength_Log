@@ -1,175 +1,137 @@
-// import {
-//   Chart as ChartJS,
-//   CategoryScale,
-//   LinearScale,
-//   PointElement,
-//   LineElement,
-//   Title,
-//   Tooltip,
-//   Legend,
-// } from "chart.js";
-// import { Line } from "react-chartjs-2";
-
-// ChartJS.register(
-//   CategoryScale,
-//   LinearScale,
-//   PointElement,
-//   LineElement,
-//   Title,
-//   Tooltip,
-//   Legend
-// );
-
-// const options = {
-//   responsive: true,
-//   plugins: {
-//     legend: {
-//       position: "top",
-//     },
-//     title: {
-//       display: true,
-//       text: "Total weight over time",
-//     },
-//   },
-// };
-
-// export default function TemplateChart({ loadChartSummaryData }) {
-//   if (loadChartSummaryData) {
-//     var data = {
-//       labels: loadChartSummaryData?.getChartData.labels,
-//       datasets: [
-//         {
-//           label: "Total Volume",
-//           data: loadChartSummaryData?.getChartData.totalWeights,
-//           borderColor: "#D84C92",
-//           backgroundColor: "#D84C92",
-//         },
-//       ],
-//     };
-//   }
-
-//   if (loadChartSummaryData?.getChartData.labels.length) {
-//     return <Line options={options} data={data} />;
-//   }
-// }
-
+import { useQuery } from "@apollo/client";
+import { GET_TEMPLATE_PROGRESS } from "../../utils/graphql/queries";
+import { Box, Text, Image, Loader, Center } from "@mantine/core";
 import {
-  LineChart,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
   Tooltip,
-  ResponsiveContainer,
   Legend,
-} from "recharts";
+  Colors,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+import shockedMan from "./shocked_guy.gif";
 
-const data = [
-  {
-    date: "2023 July 1",
-    "bench press": 4000,
-    "shoulder press": 2400,
-    "Incline dumbell press": 1500,
-    "Dumbell row": 500,
-  },
-  {
-    date: "2023 July 2",
-    "bench press": 3000,
-    "shoulder press": 2210,
-    "Incline dumbell press": 1000,
-    "Dumbell row": 500,
-  },
-  {
-    date: "2023 July 3",
-    "bench press": null,
-    "shoulder press": 2290,
-    "Incline dumbell press": 1000,
-    "Dumbell row": 500,
-  },
-  {
-    date: "2023 July 4",
-    "bench press": 2780,
-    "shoulder press": 2000,
-    "Incline dumbell press": 800,
-    "Dumbell row": 500,
-  },
-  {
-    date: "2023 July 5",
-    "bench press": 1890,
-    "shoulder press": 2181,
-    "Incline dumbell press": 1000,
-    "Dumbell row": 500,
-  },
-  {
-    date: "2023 July 6",
-    "bench press": 2390,
-    "shoulder press": 2500,
-    "Incline dumbell press": 1000,
-    "Dumbell row": 500,
-  },
-  {
-    date: "2023 July 7",
-    "bench press": 3490,
-    "shoulder press": 2100,
-    "Incline dumbell press": 1200,
-    "Dumbell row": 500,
-  },
-];
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Colors
+);
 
-export default function TemplateChart({ loading }) {
+// const labels = [
+//   "January",
+//   "February",
+//   "March",
+//   "April",
+//   "May",
+//   "June",
+//   "July",
+//   "August",
+//   "September",
+//   "October",
+//   "November",
+//   "December",
+// ];
+
+const labels = getDaysArray("2023-07-25", new Date());
+
+const testdata = {
+  labels,
+  datasets: [
+    {
+      label: "Bench press",
+      data: [
+        Math.random() * 100,
+        null,
+        Math.random() * 100,
+        Math.random() * 100,
+        Math.random() * 100,
+        null,
+        Math.random() * 100,
+        Math.random() * 100,
+        Math.random() * 100,
+        null,
+        Math.random() * 100,
+        Math.random() * 100,
+      ],
+    },
+    {
+      label: "Pull ups",
+      data: labels.map(() => Math.random() * 100),
+    },
+  ],
+};
+
+function getDaysArray(start, end) {
+  var options = {
+    month: "long",
+    day: "numeric",
+  };
+  for (
+    var a = [], d = new Date(start);
+    d <= new Date(end);
+    d.setDate(d.getDate() + 1)
+  ) {
+    a.push(new Date(d).toLocaleDateString("en-us", options));
+  }
+  return a;
+}
+
+export default function TemplateChart({ activeTemplate, userId, range }) {
+  const { loading, error, data } = useQuery(GET_TEMPLATE_PROGRESS, {
+    variables: {
+      userId: userId,
+      templateId: activeTemplate === "All templates" ? null : activeTemplate.id,
+      range: range,
+      metric: null,
+      exercises: null,
+    },
+  });
+
+  const options = {
+    responsive: true,
+    spanGaps: true,
+    plugins: {
+      legend: {
+        position: "bottom",
+      },
+
+      title: {
+        display: false,
+        text: `${activeTemplate}`,
+      },
+    },
+  };
+
   if (loading)
     return (
-      <ResponsiveContainer width={"100%"} height={550}>
-        <LineChart
-          data={data}
-          margin={{
-            top: 30,
-            right: 5,
-            bottom: 15,
-          }}
-        >
-          <XAxis dataKey="date" />
-          <YAxis type="number" />
-          <Tooltip />
-          <Legend />
-        </LineChart>
-      </ResponsiveContainer>
+      <Center mt={100}>
+        <Loader size="lg" />
+      </Center>
     );
 
-  return (
-    <ResponsiveContainer width={"100%"} height={550}>
-      <LineChart
-        data={data}
-        margin={{
-          top: 30,
-          right: 5,
-          bottom: 15,
-        }}
-      >
-        <XAxis dataKey="date" />
-        <YAxis type="number" />
-        <Tooltip />
-        <Legend />
-        <Line
-          stroke="#EA39CA"
-          type="monotone"
-          dataKey="Dumbell row"
-          activeDot={{ r: 2 }}
-        />
-        <Line
-          type="monotone"
-          dataKey="Incline dumbell press"
-          stroke="#3987EA"
-          activeDot={{ r: 2 }}
-        />
-        <Line
-          type="monotone"
-          dataKey="bench press"
-          stroke="#8884d8"
-          activeDot={{ r: 2 }}
-        />
-        <Line type="monotone" dataKey="shoulder press" stroke="#82ca9d" />
-      </LineChart>
-    </ResponsiveContainer>
-  );
+  if (data) console.log(data);
+
+  if (error)
+    return (
+      <Box color="red" my={20}>
+        <Image maw={400} radius="md" src={shockedMan} alt="Shocked man" />
+        <Text size={"xl"} color="red">
+          Oops! Something went wrong
+        </Text>
+        <Text size={"xl"} color="red">
+          {error.message}
+        </Text>
+      </Box>
+    );
+
+  return <Line options={options} data={testdata} />;
 }

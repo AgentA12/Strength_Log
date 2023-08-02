@@ -25,6 +25,7 @@ const server = new ApolloServer({
   context: authMiddleWare,
   cache: "bounded",
   formatError: (error) => {
+    console.log(error);
     if (
       error.message ===
       "User validation failed: username: Path `username` is required., password: Path `password` is required."
@@ -58,7 +59,7 @@ const server = new ApolloServer({
   },
 });
 
-function startApolloServer(typeDefs, resolvers) {
+function startApolloServer() {
   db.once("open", async () => {
     await server.start();
     server.applyMiddleware({ app });
@@ -66,4 +67,4 @@ function startApolloServer(typeDefs, resolvers) {
   });
 }
 
-startApolloServer(typeDefs, resolvers);
+startApolloServer();

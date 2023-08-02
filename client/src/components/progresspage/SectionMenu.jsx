@@ -1,7 +1,7 @@
 import { Tabs } from "@mantine/core";
 import { HiOutlineTemplate } from "react-icons/hi";
+import { MdDateRange } from "react-icons/md";
 import { BsTools } from "react-icons/bs";
-import { BiGitCompare } from "react-icons/bi";
 import { useMediaQuery } from "@mantine/hooks";
 
 export default function SectionMenu({ activeSection, setActiveSection }) {
@@ -14,24 +14,24 @@ export default function SectionMenu({ activeSection, setActiveSection }) {
           icon={<HiOutlineTemplate size={14} />}
           onClick={() => setActiveSection("Templates")}
         >
-          Templates
+         By Templates
         </Tabs.Tab>
 
         <Tabs.Tab
-          disabled
-          value="Utilities"
-          icon={<BsTools size={14} />}
+          
+          value="Date"
+          icon={<MdDateRange size={14} />}
           onClick={() => setActiveSection("Utilities")}
         >
-          Utilities
+          By Date
         </Tabs.Tab>
         <Tabs.Tab
           disabled
           value="Compare"
-          icon={<BiGitCompare size={14} />}
+          icon={<BsTools size={14} />}
           onClick={() => setActiveSection("Compare")}
         >
-          Compare
+          Utilities
         </Tabs.Tab>
       </Tabs.List>
     </Tabs>

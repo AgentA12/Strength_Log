@@ -5,7 +5,6 @@ import StartWorkoutBtn from "./StartWorkoutBtn";
 import StatsCard from "./StatsCard";
 import TemplateCard from "./TemplateCard";
 import TemplateSection from "./TemplateSection";
-import RecentCarousel from "./RecentCarousel";
 import AddExerciseBtn from "./AddExerciseBtn";
 import CreateTemplateContainer from "./CreateTemplateContainer";
 import EditTemplateContainer from "./EditTemplateContainer";
@@ -24,7 +23,6 @@ export {
   StatsCard,
   TemplateCard,
   TemplateSection,
-  RecentCarousel,
   AddExerciseBtn,
   CreateTemplateContainer,
   EditTemplateContainer,

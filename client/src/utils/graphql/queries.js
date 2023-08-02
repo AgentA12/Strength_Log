@@ -35,9 +35,38 @@ export const GET_TEMPLATES = gql`
   }
 `;
 
-export const GET_TEMPLATES_PROGRESS = gql`
-  query ($templateName: String!, $userID: ID!) {
-    getProgress(templateName: $templateName, userID: $userID) {
+export const GET_MOST_RECENT_SAVED_TEMPLATE = gql`
+  query ($templateId: ID!, $userId: ID!) {
+    getMostRecentlySavedTemplateData(templateId: $templateId, userId: $userId) {
+      _id
+      templateName
+      exercises {
+        _id
+        exerciseName
+        reps
+        sets
+        weight
+        type
+      }
+    }
+  }
+`;
+
+export const GET_TEMPLATE_PROGRESS = gql`
+  query (
+    $templateId: ID
+    $userId: ID!
+    $range: String
+    $metric: String
+    $exercise: String
+  ) {
+    getTemplateDataForProgressPage(
+      templateId: $templateId
+      userId: $userId
+      range: $range
+      metric: $metric
+      exercise: $exercise
+    ) {
       _id
       templateName
       templateId
@@ -49,18 +78,8 @@ export const GET_TEMPLATES_PROGRESS = gql`
         weight
         type
       }
-      timeToComplete
       dateCompleted
       totalWeight
-    }
-  }
-`;
-
-export const GET_TEMPLATE_CHART_DATA = gql`
-  query ($templateName: String!, $userId: ID!) {
-    getChartData(templateName: $templateName, userId: $userId) {
-      labels
-      totalWeights
     }
   }
 `;
@@ -109,23 +128,6 @@ export const GET_CALENDAR_DATA = gql`
       dates {
         date
         templateId
-      }
-    }
-  }
-`;
-
-export const GET_RECENTLY_COMPLETED_CAROUSEL_DATA = gql`
-  query ($userID: ID!) {
-    getRecentlyCompletedCarouselData(userID: $userID) {
-      templateName
-      dateCompleted
-      date
-      totalVolume
-      diff
-      prs {
-        sets
-        weight
-        reps
       }
     }
   }

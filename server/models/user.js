@@ -10,25 +10,22 @@ const progressSchema = mongoose.Schema(
     timeToComplete: { type: String },
     dateCompleted: {
       type: String,
-      default: () => {
-        return new Date().toLocaleDateString("en-us", {
-          weekday: "long",
-          month: "short",
-          day: "numeric",
-        });
-      },
+      default: () => new Date(),
     },
   },
   { timestamps: true }
 );
 
-const userSchema = mongoose.Schema({
-  username: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  createdAt: { type: Date, default: () => Date.now() },
-  templates: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
-  progress: [progressSchema],
-});
+const userSchema = mongoose.Schema(
+  {
+    username: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    createdAt: { type: Date, default: () => Date.now() },
+    templates: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
+    progress: [progressSchema],
+  },
+  { timestamps: true }
+);
 
 userSchema.pre("save", async function (next) {
   if (this.isNew || this.isModified("password")) {
@@ -42,10 +39,15 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-userSchema.methods.getProgress = function (templateName) {
-  let r = this.progress.filter((progressObj) => {
-    return progressObj.templateName.toString() === templateName;
-  });
+userSchema.methods.getProgress = function (templateId, sortType) {
+  let result;
+  if (!templateId) {
+    r = this.progress;
+    result = [...r];
+  } else {
+    let r = this.progress.filter(
+      (progressObj) => progressObj.templateId.toString() === templateId
+    );
 
   const result = [...r];
 
@@ -60,7 +62,11 @@ userSchema.methods.getProgress = function (templateName) {
     result[i].totalWeight = total;
   });
 
-  result.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
+  if (sortType === "asc") {
+    result.sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1));
+  } else {
+    result.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
+  }
 
   return result;
 };

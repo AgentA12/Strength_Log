@@ -1,5 +1,5 @@
-import { Container, Modal, Text, Title } from "@mantine/core";
-import { useState } from "react";
+import { Center, Container, Loader, Modal, Text } from "@mantine/core";
+import { useContext } from "react";
 import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
 import { useMutation } from "@apollo/client";
 import SaveWorkoutBtn from "./SaveWorkoutBtn.jsx";
@@ -63,29 +63,50 @@ export default function TemplateModal({ template, opened, setOpened }) {
       lockScroll={false}
       opened={opened}
       onClose={() => setOpened(false)}
-      title={<Title order={2}>{template?.templateName.toUpperCase()}</Title>}
+      title={
+        <Text
+          sx={(theme) => ({
+            fontSize: 24,
+            fontWeight: "bolder",
+            [theme.fn.smallerThan("sm")]: {
+              fontSize: 18,
+            },
+          })}
+        >
+          {template?.templateName.toUpperCase()}{" "}
+          <Text component="span" color="dimmed">
+            (Previously saved)
+          </Text>
+        </Text>
+      }
       overlayopacity={0.55}
       overlayblur={3}
       size="lg"
     >
-      <Container>
-        <Text mb={10}>
-          {template?.templateNotes.trim() ? "- " : null}{" "}
-          {template?.templateNotes}
-        </Text>
-        <WorkoutState
-          templateState={templateState}
-          handleChange={handleChange}
-          opened={opened}
-        />
-        <SaveWorkoutBtn
-          loading={loading}
-          handleSaveWorkout={handleSaveWorkout}
-          data={data}
-          setOpened={setOpened}
-        />
-        {error ? <Text color="red" mt={5}>{error.message}</Text> : null}
-      </Container>
+      {templateLoading ? (
+        <Center>
+          <Loader />
+        </Center>
+      ) : (
+        <Container>
+          <Text mb={10}>
+            {template.templateNotes.trim() ? "- " : null}
+            {template.templateNotes}
+          </Text>
+          <WorkoutState
+            templateData={templateData.getMostRecentlySavedTemplateData}
+            loading={loading}
+            handleSaveWorkout={handleSaveWorkout}
+            opened={opened}
+          />
+
+          {error ? (
+            <Text color="red" mt={5}>
+              {error.message}
+            </Text>
+          ) : null}
+        </Container>
+      )}
     </Modal>
   );
 }

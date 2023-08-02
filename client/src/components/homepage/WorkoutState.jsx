@@ -1,20 +1,25 @@
-import { useEffect } from "react";
-import { useRef } from "react";
-import { Fragment } from "react";
-import { Flex, Group, NumberInput, Text } from "@mantine/core";
+import { Container, Flex, Group, NumberInput, Text } from "@mantine/core";
+import { useState } from "react";
+import { SaveWorkoutBtn, StartWorkoutBtn } from "./index";
 
-export default function WorkoutState({ templateState, handleChange, opened }) {
-  const defaultValue = useRef();
+export default function WorkoutState({
+  templateData,
+  loading,
+  handleSaveWorkout,
+}) {
+  const [templateState, setTemplateState] = useState(templateData);
+  function handleChange({ target }, index) {
+    let data = JSON.parse(JSON.stringify(templateState));
 
-  // refocus the first input on modal open
-  useEffect(() => {
-    defaultValue.current.focus();
-  }, [opened]);
+    data.exercises[index][target.name] = parseInt(target.value);
+
+    setTemplateState({ ...data });
+  }
 
   return (
     <>
-      {templateState.exercises.map((exercise, index) => (
-        <Fragment key={exercise.exerciseName}>
+      {templateState?.exercises.map((exercise, index) => (
+        <Container key={exercise._id}>
           <Group mt={5}>
             <Text
               size="xl"
@@ -24,6 +29,7 @@ export default function WorkoutState({ templateState, handleChange, opened }) {
               {exercise.exerciseName}
             </Text>
           </Group>
+
           <Flex wrap={true} gap={10}>
             {index === 0 ? (
               <NumberInput
@@ -72,8 +78,17 @@ export default function WorkoutState({ templateState, handleChange, opened }) {
               />
             ) : null}
           </Flex>
-        </Fragment>
+        </Container>
       ))}
+
+      <Flex justify="space-around" align="center" mt={15}>
+        <SaveWorkoutBtn
+          loading={loading}
+          handleSaveWorkout={handleSaveWorkout}
+          templateState={templateState}
+        />
+        <StartWorkoutBtn />
+      </Flex>
     </>
   );
 }
