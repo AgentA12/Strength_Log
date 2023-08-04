@@ -3,7 +3,6 @@ import {
   ProgressPage,
   AuthPage,
   HomePage,
-  LandingPage,
   NotFoundPage,
   SettingsPage,
 } from "../pages/index";
@@ -17,7 +16,6 @@ const isLoggedIn = auth.isLoggedIn();
 export default function RouteContainer() {
   return (
     <Routes>
-      {/* <Route path="/" index element={<LandingPage />} /> */}
       <Route path="/" index element={<AuthPage isLoggedIn={isLoggedIn} />} />
 
       <Route path="/login" element={<AuthPage isLoggedIn={isLoggedIn} />} />
@@ -40,7 +38,7 @@ export default function RouteContainer() {
       />
 
       <Route
-        path="/Create-Template"
+        path="/Create-template"
         element={
           <Protected isLoggedIn={isLoggedIn}>
             <CreateTemplateContainer />
@@ -49,7 +47,7 @@ export default function RouteContainer() {
       />
 
       <Route
-        path="/Edit-Template"
+        path="/Edit-template"
         element={
           <Protected isLoggedIn={isLoggedIn}>
             <EditTemplateContainer />

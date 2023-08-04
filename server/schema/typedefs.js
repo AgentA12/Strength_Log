@@ -126,7 +126,7 @@ const typeDefs = gql`
     getTemplateModalProgress(templateId: ID, userId: ID): [ExerciseProgress]
     getSummary(templateId: ID!, userId: ID!, progressId: ID!): [Progress]
     getProgressTimeStamps(userId: ID!): CalendarDates
-    getMostRecentlySavedTemplateData(templateId: ID, userId: ID!): ModalProgress
+    getMostRecentlySavedTemplateData(templateId: ID, userId: ID!): Progress
   }
 
   type Mutation {

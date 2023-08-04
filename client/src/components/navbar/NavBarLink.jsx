@@ -40,12 +40,13 @@ export default function NavbarLink({
   label,
   active,
   link,
+  clickHandler,
 }) {
   const { classes, cx } = useStyles();
   return (
     <Tooltip label={label} position="right" transitionProps={{ duration: 0 }}>
       <Box
-        
+        onClick={() => clickHandler ? clickHandler() : null}
         component={Link}
         to={link}
         className={cx(classes.link, { [classes.active]: active })}

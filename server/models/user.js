@@ -49,26 +49,27 @@ userSchema.methods.getProgress = function (templateId, sortType) {
       (progressObj) => progressObj.templateId.toString() === templateId
     );
 
-  const result = [...r];
+    const result = [...r];
 
-  result.forEach((resultObj, i) => {
-    let total = resultObj.exercises.reduce(
-      (accumulator, { weight, reps, sets }) => {
-        return (accumulator += weight * reps * sets);
-      },
-      0
-    );
+    result.forEach((resultObj, i) => {
+      let total = resultObj.exercises.reduce(
+        (accumulator, { weight, reps, sets }) => {
+          return (accumulator += weight * reps * sets);
+        },
+        0
+      );
 
-    result[i].totalWeight = total;
-  });
+      result[i].totalWeight = total;
+    });
 
-  if (sortType === "asc") {
-    result.sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1));
-  } else {
-    result.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
+    if (sortType === "asc") {
+      result.sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1));
+    } else {
+      result.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
+    }
+
+    return result;
   }
-
-  return result;
 };
 
 userSchema.methods.getSortedProgress = function (templateID, sorted) {

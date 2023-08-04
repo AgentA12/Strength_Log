@@ -5,7 +5,7 @@ import { useQuery } from "@apollo/client";
 import { GET_CALENDAR_DATA } from "../../utils/graphql/queries";
 import { useContext } from "react";
 import { UserContext } from "../../App";
-import { Loader, Center, Text, LoadingOverlay, Box } from "@mantine/core";
+import { Center, Text, LoadingOverlay, Box } from "@mantine/core";
 
 export default function Calendar() {
   const {

@@ -53,8 +53,6 @@ const resolvers = {
       { templateId, userId, range, metric, exercise }
     ) {
       try {
-        console.log(templateId, userId, exercise, range, metric);
-
         const { progress } = await User.findById(userId);
 
         // getting the most recently saved workouts date "2023-05-20"
@@ -63,7 +61,6 @@ const resolvers = {
         )[0].createdAt;
 
         let dateArray = getRangeArray(range, mostRecentlySavedDate);
-        console.log(a(progress, dateArray));
 
         function getRangeArray(range, mostRecentlySavedDate) {
           //depending on the range generate a range of dates
@@ -129,6 +126,7 @@ const resolvers = {
               }
             }
           }
+
           return b;
         }
 
@@ -140,6 +138,8 @@ const resolvers = {
             : false;
         }
 
+        a(progress, dateArray);
+
         return [{}];
       } catch (error) {
         return error;
@@ -148,15 +148,14 @@ const resolvers = {
 
     async getMostRecentlySavedTemplateData(_, { templateId, userId }) {
       const { progress } = await User.findById(userId);
-
       const mostRecent = progress
         .filter(
           (progressObj) => progressObj.templateId.toString() === templateId
         )
         .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))[0];
-
-      // if mostRecent is is null or undefined the user hasn't save a workout with that template
+      // if mostRecent is null or undefined the user hasn't save a workout with that template
       // so query the users templates instead
+
       if (mostRecent != null && mostRecent != undefined) {
         return mostRecent;
       } else {
@@ -167,7 +166,6 @@ const resolvers = {
             model: "Exercise",
           },
         });
-
         return templates
           .filter((template) => template._id.toString() === templateId)
           .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))[0];

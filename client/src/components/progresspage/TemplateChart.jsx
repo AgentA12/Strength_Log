@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { GET_TEMPLATE_PROGRESS } from "../../utils/graphql/queries";
-import { Box, Text, Image, Loader, Center } from "@mantine/core";
+import { Box, Text, Loader, Center } from "@mantine/core";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,7 +13,6 @@ import {
   Colors,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import shockedMan from "./shocked_guy.gif";
 
 ChartJS.register(
   CategoryScale,
@@ -25,21 +24,6 @@ ChartJS.register(
   Legend,
   Colors
 );
-
-// const labels = [
-//   "January",
-//   "February",
-//   "March",
-//   "April",
-//   "May",
-//   "June",
-//   "July",
-//   "August",
-//   "September",
-//   "October",
-//   "November",
-//   "December",
-// ];
 
 const labels = getDaysArray("2023-07-25", new Date());
 
@@ -118,12 +102,9 @@ export default function TemplateChart({ activeTemplate, userId, range }) {
       </Center>
     );
 
-  if (data) console.log(data);
-
   if (error)
     return (
       <Box color="red" my={20}>
-        <Image maw={400} radius="md" src={shockedMan} alt="Shocked man" />
         <Text size={"xl"} color="red">
           Oops! Something went wrong
         </Text>

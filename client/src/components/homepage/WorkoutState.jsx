@@ -41,7 +41,6 @@ export default function WorkoutState({
                     index
                   )
                 }
-                ref={defaultValue}
               />
             ) : (
               <NumberInput

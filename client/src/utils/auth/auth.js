@@ -26,7 +26,6 @@ class Auth {
 
   logout(page) {
     window.localStorage.removeItem("token");
-
     window.location.assign(page ? page : "/");
   }
 

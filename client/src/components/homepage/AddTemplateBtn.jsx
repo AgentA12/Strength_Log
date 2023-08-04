@@ -4,7 +4,7 @@ import { Button } from "@mantine/core";
 
 export default function AddTemplateBtn() {
   return (
-    <Link to={"/Create-Template"}>
+    <Link to={"/Create-template"}>
       <Button leftIcon={<HiPlus />} variant={"outline"}>
         Template
       </Button>

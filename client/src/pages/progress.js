@@ -5,7 +5,6 @@ import {
   TemplateSelect,
   ExerciseSelect,
   TypeSelect,
-  Table,
   TemplateChart,
 } from "../components/progresspage/index";
 
@@ -23,7 +22,6 @@ import {
   createStyles,
 } from "@mantine/core";
 import RangeSelect from "../components/progresspage/SelectRange";
-// import { useLocation } from "react-router-dom";
 import { UserContext } from "../App";
 
 const useStyles = createStyles((theme) => ({
@@ -43,8 +41,6 @@ export default function ProgressPage() {
   const [range, setRange] = useState("All time");
 
   const { classes } = useStyles();
-
-  // const { state } = useLocation();
 
   const {
     data: { _id: userID },
@@ -138,14 +134,14 @@ export default function ProgressPage() {
 
             <ExerciseSelect />
             <TypeSelect />
-            <RangeSelect />
+            <RangeSelect setRange={setRange} />
           </Flex>
           <TemplateChart
             loadChartSummaryData={loadChartSummaryData}
             activeTemplate={activeTemplate}
             loading={loading}
+            userId={userID}
           />
-          <Table />{" "}
         </>
       )}
     </Container>

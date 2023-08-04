@@ -1,23 +1,29 @@
 import { Center, Container, Loader, Modal, Text } from "@mantine/core";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
-import { useMutation } from "@apollo/client";
-import SaveWorkoutBtn from "./SaveWorkoutBtn.jsx";
-import auth from "../../utils/auth/auth";
+import { useMutation, useQuery } from "@apollo/client";
 import WorkoutState from "./WorkoutState";
 import { showNotification } from "@mantine/notifications";
 import { AiOutlineCheck } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
+import { GET_MOST_RECENT_SAVED_TEMPLATE } from "../../utils/graphql/queries";
+import { UserContext } from "../../App";
 
 export default function TemplateModal({ template, opened, setOpened }) {
-  const [templateState, setTemplateState] = useState(template);
-
-  const [saveWorkoutFunction, { data, loading, error }] =
-    useMutation(SAVE_WORKOUT);
-
   const {
     data: { _id: userID },
-  } = auth.getInfo();
+  } = useContext(UserContext);
+
+  const [templateState, setTemplateState] = useState(template);
+  const {
+    data: templateData,
+    loading: templateLoading,
+    error: TemplateError,
+  } = useQuery(GET_MOST_RECENT_SAVED_TEMPLATE, {
+    variables: { templateId: template._id, userId: userID },
+  });
+
+  const [saveWorkoutFunction, { loading, error }] = useMutation(SAVE_WORKOUT);
 
   function handleSaveWorkout() {
     // async await is very inconsistent here

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Navbar, createStyles, Flex } from "@mantine/core";
 import {
   AiFillThunderbolt,
@@ -7,7 +6,6 @@ import {
   AiOutlineLineChart,
 } from "react-icons/ai";
 import { HiLogout } from "react-icons/hi";
-import { IoMdSwap } from "react-icons/io";
 import { ToggleTheme, NavbarLink } from "./index.js";
 import auth from "../../utils/auth/auth.js";
 import { useLocation } from "react-router-dom";
@@ -39,8 +37,8 @@ const useStyles = createStyles((theme) => ({
     },
 
     [theme.fn.smallerThan("xs")]: {
-      justifyContent: "center"
-    }
+      justifyContent: "center",
+    },
   },
 
   iconFlex: {
@@ -108,14 +106,9 @@ export default function SideNav() {
             <ToggleTheme />
 
             <NavbarLink
-              icon={IoMdSwap}
-              label="Change account"
-              onClick={() => auth.logout("/login")}
-            />
-            <NavbarLink
               icon={HiLogout}
               label="Logout"
-              onClick={() => auth.logout()}
+              clickHandler={auth.logout}
             />
           </Flex>
         </Navbar.Section>
