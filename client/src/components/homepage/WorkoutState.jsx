@@ -1,13 +1,13 @@
 import { Container, Flex, Group, NumberInput, Text } from "@mantine/core";
-import { useState } from "react";
 import { SaveWorkoutBtn, StartWorkoutBtn } from "./index";
 
 export default function WorkoutState({
-  templateData,
   loading,
   handleSaveWorkout,
+  setTemplateState,
+  templateState
 }) {
-  const [templateState, setTemplateState] = useState(templateData);
+
   function handleChange({ target }, index) {
     let data = JSON.parse(JSON.stringify(templateState));
 
@@ -26,7 +26,7 @@ export default function WorkoutState({
               sx={(theme) => ({ color: theme.colors.violet[5] })}
               fw={700}
             >
-              {exercise.exerciseName}
+              {exercise.exercise.name}
             </Text>
           </Group>
 

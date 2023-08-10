@@ -1,7 +1,6 @@
 const { User, Template, Exercise } = require("../models/index");
 const { AuthenticationError } = require("apollo-server");
 const { signToken } = require("../utils/auth");
-const { getDaysArray } = require("../utils/helpers");
 
 const resolvers = {
   Query: {
@@ -30,6 +29,11 @@ const resolvers = {
       }
     },
 
+    getExercises: async function () {
+      const exercises = await Exercise.find().select("-_id name");
+      return exercises;
+    },
+
     getTemplates: async function (_, { userId }) {
       try {
         const { templates } = await User.findById(userId)
@@ -42,6 +46,7 @@ const resolvers = {
             },
           });
 
+        console.log(templates[0]);
         return templates;
       } catch (error) {
         return error;
@@ -50,97 +55,14 @@ const resolvers = {
 
     getTemplateDataForProgressPage: async function (
       _,
-      { templateId, userId, range, metric, exercise }
+      { templateId, userId, range, metric }
     ) {
       try {
-        const { progress } = await User.findById(userId);
+        const { progress } = await User.findById(userId).select(
+          "-_id progress.exercises progress.createdAt progress.templateName"
+        );
 
-        // getting the most recently saved workouts date "2023-05-20"
-        const mostRecentlySavedDate = progress.sort((a, b) =>
-          a.createdAt > b.createdAt ? -1 : 1
-        )[0].createdAt;
-
-        let dateArray = getRangeArray(range, mostRecentlySavedDate);
-
-        function getRangeArray(range, mostRecentlySavedDate) {
-          //depending on the range generate a range of dates
-          switch (range) {
-            case "Last 12 months":
-              return getDaysArray(
-                new Date(
-                  mostRecentlySavedDate.setFullYear(
-                    mostRecentlySavedDate.getFullYear() - 1
-                  )
-                ),
-                new Date()
-              ).map((d) => d);
-
-            case "Last 6 months":
-              return getDaysArray(
-                new Date(
-                  mostRecentlySavedDate.setMonth(
-                    mostRecentlySavedDate.getMonth() - 6
-                  )
-                ),
-                new Date()
-              ).map((d) => d);
-
-            case "Last 3 months":
-              return getDaysArray(
-                new Date(
-                  mostRecentlySavedDate.setMonth(
-                    mostRecentlySavedDate.getMonth() - 3
-                  )
-                ),
-                new Date()
-              ).map((d) => d);
-
-            case "Last month":
-              return getDaysArray(
-                new Date(
-                  mostRecentlySavedDate.setMonth(
-                    mostRecentlySavedDate.getMonth() - 1
-                  )
-                ),
-                new Date()
-              ).map((d) => d);
-
-            default:
-              return getDaysArray(
-                new Date(mostRecentlySavedDate),
-                new Date()
-              ).map((d) => d);
-          }
-        }
-
-        function a(progressAry, dateAry) {
-          const b = [];
-
-          for (let i = 0; i < dateAry.length; i++) {
-            for (let x = 0; x < progressAry.length; x++) {
-              if (checkIfSameDay(dateAry[i], progressAry[x].createdAt)) {
-                const { exercises } = progress[x];
-                b.push({ labels: dateAry[i], data: [...exercises] });
-              } else {
-                b.push({ labels: dateAry[i], data: null });
-              }
-            }
-          }
-
-          return b;
-        }
-
-        function checkIfSameDay(date1, date2) {
-          return date1.getMonth() === date2.getMonth() &&
-            date1.getFullYear() === date2.getFullYear() &&
-            date1.getDay() === date2.getDay()
-            ? true
-            : false;
-        }
-
-        a(progress, dateArray);
-
-        return [{}];
+        // data format => datasets = [{label: "bench press", data: [x: "2023-05-30", y: 225]}, ...etc]
       } catch (error) {
         return error;
       }
@@ -177,44 +99,6 @@ const resolvers = {
       const chartData = user.ExerciseProgress(templateID);
 
       return chartData;
-    },
-
-    async getSummary(_, { userId, templateId, progressId }) {
-      const user = await User.findById(userId);
-
-      const progress = user.getSortedProgress(templateId, "asc");
-
-      function getRecentComparison(aryOfRecents, progressId) {
-        let variable = [];
-
-        aryOfRecents.forEach((recentObj, i) => {
-          if (recentObj._id.toString() === progressId) {
-            // if true we are at the first progressObj in array and there is no recent to compare
-            // so only push the current recentObj data
-            if (aryOfRecents.length - 1 === i) {
-              variable.push(recentObj);
-            } else {
-              // else push the current and previous
-              variable.push(recentObj);
-              variable.push(aryOfRecents[i + 1]);
-            }
-          }
-        });
-        // if length is 1 we are only getting the first saved template so we dont need to get the difference
-        if (variable.length <= 1) return variable;
-
-        // compare exercise weight and add difference
-        variable[0].exercises.forEach((exercise, i) => {
-          variable[1].exercises[i].dif =
-            exercise.weight - variable[1].exercises[i].weight;
-        });
-
-        return variable;
-      }
-
-      const summary = getRecentComparison(progress, progressId);
-
-      return summary;
     },
   },
 
@@ -261,10 +145,15 @@ const resolvers = {
 
     createTemplate: async function (_, args) {
       try {
-        await Exercise.create(args.exercises);
-
         const templatePayload = {
-          exercises: args.exercises,
+          exercises: args.exercises.map((exercise) => {
+            return {
+              exercise: { name: exercise.name },
+              reps: exercise.reps,
+              sets: exercise.sets,
+              weight: exercise.weight,
+            };
+          }),
           templateName: args.templateName,
           templateNotes: args.templateNotes,
         };
@@ -277,15 +166,13 @@ const resolvers = {
           $push: { templates: [templateId] },
         });
 
-        const userData = await User.findById(args.userId).populate({
+        const { templates } = await User.findById(args.userId).populate({
           path: "templates",
           populate: {
             path: "exercises",
             model: "Exercise",
           },
         });
-
-        const { templates } = userData;
 
         return templates;
       } catch (error) {
@@ -332,6 +219,7 @@ const resolvers = {
 
     saveWorkout: async function (_, { templateId, userID, exerciseInput }) {
       try {
+        console.log(templateId, userID, exerciseInput);
         const template = await Template.findById(templateId);
 
         const user = await User.findByIdAndUpdate(

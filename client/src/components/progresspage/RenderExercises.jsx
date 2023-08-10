@@ -10,7 +10,7 @@ export default function RenderExercises({ summaryObj, summaryNum }) {
           {summaryNum === 0 &&
             summaryObj?.exercises.map((exercise, i) => (
               <>
-                {exercise.exerciseName}
+                {exercise.name}
                 <Table>
                   <thead>
                     <tr>

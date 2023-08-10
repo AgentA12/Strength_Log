@@ -16,26 +16,31 @@ const typeDefs = gql`
 
   type Exercise {
     _id: ID
-    exerciseName: String
-    sets: Int
-    reps: Int
-    weight: Int
-    type: String
-    dif: Int
+    name: String
+    equipment: String
   }
 
   input exerciseInput {
-    _id: ID
-    exerciseName: String
+    name: String
+  }
+
+  input saveWorkoutExerciseInput {
+    exercise: exerciseInput
+    weight: Int
+    reps: Int
+    sets: Int
+  }
+
+  input createTemplateExerciseInput {
+    name: String
     sets: Int
     reps: Int
     weight: Int
-    type: String
   }
 
   input editExerciseInput {
     _id: ID
-    exerciseName: String
+    name: String
     sets: Int
     reps: Int
     weight: Int
@@ -46,7 +51,14 @@ const typeDefs = gql`
     _id: ID
     templateName: String
     templateNotes: String
-    exercises: [Exercise]
+    exercises: [TemplateExercises]
+  }
+
+  type TemplateExercises {
+    exercise: Exercise
+    sets: Int
+    reps: Int
+    weight: Int
   }
 
   type Routine {
@@ -58,10 +70,14 @@ const typeDefs = gql`
     _id: ID
     templateName: String
     templateId: String
-    exercises: [Exercise]
-    timeToComplete: String
-    totalWeight: Int
-    dateCompleted: String
+    exercises: [ExerciseProgress]
+  }
+
+  type ExerciseProgress {
+    exercise: Exercise
+    weight: Int
+    sets: Int
+    reps: Int
   }
 
   type isDeleted {
@@ -114,7 +130,8 @@ const typeDefs = gql`
   }
 
   type Query {
-    getTemplates(userId: ID!, offset: Int, limit: Int): [Template]
+    getExercises: [Exercise]
+    getTemplates(userId: ID!): [Template]
     getTemplateDataForProgressPage(
       templateId: ID
       userId: ID!
@@ -124,7 +141,6 @@ const typeDefs = gql`
     ): [Progress]
     getExerciseProgress(templateID: ID!, userID: ID!): ExerciseProgress
     getTemplateModalProgress(templateId: ID, userId: ID): [ExerciseProgress]
-    getSummary(templateId: ID!, userId: ID!, progressId: ID!): [Progress]
     getProgressTimeStamps(userId: ID!): CalendarDates
     getMostRecentlySavedTemplateData(templateId: ID, userId: ID!): Progress
   }
@@ -136,7 +152,7 @@ const typeDefs = gql`
       userId: ID!
       templateName: String!
       templateNotes: String
-      exercises: [exerciseInput!]
+      exercises: [createTemplateExerciseInput!]
     ): [Template]
     editTemplate(
       _id: ID!
@@ -149,7 +165,7 @@ const typeDefs = gql`
     saveWorkout(
       templateId: ID!
       userID: ID!
-      exerciseInput: [exerciseInput!]
+      exercises: [saveWorkoutExerciseInput!]
     ): User
     deleteAccount(userID: ID!): Confirm
   }

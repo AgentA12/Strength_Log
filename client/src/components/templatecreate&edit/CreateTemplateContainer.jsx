@@ -2,10 +2,8 @@ import ExerciseForm from "./ExerciseForm";
 import { useState, useEffect, useRef, useContext } from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_TEMPLATE } from "../../utils/graphql/mutations";
-import { useQuery } from "@apollo/client";
-import { GET_TEMPLATES } from "../../utils/graphql/queries";
-import AddExerciseBtn from "./AddExerciseBtn";
-import SaveTemplateBtn from "./SaveTemplateBtn";
+import AddExerciseBtn from "../homepage/AddExerciseBtn";
+import SaveTemplateBtn from "../homepage/SaveTemplateBtn";
 import { useNavigate } from "react-router-dom";
 import {
   ScrollArea,
@@ -20,14 +18,13 @@ import {
   Box,
 } from "@mantine/core";
 import { UserContext } from "../../App";
+import { useQuery } from "@apollo/client";
+import { GET_EXERCISES } from "../../utils/graphql/queries";
 
 const useStyles = createStyles(() => ({
   container: {
-    display: "grid",
+    maxWidth: "600px",
   },
-  itemOne: {},
-  itemTwo: {},
-  itemThree: {},
 }));
 
 export default function CreateTemplateContainer() {
@@ -38,29 +35,25 @@ export default function CreateTemplateContainer() {
   const { classes } = useStyles();
   const navigate = useNavigate();
 
+  const { data: exerciseData } = useQuery(GET_EXERCISES);
+
   const [errorMessage, setErrorMessage] = useState(null);
   const [formState, setFormState] = useState({
     templateName: "",
     templateNotes: "",
     exercises: [
       {
-        exerciseName: "",
+        name: "",
         sets: 5,
         reps: 5,
         weight: 135,
-        type: "Barbell",
       },
     ],
   });
 
-  const { refetch } = useQuery(GET_TEMPLATES, {
-    variables: {
-      userId: userID,
-    },
-  });
-
   //ref on error message to scroll to bottom of exercise container div when exercise is added
   const bottomRef = useRef(null);
+
   useEffect(() => {
     bottomRef.current.scrollIntoView();
   }, [formState.exercises.length]);
@@ -87,11 +80,10 @@ export default function CreateTemplateContainer() {
       templateNotes: "",
       exercises: [
         {
-          exerciseName: "",
+          name: "",
           sets: 5,
           reps: 5,
           weight: 135,
-          type: "Barbell",
         },
       ],
     });
@@ -111,7 +103,7 @@ export default function CreateTemplateContainer() {
       if (mutationRes) {
         //if template is added, reset form and refetch new templates and remove the error message
         resetFormState();
-        refetch();
+        // refetch();
         setErrorMessage(null);
         navigate("/Home");
       }
@@ -125,11 +117,10 @@ export default function CreateTemplateContainer() {
   //adds an exercise to the form
   function addExercise() {
     const exercise = {
-      exerciseName: "",
+      name: "Bench press",
       sets: 5,
       reps: 5,
       weight: 135,
-      type: "Barbell",
     };
 
     const data = { ...formState };
@@ -166,6 +157,7 @@ export default function CreateTemplateContainer() {
           value={formState?.templateName}
           placeholder="Template Name"
           size="xl"
+          mb={15}
         />
         <Box>
           <Textarea
@@ -186,9 +178,10 @@ export default function CreateTemplateContainer() {
         </Box>
 
         <ScrollArea offsetScrollbars scrollbarSize={4} scrollHideDelay={1500}>
-          <form onSubmit={(event) => handleSubmit(event)}>
+          <>
             {formState?.exercises.map((_, index) => (
               <ExerciseForm
+                exerciseData={exerciseData}
                 key={index}
                 handleChange={handleChange}
                 index={index}
@@ -198,7 +191,7 @@ export default function CreateTemplateContainer() {
             ))}
 
             <Box component="span" ref={bottomRef} />
-          </form>
+          </>
         </ScrollArea>
       </Box>
     </Container>

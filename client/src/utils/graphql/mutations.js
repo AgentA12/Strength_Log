@@ -14,7 +14,7 @@ export const ADD_USER = gql`
           templateName
           exercises {
             _id
-            exerciseName
+            name
             reps
             sets
             weight
@@ -42,7 +42,7 @@ export const CREATE_TEMPLATE = gql`
     $userId: ID!
     $templateName: String!
     $templateNotes: String
-    $exercises: [exerciseInput!]
+    $exercises: [createTemplateExerciseInput!]
   ) {
     createTemplate(
       userId: $userId
@@ -50,14 +50,7 @@ export const CREATE_TEMPLATE = gql`
       templateNotes: $templateNotes
       exercises: $exercises
     ) {
-      _id
       templateName
-      exercises {
-        exerciseName
-        reps
-        sets
-        weight
-      }
     }
   }
 `;
@@ -113,7 +106,7 @@ export const EDIT_TEMPLATE = gql`
       _id
       exercises {
         _id
-        exerciseName
+        name
         sets
         reps
         weight
@@ -123,11 +116,11 @@ export const EDIT_TEMPLATE = gql`
 `;
 
 export const SAVE_WORKOUT = gql`
-  mutation ($templateId: ID!, $userID: ID!, $exercises: [exerciseInput!]) {
+  mutation ($templateId: ID!, $userID: ID!, $exercises: [saveWorkoutExerciseInput!]) {
     saveWorkout(
       templateId: $templateId
       userID: $userID
-      exerciseInput: $exercises
+      exercises: $exercises
     ) {
       username
     }

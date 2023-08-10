@@ -1,6 +1,6 @@
 import { Select } from "@mantine/core";
 
-export default function RangeSelect({ range, setRange }) {
+export default function DateRangeSelect({ range, setRange }) {
   return (
     <Select
       sx={{ width: "fit-content" }}
@@ -11,17 +11,11 @@ export default function RangeSelect({ range, setRange }) {
         "Last 12 months",
         "All time",
       ]}
-      searchable
       placeholder="Select a range"
       defaultValue={"All time"}
       description="Range"
       value={range}
       onChange={(value) => setRange(value)}
-      transitionProps={{
-        transition: "pop-top-left",
-        duration: 80,
-        timingFunction: "ease",
-      }}
     />
   );
 }

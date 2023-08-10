@@ -12,13 +12,14 @@ import {
   Loader,
   Center,
   Group,
-  Skeleton,
 } from "@mantine/core";
 import { UserContext } from "../../App";
 import { showNotification } from "@mantine/notifications";
 
 export default function TemplateSection() {
-  const userInfo = useContext(UserContext);
+  const {
+    data: { _id },
+  } = useContext(UserContext);
 
   const [templates, setTemplates] = useState([]);
 
@@ -26,7 +27,7 @@ export default function TemplateSection() {
 
   const { loading, data, error, refetch } = useQuery(GET_TEMPLATES, {
     variables: {
-      userId: userInfo.data._id,
+      userId: _id,
     },
   });
 
@@ -100,14 +101,14 @@ export default function TemplateSection() {
         />
       ))
     ) : (
-      <Text size={"xl"}>You have no templates saved.</Text>
+      <Text size={"xl"}>You have no templates saved yet.</Text>
     );
   }
 
   return (
     <Box component="section">
       <Flex
-        gap="lg" 
+        gap="lg"
         justify={{ base: "center", sm: "flex-start" }}
         align="center"
         direction="row"

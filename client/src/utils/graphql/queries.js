@@ -8,7 +8,7 @@ export const GET_TEMPLATE_BY_ID = gql`
       templateNotes
       exercises {
         _id
-        exerciseName
+        name
         reps
         sets
         weight
@@ -24,12 +24,12 @@ export const GET_TEMPLATES = gql`
       templateName
       templateNotes
       exercises {
-        _id
-        exerciseName
-        reps
+        exercise {
+          name
+        }
         sets
+        reps
         weight
-        type
       }
     }
   }
@@ -41,18 +41,19 @@ export const GET_MOST_RECENT_SAVED_TEMPLATE = gql`
       _id
       templateName
       exercises {
+        exercise {
+          name
+        }
         _id
-        exerciseName
         reps
         sets
         weight
-        type
       }
     }
   }
 `;
 
-export const GET_TEMPLATE_PROGRESS = gql`
+export const GET_CHART_PROGRESS_BY_TEMPLATE = gql`
   query (
     $templateId: ID
     $userId: ID!
@@ -71,15 +72,13 @@ export const GET_TEMPLATE_PROGRESS = gql`
       templateName
       templateId
       exercises {
-        _id
-        exerciseName
+        exercise {
+          name
+        }
         reps
         sets
         weight
-        type
       }
-      dateCompleted
-      totalWeight
     }
   }
 `;
@@ -96,32 +95,6 @@ export const GET_EXERCISE_PROGRESS = gql`
   }
 `;
 
-export const GET_SUMMARY = gql`
-  query ($templateId: ID!, $userId: ID!, $progressId: ID!) {
-    getSummary(
-      templateId: $templateId
-      userId: $userId
-      progressId: $progressId
-    ) {
-      _id
-      templateName
-      templateId
-      exercises {
-        _id
-        exerciseName
-        sets
-        reps
-        weight
-        type
-        dif
-      }
-      timeToComplete
-      totalWeight
-      dateCompleted
-    }
-  }
-`;
-
 export const GET_CALENDAR_DATA = gql`
   query ($userId: ID!) {
     getProgressTimeStamps(userId: $userId) {
@@ -129,6 +102,14 @@ export const GET_CALENDAR_DATA = gql`
         date
         templateId
       }
+    }
+  }
+`;
+
+export const GET_EXERCISES = gql`
+  query {
+    getExercises {
+      name
     }
   }
 `;

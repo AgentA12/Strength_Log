@@ -6,8 +6,8 @@ import {
   NotFoundPage,
   SettingsPage,
 } from "../pages/index";
-import CreateTemplateContainer from "../components/homepage/CreateTemplateContainer";
-import EditTemplateContainer from "../components/homepage/EditTemplateContainer";
+import CreateTemplateContainer from "../components/templatecreate&edit/CreateTemplateContainer";
+import EditTemplateContainer from "../components/templatecreate&edit/EditTemplateContainer";
 import Protected from "../components/ProtectedRoute";
 import auth from "../utils/auth/auth";
 

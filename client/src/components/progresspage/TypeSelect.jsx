@@ -1,19 +1,14 @@
 import { Select } from "@mantine/core";
 
-export default function TypeSelect() {
+export default function TypeSelect({ metric, setMetric }) {
   return (
     <Select
       sx={{ width: "fit-content" }}
-      data={["Total weight", "Repetitions", "Sets", "Weight"]}
-      searchable
+      data={["Total weight", "Weight", "1RM"]}
+      onChange={(value) => setMetric(value)}
       placeholder="Select metric"
-      defaultValue={"Total weight"}
+      defaultValue={metric}
       description="Metric"
-      transitionProps={{
-        transition: "pop-top-left",
-        duration: 80,
-        timingFunction: "ease",
-      }}
     />
   );
 }

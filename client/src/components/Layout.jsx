@@ -5,7 +5,6 @@ import { useLocation } from "react-router-dom";
 const useStyles = createStyles((theme) => ({
   container: {
     marginLeft: 80,
-    marginTop: 25,
     [theme.fn.smallerThan("sm")]: {
       margin: "auto",
       marginBottom: 150,

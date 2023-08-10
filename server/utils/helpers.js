@@ -1,8 +1,8 @@
-function getDaysArray(start, end) {
+function getDaysArray(start, end, range) {
   for (
     var a = [], d = new Date(start);
     d <= new Date(end);
-    d.setDate(d.getDate() + 1)
+    d.setDate(d.getDate() + range)
   ) {
     a.push(new Date(d));
   }

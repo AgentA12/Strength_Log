@@ -5,8 +5,8 @@ import { EDIT_TEMPLATE } from "../../utils/graphql/mutations";
 import auth from "../../utils/auth/auth";
 import { useQuery } from "@apollo/client";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
-import AddExerciseBtn from "./AddExerciseBtn";
-import SaveTemplateBtn from "./SaveTemplateBtn";
+import AddExerciseBtn from "../homepage/AddExerciseBtn";
+import SaveTemplateBtn from "../homepage/SaveTemplateBtn";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   ScrollArea,
@@ -71,7 +71,7 @@ export default function EditTemplate() {
 
       for (let i = 0; i < formState.exercises.length; i++) {
         if (
-          !formState.exercises[i].exerciseName ||
+          !formState.exercises[i].name ||
           !formState.exercises[i].sets ||
           !formState.exercises[i].reps
         ) {
@@ -100,7 +100,7 @@ export default function EditTemplate() {
 
   function addExercise() {
     const exercise = {
-      exerciseName: "",
+      name: "",
       sets: 5,
       reps: 5,
       weight: 135,

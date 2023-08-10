@@ -1,18 +1,14 @@
 import { useState, useContext } from "react";
-import { useQuery, useLazyQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import {
   SectionMenu,
   TemplateSelect,
-  ExerciseSelect,
   TypeSelect,
   TemplateChart,
+  DateRangeSelect,
 } from "../components/progresspage/index";
 
-import {
-  GET_TEMPLATES,
-  GET_TEMPLATE_PROGRESS,
-  GET_CALENDAR_DATA,
-} from "../utils/graphql/queries";
+import { GET_TEMPLATES } from "../utils/graphql/queries";
 import {
   Container,
   Title,
@@ -20,8 +16,8 @@ import {
   Loader,
   Text,
   createStyles,
+  Box,
 } from "@mantine/core";
-import RangeSelect from "../components/progresspage/SelectRange";
 import { UserContext } from "../App";
 
 const useStyles = createStyles((theme) => ({
@@ -37,7 +33,6 @@ export default function ProgressPage() {
   const [activeTemplate, setActiveTemplate] = useState("All templates");
   const [activeSection, setActiveSection] = useState("Templates");
   const [metric, setMetric] = useState("Total weight");
-  const [exercises, setExercises] = useState("All");
   const [range, setRange] = useState("All time");
 
   const { classes } = useStyles();
@@ -52,34 +47,8 @@ export default function ProgressPage() {
     },
   });
 
-  const [
-    loadOneTemplate,
-    { loading: loadOneTemplateLoading, data: loadOneTemplateData },
-  ] = useLazyQuery(GET_TEMPLATE_PROGRESS);
-
-  const [
-    loadChartSummary,
-    { loading: loadChartSummaryDataLoading, data: loadChartSummaryData },
-  ] = useLazyQuery(GET_CALENDAR_DATA);
-
-  async function handleQuery(templateName) {
-    await loadOneTemplate({
-      variables: {
-        templateName: templateName,
-        userID: userID,
-      },
-    });
-  }
-
-  async function getChartData(templateName) {
-    await loadChartSummary({
-      variables: {
-        templateName: templateName,
-        userId: userID,
-      },
-    });
-  }
   if (error) return <Title color="red">{error.message}</Title>;
+
   if (loading)
     return (
       <Container fluid className={classes.container}>
@@ -123,25 +92,34 @@ export default function ProgressPage() {
         <Loader />
       ) : (
         <>
-          <Flex wrap="wrap" gap={5} justify={{ base: "center", sm: "left" }}>
+          <Flex
+            wrap="wrap"
+            gap={5}
+            justify={{ base: "center", sm: "left" }}
+            mb={30}
+          >
             <TemplateSelect
               templates={data.getTemplates}
-              handleQuery={handleQuery}
               activeTemplate={activeTemplate}
               setActiveTemplate={setActiveTemplate}
-              getChartData={getChartData}
             />
 
-            <ExerciseSelect />
-            <TypeSelect />
-            <RangeSelect setRange={setRange} />
+            <TypeSelect metric={metric} setMetric={setMetric} />
+            <DateRangeSelect setRange={setRange} />
           </Flex>
-          <TemplateChart
-            loadChartSummaryData={loadChartSummaryData}
-            activeTemplate={activeTemplate}
-            loading={loading}
-            userId={userID}
-          />
+          <Box
+            sx={{
+              height: "700px",
+            }}
+          >
+            {" "}
+            <TemplateChart
+              activeTemplate={activeTemplate}
+              userId={userID}
+              range={range}
+              metric={metric}
+            />
+          </Box>
         </>
       )}
     </Container>

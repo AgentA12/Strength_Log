@@ -1,12 +1,11 @@
-import { Center, Container, Loader, Modal, Text } from "@mantine/core";
+import { Container, Modal, Text } from "@mantine/core";
 import { useContext, useState } from "react";
 import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import WorkoutState from "./WorkoutState";
 import { showNotification } from "@mantine/notifications";
 import { AiOutlineCheck } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
-import { GET_MOST_RECENT_SAVED_TEMPLATE } from "../../utils/graphql/queries";
 import { UserContext } from "../../App";
 
 export default function TemplateModal({ template, opened, setOpened }) {
@@ -15,13 +14,6 @@ export default function TemplateModal({ template, opened, setOpened }) {
   } = useContext(UserContext);
 
   const [templateState, setTemplateState] = useState(template);
-  const {
-    data: templateData,
-    loading: templateLoading,
-    error: TemplateError,
-  } = useQuery(GET_MOST_RECENT_SAVED_TEMPLATE, {
-    variables: { templateId: template._id, userId: userID },
-  });
 
   const [saveWorkoutFunction, { loading, error }] = useMutation(SAVE_WORKOUT);
 
@@ -56,14 +48,6 @@ export default function TemplateModal({ template, opened, setOpened }) {
       });
   }
 
-  function handleChange({ target }, index) {
-    let data = JSON.parse(JSON.stringify(templateState));
-
-    data.exercises[index][target.name] = parseInt(target.value);
-
-    setTemplateState({ ...data });
-  }
-
   return (
     <Modal
       lockScroll={false}
@@ -80,39 +64,31 @@ export default function TemplateModal({ template, opened, setOpened }) {
           })}
         >
           {template?.templateName.toUpperCase()}{" "}
-          <Text component="span" color="dimmed">
-            (Previously saved)
-          </Text>
         </Text>
       }
       overlayopacity={0.55}
       overlayblur={3}
       size="lg"
     >
-      {templateLoading ? (
-        <Center>
-          <Loader />
-        </Center>
-      ) : (
-        <Container>
-          <Text mb={10}>
-            {template.templateNotes.trim() ? "- " : null}
-            {template.templateNotes}
-          </Text>
-          <WorkoutState
-            templateData={templateData.getMostRecentlySavedTemplateData}
-            loading={loading}
-            handleSaveWorkout={handleSaveWorkout}
-            opened={opened}
-          />
+      <Container>
+        <Text mb={10}>
+          {template.templateNotes.trim() ? "- " : null}
+          {template.templateNotes}
+        </Text>
+        <WorkoutState
+          loading={loading}
+          handleSaveWorkout={handleSaveWorkout}
+          setTemplateState={setTemplateState}
+          templateState={templateState}
+        />
 
-          {error ? (
-            <Text color="red" mt={5}>
-              {error.message}
-            </Text>
-          ) : null}
-        </Container>
-      )}
+        {error ? (
+          <Text color="red" mt={5}>
+            {error.message}
+          </Text>
+        ) : null}
+      </Container>
+      )
     </Modal>
   );
 }

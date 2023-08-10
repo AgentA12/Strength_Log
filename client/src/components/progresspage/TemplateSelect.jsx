@@ -1,19 +1,15 @@
 import { Select } from "@mantine/core";
-import { useState } from "react";
 
 export default function TemplateSelect({
   templates,
-  handleQuery,
   setActiveTemplate,
-  getChartData,
   activeTemplate,
 }) {
   const templateData = templates.map((template) => {
-    let data = {};
-
-    data.label = template.templateName;
-    data.value = template.templateName;
-    return data;
+    return {
+      label: template.templateName,
+      value: template.templateName,
+    };
   });
 
   templateData.push({ label: "All templates", value: "All templates" });
@@ -26,9 +22,7 @@ export default function TemplateSelect({
       description="Template(s)"
       value={activeTemplate}
       onChange={(value) => {
-        handleQuery(value);
         setActiveTemplate(value);
-        getChartData(value);
       }}
     />
   );

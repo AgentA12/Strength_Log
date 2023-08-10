@@ -9,7 +9,7 @@ const useStyles = createStyles((theme) => ({
   card: {
     width: 300,
     overflow: "visible",
-    "&:hover": { cursor: "pointer" },
+    "&:hover": { cursor: "pointer", scale: 1.2 },
     [theme.fn.smallerThan("sm")]: {
       width: 240,
     },
@@ -19,14 +19,6 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const cardAnimation = {
-  initial: { scale: 0.9, opacity: 0 },
-  animate: {
-    scale: 1,
-    opacity: 1,
-  },
-};
-
 export default function TemplateCard({ template, handleTemplateDelete }) {
   const { classes } = useStyles();
   const [opened, setOpened] = useState(false);
@@ -34,7 +26,7 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
     <>
       <motion.div
         layout
-        animate={cardAnimation}
+        transition={{ type: "spring", stiffness: 400, damping: 30 }}
         onClick={() => setOpened(!opened)}
       >
         <Card
@@ -55,10 +47,10 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
           </Flex>
           <Text lineClamp={1} className={classes.exercises}>
             {template.exercises.map((exercise, i) => (
-              <Text component="span" key={exercise.exerciseName}>
+              <Text component="span" key={exercise?.exercise?.name}>
                 {template.exercises.length - 1 === i
-                  ? capitalizeFirstLetter(exercise.exerciseName)
-                  : capitalizeFirstLetter(exercise.exerciseName) + ", "}
+                  ? capitalizeFirstLetter(exercise?.exercise?.name)
+                  : capitalizeFirstLetter(exercise?.exercise?.name) + ", "}
               </Text>
             ))}
           </Text>

@@ -1,16 +1,11 @@
 import { Select } from "@mantine/core";
 
-export default function ExerciseSelect({ execises, setExercise }) {
-  let exercises = [
-    "All",
-    "Bench press",
-    "shoulder press",
-    "dumbell bench press",
-  ];
+export default function ExerciseSelect({ exercises, setExercise }) {
   return (
     <Select
       sx={{ width: "fit-content" }}
-      data={exercises}
+      data={[...exercises]}
+      onChange={(value) => setExercise(value)}
       searchable
       defaultValue={"All"}
       description="Exercise(s)"

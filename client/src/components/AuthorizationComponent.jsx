@@ -38,7 +38,7 @@ export default function AuthorizationComponent() {
   function handleFormChange({ target }) {
     setFormState({
       ...formState,
-      [target.name]: target.value.trim(),
+      [target.name]: target.value,
     });
   }
 
