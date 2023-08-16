@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const { exerciseSchema } = require("./exercise");
 
 const templateSchema = mongoose.Schema(
   {
+    belongsTo: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     templateName: {
       type: String,
       required: function () {
@@ -13,13 +13,14 @@ const templateSchema = mongoose.Schema(
     templateNotes: { type: String, trim: true },
     exercises: [
       {
-        exercise: exerciseSchema,
+        exerciseName: String,
         weight: { type: Number },
         sets: { type: Number, min: [1, "You must enter at lease one set"] },
         reps: {
           type: Number,
           min: [1, "You must enter at lease one repetition"],
         },
+        isBodyWeight: Boolean,
       },
     ],
   },
@@ -28,4 +29,4 @@ const templateSchema = mongoose.Schema(
 
 const Template = mongoose.model("Template", templateSchema);
 
-module.exports = { Template, templateSchema };
+module.exports = { templateSchema, Template };

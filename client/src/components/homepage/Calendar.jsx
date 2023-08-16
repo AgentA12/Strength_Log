@@ -28,7 +28,10 @@ export default function Calendar() {
     if (dateSelected.length > 0) {
       // route to summary page with template data and date
       navigate("/Progress", {
-        state: { viewCurrentTemplate: dateSelected },
+        state: {
+          viewCurrentTemplate: dateSelected,
+          activeSectionParam: "Date",
+        },
       });
     }
   }
@@ -69,7 +72,7 @@ export default function Calendar() {
       type="multiple"
       weekendDays={[]}
       size="md"
-      value={data?.getProgressTimeStamps?.dates.map(
+      value={data.getProgressTimeStamps?.dates?.map(
         (d) => new Date(parseInt(d.date))
       )}
       getDayProps={(date) => ({

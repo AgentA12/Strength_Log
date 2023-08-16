@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
 }
 
-app.get("*", (req, res) => {
+app.get("*", (_, res) => {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
@@ -68,3 +68,46 @@ function startApolloServer() {
 }
 
 startApolloServer();
+
+// User = {
+//   username,
+//   password,
+//   templates: [TemplateID],
+//   completedWorkouts: [CompletedWorkout],
+//   completedExercises: [CompletedExercise],
+// {timestamps: true}
+// };
+
+// Template = {
+//   belongsTo: USERID,
+//   templateName: String,
+//   exercises: [
+//     {
+//       exerciseName: String,
+//       startingWeight: Int,
+//       startingReps: Int,
+//       startingSets: Int,
+//     },
+//   ],
+// {timestamps: true}
+// };
+
+// CompletedWorkout = {
+//   templateID: ID,
+//   exercisesCompleted: [CompletedExercise]
+//   {timestamps: true}
+// };
+
+// CompletedExercise = {
+//   exerciseName: String,
+//   weight: Int,
+//   reps: Int,
+//   sets: Int,
+//   gettotalWeight() {
+//      return this.weight * this.reps * this.sets
+//     },
+// {timestamps: true}
+// };
+
+
+

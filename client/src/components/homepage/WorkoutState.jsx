@@ -5,9 +5,8 @@ export default function WorkoutState({
   loading,
   handleSaveWorkout,
   setTemplateState,
-  templateState
+  templateState,
 }) {
-
   function handleChange({ target }, index) {
     let data = JSON.parse(JSON.stringify(templateState));
 
@@ -15,45 +14,28 @@ export default function WorkoutState({
 
     setTemplateState({ ...data });
   }
-
   return (
     <>
-      {templateState?.exercises.map((exercise, index) => (
-        <Container key={exercise._id}>
+      {templateState.exercises.map((exercise, index) => (
+        <Container key={exercise.exerciseName}>
           <Group mt={5}>
             <Text
               size="xl"
               sx={(theme) => ({ color: theme.colors.violet[5] })}
               fw={700}
             >
-              {exercise.exercise.name}
+              {exercise.exerciseName}
             </Text>
           </Group>
 
           <Flex wrap={true} gap={10}>
-            {index === 0 ? (
-              <NumberInput
-                label="Sets"
-                value={parseInt(exercise.sets)}
-                onChange={(value) =>
-                  handleChange(
-                    { target: { name: "sets", value: value } },
-                    index
-                  )
-                }
-              />
-            ) : (
-              <NumberInput
-                label="Sets"
-                defaultValue={parseInt(exercise.sets)}
-                onChange={(value) =>
-                  handleChange(
-                    { target: { name: "sets", value: value } },
-                    index
-                  )
-                }
-              />
-            )}
+            <NumberInput
+              label="Sets"
+              value={parseInt(exercise.sets)}
+              onChange={(value) =>
+                handleChange({ target: { name: "sets", value: value } }, index)
+              }
+            />
 
             <NumberInput
               label="Reps"

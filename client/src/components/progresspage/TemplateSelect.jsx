@@ -20,6 +20,7 @@ export default function TemplateSelect({
       searchable
       placeholder="Select a template"
       description="Template(s)"
+      defaultValue={"All templates"}
       value={activeTemplate}
       onChange={(value) => {
         setActiveTemplate(value);

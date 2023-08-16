@@ -1,6 +1,11 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
+  enum ResponseStatus {
+    SUCCESS
+    FAILURE
+  }
+
   type Auth {
     token: ID
     user: User
@@ -14,25 +19,20 @@ const typeDefs = gql`
     templates: [Template]
   }
 
-  type Exercise {
-    _id: ID
-    name: String
-    equipment: String
-  }
-
   input exerciseInput {
     name: String
+    _id: ID
   }
 
   input saveWorkoutExerciseInput {
-    exercise: exerciseInput
+    exerciseName: String
     weight: Int
     reps: Int
     sets: Int
   }
 
   input createTemplateExerciseInput {
-    name: String
+    exerciseName: String
     sets: Int
     reps: Int
     weight: Int
@@ -49,21 +49,40 @@ const typeDefs = gql`
 
   type Template {
     _id: ID
+    belongsTo: ID
     templateName: String
     templateNotes: String
-    exercises: [TemplateExercises]
+    exercises: [Exercise]
   }
 
-  type TemplateExercises {
-    exercise: Exercise
+  type Exercise {
+    exerciseName: String
     sets: Int
     reps: Int
     weight: Int
+    isBodyWeight: Boolean
   }
 
   type Routine {
     _id: ID
     templates: [Template]
+  }
+
+  type ChartData {
+    x: String
+    y: Int
+  }
+
+  type DataSet {
+    belongsTo: String
+    label: String
+    data: [ChartData]
+  }
+
+  type TemplateChartData {
+    belongsTo: String
+    label: String
+    data: [ChartData]
   }
 
   type Progress {
@@ -100,11 +119,6 @@ const typeDefs = gql`
     labels: [String]
   }
 
-  type DataSet {
-    label: String
-    data: [Int]
-  }
-
   type dateType {
     date: String
     templateId: ID
@@ -132,13 +146,13 @@ const typeDefs = gql`
   type Query {
     getExercises: [Exercise]
     getTemplates(userId: ID!): [Template]
-    getTemplateDataForProgressPage(
-      templateId: ID
+    getChartDataForTemplates(
+      templateName: String
       userId: ID!
       range: String
       metric: String
       exercise: String
-    ): [Progress]
+    ): [TemplateChartData]
     getExerciseProgress(templateID: ID!, userID: ID!): ExerciseProgress
     getTemplateModalProgress(templateId: ID, userId: ID): [ExerciseProgress]
     getProgressTimeStamps(userId: ID!): CalendarDates
@@ -153,7 +167,7 @@ const typeDefs = gql`
       templateName: String!
       templateNotes: String
       exercises: [createTemplateExerciseInput!]
-    ): [Template]
+    ): Template
     editTemplate(
       _id: ID!
       templateName: String!

@@ -50,6 +50,7 @@ export default function TemplateModal({ template, opened, setOpened }) {
 
   return (
     <Modal
+      transitionProps={{ transition: "rotate-left" }}
       lockScroll={false}
       opened={opened}
       onClose={() => setOpened(false)}
@@ -63,7 +64,7 @@ export default function TemplateModal({ template, opened, setOpened }) {
             },
           })}
         >
-          {template?.templateName.toUpperCase()}{" "}
+          {template.templateName.toUpperCase()}{" "}
         </Text>
       }
       overlayopacity={0.55}
@@ -72,8 +73,7 @@ export default function TemplateModal({ template, opened, setOpened }) {
     >
       <Container>
         <Text mb={10}>
-          {template.templateNotes.trim() ? "- " : null}
-          {template.templateNotes}
+          {template.templateNotes.trim() ? `- ${template.templateNotes}` : null}
         </Text>
         <WorkoutState
           loading={loading}
@@ -88,7 +88,6 @@ export default function TemplateModal({ template, opened, setOpened }) {
           </Text>
         ) : null}
       </Container>
-      )
     </Modal>
   );
 }

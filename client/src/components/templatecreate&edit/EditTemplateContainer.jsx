@@ -2,7 +2,6 @@ import ExerciseForm from "./ExerciseForm";
 import { useState, useEffect, useRef } from "react";
 import { useMutation } from "@apollo/client";
 import { EDIT_TEMPLATE } from "../../utils/graphql/mutations";
-import auth from "../../utils/auth/auth";
 import { useQuery } from "@apollo/client";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import AddExerciseBtn from "../homepage/AddExerciseBtn";
@@ -18,11 +17,20 @@ import {
   Title,
   Flex,
   Box,
+  createStyles,
 } from "@mantine/core";
 import { UserContext } from "../../App";
 import { useContext } from "react";
 
+const useStyles = createStyles(() => ({
+  container: {
+    maxWidth: "600px",
+  },
+}));
+
 export default function EditTemplate() {
+  const { classes } = useStyles();
+
   const navigate = useNavigate();
 
   const { state } = useLocation();
@@ -34,13 +42,14 @@ export default function EditTemplate() {
     data: { _id: userID },
   } = useContext(UserContext);
 
-  const { data, error, loading, refetch } = useQuery(GET_TEMPLATES, {
+  const { loading, refetch } = useQuery(GET_TEMPLATES, {
     variables: {
       userId: userID,
     },
   });
 
   const bottomRef = useRef(null);
+
   useEffect(() => {
     bottomRef.current.scrollIntoView();
   }, [formState.exercises.length]);
@@ -135,44 +144,46 @@ export default function EditTemplate() {
           </Title>
         }
       />
-
-      <TextInput
-        size="xl"
-        onChange={(event) => handleChange(null, event)}
-        name="templateName"
-        value={formState?.templateName}
-        placeholder="Template Name"
-      />
-
-      <Box>
-        <Textarea
+      <Box className={classes.container}>
+        <TextInput
+          size="xl"
           onChange={(event) => handleChange(null, event)}
-          name="templateNotes"
-          minRows={10}
-          placeholder="Template notes"
-          value={formState?.templateNotes}
+          name="templateName"
+          value={formState?.templateName}
+          placeholder="Template Name"
         />
-        <Flex mt={5} justify={"space-between"}>
-          <AddExerciseBtn addExercise={addExercise} />
-          <SaveTemplateBtn loading={loading} handleSubmit={handleSubmit} />
-        </Flex>
-        <Text color="red"> {errorMessage ? errorMessage : null}</Text>
-      </Box>
-      <ScrollArea offsetScrollbars scrollbarSize={4} scrollHideDelay={1500}>
-        <form onSubmit={(event) => handleSubmit(event)}>
-          {formState?.exercises.map((exercise, index) => (
-            <ExerciseForm
-              key={index}
-              handleChange={handleChange}
-              index={index}
-              formState={formState}
-              removeExercise={removeExercise}
-            />
-          ))}
 
-          <div ref={bottomRef}></div>
-        </form>
-      </ScrollArea>
+        <Box>
+          <Textarea
+            onChange={(event) => handleChange(null, event)}
+            name="templateNotes"
+            minRows={10}
+            mt={10}
+            placeholder="Template notes"
+            value={formState?.templateNotes}
+          />
+          <Flex mt={5} justify={"space-between"}>
+            <AddExerciseBtn addExercise={addExercise} />
+            <SaveTemplateBtn loading={loading} handleSubmit={handleSubmit} />
+          </Flex>
+          <Text color="red"> {errorMessage ? errorMessage : null}</Text>
+        </Box>
+        <ScrollArea offsetScrollbars scrollbarSize={4} scrollHideDelay={1500}>
+          <form onSubmit={(event) => handleSubmit(event)}>
+            {formState?.exercises.map((_, index) => (
+              <ExerciseForm
+                key={index}
+                handleChange={handleChange}
+                index={index}
+                formState={formState}
+                removeExercise={removeExercise}
+              />
+            ))}
+
+            <div ref={bottomRef}></div>
+          </form>
+        </ScrollArea>
+      </Box>
     </Container>
   );
 }

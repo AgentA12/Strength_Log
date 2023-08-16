@@ -1,24 +1,12 @@
-import { useState, useContext } from "react";
-import { useQuery } from "@apollo/client";
+import { useState } from "react";
+import { SectionMenu } from "../components/progresspage/index";
+import { Container, Title, Text, createStyles } from "@mantine/core";
 import {
-  SectionMenu,
-  TemplateSelect,
-  TypeSelect,
-  TemplateChart,
-  DateRangeSelect,
+  ByTemplatesContainer,
+  ByDateContainer,
+  UtilitiesContainer,
 } from "../components/progresspage/index";
-
-import { GET_TEMPLATES } from "../utils/graphql/queries";
-import {
-  Container,
-  Title,
-  Flex,
-  Loader,
-  Text,
-  createStyles,
-  Box,
-} from "@mantine/core";
-import { UserContext } from "../App";
+import { useLocation } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -30,45 +18,15 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export default function ProgressPage() {
+  // if coming from calendar in homepage set active section to date
+  const { state } = useLocation();
+  const [activeSection, setActiveSection] = useState(
+    state?.viewCurrentTemplate ? "Date" : "Templates"
+  );
+
   const [activeTemplate, setActiveTemplate] = useState("All templates");
-  const [activeSection, setActiveSection] = useState("Templates");
-  const [metric, setMetric] = useState("Total weight");
-  const [range, setRange] = useState("All time");
 
   const { classes } = useStyles();
-
-  const {
-    data: { _id: userID },
-  } = useContext(UserContext);
-
-  const { data, loading, error } = useQuery(GET_TEMPLATES, {
-    variables: {
-      userId: userID,
-    },
-  });
-
-  if (error) return <Title color="red">{error.message}</Title>;
-
-  if (loading)
-    return (
-      <Container fluid className={classes.container}>
-        <Title>
-          <Text
-            sx={(theme) => ({ color: theme.colors.violet[5] })}
-            fw={800}
-            component="span"
-          >
-            {activeTemplate && activeTemplate}
-          </Text>{" "}
-          Summary
-        </Title>
-
-        <SectionMenu
-          activeSection={activeSection}
-          setActiveSection={setActiveSection}
-        />
-      </Container>
-    );
 
   return (
     <Container fluid className={classes.container}>
@@ -88,39 +46,15 @@ export default function ProgressPage() {
         setActiveSection={setActiveSection}
       />
 
-      {loading ? (
-        <Loader />
+      {activeSection === "Templates" ? (
+        <ByTemplatesContainer
+          activeTemplate={activeTemplate}
+          setActiveTemplate={setActiveTemplate}
+        />
+      ) : activeSection === "Date" ? (
+        <ByDateContainer />
       ) : (
-        <>
-          <Flex
-            wrap="wrap"
-            gap={5}
-            justify={{ base: "center", sm: "left" }}
-            mb={30}
-          >
-            <TemplateSelect
-              templates={data.getTemplates}
-              activeTemplate={activeTemplate}
-              setActiveTemplate={setActiveTemplate}
-            />
-
-            <TypeSelect metric={metric} setMetric={setMetric} />
-            <DateRangeSelect setRange={setRange} />
-          </Flex>
-          <Box
-            sx={{
-              height: "700px",
-            }}
-          >
-            {" "}
-            <TemplateChart
-              activeTemplate={activeTemplate}
-              userId={userID}
-              range={range}
-              metric={metric}
-            />
-          </Box>
-        </>
+        <UtilitiesContainer />
       )}
     </Container>
   );

@@ -24,9 +24,7 @@ export const GET_TEMPLATES = gql`
       templateName
       templateNotes
       exercises {
-        exercise {
-          name
-        }
+        exerciseName
         sets
         reps
         weight
@@ -55,29 +53,24 @@ export const GET_MOST_RECENT_SAVED_TEMPLATE = gql`
 
 export const GET_CHART_PROGRESS_BY_TEMPLATE = gql`
   query (
-    $templateId: ID
+    $templateName: String
     $userId: ID!
     $range: String
     $metric: String
     $exercise: String
   ) {
-    getTemplateDataForProgressPage(
-      templateId: $templateId
+    getChartDataForTemplates(
+      templateName: $templateName
       userId: $userId
       range: $range
       metric: $metric
       exercise: $exercise
     ) {
-      _id
-      templateName
-      templateId
-      exercises {
-        exercise {
-          name
-        }
-        reps
-        sets
-        weight
+      belongsTo
+      label
+      data {
+        x
+        y
       }
     }
   }

@@ -18,8 +18,6 @@ import {
   Box,
 } from "@mantine/core";
 import { UserContext } from "../../App";
-import { useQuery } from "@apollo/client";
-import { GET_EXERCISES } from "../../utils/graphql/queries";
 
 const useStyles = createStyles(() => ({
   container: {
@@ -35,18 +33,16 @@ export default function CreateTemplateContainer() {
   const { classes } = useStyles();
   const navigate = useNavigate();
 
-  const { data: exerciseData } = useQuery(GET_EXERCISES);
-
   const [errorMessage, setErrorMessage] = useState(null);
   const [formState, setFormState] = useState({
     templateName: "",
     templateNotes: "",
     exercises: [
       {
-        name: "",
-        sets: 5,
-        reps: 5,
-        weight: 135,
+        exerciseName: "",
+        sets: 0,
+        reps: 0,
+        weight: 0,
       },
     ],
   });
@@ -80,10 +76,10 @@ export default function CreateTemplateContainer() {
       templateNotes: "",
       exercises: [
         {
-          name: "",
-          sets: 5,
-          reps: 5,
-          weight: 135,
+          exerciseName: "",
+          sets: 0,
+          reps: 0,
+          weight: 0,
         },
       ],
     });
@@ -92,7 +88,6 @@ export default function CreateTemplateContainer() {
   async function handleSubmit(event) {
     try {
       event.preventDefault();
-
       const mutationRes = await addTemplate({
         variables: {
           ...formState,
@@ -117,7 +112,7 @@ export default function CreateTemplateContainer() {
   //adds an exercise to the form
   function addExercise() {
     const exercise = {
-      name: "Bench press",
+      exerciseName: "Bench press",
       sets: 5,
       reps: 5,
       weight: 135,
@@ -181,7 +176,6 @@ export default function CreateTemplateContainer() {
           <>
             {formState?.exercises.map((_, index) => (
               <ExerciseForm
-                exerciseData={exerciseData}
                 key={index}
                 handleChange={handleChange}
                 index={index}

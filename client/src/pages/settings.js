@@ -1,5 +1,9 @@
-import { Container } from "@mantine/core";
+import { Container, Title } from "@mantine/core";
 
 export default function SettingsPage() {
-  return <Container fluid>Coming Soon</Container>;
+  return (
+    <Container fluid>
+      <Title>Settings in Construction</Title>
+    </Container>
+  );
 }

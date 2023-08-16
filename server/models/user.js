@@ -1,23 +1,30 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const { exerciseSchema } = require("./exercise");
 
-const progressSchema = mongoose.Schema(
+const completedExerciseSchema = mongoose.Schema(
   {
-    belongsTo: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
-    exercise: [exerciseSchema],
+    exerciseName: String,
     weight: Number,
-    sets: Number,
     reps: Number,
+    sets: Number,
+  },
+  { timestamps: true }
+);
+
+completedExerciseSchema.methods = function getTotalWeight() {
+  return this.weight * this.reps * this.sets;
+};
+
+const completedWorkoutSchema = mongoose.Schema(
+  {
+    template: { type: mongoose.Schema.Types.ObjectId, ref: "Template" },
+    exercises: [completedExerciseSchema],
   },
   { timestamps: true }
 );
 
 const userSchema = mongoose.Schema(
   {
-    firstName: { type: String },
-    firstLast: { type: String },
-    emailAddress: { type: String },
     username: { type: String, required: true, unique: true },
     password: {
       type: String,
@@ -25,10 +32,10 @@ const userSchema = mongoose.Schema(
         return this.password.length >= 5;
       },
     },
-    preferredColor: { type: String },
-    favouriteExercise: { type: String },
+
     templates: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
-    progress: [progressSchema],
+    completedWorkouts: [completedWorkoutSchema],
+    completedExercises: [completedExerciseSchema],
   },
   { timestamps: true }
 );

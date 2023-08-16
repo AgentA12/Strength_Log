@@ -7,6 +7,9 @@ import DateRangeSelect from "./DateRangeSelect";
 import ExerciseSelect from "./ExerciseSelect";
 import TypeSelect from "./TypeSelect";
 import Table from "./Table";
+import ByTemplatesContainer from "./ByTemplatesContainer";
+import ByDateContainer from "./ByDateContainer";
+import UtilitiesContainer from "./UtilitiesContainer";
 
 export {
   SectionMenu,
@@ -18,4 +21,7 @@ export {
   ExerciseSelect,
   TypeSelect,
   Table,
+  ByTemplatesContainer,
+  ByDateContainer,
+  UtilitiesContainer
 };

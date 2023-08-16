@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { GET_CHART_PROGRESS_BY_TEMPLATE } from "../../utils/graphql/queries";
-import { Box, Text, LoadingOverlay } from "@mantine/core";
+import { Box, LoadingOverlay, Text } from "@mantine/core";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -60,104 +60,24 @@ export default function TemplateChart({
   range,
   metric,
 }) {
-
   const firstSavedExeciseDate = "2023-05-20";
   const lastSavedExerciseDate = "2023-08-01";
-
-  const { loading, error } = useQuery(GET_CHART_PROGRESS_BY_TEMPLATE, {
-    variables: {
-      userId: userId,
-      templateId: activeTemplate === "All templates" ? null : activeTemplate.id,
-      range: range,
-      metric: metric,
-      exercise: null,
-    },
-  });
 
   const labels = getRangeOfDates(
     range,
     firstSavedExeciseDate,
     lastSavedExerciseDate
   );
-
-  const testdata = {
-    labels,
-    datasets: [
-      {
-        label: "Bench press",
-        data: [
-          { x: "2023-07-05", y: 155 },
-          { x: "2023-07-06", y: 155 },
-          { x: "2023-07-10", y: 160 },
-          { x: "2023-07-11", y: 160 },
-          { x: "2023-07-15", y: 165 },
-          { x: "2023-07-16", y: 165 },
-          { x: "2023-07-20", y: 165 },
-          { x: "2023-07-21", y: 165 },
-          { x: "2023-07-25", y: 170 },
-          { x: "2023-07-26", y: 170 },
-          { x: "2023-07-30", y: 170 },
-          { x: "2023-08-01", y: 170 },
-        ],
-      },
-
-      {
-        label: "Squats",
-        data: [
-          { x: "2023-06-29", y: 205 },
-          { x: "2023-07-03", y: 225 },
-          { x: "2023-07-04", y: 225 },
-          { x: "2023-07-05", y: 225 },
-          { x: "2023-07-06", y: 225 },
-          { x: "2023-07-10", y: 230 },
-          { x: "2023-07-11", y: 230 },
-          { x: "2023-07-15", y: 230 },
-          { x: "2023-07-16", y: 230 },
-          { x: "2023-07-20", y: 220 },
-          { x: "2023-07-21", y: 220 },
-        ],
-      },
-      {
-        label: "Deadlift",
-        data: [
-          { x: "2023-06-05", y: 315 },
-          { x: "2023-06-06", y: 315 },
-          { x: "2023-06-10", y: 320 },
-          { x: "2023-06-11", y: 320 },
-          { x: "2023-06-15", y: 350 },
-          { x: "2023-06-16", y: 350 },
-          { x: "2023-06-20", y: 350 },
-          { x: "2023-06-21", y: 350 },
-        ],
-      },
-
-      {
-        label: "Barbell row",
-        data: [
-          { x: "2023-05-20", y: 185 },
-          { x: "2023-05-21", y: 185 },
-          { x: "2023-05-22", y: 185 },
-          { x: "2023-05-26", y: 195 },
-          { x: "2023-05-27", y: 190 },
-          { x: "2023-05-30", y: 190 },
-          { x: "2023-05-31", y: 195 },
-        ],
-      },
-
-      {
-        label: "Dumbell incline press",
-        data: [
-          { x: "2023-06-20", y: 60 },
-          { x: "2023-06-21", y: 60 },
-          { x: "2023-06-22", y: 60 },
-          { x: "2023-06-26", y: 60 },
-          { x: "2023-06-27", y: 65 },
-          { x: "2023-06-30", y: 65 },
-          { x: "2023-06-31", y: 65 },
-        ],
-      },
-    ],
-  };
+  const { loading, data, error } = useQuery(GET_CHART_PROGRESS_BY_TEMPLATE, {
+    variables: {
+      userId: userId,
+      templateName:
+        activeTemplate === "All templates" ? "All templates" : activeTemplate,
+      range: range,
+      metric: metric,
+      exercise: null,
+    },
+  });
 
   if (loading)
     return (
@@ -185,5 +105,13 @@ export default function TemplateChart({
       </Box>
     );
 
-  return <Line  options={options} data={testdata} />;
+  return (
+    <Line
+      options={options}
+      data={{
+        labels: labels,
+        datasets: data.getChartDataForTemplates,
+      }}
+    />
+  );
 }
