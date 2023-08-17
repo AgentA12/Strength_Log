@@ -1,5 +1,5 @@
 import ExerciseForm from "./ExerciseForm";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { EDIT_TEMPLATE } from "../../utils/graphql/mutations";
 import { useQuery } from "@apollo/client";
@@ -48,12 +48,6 @@ export default function EditTemplate() {
     },
   });
 
-  const bottomRef = useRef(null);
-
-  useEffect(() => {
-    bottomRef.current.scrollIntoView();
-  }, [formState.exercises.length]);
-
   const [EditTemplate] = useMutation(EDIT_TEMPLATE);
 
   function handleChange(index, { target }) {
@@ -72,7 +66,6 @@ export default function EditTemplate() {
   async function handleSubmit(event) {
     try {
       event.preventDefault();
-
       if (!formState.templateName.trim()) {
         setErrorMessage("You must enter a template name");
         return;
@@ -80,7 +73,7 @@ export default function EditTemplate() {
 
       for (let i = 0; i < formState.exercises.length; i++) {
         if (
-          !formState.exercises[i].name ||
+          !formState.exercises[i].exerciseName ||
           !formState.exercises[i].sets ||
           !formState.exercises[i].reps
         ) {
@@ -109,11 +102,10 @@ export default function EditTemplate() {
 
   function addExercise() {
     const exercise = {
-      name: "",
+      exerciseName: "",
       sets: 5,
       reps: 5,
       weight: 135,
-      type: "Barbell",
     };
 
     const data = { ...formState };
@@ -179,8 +171,6 @@ export default function EditTemplate() {
                 removeExercise={removeExercise}
               />
             ))}
-
-            <div ref={bottomRef}></div>
           </form>
         </ScrollArea>
       </Box>

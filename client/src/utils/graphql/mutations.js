@@ -96,14 +96,6 @@ export const EDIT_TEMPLATE = gql`
     ) {
       templateName
       templateNotes
-      _id
-      exercises {
-        _id
-        name
-        sets
-        reps
-        weight
-      }
     }
   }
 `;

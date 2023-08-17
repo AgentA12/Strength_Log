@@ -77,7 +77,8 @@ const Mutation = {
 
   editTemplate: async function (_, args) {
     try {
-      await Template.findByIdAndUpdate(
+      console.log(args);
+      const template = await Template.findByIdAndUpdate(
         args._id,
         {
           templateName: args.templateName,
@@ -87,8 +88,8 @@ const Mutation = {
 
         { new: true }
       );
-
-      return Template.findById(args._id);
+      console.log(template);
+      return template;
     } catch (error) {
       return error.message;
     }

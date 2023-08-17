@@ -39,12 +39,10 @@ const typeDefs = gql`
   }
 
   input editExerciseInput {
-    _id: ID
-    name: String
+    exerciseName: String
     sets: Int
     reps: Int
     weight: Int
-    type: String
   }
 
   type Template {

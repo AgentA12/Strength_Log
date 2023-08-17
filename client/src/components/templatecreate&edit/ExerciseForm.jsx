@@ -1,44 +1,6 @@
 import { IoMdRemove } from "react-icons/io";
 import { NumberInput, Select, Card, Button, Title } from "@mantine/core";
-
-const exerciseData = [
-  { label: "bench press", value: "bench press" },
-  { label: "close grip bench press", value: "clse grip bench press" },
-
-  { label: "tricep push down", value: "tricep push down" },
-
-  { label: "push up", value: "push up" },
-
-  { label: "cable chest fly", value: "cable chest fly" },
-
-  { label: "squat", value: "squat" },
-
-  { label: "deadlift", value: "deadlift" },
-
-  { label: "overhead press", value: "overhead press" },
-
-  { label: "hip thrust", value: "hip thrust" },
-
-  { label: "romanian deadlift", value: "romanian deadlift" },
-
-  { label: "incline dumbell press", value: "incline dumbell press" },
-
-  { label: "Pull up", value: "Pull up" },
-
-  { label: "lat pull down", value: "lat pull down" },
-
-  { label: "dumbell row", value: "dumbell row" },
-
-  { label: "leg press", value: "leg press" },
-
-  { label: "face pull", value: "face pull" },
-
-  { label: "bicep curl", value: "bicep curl" },
-
-  { label: "tricep extension", value: "tricep extension" },
-
-  { label: "barbell row", value: "barbell row" },
-];
+import {exerciseData} from "../../utils/data"
 export default function ExerciseForm({
   handleChange,
   index,
