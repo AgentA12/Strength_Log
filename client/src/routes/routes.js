@@ -5,6 +5,7 @@ import {
   HomePage,
   NotFoundPage,
   SettingsPage,
+  WorkoutPage,
 } from "../pages/index";
 import CreateTemplateContainer from "../components/templatecreate&edit/CreateTemplateContainer";
 import EditTemplateContainer from "../components/templatecreate&edit/EditTemplateContainer";
@@ -60,6 +61,15 @@ export default function RouteContainer() {
         element={
           <Protected isLoggedIn={isLoggedIn}>
             <ProgressPage />
+          </Protected>
+        }
+      />
+
+      <Route
+        path="/Workout"
+        element={
+          <Protected isLoggedIn={isLoggedIn}>
+            <WorkoutPage />
           </Protected>
         }
       />

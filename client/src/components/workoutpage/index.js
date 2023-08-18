@@ -1,3 +1,6 @@
-import Table from "./Table";
+import ExerciseCard from "./ExerciseCard";
+import Timer from "./Timer";
+import RestTimer from "./Rest";
+import WorkoutModal from "./WorkoutModal";
 
-export { Table };
+export { ExerciseCard, Timer, RestTimer, WorkoutModal };

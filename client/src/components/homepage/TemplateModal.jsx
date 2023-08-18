@@ -1,4 +1,4 @@
-import { Container, Modal, Text } from "@mantine/core";
+import { Container, Modal, Text, useMantineTheme } from "@mantine/core";
 import { useContext, useState } from "react";
 import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
 import { useMutation } from "@apollo/client";
@@ -14,6 +14,7 @@ export default function TemplateModal({ template, opened, setOpened }) {
   } = useContext(UserContext);
 
   const [templateState, setTemplateState] = useState(template);
+  const theme = useMantineTheme();
 
   const [saveWorkoutFunction, { loading, error }] = useMutation(SAVE_WORKOUT);
 
@@ -50,7 +51,15 @@ export default function TemplateModal({ template, opened, setOpened }) {
 
   return (
     <Modal
-      transitionProps={{ transition: "rotate-left" }}
+      overlayProps={{
+        color:
+          theme.colorScheme === "dark"
+            ? theme.colors.dark[9]
+            : theme.colors.gray[2],
+        opacity: 0.55,
+        blur: 3,
+      }}
+      transitionProps={{ transition: "skew-up" }}
       lockScroll={false}
       opened={opened}
       onClose={() => setOpened(false)}

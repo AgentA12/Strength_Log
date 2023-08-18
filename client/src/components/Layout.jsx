@@ -20,6 +20,7 @@ const pathHasNavBar = {
   "/Home": true,
   "/Progress": true,
   "/Settings": true,
+  "/Workout": true,
 };
 
 export default function AppLayout({ children }) {
