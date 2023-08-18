@@ -21,7 +21,7 @@ export default function WorkoutState({
           <Group mt={5}>
             <Text
               size="xl"
-              sx={(theme) => ({ color: theme.colors.violet[5] })}
+              sx={(theme) => ({ color: theme.primaryColor})}
               fw={700}
             >
               {exercise.exerciseName}
@@ -68,7 +68,7 @@ export default function WorkoutState({
           handleSaveWorkout={handleSaveWorkout}
           templateState={templateState}
         />
-        <StartWorkoutBtn />
+        <StartWorkoutBtn template={templateState} />
       </Flex>
     </>
   );

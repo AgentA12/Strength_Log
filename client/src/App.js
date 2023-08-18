@@ -6,6 +6,7 @@ import Layout from "./components/Layout";
 import RouteContainer from "./routes/routes";
 
 import auth from "./utils/auth/auth";
+import ScrollToTop from "./components/ScrollToTop";
 
 export const UserContext = createContext();
 
@@ -15,8 +16,13 @@ export function App() {
   });
 
   const themeStyles = {
+    fontFamily: "Inter",
     colorScheme: colorScheme,
-    primaryColor: "violet",
+    white: "#FFFFFF",
+    black: "#000000",
+    loader: "bars",
+    primaryColor: "cyan",
+    
   };
 
   useHotkeys([["ctrl+K", () => toggleColorScheme()]]);
@@ -54,6 +60,7 @@ export function App() {
         <UserContext.Provider value={auth.getInfo()}>
           <Layout>
             <RouteContainer />
+            <ScrollToTop />
           </Layout>
         </UserContext.Provider>
       </MantineProvider>

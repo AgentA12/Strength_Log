@@ -1,5 +1,5 @@
 import ExerciseForm from "./ExerciseForm";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { EDIT_TEMPLATE } from "../../utils/graphql/mutations";
 import { useQuery } from "@apollo/client";
@@ -47,12 +47,6 @@ export default function EditTemplate() {
       userId: userID,
     },
   });
-
-  const bottomRef = useRef(null);
-
-  useEffect(() => {
-    bottomRef.current.scrollIntoView();
-  }, [formState.exercises.length]);
 
   const [EditTemplate] = useMutation(EDIT_TEMPLATE);
 
@@ -179,8 +173,6 @@ export default function EditTemplate() {
                 removeExercise={removeExercise}
               />
             ))}
-
-            <div ref={bottomRef}></div>
           </form>
         </ScrollArea>
       </Box>

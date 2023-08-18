@@ -1,5 +1,5 @@
 import ExerciseForm from "./ExerciseForm";
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_TEMPLATE } from "../../utils/graphql/mutations";
 import AddExerciseBtn from "../homepage/AddExerciseBtn";
@@ -46,13 +46,6 @@ export default function CreateTemplateContainer() {
       },
     ],
   });
-
-  //ref on error message to scroll to bottom of exercise container div when exercise is added
-  const bottomRef = useRef(null);
-
-  useEffect(() => {
-    bottomRef.current.scrollIntoView();
-  }, [formState.exercises.length]);
 
   const [addTemplate, { loading: createTemplateLoading }] =
     useMutation(CREATE_TEMPLATE);
@@ -183,8 +176,6 @@ export default function CreateTemplateContainer() {
                 removeExercise={removeExercise}
               />
             ))}
-
-            <Box component="span" ref={bottomRef} />
           </>
         </ScrollArea>
       </Box>

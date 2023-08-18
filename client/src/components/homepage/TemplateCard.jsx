@@ -15,7 +15,7 @@ const useStyles = createStyles((theme) => ({
     },
   },
   exercises: {
-    color: theme.colors.violet[5],
+    color: theme.primaryColor,
   },
 }));
 
