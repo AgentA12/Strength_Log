@@ -49,8 +49,8 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
             {template.exercises.map((exercise, i) => (
               <Text component="span" key={exercise.exerciseName}>
                 {template.exercises.length - 1 === i
-                  ? capitalizeFirstLetter(exercise.exerciseName)
-                  : capitalizeFirstLetter(exercise.exerciseName) + ", "}
+                  ? capitalizeFirstLetter(exercise.exercise.exerciseName)
+                  : capitalizeFirstLetter(exercise.exercise.exerciseName) + ", "}
               </Text>
             ))}
           </Text>

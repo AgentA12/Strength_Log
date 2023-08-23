@@ -31,11 +31,20 @@ const typeDefs = gql`
     sets: Int
   }
 
+  input Set {
+    weight: Int
+    reps: Int
+  }
+
+  type SetType {
+    weight: Int
+    reps: Int
+  }
+
   input createTemplateExerciseInput {
     exerciseName: String
-    sets: Int
-    reps: Int
-    weight: Int
+    _id: ID
+    sets: [Set]
   }
 
   input editExerciseInput {
@@ -43,6 +52,13 @@ const typeDefs = gql`
     sets: Int
     reps: Int
     weight: Int
+  }
+
+  type ExerciseType {
+    _id: ID
+    exerciseName: String
+    equipment: String
+    isUserCreated: Boolean
   }
 
   type Template {
@@ -54,11 +70,9 @@ const typeDefs = gql`
   }
 
   type Exercise {
-    exerciseName: String
-    sets: Int
-    reps: Int
-    weight: Int
-    isBodyWeight: Boolean
+    _id: ID
+    exercise: ExerciseType
+    sets: [SetType]
   }
 
   type Routine {
@@ -141,8 +155,16 @@ const typeDefs = gql`
     reps: Int
   }
 
+  type Exercises {
+    _id: ID
+    exerciseName: String
+    equipment: String
+    isUserCreated: String
+  }
+
   type Query {
     getExercises: [Exercise]
+    getAllExercises: [Exercises]
     getTemplates(userId: ID!): [Template]
     getChartDataForTemplates(
       templateName: String

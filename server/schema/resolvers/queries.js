@@ -28,12 +28,25 @@ const Query = {
     return exercises;
   },
 
+  getAllExercises: async function () {
+    const exercises = await Exercise.find().select("-__v");
+
+    console.log(exercises)
+
+    return exercises;
+  },
+
   getTemplates: async function (_, args) {
     try {
-      const { templates } = await User.findById(args.userId).populate(
-        "templates"
-      );
+      const { templates } = await User.findById(args.userId).populate({
+        path: "templates",
+        populate: {
+          path: "exercises.exercise",
+          model: "Exercise",
+        },
+      });
 
+      console.log(templates[0].exercises);
       return templates.length > 0 ? templates : [];
     } catch (error) {
       return error;

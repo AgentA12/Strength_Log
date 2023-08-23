@@ -1,19 +1,14 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const { setSchema } = require("./exercise");
 
 const completedExerciseSchema = mongoose.Schema(
   {
-    exerciseName: String,
-    weight: Number,
-    reps: Number,
-    sets: Number,
+    exercise: { type: mongoose.Schema.ObjectId, ref: "Exercise" },
+    sets: [setSchema],
   },
   { timestamps: true }
 );
-
-completedExerciseSchema.methods = function getTotalWeight() {
-  return this.weight * this.reps * this.sets;
-};
 
 const completedWorkoutSchema = mongoose.Schema(
   {
@@ -32,7 +27,6 @@ const userSchema = mongoose.Schema(
         return this.password.length >= 5;
       },
     },
-
     templates: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
     completedWorkouts: [completedWorkoutSchema],
     completedExercises: [completedExerciseSchema],

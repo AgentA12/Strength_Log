@@ -24,11 +24,25 @@ export const GET_TEMPLATES = gql`
       templateName
       templateNotes
       exercises {
-        exerciseName
-        sets
-        reps
-        weight
+        exercise {
+          exerciseName
+        }
+        sets {
+          weight
+          reps
+        }
       }
+    }
+  }
+`;
+
+export const GET_ALL_EXERCISES = gql`
+  query {
+    getAllExercises {
+      _id
+      exerciseName
+      equipment
+      isUserCreated
     }
   }
 `;

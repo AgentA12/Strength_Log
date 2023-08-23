@@ -22,7 +22,6 @@ export function App() {
     black: "#000000",
     loader: "bars",
     primaryColor: "cyan",
-    
   };
 
   useHotkeys([["ctrl+K", () => toggleColorScheme()]]);

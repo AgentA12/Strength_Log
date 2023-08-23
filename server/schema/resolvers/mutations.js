@@ -1,4 +1,4 @@
-const { User, Template } = require("../../models/index");
+const { User, Template, Exercise } = require("../../models/index");
 
 const { AuthenticationError } = require("apollo-server");
 const { signToken } = require("../../utils/auth");
@@ -46,38 +46,32 @@ const Mutation = {
 
   createTemplate: async function (_, args) {
     try {
-      const templatePayload = {
-        exercises: args.exercises.map((exercise) => {
-          return {
-            exerciseName: exercise.exerciseName,
-            reps: exercise.reps,
-            sets: exercise.sets,
-            weight: exercise.weight,
-            isBodyWeight: exercise.exerciseName === "Pull up" ? true : false,
-          };
-        }),
+      console.log("called?");
+
+      const tempPayload = {
+        belongsTo: args.userId,
         templateName: args.templateName,
         templateNotes: args.templateNotes,
-        belongsTo: args.userId,
+        exercises: args.exercises.map((e) => {
+          return { exercise: e._id, sets: e.sets };
+        }),
       };
 
-      const template = await Template.create(templatePayload);
-
-      const { _id: templateId } = template;
+      const temp = await Template.create(tempPayload);
 
       await User.findByIdAndUpdate(args.userId, {
-        $push: { templates: [templateId] },
+        $push: { templates: [temp._id] },
       });
 
       return args.templateName;
     } catch (error) {
+      console.log(error);
       return error.message;
     }
   },
 
   editTemplate: async function (_, args) {
     try {
-      console.log(args);
       const template = await Template.findByIdAndUpdate(
         args._id,
         {
@@ -88,7 +82,6 @@ const Mutation = {
 
         { new: true }
       );
-      console.log(template);
       return template;
     } catch (error) {
       return error.message;

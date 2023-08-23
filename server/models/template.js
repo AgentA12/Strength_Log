@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { setSchema } = require("./exercise");
 
 const templateSchema = mongoose.Schema(
   {
@@ -13,14 +14,8 @@ const templateSchema = mongoose.Schema(
     templateNotes: { type: String, trim: true },
     exercises: [
       {
-        exerciseName: String,
-        weight: { type: Number },
-        sets: { type: Number, min: [1, "You must enter at lease one set"] },
-        reps: {
-          type: Number,
-          min: [1, "You must enter at lease one repetition"],
-        },
-        isBodyWeight: Boolean,
+        exercise: { type: mongoose.Schema.Types.ObjectId, ref: "Exercise" },
+        sets: [setSchema],
       },
     ],
   },
