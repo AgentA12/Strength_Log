@@ -18,7 +18,7 @@ export default function SelectExerciseModal({
       <List
         withPadding
         icon={
-          <ThemeIcon color="cyan" size={24} radius="xl">
+          <ThemeIcon size={24} radius="xl">
             <TbBarbell />
           </ThemeIcon>
         }

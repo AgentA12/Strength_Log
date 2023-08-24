@@ -8,17 +8,11 @@ export default function WorkoutPage() {
     state: { template },
   } = useLocation();
 
+
   return (
     <Stack justify="center" align="center">
       <Box>
-        <Title
-          sx={(theme) => ({
-            color: theme.primaryShade.dark,
-          })}
-          mt={5}
-        >
-          {template.templateName.toUpperCase()}
-        </Title>
+        <Title mt={5}>{template.templateName}</Title>
       </Box>
 
       <Timer textSize={"xl"} />
@@ -27,8 +21,9 @@ export default function WorkoutPage() {
         <ExerciseCard
           template={template}
           exercise={exercise}
-          key={exercise.exerciseName}
+          key={exercise.exercise._id}
         />
+
       ))}
     </Stack>
   );

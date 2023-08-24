@@ -20,8 +20,10 @@ export default function ExerciseForm({
   return (
     <Card withBorder my={10}>
       <Group position="apart">
-        <Title order={2} sx={(theme) => ({ color: theme.colors.cyan[5] })}>
-          {formState.exercises[index].exerciseName.toUpperCase()}
+        <Title order={2} sx={(theme) => ({ color: theme.colors.brand[4] })}>
+          {formState.exercises[index].exercise
+            ? formState.exercises[index].exercise.exerciseName
+            : formState.exercises[index].exerciseName}
         </Title>
         <NumberInput
           label="Rest time"
@@ -38,9 +40,7 @@ export default function ExerciseForm({
               <Text fz={20} fw="bold">
                 Set {i + 1}
               </Text>
-              <Button variant="outline" onClick={() => removeSet(index, i)}>
-                Remove Set
-              </Button>
+              <Button onClick={() => removeSet(index, i)}>Remove Set</Button>
             </Group>
             <Group>
               <NumberInput
@@ -68,14 +68,11 @@ export default function ExerciseForm({
       </List>
 
       <Group position="apart">
-        <Button variant="outline" onClick={() => addSet(index)}>
-          Add Set
-        </Button>
+        <Button onClick={() => addSet(index)}>Add Set</Button>
         <Button
           mt={10}
           onClick={(event) => removeExercise(event, index)}
           rightIcon={<IoMdRemove color="" />}
-          variant="outline"
           color="red"
         >
           Remove Exercise

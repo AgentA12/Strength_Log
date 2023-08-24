@@ -26,6 +26,8 @@ export const GET_TEMPLATES = gql`
       exercises {
         exercise {
           exerciseName
+          _id
+          equipment
         }
         sets {
           weight

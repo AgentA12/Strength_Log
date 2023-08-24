@@ -52,15 +52,12 @@ export default function CreateTemplateContainer() {
 
   if (loading) return null;
   if (error) {
-    console.log(error);
     return null;
   }
 
   let exercises = data?.getAllExercises.map((e) => {
     return { value: e.exerciseName, label: e.exerciseName, _id: e._id };
   });
-
-  console.log(data?.getAllExercises)
 
   function handleChange(index, { target }) {
     let data = { ...formState };
@@ -84,7 +81,6 @@ export default function CreateTemplateContainer() {
   }
 
   async function handleSubmit(event) {
-    console.log(formState);
     try {
       event.preventDefault();
       const mutationRes = await addTemplate({

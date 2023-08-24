@@ -1,5 +1,3 @@
-
-
 import { Link } from "react-router-dom";
 import { Menu, Button } from "@mantine/core";
 import { FaTrash, FaEdit } from "react-icons/fa";
@@ -11,9 +9,14 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
         event.stopPropagation();
       }}
     >
-      <Link to={"/Edit-template"} state={{ template: template }}>
-        <Menu.Item icon={<FaEdit size={14} />}>Edit</Menu.Item>
-      </Link>
+      <Menu.Item
+        component={Link}
+        to="/Edit-template"
+        state={{ template: template }}
+        icon={<FaEdit size={14} />}
+      >
+        Edit
+      </Menu.Item>
 
       <Menu.Item
         color="red"
@@ -41,7 +44,6 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
             event.stopPropagation();
           }}
           data-dropdown-toggle="dropdownDotsHorizontal"
-          variant="outline"
           p="xs"
         >
           <svg

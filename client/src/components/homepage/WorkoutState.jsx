@@ -1,27 +1,88 @@
-import { Container, Flex, Group, NumberInput, Text } from "@mantine/core";
-import { SaveWorkoutBtn, StartWorkoutBtn } from "./index";
+import {
+  Container,
+  Text,
+  Table,
+  useMantineTheme,
+  NumberInput,
+} from "@mantine/core";
 
-export default function WorkoutState({
-  loading,
-  handleSaveWorkout,
-  setTemplateState,
-  templateState,
-}) {
-  function handleChange({ target }, index) {
+export default function WorkoutState({ setTemplateState, templateState }) {
+  const theme = useMantineTheme();
+
+  function handleChange({ target }, exerciseIndex, setIndex) {
     let data = JSON.parse(JSON.stringify(templateState));
 
-    data.exercises[index][target.name] = parseInt(target.value);
+    data.exercises[exerciseIndex].sets[setIndex][target.name] = parseInt(
+      target.value
+    );
 
     setTemplateState({ ...data });
   }
+
+  const Tables = templateState.exercises.map((exercise, exerciseIndex) => (
+    <Container mb={10}>
+      <Text fz={20} fw="bolder" color={theme.colors.brand[6]} mt={10}>
+        {exercise.exercise.exerciseName.toUpperCase()}
+      </Text>
+      <Table withBorder withColumnBorders key={exercise._id} >
+        <thead>
+          <tr>
+            <th>Set</th>
+            <th>Reps</th>
+            <th>Weight</th>
+          </tr>
+        </thead>
+        <tbody>
+          {exercise.sets.map((set, setIndex) => (
+            <tr key={exercise._id}>
+              <td>{setIndex + 1}</td>
+              <td>
+                <NumberInput
+                  w={75}
+                  min={1}
+                  max={99}
+                  defaultValue={parseInt(set.reps)}
+                  onChange={(value) =>
+                    handleChange(
+                      { target: { name: "reps", value: value } },
+                      exerciseIndex,
+                      setIndex
+                    )
+                  }
+                />
+              </td>
+              <td>
+                <NumberInput
+                  w={75}
+                  step={5}
+                  min={5}
+                  max={995}
+                  defaultValue={parseInt(set.weight)}
+                  onChange={(value) =>
+                    handleChange(
+                      { target: { name: "weight", value: value } },
+                      exerciseIndex,
+                      setIndex
+                    )
+                  }
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </Container>
+  ));
+
   return (
     <>
-      {templateState.exercises.map((exercise, index) => (
+      {Tables}
+      {/* {templateState.exercises.map((exercise, index) => (
         <Container key={exercise.exerciseName}>
           <Group mt={5}>
             <Text
               size="xl"
-              sx={(theme) => ({ color: theme.primaryColor})}
+              sx={(theme) => ({ color: theme.primaryColor })}
               fw={700}
             >
               {exercise.exerciseName}
@@ -37,39 +98,14 @@ export default function WorkoutState({
               }
             />
 
-            <NumberInput
-              label="Reps"
-              defaultValue={parseInt(exercise.reps)}
-              onChange={(value) =>
-                handleChange({ target: { name: "reps", value: value } }, index)
-              }
-            />
+            
 
             {exercise.weight !== "Body weight" ? (
-              <NumberInput
-                label="Weight"
-                step={5}
-                defaultValue={parseInt(exercise.weight)}
-                onChange={(value) =>
-                  handleChange(
-                    { target: { name: "weight", value: value } },
-                    index
-                  )
-                }
-              />
+             
             ) : null}
           </Flex>
         </Container>
-      ))}
-
-      <Flex justify="space-around" align="center" mt={15}>
-        <SaveWorkoutBtn
-          loading={loading}
-          handleSaveWorkout={handleSaveWorkout}
-          templateState={templateState}
-        />
-        <StartWorkoutBtn template={templateState} />
-      </Flex>
+      ))} */}
     </>
   );
 }

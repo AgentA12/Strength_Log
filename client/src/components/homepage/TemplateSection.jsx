@@ -35,8 +35,6 @@ export default function TemplateSection() {
     if (data) setTemplates(data.getTemplates);
   }, [data]);
 
-  if(templates) console.log(templates)
-
   async function handleTemplateDelete(templateId) {
     try {
       const res = await deleteTemplate({

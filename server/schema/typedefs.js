@@ -20,15 +20,14 @@ const typeDefs = gql`
   }
 
   input exerciseInput {
-    name: String
+    exerciseName: String
     _id: ID
+    equipment: String
   }
 
   input saveWorkoutExerciseInput {
-    exerciseName: String
-    weight: Int
-    reps: Int
-    sets: Int
+    exercise: exerciseInput
+    sets: [Set]
   }
 
   input Set {
@@ -44,6 +43,14 @@ const typeDefs = gql`
   input createTemplateExerciseInput {
     exerciseName: String
     _id: ID
+    sets: [Set]
+  }
+
+  input TemplateInput {
+    templateName: String
+    templateNotes: String
+    _id: ID
+    exercise: [exerciseInput]
     sets: [Set]
   }
 
@@ -189,10 +196,10 @@ const typeDefs = gql`
       exercises: [createTemplateExerciseInput!]
     ): Template
     editTemplate(
-      _id: ID!
+      templateId: ID!
       templateName: String!
       templateNotes: String
-      exercises: [editExerciseInput!]
+      exercises: [TemplateInput!]
     ): Template
     createExercise(name: String!, sets: Int!, reps: Int!): Exercise
     deleteTemplate(templateId: ID!): isDeleted

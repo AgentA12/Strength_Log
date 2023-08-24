@@ -57,7 +57,11 @@ export default function SettingsNavBtn() {
   return (
     <Menu shadow="md" width={230} position="bottom-right" trigger="hover">
       <Menu.Target>
-        <Button  rightIcon={<IoMdArrowDropdown size={15} />}  variant="subtle" compact>
+        <Button
+          rightIcon={<IoMdArrowDropdown size={15} />}
+          variant="subtle"
+          compact
+        >
           Account
         </Button>
       </Menu.Target>
@@ -103,19 +107,17 @@ export default function SettingsNavBtn() {
           to confirm
         </Text>
 
-        <TextInput sx={{marginBottom: 10, marginTop:10}} onChange={handleChange}></TextInput>
+        <TextInput
+          sx={{ marginBottom: 10, marginTop: 10 }}
+          onChange={handleChange}
+        ></TextInput>
 
         <Flex justify="end" gap={10}>
-          <Button
-            color={"gray"}
-            variant="outline"
-            onClick={() => setOpened(false)}
-          >
+          <Button color={"gray"} onClick={() => setOpened(false)}>
             Cancel
           </Button>
           <Button
             color={"red"}
-            variant="outline"
             disabled={!deleteAllowed}
             sx={{ "&[disabled]": { pointerEvents: "all" } }}
             onClick={handleDelete}

@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { EDIT_TEMPLATE } from "../../utils/graphql/mutations";
 import { useQuery } from "@apollo/client";
-import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import AddExerciseBtn from "../homepage/AddExerciseBtn";
 import SaveTemplateBtn from "../homepage/SaveTemplateBtn";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -19,8 +18,9 @@ import {
   Box,
   createStyles,
 } from "@mantine/core";
-import { UserContext } from "../../App";
-import { useContext } from "react";
+import { GET_ALL_EXERCISES } from "../../utils/graphql/queries";
+import { useDisclosure } from "@mantine/hooks";
+import { SelectExerciseModal } from "./index";
 
 const useStyles = createStyles(() => ({
   container: {
@@ -29,32 +29,35 @@ const useStyles = createStyles(() => ({
 }));
 
 export default function EditTemplate() {
-  const { classes } = useStyles();
+  const { state } = useLocation();
+  
+  const { data, loading, error } = useQuery(GET_ALL_EXERCISES);
 
+  const [opened, { open, close }] = useDisclosure(false);
+
+  const { classes } = useStyles();
   const navigate = useNavigate();
 
-  const { state } = useLocation();
-
   const [errorMessage, setErrorMessage] = useState(null);
-  const [formState, setFormState] = useState(state.template);
+  const [formState, setFormState] = useState(state?.template);
 
-  const {
-    data: { _id: userID },
-  } = useContext(UserContext);
+  const [editTemplate, { loading: editTemplateLoading }] =
+    useMutation(EDIT_TEMPLATE);
 
-  const { loading, refetch } = useQuery(GET_TEMPLATES, {
-    variables: {
-      userId: userID,
-    },
+  if (loading) return null;
+  if (error) {
+    return null;
+  }
+
+  let exercises = data?.getAllExercises.map((e) => {
+    return { value: e.exerciseName, label: e.exerciseName, _id: e._id };
   });
-
-  const [EditTemplate] = useMutation(EDIT_TEMPLATE);
 
   function handleChange(index, { target }) {
     let data = { ...formState };
 
     if (target.name !== "templateName" && target.name !== "templateNotes") {
-      data.exercises[index][target.name] = target.value;
+      data.exercises[index].sets[target.setIndex][target.name] = target.value;
 
       setFormState({ ...data });
       return;
@@ -63,34 +66,29 @@ export default function EditTemplate() {
     setFormState({ ...formState, [target.name]: target.value });
   }
 
+  function resetFormState() {
+    setFormState({
+      templateName: "",
+      templateNotes: "",
+      exercises: [],
+    });
+  }
+
   async function handleSubmit(event) {
     try {
       event.preventDefault();
-      if (!formState.templateName.trim()) {
-        setErrorMessage("You must enter a template name");
-        return;
-      }
-
-      for (let i = 0; i < formState.exercises.length; i++) {
-        if (
-          !formState.exercises[i].exerciseName ||
-          !formState.exercises[i].sets ||
-          !formState.exercises[i].reps
-        ) {
-          setErrorMessage("You must fill in all exercise fields");
-          return;
-        }
-      }
-
-      const mutationRes = await EditTemplate({
+      const mutationRes = await editTemplate({
         variables: {
+          templateId: formState._id,
           ...formState,
-          userId: userID,
         },
       });
 
       if (mutationRes) {
-        refetch();
+        //if template is added, reset form and refetch new templates and remove the error message
+        resetFormState();
+        // refetch();
+        setErrorMessage(null);
         navigate("/Home");
       }
     } catch (error) {
@@ -100,12 +98,14 @@ export default function EditTemplate() {
     }
   }
 
-  function addExercise() {
+  //adds an exercise to the form
+  function addExercise(value) {
+    const e = exercises.find((exercise) => exercise.value === value);
+
     const exercise = {
-      exerciseName: "",
-      sets: 5,
-      reps: 5,
-      weight: 135,
+      exerciseName: value,
+      _id: e._id,
+      sets: [{ weight: 0, reps: 0 }],
     };
 
     const data = { ...formState };
@@ -113,12 +113,34 @@ export default function EditTemplate() {
     data.exercises.push(exercise);
 
     setFormState(data);
+
+    close();
+  }
+
+  function addSet(index) {
+    let data = { ...formState };
+
+    data.exercises[index].sets.push({ weight: 0, reps: 0 });
+
+    setFormState(data);
+  }
+
+  function removeSet(index, i) {
+    let data = { ...formState };
+
+    data.exercises[index].sets = data.exercises[index].sets.filter(
+      (_, x) => i !== x
+    );
+
+    setFormState(data);
   }
 
   function removeExercise(_, index) {
     let data = { ...formState };
 
-    const filteredExercises = formState.exercises.filter((_, i) => i !== index);
+    const filteredExercises = formState.exercises.filter((_, i) => {
+      return i !== index;
+    });
 
     data.exercises = filteredExercises;
 
@@ -130,48 +152,55 @@ export default function EditTemplate() {
       <Divider
         my="lg"
         variant="dashed"
-        label={
-          <Title>
-            Edit <Text component="span">{formState.templateName}</Text>
-          </Title>
-        }
+        label={<Title>Create A Template</Title>}
       />
+
       <Box className={classes.container}>
         <TextInput
-          size="xl"
           onChange={(event) => handleChange(null, event)}
           name="templateName"
           value={formState?.templateName}
           placeholder="Template Name"
+          size="xl"
+          mb={15}
         />
-
         <Box>
           <Textarea
+            minRows={10}
             onChange={(event) => handleChange(null, event)}
             name="templateNotes"
-            minRows={10}
-            mt={10}
             placeholder="Template notes"
             value={formState?.templateNotes}
           />
-          <Flex mt={5} justify={"space-between"}>
-            <AddExerciseBtn addExercise={addExercise} />
-            <SaveTemplateBtn loading={loading} handleSubmit={handleSubmit} />
+          <Flex mt={10} justify={"space-between"}>
+            <AddExerciseBtn clickHandler={open} />
+            <SaveTemplateBtn
+              loading={editTemplateLoading}
+              handleSubmit={handleSubmit}
+            />
           </Flex>
-          <Text color="red"> {errorMessage ? errorMessage : null}</Text>
+          <Text>{errorMessage && errorMessage}</Text>
         </Box>
+
+        <SelectExerciseModal
+          opened={opened}
+          close={close}
+          addExercise={addExercise}
+          exercises={exercises}
+        />
+
         <ScrollArea offsetScrollbars scrollbarSize={4} scrollHideDelay={1500}>
-          <form onSubmit={(event) => handleSubmit(event)}>
-            {formState?.exercises.map((_, index) => (
-              <ExerciseForm
-                key={index}
-                handleChange={handleChange}
-                index={index}
-                formState={formState}
-                removeExercise={removeExercise}
-              />
-            ))}
-          </form>
+          {formState?.exercises.map((_, index) => (
+            <ExerciseForm
+              key={index}
+              handleChange={handleChange}
+              index={index}
+              formState={formState}
+              removeExercise={removeExercise}
+              addSet={addSet}
+              removeSet={removeSet}
+            />
+          ))}
         </ScrollArea>
       </Box>
     </Container>

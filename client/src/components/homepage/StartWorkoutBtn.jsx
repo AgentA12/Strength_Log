@@ -5,7 +5,7 @@ export default function StartWorkoutBtn({ template }) {
   function handleStartWorkout() {}
   return (
     <Link to="/Workout" state={{ template: template }}>
-      <Button variant="outline" onClick={handleStartWorkout}>
+      <Button onClick={handleStartWorkout}>
         Start workout
       </Button>
     </Link>

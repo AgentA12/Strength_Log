@@ -31,8 +31,6 @@ const Query = {
   getAllExercises: async function () {
     const exercises = await Exercise.find().select("-__v");
 
-    console.log(exercises)
-
     return exercises;
   },
 
@@ -46,7 +44,6 @@ const Query = {
         },
       });
 
-      console.log(templates[0].exercises);
       return templates.length > 0 ? templates : [];
     } catch (error) {
       return error;
@@ -58,13 +55,12 @@ const Query = {
     { templateName, userId, range, metric }
   ) {
     try {
-      const { completedWorkouts } = await User.findById(userId).populate({
-        path: "completedWorkouts",
-        populate: {
-          path: "template",
-          model: "Template",
-        },
-      });
+      const user = await User.findById(userId)
+        .populate({ path: "completedWorkouts.template", model: "Template" })
+        .populate({
+          path: "completedWorkouts.exercises.exercise.sets",
+          model: "Exercise",
+        });
 
       let dataSets = [
         {

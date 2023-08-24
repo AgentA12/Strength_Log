@@ -15,7 +15,7 @@ const useStyles = createStyles((theme) => ({
     },
   },
   exercises: {
-    color: theme.primaryColor,
+    color: theme.colors.brand[5],
   },
 }));
 
@@ -50,7 +50,8 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
               <Text component="span" key={exercise.exerciseName}>
                 {template.exercises.length - 1 === i
                   ? capitalizeFirstLetter(exercise.exercise.exerciseName)
-                  : capitalizeFirstLetter(exercise.exercise.exerciseName) + ", "}
+                  : capitalizeFirstLetter(exercise.exercise.exerciseName) +
+                    ", "}
               </Text>
             ))}
           </Text>

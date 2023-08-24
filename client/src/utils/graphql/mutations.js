@@ -48,25 +48,20 @@ export const CREATE_TEMPLATE = gql`
   }
 `;
 
-export const ADD_EXERCISE = gql`
+export const EDIT_TEMPLATE = gql`
   mutation (
+    $templateId: ID!
     $templateName: String!
-    $reps: Int!
-    $sets: Int!
-    $type: String
-    $userId: ID!
+    $templateNotes: String
+    $exercises: [TemplateInput!]
   ) {
-    createExercise(
+    editTemplate(
+      templateId: $templateId
       templateName: $templateName
-      reps: $reps
-      sets: $sets
-      type: $type
-      userId: $userId
+      templateNotes: $templateNotes
+      exercises: $exercises
     ) {
-      _id
-      name
-      reps
-      sets
+      templateName
     }
   }
 `;
@@ -77,25 +72,6 @@ export const DELETE_TEMPLATE = gql`
       acknowledged
       deleteCount
       templateName
-    }
-  }
-`;
-
-export const EDIT_TEMPLATE = gql`
-  mutation (
-    $_id: ID!
-    $templateName: String!
-    $templateNotes: String
-    $exercises: [editExerciseInput!]
-  ) {
-    editTemplate(
-      _id: $_id
-      templateName: $templateName
-      templateNotes: $templateNotes
-      exercises: $exercises
-    ) {
-      templateName
-      templateNotes
     }
   }
 `;

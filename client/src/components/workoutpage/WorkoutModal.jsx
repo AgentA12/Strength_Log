@@ -47,7 +47,7 @@ export default function WorkoutModal({
         </Title>
         <Menu position="bottom-end">
           <Menu.Target>
-            <ActionIcon size="md" variant="outline">
+            <ActionIcon size="md">
               <IoIosOptions size={24} />
             </ActionIcon>
           </Menu.Target>
@@ -63,13 +63,13 @@ export default function WorkoutModal({
         </Menu>
       </Group>
       <Stack align="center" justify="center">
-        <Title mt={15}>{exercise.exerciseName.toUpperCase()}</Title>
+        <Title mt={15}>{exercise.exercise.exerciseName.toUpperCase()}</Title>
         <Timer textSize={"xl"} />
-        <Text fz={24} c="dimmed">
+        {/* <Text fz={24} c="dimmed">
           Set {"   "}
           {currentSet}/{totalSets}
-        </Text>
-        <Group>
+        </Text> */}
+        {/* <Group>
           <Group spacing={-2}>
             <ActionIcon
               size={34}
@@ -123,7 +123,7 @@ export default function WorkoutModal({
               +
             </ActionIcon>
           </Group>
-        </Group>
+        </Group> */}
         <Button>Set Done</Button>
       </Stack>
     </Modal>

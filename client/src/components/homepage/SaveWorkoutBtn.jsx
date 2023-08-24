@@ -6,12 +6,7 @@ export default function SaveWorkoutBtn({
   templateState,
 }) {
   return (
-    <Button
-      onClick={() => handleSaveWorkout(templateState)}
-      loading={loading}
-      variant="outline"
-   
-    >
+    <Button onClick={() => handleSaveWorkout(templateState)} loading={loading}>
       Quick Save
     </Button>
   );

@@ -46,8 +46,6 @@ const Mutation = {
 
   createTemplate: async function (_, args) {
     try {
-      console.log("called?");
-
       const tempPayload = {
         belongsTo: args.userId,
         templateName: args.templateName,
@@ -65,7 +63,6 @@ const Mutation = {
 
       return args.templateName;
     } catch (error) {
-      console.log(error);
       return error.message;
     }
   },
@@ -73,11 +70,16 @@ const Mutation = {
   editTemplate: async function (_, args) {
     try {
       const template = await Template.findByIdAndUpdate(
-        args._id,
+        args.templateId,
         {
           templateName: args.templateName,
           templateNotes: args.templateNotes,
-          $set: { exercises: args.exercises },
+          exercises: args.exercises.map((exercise) => {
+            return {
+              exercise: exercise.exercise[0]._id,
+              sets: [...exercise.sets],
+            };
+          }),
         },
 
         { new: true }
@@ -114,7 +116,17 @@ const Mutation = {
           $push: {
             completedWorkouts: {
               template: templateId,
-              exercises: [...exercises],
+              exercises: exercises.map((exercise) => {
+                return {
+                  exercise: exercise.exercise._id,
+                  sets: [...exercise.sets],
+                };
+              }),
+            },
+            completedExercises: {
+              exercises: exercises.map((exercise) => {
+                return { exercise: exercise._id, sets: [...exercise.sets] };
+              }),
             },
           },
         },

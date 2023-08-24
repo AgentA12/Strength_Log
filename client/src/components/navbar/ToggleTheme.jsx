@@ -6,7 +6,6 @@ export default function ToggleTheme() {
   const dark = colorScheme === "dark";
   return (
     <ActionIcon
-      variant="outline"
       color={dark ? "yellow" : "hot-pink"}
       onClick={() => toggleColorScheme()}
       title="Toggle color scheme"

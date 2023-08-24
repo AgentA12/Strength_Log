@@ -123,7 +123,6 @@ export default function AuthorizationComponent() {
         <Button
           mt={10}
           type="submit"
-          variant="outline"
           loading={loginLoading ? loginLoading : signupLoading}
         >
           {type.toUpperCase()}

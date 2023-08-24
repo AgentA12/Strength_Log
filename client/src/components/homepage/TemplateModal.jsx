@@ -1,4 +1,4 @@
-import { Container, Modal, Text, useMantineTheme } from "@mantine/core";
+import { Container, Modal, Text, useMantineTheme, Flex } from "@mantine/core";
 import { useContext, useState } from "react";
 import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
 import { useMutation } from "@apollo/client";
@@ -7,6 +7,7 @@ import { showNotification } from "@mantine/notifications";
 import { AiOutlineCheck } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
 import { UserContext } from "../../App";
+import { SaveWorkoutBtn, StartWorkoutBtn } from "./index";
 
 export default function TemplateModal({ template, opened, setOpened }) {
   const {
@@ -14,6 +15,7 @@ export default function TemplateModal({ template, opened, setOpened }) {
   } = useContext(UserContext);
 
   const [templateState, setTemplateState] = useState(template);
+
   const theme = useMantineTheme();
 
   const [saveWorkoutFunction, { loading, error }] = useMutation(SAVE_WORKOUT);
@@ -84,6 +86,14 @@ export default function TemplateModal({ template, opened, setOpened }) {
         <Text mb={10}>
           {template.templateNotes.trim() ? `- ${template.templateNotes}` : null}
         </Text>
+        <Flex justify="space-around" align="center" mt={15}>
+          <SaveWorkoutBtn
+            loading={loading}
+            handleSaveWorkout={handleSaveWorkout}
+            templateState={templateState}
+          />
+          <StartWorkoutBtn template={templateState} />
+        </Flex>
         <WorkoutState
           loading={loading}
           handleSaveWorkout={handleSaveWorkout}
