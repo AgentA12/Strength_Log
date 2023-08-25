@@ -6,11 +6,14 @@ export default function ToggleTheme() {
   const dark = colorScheme === "dark";
   return (
     <ActionIcon
-      color={dark ? "yellow" : "hot-pink"}
+      color={dark ? "yellow" : "pink"}
       onClick={() => toggleColorScheme()}
-      title="Toggle color scheme"
+      title="Toggle scheme "
+      size="md"
+     
+      variant="outline"
     >
-      {dark ? <BsSun size="1.1rem" /> : <BsMoon size="1.1rem" />}
+      {dark ? <BsSun size="0.9rem" /> : <BsMoon size="0.9rem" />}
     </ActionIcon>
   );
 }

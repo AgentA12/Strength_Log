@@ -21,7 +21,7 @@ export default function WorkoutState({ setTemplateState, templateState }) {
 
   const Tables = templateState.exercises.map((exercise, exerciseIndex) => (
     <Container mb={10}>
-      <Text fz={20} fw="bolder" color={theme.colors.brand[6]} mt={10}>
+      <Text fz={20} fw="bolder" color={theme.colors.brand[5]} mt={10}>
         {exercise.exercise.exerciseName.toUpperCase()}
       </Text>
       <Table withBorder withColumnBorders key={exercise._id} >

@@ -32,7 +32,7 @@ export default function ProgressPage() {
     <Container fluid className={classes.container}>
       <Title>
         <Text
-          sx={(theme) => ({ color: theme.primaryColor })}
+          sx={(theme) => ({ color: theme.colors.brand[4] })}
           fw={800}
           component="span"
         >

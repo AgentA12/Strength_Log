@@ -56,12 +56,33 @@ const Query = {
   ) {
     try {
       const user = await User.findById(userId)
-        .populate({ path: "completedWorkouts.template", model: "Template" })
         .populate({
-          path: "completedWorkouts.exercises.exercise.sets",
+          path: "completedExercises.exercise",
           model: "Exercise",
-        });
+        })
+        .populate({
+          path: "completedExercises.belongsTo",
+          model: "Template",
+        })
+        .select("-__v");
 
+      function formatChartData(exerciseArrs) {
+        let dataSet = exerciseArrs.map((exercise) => {
+          return {
+            label: exercise.exercise.exerciseName,
+            belongsTo: exercise.belongsTo.templateName,
+            data: exercise.sets.map((set) => {
+              return {
+                x: new Date(exercise.savedOn).toLocaleDateString(),
+                y: set.weight,
+              };
+            }),
+          };
+        });
+        return dataSet;
+      }
+
+      let dataSet = formatChartData(user.completedExercises);
       let dataSets = [
         {
           belongsTo: "Upper body",
@@ -162,9 +183,11 @@ const Query = {
       ];
 
       if (templateName != "All templates")
-        dataSets = dataSets.filter((data) => data.belongsTo === templateName);
+        dataSet = dataSet.filter(
+          (data) => data.belongsTo.toLowerCase() === templateName.toLowerCase()
+        );
 
-      return dataSets;
+      return dataSet;
     } catch (error) {
       return error;
     }

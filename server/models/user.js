@@ -6,6 +6,9 @@ const completedExerciseSchema = mongoose.Schema(
   {
     exercise: { type: mongoose.Schema.ObjectId, ref: "Exercise" },
     sets: [setSchema],
+    belongsTo: {type:mongoose.Schema.ObjectId, ref: "Template"},
+    savedOn: Date
+
   },
   { timestamps: true }
 );
@@ -18,6 +21,7 @@ const completedWorkoutSchema = mongoose.Schema(
   { timestamps: true }
 );
 
+
 const userSchema = mongoose.Schema(
   {
     username: { type: String, required: true, unique: true },
@@ -29,6 +33,7 @@ const userSchema = mongoose.Schema(
     },
     templates: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
     completedWorkouts: [completedWorkoutSchema],
+
     completedExercises: [completedExerciseSchema],
   },
   { timestamps: true }

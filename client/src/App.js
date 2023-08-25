@@ -16,32 +16,42 @@ export function App() {
   });
 
   const themeStyles = {
-    fontFamily: "Inter",
-    colorScheme: colorScheme,
-    loader: "bars",
-    colors: {
-      brand: [
-        "#F0BBDD",
-        "#ED9BCF",
-        "#EC7CC3",
-        "#ED5DB8",
-        "#F13EAF",
-        "#F71FA7",
-        "#FF00A1",
-        "#E00890",
-        "#C50E82",
-        "#AD1374",
-      ],
-    },
-    primaryColor: "brand",
     components: {
       Button: {
         defaultProps: {
           variant: "outline",
         },
       },
+
+      Modal: {
+        styles: {
+          root: {
+            border: "1px gray solid",
+          },
+        },
+      },
     },
-    globalSyles: (theme) => ({}),
+
+    globalStyles: (theme) => ({}),
+    fontFamily: "Inter",
+    colorScheme: colorScheme,
+    loader: "bars",
+    colors: {
+      brand: myColors.yellow,
+      dark: [
+        "#E2E2E2",
+        "#AFAFAF",
+        "#888888",
+        "#616161",
+        "#454545",
+        "#313131",
+        "#232323",
+        "#191919",
+        "#111111",
+      ],
+    },
+
+    primaryColor: "brand",
   };
 
   useHotkeys([["ctrl+K", () => toggleColorScheme()]]);
@@ -86,3 +96,80 @@ export function App() {
     </ColorSchemeProvider>
   );
 }
+
+let myColors = {
+  alizarin: [
+    "#FFCCC4",
+    "#FF7D6B",
+    "#FF5A47",
+    "#FF0000",
+    "#FF0000",
+    "#D20000",
+    "#AA0000",
+    "#8A0000",
+    "#6F0000",
+  ],
+  peterriver: [
+    "#E0F7FF",
+    "#A4E6FF",
+    "#8BD1FF",
+    "#38C8FF",
+    "#08BBFF",
+    "#00AFFF",
+    "#00A2FF",
+    "#0090FF",
+    "#0080F5",
+  ],
+  nephritis: [
+    "#B4FFD7",
+    "#6CFFAC",
+    "#3EF58B",
+    "#20E071",
+    "#27AE60",
+    "#15954B",
+    "#07813B",
+    "#00712D",
+    "#006024",
+    "#004C1C",
+    "#003D17",
+  ],
+
+  teal: [
+    "#B3FFF5",
+    "#63FFEB",
+    "#20FFE2",
+    "#00FFCC",
+    "#00DFAF",
+    "#00B38C",
+    "#008F70",
+    "#00725A",
+    "#005B48",
+    "#004939",
+  ],
+
+  pink: [
+    "#FFD2FF",
+    "#FF9DFF",
+    "#FF6EFF",
+    "#FF59FD",
+    "#FF18FF",
+    "#FF00FF",
+    "#FF00FF",
+    "#F500F2",
+    "#DA00D7",
+    "#C200BF",
+  ],
+
+  yellow: [
+    "#FFF6D2",
+    "#FFEC9D",
+    "#FFE26E",
+    "#FFD059",
+    "#FFD118",
+    "#FFCA00",
+    "#FFBC00",
+    "#F5A700",
+    "#DA9500",
+    "#C28500",
+  ],
+};

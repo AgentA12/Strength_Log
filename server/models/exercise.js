@@ -9,6 +9,9 @@ const exerciseSchema = mongoose.Schema({
       message: "Type is not supported",
     },
   },
+  belongsToTemplate: [
+    { type: mongoose.Schema.Types.ObjectId, model: "Template" },
+  ],
   isUserCreated: Boolean,
 });
 

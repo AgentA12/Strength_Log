@@ -61,7 +61,7 @@ export default function TemplateChart({
   metric,
 }) {
   const firstSavedExeciseDate = "2023-05-20";
-  const lastSavedExerciseDate = "2023-08-01";
+  const lastSavedExerciseDate = "2023-09-01";
 
   const labels = getRangeOfDates(
     range,

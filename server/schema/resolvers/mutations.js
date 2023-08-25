@@ -123,15 +123,23 @@ const Mutation = {
                 };
               }),
             },
-            completedExercises: {
-              exercises: exercises.map((exercise) => {
-                return { exercise: exercise._id, sets: [...exercise.sets] };
-              }),
-            },
           },
         },
         { new: true }
       ).select("-password");
+
+      await User.findByIdAndUpdate(userID, {
+        $push: {
+          completedExercises: exercises.map((exercise) => {
+            return {
+              exercise: exercise.exercise._id,
+              sets: exercise.sets.map((set) => set),
+              belongsTo: templateId,
+              savedOn: new Date()
+            };
+          }),
+        },
+      });
 
       return user;
     } catch (error) {

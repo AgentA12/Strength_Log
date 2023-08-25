@@ -56,8 +56,14 @@ export default function CreateTemplateContainer() {
   }
 
   let exercises = data?.getAllExercises.map((e) => {
-    return { value: e.exerciseName, label: e.exerciseName, _id: e._id };
+    return {
+      value: e.exerciseName,
+      label: e.exerciseName,
+      _id: e._id,
+      equipment: e.equipment,
+    };
   });
+
 
   function handleChange(index, { target }) {
     let data = { ...formState };
