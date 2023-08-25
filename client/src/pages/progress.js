@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SectionMenu } from "../components/progresspage/index";
-import { Container, Title, Text, createStyles } from "@mantine/core";
+import { Container, createStyles } from "@mantine/core";
 import {
   ByTemplatesContainer,
   ByDateContainer,
@@ -30,17 +30,6 @@ export default function ProgressPage() {
 
   return (
     <Container fluid className={classes.container}>
-      <Title>
-        <Text
-          sx={(theme) => ({ color: theme.colors.brand[4] })}
-          fw={800}
-          component="span"
-        >
-          {activeTemplate && activeTemplate}
-        </Text>{" "}
-        Summary
-      </Title>
-
       <SectionMenu
         activeSection={activeSection}
         setActiveSection={setActiveSection}

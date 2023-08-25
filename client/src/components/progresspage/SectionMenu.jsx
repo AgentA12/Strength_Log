@@ -7,7 +7,7 @@ import { useMediaQuery } from "@mantine/hooks";
 export default function SectionMenu({ activeSection, setActiveSection }) {
   const isLargeScreen = useMediaQuery("(max-width: 48em)");
   return (
-    <Tabs defaultValue={activeSection} onTabChange={setActiveSection} my={8}>
+    <Tabs defaultValue={activeSection} onTabChange={setActiveSection} my={10}>
       <Tabs.List position={isLargeScreen ? "center" : "left"}>
         <Tabs.Tab
           value="Templates"

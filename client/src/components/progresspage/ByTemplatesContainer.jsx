@@ -16,7 +16,6 @@ import {
 const useStyles = createStyles((theme) => ({
   chartContainer: {
     height: "700px",
-    
   },
 }));
 
@@ -38,27 +37,19 @@ export default function ByTemplatesContainer({
     },
   });
 
-  // const {
-  //   data: progressData,
-  //   loading: progressLoading,
-  //   error: progressError,
-  // } = useQuery(GET_CHART_PROGRESS_BY_TEMPLATE, {
-  //   variables: {
-  //     templateId: activeTemplate === "All templates" ? null : templateId,
-  //     userId: userID,
-  //     range: range,
-  //     metric: null,
-  //     exercise: null,
-  //   },
-  // });
-
   const { classes } = useStyles();
 
   if (error) return <Title color="red">{error.message}</Title>;
 
-
   return (
     <>
+      <Title
+        sx={(theme) => ({ color: theme.colors.brand[4] })}
+        fw={800}
+        component="span"
+      >
+        {activeTemplate && activeTemplate}
+      </Title>
       <Flex
         wrap="wrap"
         gap={5}

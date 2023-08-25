@@ -8,7 +8,6 @@ export default function WorkoutPage() {
     state: { template },
   } = useLocation();
 
-
   return (
     <Stack justify="center" align="center">
       <Box>
@@ -23,7 +22,6 @@ export default function WorkoutPage() {
           exercise={exercise}
           key={exercise.exercise._id}
         />
-
       ))}
     </Stack>
   );

@@ -169,6 +169,12 @@ const typeDefs = gql`
     isUserCreated: String
   }
 
+  type CompletedWorkouts {
+    createdAt: String
+    template: Template
+    exercises: [Exercise]
+  }
+
   type Query {
     getExercises: [Exercise]
     getAllExercises: [Exercises]
@@ -184,6 +190,7 @@ const typeDefs = gql`
     getTemplateModalProgress(templateId: ID, userId: ID): [ExerciseProgress]
     getProgressTimeStamps(userId: ID!): CalendarDates
     getMostRecentlySavedTemplateData(templateId: ID, userId: ID!): Progress
+    getProgressByDate(userID: ID!): [CompletedWorkouts]
   }
 
   type Mutation {

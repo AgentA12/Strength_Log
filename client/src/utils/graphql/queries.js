@@ -104,6 +104,26 @@ export const GET_EXERCISE_PROGRESS = gql`
   }
 `;
 
+export const GET_PROGRESS_BY_DATE = gql`
+  query ($userID: ID!) {
+    getProgressByDate(userID: $userID) {
+      createdAt
+      template {
+        templateName
+      }
+      exercises {
+        exercise {
+          exerciseName
+        }
+        sets {
+          weight
+          reps
+        }
+      }
+    }
+  }
+`;
+
 export const GET_CALENDAR_DATA = gql`
   query ($userId: ID!) {
     getProgressTimeStamps(userId: $userId) {
