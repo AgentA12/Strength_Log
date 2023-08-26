@@ -1,13 +1,16 @@
 import {
+  Badge,
+  Center,
   Container,
   Divider,
-  Flex,
+  Pagination,
+  Loader,
+  Stack,
   Table,
   Text,
   createStyles,
 } from "@mantine/core";
 import { Link } from "react-router-dom";
-import TableSelection from "../workoutpage/Table";
 import { useQuery } from "@apollo/client";
 import { GET_PROGRESS_BY_DATE } from "../../utils/graphql/queries";
 import { UserContext } from "../../App";
@@ -22,10 +25,18 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+function getTotalVolume(sets) {
+  let TotalVolume = 0;
+
+  sets.map((set) => (TotalVolume += set.weight * set.reps));
+
+  return TotalVolume;
+}
 export default function ByDateContainer({}) {
   const {
     data: { _id },
   } = useContext(UserContext);
+
 
   const { classes } = useStyles();
 
@@ -33,8 +44,17 @@ export default function ByDateContainer({}) {
     variables: { userID: _id },
   });
 
-  if (loading) return "loading...";
+  if (loading)
+    return (
+      <Center mt={50}>
+        <Stack align="center">
+          <Loader />
+          loading...
+        </Stack>
+      </Center>
+    );
   if (error) return error.message;
+  if (data) console.log(data);
 
   const options = {
     weekday: "long",
@@ -43,8 +63,10 @@ export default function ByDateContainer({}) {
     day: "numeric",
   };
 
+  let total = Math.floor(data.getProgressByDate.length / 2);
+
   return (
-    <>
+    <Container>
       {data.getProgressByDate.map((progress, i) => (
         <Container mb={25} size="md" key={progress.createdAt + i}>
           {i !== 0 ? <Divider variant="dashed"></Divider> : null}
@@ -59,11 +81,19 @@ export default function ByDateContainer({}) {
           </Text>
 
           {progress.exercises.map((exercise) => (
-            <TableSection exercise={exercise} />
+            <>
+              <Badge>Total Volume {getTotalVolume(exercise.sets)} Lbs</Badge>{" "}
+              <Badge>Sets {exercise.sets.length}</Badge>{" "}
+              <Badge>Reps {getTotalReps(exercise.sets)}</Badge>
+              <TableSection exercise={exercise} />{" "}
+            </>
           ))}
         </Container>
       ))}
-    </>
+      <Center>
+        <Pagination total={total} withEdges />
+      </Center>
+    </Container>
   );
 }
 
@@ -81,6 +111,7 @@ function TableSection({ exercise }) {
       <Text my={5} fz={20} sx={(theme) => ({ color: theme.colors.brand[7] })}>
         {exercise.exercise.exerciseName.toUpperCase()}
       </Text>
+
       <Table>
         <thead>
           <tr>
@@ -94,3 +125,5 @@ function TableSection({ exercise }) {
     </>
   );
 }
+const getTotalReps = (sets) =>
+  sets.reduce((total, set) => (total += set.reps), 0);

@@ -22,14 +22,6 @@ export function App() {
           variant: "outline",
         },
       },
-
-      Modal: {
-        styles: {
-          root: {
-            border: "1px gray solid",
-          },
-        },
-      },
     },
 
     globalStyles: (theme) => ({}),
@@ -37,7 +29,7 @@ export function App() {
     colorScheme: colorScheme,
     loader: "bars",
     colors: {
-      brand: myColors.yellow,
+      brand: myColors.sunflower,
       dark: [
         "#E2E2E2",
         "#AFAFAF",
@@ -98,17 +90,6 @@ export function App() {
 }
 
 let myColors = {
-  alizarin: [
-    "#FFCCC4",
-    "#FF7D6B",
-    "#FF5A47",
-    "#FF0000",
-    "#FF0000",
-    "#D20000",
-    "#AA0000",
-    "#8A0000",
-    "#6F0000",
-  ],
   peterriver: [
     "#E0F7FF",
     "#A4E6FF",
@@ -147,20 +128,7 @@ let myColors = {
     "#004939",
   ],
 
-  pink: [
-    "#FFD2FF",
-    "#FF9DFF",
-    "#FF6EFF",
-    "#FF59FD",
-    "#FF18FF",
-    "#FF00FF",
-    "#FF00FF",
-    "#F500F2",
-    "#DA00D7",
-    "#C200BF",
-  ],
-
-  yellow: [
+  sunflower: [
     "#FFF6D2",
     "#FFEC9D",
     "#FFE26E",
