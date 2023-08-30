@@ -1,11 +1,6 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-  enum ResponseStatus {
-    SUCCESS
-    FAILURE
-  }
-
   type Auth {
     token: ID
     user: User
@@ -176,7 +171,6 @@ const typeDefs = gql`
   }
 
   type Query {
-    getExercises: [Exercise]
     getAllExercises: [Exercises]
     getTemplates(userId: ID!): [Template]
     getChartDataForTemplates(
@@ -186,10 +180,7 @@ const typeDefs = gql`
       metric: String
       exercise: String
     ): [TemplateChartData]
-    getExerciseProgress(templateID: ID!, userID: ID!): ExerciseProgress
-    getTemplateModalProgress(templateId: ID, userId: ID): [ExerciseProgress]
     getProgressTimeStamps(userId: ID!): CalendarDates
-    getMostRecentlySavedTemplateData(templateId: ID, userId: ID!): Progress
     getProgressByDate(userID: ID!): [CompletedWorkouts]
   }
 
@@ -208,7 +199,6 @@ const typeDefs = gql`
       templateNotes: String
       exercises: [TemplateInput!]
     ): Template
-    createExercise(name: String!, sets: Int!, reps: Int!): Exercise
     deleteTemplate(templateId: ID!): isDeleted
     saveWorkout(
       templateId: ID!
