@@ -7,10 +7,12 @@ import DateRangeSelect from "./DateRangeSelect";
 import ExerciseSelect from "./ExerciseSelect";
 import TypeSelect from "./TypeSelect";
 import Table from "./Table";
-import ByTemplatesContainer from "./ByTemplatesContainer";
+import ByChartContainer from "./ByChartContainer";
 import ByDateContainer from "./ByDateContainer";
 import UtilitiesContainer from "./UtilitiesContainer";
-
+import ExerciseChart from "./ExerciseChart"
+import ExerciseChartSection from "./ExerciseChartSection";
+import TemplateChartSection from "./TemplateChartSection";
 export {
   SectionMenu,
   TemplateSelect,
@@ -21,7 +23,10 @@ export {
   ExerciseSelect,
   TypeSelect,
   Table,
-  ByTemplatesContainer,
+  ByChartContainer,
   ByDateContainer,
-  UtilitiesContainer
+  UtilitiesContainer,
+  ExerciseChart,
+  ExerciseChartSection,
+  TemplateChartSection
 };

@@ -9,12 +9,14 @@ import {
   Table,
   Text,
   createStyles,
+  Box,
 } from "@mantine/core";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_PROGRESS_BY_DATE } from "../../utils/graphql/queries";
 import { UserContext } from "../../App";
-import { useContext } from "react";
+import { Fragment, useContext } from "react";
+import { getTotalVolume } from "../../utils/helpers/functions";
 
 const useStyles = createStyles((theme) => ({
   date: {
@@ -25,18 +27,10 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function getTotalVolume(sets) {
-  let TotalVolume = 0;
-
-  sets.map((set) => (TotalVolume += set.weight * set.reps));
-
-  return TotalVolume;
-}
-export default function ByDateContainer({}) {
+export default function ByDateContainer() {
   const {
     data: { _id },
   } = useContext(UserContext);
-
 
   const { classes } = useStyles();
 
@@ -54,7 +48,6 @@ export default function ByDateContainer({}) {
       </Center>
     );
   if (error) return error.message;
-  if (data) console.log(data);
 
   const options = {
     weekday: "long",
@@ -66,9 +59,9 @@ export default function ByDateContainer({}) {
   let total = Math.floor(data.getProgressByDate.length / 2);
 
   return (
-    <Container>
+    <>
       {data.getProgressByDate.map((progress, i) => (
-        <Container mb={25} size="md" key={progress.createdAt + i}>
+        <Container size="sm" ml={0} mb={25}>
           {i !== 0 ? <Divider variant="dashed"></Divider> : null}
           <Text component={Link} className={classes.date} fz={28}>
             {new Date(parseInt(progress.createdAt)).toLocaleDateString(
@@ -77,23 +70,22 @@ export default function ByDateContainer({}) {
             )}
           </Text>
           <Text fz={25} fw="bolder">
-            {progress.template.templateName}
+            {progress.template?.templateName}
           </Text>
 
           {progress.exercises.map((exercise) => (
-            <>
+            <Fragment key={exercise._id}>
               <Badge>Total Volume {getTotalVolume(exercise.sets)} Lbs</Badge>{" "}
               <Badge>Sets {exercise.sets.length}</Badge>{" "}
               <Badge>Reps {getTotalReps(exercise.sets)}</Badge>
-              <TableSection exercise={exercise} />{" "}
-            </>
+              <TableSection exercise={exercise} />
+            </Fragment>
           ))}
         </Container>
       ))}
-      <Center>
-        <Pagination total={total} withEdges />
-      </Center>
-    </Container>
+
+      <Pagination total={total} withEdges />
+    </>
   );
 }
 

@@ -29,45 +29,14 @@ ChartJS.register(
   TimeScale
 );
 
-const unit = " Lbs";
-
-const options = {
-  responsive: true,
-  spanGaps: true,
-  plugins: {
-    legend: {
-      position: "bottom",
-    },
-  },
-  scales: {
-    x: {
-      type: "time",
-      time: {
-        unit: "day",
-      },
-    },
-    y: {
-      ticks: {
-        callback: (label) => label + unit,
-      },
-    },
-  },
-};
 
 export default function TemplateChart({
   activeTemplate,
   userId,
   range,
   metric,
+  options
 }) {
-  const firstSavedExeciseDate = "2023-05-20";
-  const lastSavedExerciseDate = "2023-09-01";
-
-  const labels = getRangeOfDates(
-    range,
-    firstSavedExeciseDate,
-    lastSavedExerciseDate
-  );
   const { loading, data, error } = useQuery(GET_CHART_PROGRESS_BY_TEMPLATE, {
     variables: {
       userId: userId,
@@ -76,6 +45,7 @@ export default function TemplateChart({
       range: range,
       metric: metric,
       exercise: null,
+      shouldSortByTemplate: true
     },
   });
 
@@ -86,7 +56,7 @@ export default function TemplateChart({
         <Line
           options={options}
           data={{
-            labels,
+            labels: [],
             datasets: [],
           }}
         />
@@ -105,13 +75,42 @@ export default function TemplateChart({
       </Box>
     );
 
+  const labels = getRangeOfDates(
+    range,
+    ...findFirstAndLastRange(data?.getChartDataForTemplates)
+  );
+
   return (
     <Line
       options={options}
       data={{
         labels: labels,
-        datasets: data.getChartDataForTemplates,
+        datasets: data?.getChartDataForTemplates,
       }}
     />
   );
+}
+
+function findFirstAndLastRange(dataSet) {
+  let greatestDate = new Date(0);
+
+  for (let i = 0; i < dataSet.length; i++) {
+    dataSet[i].data.map((d) =>
+      new Date(d.x).getTime() > new Date(greatestDate).getTime()
+        ? (greatestDate = d.x)
+        : null
+    );
+  }
+
+  let smallestDate = new Date(greatestDate);
+
+  for (let x = 0; x < dataSet.length; x++) {
+    dataSet[x].data.map((d) =>
+      new Date(d.x).getTime() < new Date(smallestDate).getTime()
+        ? (smallestDate = d.x)
+        : null
+    );
+  }
+
+  return [smallestDate, greatestDate];
 }

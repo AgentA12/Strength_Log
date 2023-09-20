@@ -24,12 +24,12 @@ export function App() {
       },
     },
 
-    globalStyles: (theme) => ({}),
+    globalStyles: () => ({}),
     fontFamily: "Inter",
     colorScheme: colorScheme,
     loader: "bars",
     colors: {
-      brand: myColors.sunflower,
+      brand: myColors.peterriver,
       dark: [
         "#E2E2E2",
         "#AFAFAF",

@@ -45,7 +45,10 @@ const Query = {
     }
   },
 
-  getChartDataForTemplates: async function (_, { templateName, userId }) {
+  getChartDataForTemplates: async function (
+    _,
+    { templateName, userId, shouldSortByTemplate }
+  ) {
     try {
       const user = await User.findById(userId)
         .populate({
@@ -62,7 +65,9 @@ const Query = {
         let dataSet = exerciseArrs.map((exercise) => {
           return {
             label: exercise.exercise.exerciseName,
-            belongsTo: exercise.belongsTo.templateName,
+            belongsTo: exercise.belongsTo
+              ? exercise.belongsTo.templateName
+              : null,
             data: exercise.sets.map((set) => {
               return {
                 x: new Date(exercise.savedOn).toLocaleDateString(),
@@ -76,15 +81,39 @@ const Query = {
 
       let dataSet = formatChartData(user.completedExercises);
 
-      if (templateName != "All templates")
-        dataSet = dataSet.filter(
-          (data) => data.belongsTo.toLowerCase() === templateName.toLowerCase()
-        );
+      if (templateName != "All templates" || !shouldSortByTemplate)
+        dataSet = dataSet.filter((data) => {
+          if (!data.belongsTo) return null;
+          return data.belongsTo.toLowerCase() === templateName.toLowerCase();
+        });
 
-      return dataSet;
+      let map = {};
+
+      for (let i = 0; i < dataSet.length; i++) {
+        if (!map[dataSet[i].label]) {
+          map[dataSet[i].label] = dataSet[i].data;
+        } else {
+          map[dataSet[i].label] = map[dataSet[i].label].concat(dataSet[i].data);
+        }
+      }
+
+      let newAry = [];
+
+      for (const key in map) {
+        newAry.push({
+          label: key,
+          data: map[key],
+        });
+      }
+
+      return newAry;
     } catch (error) {
       return error;
     }
+  },
+
+  getChartDataForExercises: async function (_, args) {
+    return;
   },
 
   async getProgressByDate(_, { userID }) {

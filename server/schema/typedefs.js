@@ -97,6 +97,7 @@ const typeDefs = gql`
     belongsTo: String
     label: String
     data: [ChartData]
+    findFirstAndLastDate: [String]
   }
 
   type Progress {
@@ -170,6 +171,10 @@ const typeDefs = gql`
     exercises: [Exercise]
   }
 
+  type ExerciseChartData {
+    exerciseData: String
+  }
+
   type Query {
     getAllExercises: [Exercises]
     getTemplates(userId: ID!): [Template]
@@ -179,7 +184,9 @@ const typeDefs = gql`
       range: String
       metric: String
       exercise: String
+      shouldSortByTemplate: Boolean
     ): [TemplateChartData]
+    getChartDataForExercises(userId: ID!): [ExerciseChartData]
     getProgressTimeStamps(userId: ID!): CalendarDates
     getProgressByDate(userID: ID!): [CompletedWorkouts]
   }

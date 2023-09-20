@@ -11,9 +11,7 @@ export default function DateRangeSelect({ range, setRange }) {
         "Last 12 months",
         "All time",
       ]}
-      placeholder="Select a range"
-      defaultValue={"All time"}
-      description="Range"
+      defaultValue={"Last month"}
       value={range}
       onChange={(value) => setRange(value)}
     />

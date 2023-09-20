@@ -6,9 +6,8 @@ const completedExerciseSchema = mongoose.Schema(
   {
     exercise: { type: mongoose.Schema.ObjectId, ref: "Exercise" },
     sets: [setSchema],
-    belongsTo: {type:mongoose.Schema.ObjectId, ref: "Template"},
-    savedOn: Date
-
+    belongsTo: { type: mongoose.Schema.ObjectId, ref: "Template" },
+    savedOn: Date,
   },
   { timestamps: true }
 );
@@ -20,7 +19,6 @@ const completedWorkoutSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
-
 
 const userSchema = mongoose.Schema(
   {

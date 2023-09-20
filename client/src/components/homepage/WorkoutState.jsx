@@ -5,6 +5,7 @@ import {
   useMantineTheme,
   NumberInput,
 } from "@mantine/core";
+import { v4 as uuidv4 } from "uuid";
 
 export default function WorkoutState({ setTemplateState, templateState }) {
   const theme = useMantineTheme();
@@ -20,11 +21,11 @@ export default function WorkoutState({ setTemplateState, templateState }) {
   }
 
   const Tables = templateState.exercises.map((exercise, exerciseIndex) => (
-    <Container mb={10}>
+    <Container mb={10} key={exercise._id}>
       <Text fz={20} fw="bolder" color={theme.colors.brand[5]} mt={10}>
         {exercise.exercise.exerciseName.toUpperCase()}
       </Text>
-      <Table withBorder withColumnBorders key={exercise._id} >
+      <Table withBorder withColumnBorders>
         <thead>
           <tr>
             <th>Set</th>
@@ -34,7 +35,7 @@ export default function WorkoutState({ setTemplateState, templateState }) {
         </thead>
         <tbody>
           {exercise.sets.map((set, setIndex) => (
-            <tr key={exercise._id}>
+            <tr key={uuidv4()}>
               <td>{setIndex + 1}</td>
               <td>
                 <NumberInput
@@ -74,38 +75,5 @@ export default function WorkoutState({ setTemplateState, templateState }) {
     </Container>
   ));
 
-  return (
-    <>
-      {Tables}
-      {/* {templateState.exercises.map((exercise, index) => (
-        <Container key={exercise.exerciseName}>
-          <Group mt={5}>
-            <Text
-              size="xl"
-              sx={(theme) => ({ color: theme.primaryColor })}
-              fw={700}
-            >
-              {exercise.exerciseName}
-            </Text>
-          </Group>
-
-          <Flex wrap={true} gap={10}>
-            <NumberInput
-              label="Sets"
-              value={parseInt(exercise.sets)}
-              onChange={(value) =>
-                handleChange({ target: { name: "sets", value: value } }, index)
-              }
-            />
-
-            
-
-            {exercise.weight !== "Body weight" ? (
-             
-            ) : null}
-          </Flex>
-        </Container>
-      ))} */}
-    </>
-  );
+  return Tables;
 }

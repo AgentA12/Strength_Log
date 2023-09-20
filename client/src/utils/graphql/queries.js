@@ -32,6 +32,14 @@ export const GET_ALL_EXERCISES = gql`
   }
 `;
 
+export const GET_CHART_PROGRESS_BY_EXERCISE = gql`
+  query ($userId: ID!) {
+    getChartDataForExercises(userId: $userId) {
+      exerciseData
+    }
+  }
+`;
+
 export const GET_CHART_PROGRESS_BY_TEMPLATE = gql`
   query (
     $templateName: String
@@ -39,6 +47,7 @@ export const GET_CHART_PROGRESS_BY_TEMPLATE = gql`
     $range: String
     $metric: String
     $exercise: String
+    $shouldSortByTemplate: Boolean
   ) {
     getChartDataForTemplates(
       templateName: $templateName
@@ -46,6 +55,7 @@ export const GET_CHART_PROGRESS_BY_TEMPLATE = gql`
       range: $range
       metric: $metric
       exercise: $exercise
+      shouldSortByTemplate: $shouldSortByTemplate
     ) {
       belongsTo
       label
@@ -53,6 +63,7 @@ export const GET_CHART_PROGRESS_BY_TEMPLATE = gql`
         x
         y
       }
+      findFirstAndLastDate
     }
   }
 `;
@@ -63,10 +74,13 @@ export const GET_PROGRESS_BY_DATE = gql`
       createdAt
       template {
         templateName
+        _id
       }
       exercises {
         exercise {
+          _id
           exerciseName
+
         }
         sets {
           weight

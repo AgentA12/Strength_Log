@@ -79,6 +79,53 @@ function checkIfSameDay(date1, date2) {
     : false;
 }
 
+function displayExercisesForTemplate(templates, activeTemplate) {
+  let temps = templates.filter(
+    (template) =>
+      template.templateName.toLowerCase() === activeTemplate.toLowerCase()
+  )[0];
+
+  return temps
+    ? temps.exercises.map((exercise) => exercise.exercise.exerciseName + "   ")
+    : templates.map((template) =>
+        template.exercises.map(
+          (exercise) => exercise.exercise.exerciseName + "   "
+        )
+      );
+}
+
+function findFirstAndLastRange(dataSet) {
+  let greatestDate = new Date(0);
+
+  for (let i = 0; i < dataSet.length; i++) {
+    dataSet[i].data.map((d) =>
+      new Date(d.x).getTime() > new Date(greatestDate).getTime()
+        ? (greatestDate = d.x)
+        : null
+    );
+  }
+
+  let smallestDate = new Date(greatestDate);
+
+  for (let x = 0; x < dataSet.length; x++) {
+    dataSet[x].data.map((d) =>
+      new Date(d.x).getTime() < new Date(smallestDate).getTime()
+        ? (smallestDate = d.x)
+        : null
+    );
+  }
+
+  return [smallestDate, greatestDate];
+}
+
+function getTotalVolume(sets) {
+  let TotalVolume = 0;
+
+  sets.map((set) => (TotalVolume += set.weight * set.reps));
+
+  return TotalVolume;
+}
+
 export {
   formatDate,
   getOneRepMax,
@@ -87,4 +134,7 @@ export {
   getDaysArray,
   getRangeOfDates,
   checkIfSameDay,
+  displayExercisesForTemplate,
+  findFirstAndLastRange,
+  getTotalVolume
 };
