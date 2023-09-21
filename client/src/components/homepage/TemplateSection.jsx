@@ -115,7 +115,7 @@ export default function TemplateSection() {
         wrap="wrap"
         mt={20}
       >
-        <Title>Your Templates</Title>
+        <Title tt="capitalize">Your Templates</Title>
 
         <Flex
           gap="lg"

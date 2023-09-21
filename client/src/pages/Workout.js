@@ -1,4 +1,4 @@
-import { Title, Box, Stack } from "@mantine/core";
+import { Title, Center, Stack } from "@mantine/core";
 import { useLocation } from "react-router-dom";
 import { ExerciseCard } from "../components/workoutpage/index";
 import { Timer } from "../components/workoutpage/index";
@@ -10,9 +10,13 @@ export default function WorkoutPage() {
 
   return (
     <Stack justify="center" align="center">
-      <Box>
-        <Title mt={5}>{template.templateName}</Title>
-      </Box>
+      <Title
+        variant="gradient"
+        gradient={{ from: "#662D8C", to: " #ED1E79", deg: 90 }}
+        mt={5}
+      >
+        {template.templateName}
+      </Title>
 
       <Timer textSize={"xl"} />
 

@@ -47,6 +47,7 @@ export default function StatsCard({ stat }) {
     <Paper
       withBorder
       p="sm"
+      shadow="lg"
       radius="md"
       key={stat.title}
       className={classes.root}

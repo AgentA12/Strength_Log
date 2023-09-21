@@ -32,7 +32,7 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
     <Menu
       position="bottom-end"
       zindex={99}
-      shadow="md"
+      shadow="lg"
       width={175}
       trigger="hover"
       closeDelay={100}

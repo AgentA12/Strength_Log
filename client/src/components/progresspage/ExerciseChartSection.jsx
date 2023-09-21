@@ -18,6 +18,7 @@ export default function ExerciseChartSection({
         sx={(theme) => ({ color: theme.colors.brand[4] })}
         fw={800}
         component="span"
+        tt="capitalize"
       >
         {activeExercise && activeExercise}
       </Title>

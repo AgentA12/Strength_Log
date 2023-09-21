@@ -1,48 +1,65 @@
-import { createStyles, Group, Card, Text, Button } from "@mantine/core";
+import { Group, Overlay, Card, Text, Button, Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { WorkoutModal } from "./index";
-
-const useStyles = createStyles((theme) => ({
-  cardCompleted: {},
-}));
+import { AiOutlineCheckCircle } from "react-icons/ai";
 
 export default function ExerciseCard({ exercise, template }) {
-  const { classes } = useStyles();
   const [opened, { open, close }] = useDisclosure(false);
 
   function startExercise() {
     open();
   }
 
+  let completed = false;
 
-  return (
-    <>
-      <Card
-        withBorder
-        p="md"
-        className={classes.cardCompleted}
-        radius="md"
-        w={275}
-        key={exercise.exercise.exerciseName}
-      >
+  return completed ? (
+    <Card
+      p="md"
+      withBorder
+      radius="md"
+      w={275}
+      sx={(theme) => ({
+        color: theme.colors.green[4],
+      })}
+      key={exercise.exercise.exerciseName}
+    >
+      <Flex mb={5} justify="space-between">
         <Text tt="uppercase" fw={700} fz="lg">
+          {exercise.exercise.exerciseName}
+        </Text>
+
+        <AiOutlineCheckCircle size={28} />
+      </Flex>
+      <Text>{`${exercise.sets.length} Set(s) completed`}</Text>
+    </Card>
+  ) : (
+    <>
+      <Card shadow="lg" withBorder p="md" radius="md" w={275} key={exercise.exercise.exerciseName}>
+        <Text
+          sx={(theme) => ({ color: theme.colors.brand[4] })}
+          tt="uppercase"
+          fw={700}
+          fz="lg"
+        >
           {exercise.exercise.exerciseName}
         </Text>
         <Group position="apart" align="center" mt={10}>
           <Text c="dimmed" fz="sm" mt="md">
-            {`${exercise.sets.length} sets`}
+            {`${exercise.sets.length} set(s)`}
           </Text>
           <Button size="xs" onClick={startExercise}>
             Start
           </Button>
         </Group>
       </Card>
-      <WorkoutModal
-        opened={opened}
-        close={close}
-        exercise={exercise}
-        templateName={template.templateName}
-      />
+      {open ? (
+        <WorkoutModal
+          opened={opened}
+          close={close}
+          exercise={exercise}
+          templateName={template.templateName}
+        />
+      ) : null}
     </>
   );
 }

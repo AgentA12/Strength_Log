@@ -61,21 +61,24 @@ export default function TemplateModal({ template, opened, setOpened }) {
         opacity: 0.55,
         blur: 3,
       }}
-      transitionProps={{ transition: "skew-up" }}
+      transitionProps={{ transition: "rotate-left" }}
       lockScroll={false}
       opened={opened}
       onClose={() => setOpened(false)}
       title={
         <Text
+          tt="capitalize"
+          variant="gradient"
+          gradient={{ from: "#662D8C", to: " #ED1E79", deg: 90 }}
           sx={(theme) => ({
-            fontSize: 24,
+            fontSize: 30,
             fontWeight: "bolder",
             [theme.fn.smallerThan("sm")]: {
               fontSize: 18,
             },
           })}
         >
-          {template.templateName.toUpperCase()}{" "}
+          {template.templateName}
         </Text>
       }
       overlayopacity={0.55}
@@ -83,10 +86,18 @@ export default function TemplateModal({ template, opened, setOpened }) {
       size="lg"
     >
       <Container>
-        <Text mb={10}>
+        <Text c="dimmed">
           {template.templateNotes.trim() ? `- ${template.templateNotes}` : null}
         </Text>
-        <Flex justify="space-around" align="center" mt={15}>
+
+        <WorkoutState
+          loading={loading}
+          handleSaveWorkout={handleSaveWorkout}
+          setTemplateState={setTemplateState}
+          templateState={templateState}
+        />
+
+        <Flex justify="space-around" align="center">
           <SaveWorkoutBtn
             loading={loading}
             handleSaveWorkout={handleSaveWorkout}
@@ -94,12 +105,6 @@ export default function TemplateModal({ template, opened, setOpened }) {
           />
           <StartWorkoutBtn template={templateState} />
         </Flex>
-        <WorkoutState
-          loading={loading}
-          handleSaveWorkout={handleSaveWorkout}
-          setTemplateState={setTemplateState}
-          templateState={templateState}
-        />
 
         {error ? (
           <Text color="red" mt={5}>

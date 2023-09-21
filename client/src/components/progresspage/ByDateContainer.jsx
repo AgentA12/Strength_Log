@@ -100,7 +100,7 @@ function TableSection({ exercise }) {
 
   return (
     <>
-      <Text my={5} fz={20} sx={(theme) => ({ color: theme.colors.brand[7] })}>
+      <Text my={5} fz={20} sx={(theme) => ({ color: theme.colors.brand[4] })}>
         {exercise.exercise.exerciseName.toUpperCase()}
       </Text>
 

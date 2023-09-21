@@ -126,6 +126,11 @@ function getTotalVolume(sets) {
   return TotalVolume;
 }
 
+function formatTime(num) {
+  if (num < 10) return `0${num}`;
+  return `${num}`;
+}
+
 export {
   formatDate,
   getOneRepMax,
@@ -136,5 +141,6 @@ export {
   checkIfSameDay,
   displayExercisesForTemplate,
   findFirstAndLastRange,
-  getTotalVolume
+  getTotalVolume,
+  formatTime
 };

@@ -152,7 +152,7 @@ export default function EditTemplate() {
       <Divider
         my="lg"
         variant="dashed"
-        label={<Title>Create A Template</Title>}
+        label={<Title tt="capitalize">Create A Template</Title>}
       />
 
       <Box className={classes.container}>

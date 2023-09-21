@@ -1,11 +1,7 @@
 import { Text } from "@mantine/core";
 import { useState, useEffect } from "react";
 import { useInterval } from "@mantine/hooks";
-
-function formatTime(num) {
-  if (num < 10) return `0${num}`;
-  return `${num}`;
-}
+import { formatTime } from "../../utils/helpers/functions";
 
 export default function Timer({ textSize }) {
   const [seconds, setSeconds] = useState(0);

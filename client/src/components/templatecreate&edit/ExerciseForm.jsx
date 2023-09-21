@@ -20,7 +20,7 @@ export default function ExerciseForm({
   return (
     <Card withBorder my={10}>
       <Group position="apart">
-        <Title order={2} sx={(theme) => ({ color: theme.colors.brand[5] })}>
+        <Title tt="capitalize" order={2} sx={(theme) => ({ color: theme.colors.brand[4] })}>
           {formState.exercises[index].exercise
             ? formState.exercises[index].exercise.exerciseName
             : formState.exercises[index].exerciseName}

@@ -82,7 +82,7 @@ export default function Features() {
   const features = mockdata.map((feature) => (
     <Card
       key={feature.title}
-      shadow="md"
+      shadow="lg"
       radius="md"
       className={classes.card}
       padding="xl"
