@@ -16,8 +16,11 @@ const useStyles = createStyles((theme) => ({
     borderRadius: 5,
     margin: 2,
     "&:hover": {
-      backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[1],
-      cursor: "pointer"
+      backgroundColor:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[5]
+          : theme.colors.gray[1],
+      cursor: "pointer",
     },
   },
 }));
@@ -46,13 +49,22 @@ export default function SelectExerciseModal({
   const { classes } = useStyles();
 
   return (
-    <Modal title={<Text>Select Exercise</Text>} opened={opened} onClose={close}>
+    <Modal
+      title={<Text>Select an Exercise</Text>}
+      opened={opened}
+      onClose={close}
+      size="md"
+    >
       <Select
+        mt={10}
         data={exercises}
         searchable
-        onChange={(value) => addExercise(value)}
-        placeholder="Select an exercise"
+        onChange={(value) => {
+          addExercise(value);
+        }}
+        placeholder="Search..."
       />
+
       <List withPadding mt={10}>
         {exercises.map((e) => (
           <List.Item
@@ -67,7 +79,6 @@ export default function SelectExerciseModal({
             key={e.id}
           >
             <Text fz={15} fw="bold">
-              {" "}
               {e.label}
             </Text>
           </List.Item>

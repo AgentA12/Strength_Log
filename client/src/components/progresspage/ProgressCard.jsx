@@ -1,11 +1,10 @@
 import { FaWeightHanging } from "react-icons/fa";
-import { motion } from "framer-motion";
 import { Text, Card, Flex } from "@mantine/core";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
 export default function ProgressCard({ progressInfo, handleSummary }) {
   return (
-    <motion.div
+    <div
       whileHover={{ translateY: -5, cursor: "pointer" }}
       onClick={() => handleSummary(progressInfo)}
     >
@@ -25,6 +24,6 @@ export default function ProgressCard({ progressInfo, handleSummary }) {
           </Flex>
         </Flex>
       </Card>
-    </motion.div>
+    </div>
   );
 }

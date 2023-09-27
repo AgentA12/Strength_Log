@@ -2,9 +2,18 @@ import { Text } from "@mantine/core";
 import { useState, useEffect } from "react";
 import { useInterval } from "@mantine/hooks";
 
-export default function CountDown() {
-  const [seconds, setSeconds] = useState(3);
-  const [minutes, setMinutes] = useState(0);
+export default function CountDown({ timeInSeconds }) {
+  function getSplitTime(timeInSeconds) {
+    let minutes = Math.floor(timeInSeconds / 60),
+      seconds = Math.floor(timeInSeconds % 60);
+
+    return [minutes, seconds];
+  }
+
+  const [m, s] = getSplitTime(timeInSeconds);
+
+  const [seconds, setSeconds] = useState(m);
+  const [minutes, setMinutes] = useState(s);
 
   const interval = useInterval(() => setSeconds((s) => s - 1), 1000);
 

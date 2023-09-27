@@ -10,9 +10,7 @@ export default function ExerciseCard({ exercise, template }) {
     open();
   }
 
-  let completed = false;
-
-  return completed ? (
+  return exercise.completed ? (
     <Card
       p="md"
       withBorder
@@ -34,7 +32,14 @@ export default function ExerciseCard({ exercise, template }) {
     </Card>
   ) : (
     <>
-      <Card shadow="lg" withBorder p="md" radius="md" w={275} key={exercise.exercise.exerciseName}>
+      <Card
+        shadow="lg"
+        withBorder
+        p="md"
+        radius="md"
+        w={275}
+        key={exercise.exercise.exerciseName}
+      >
         <Text
           sx={(theme) => ({ color: theme.colors.brand[4] })}
           tt="uppercase"

@@ -38,6 +38,7 @@ export default function CreateTemplateContainer() {
   const [opened, { open, close }] = useDisclosure(false);
 
   const { classes } = useStyles();
+
   const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = useState(null);
@@ -55,7 +56,7 @@ export default function CreateTemplateContainer() {
     return null;
   }
 
-  let exercises = data?.getAllExercises.map((e) => {
+  let exercises = data.getAllExercises.map((e) => {
     return {
       value: e.exerciseName,
       label: e.exerciseName,
@@ -64,18 +65,25 @@ export default function CreateTemplateContainer() {
     };
   });
 
-
-  function handleChange(index, { target }) {
+  function handleChange(exerciseIndex, { target }) {
     let data = { ...formState };
 
-    if (target.name !== "templateName" && target.name !== "templateNotes") {
-      data.exercises[index].sets[target.setIndex][target.name] = target.value;
+    if (target.name === "restTime") {
+      data.exercises[exerciseIndex][target.name] = target.value;
+      setFormState({ ...data });
+      return;
+    } else if (
+      target.name !== "templateName" &&
+      target.name !== "templateNotes"
+    ) {
+      data.exercises[exerciseIndex].sets[target.setIndex][target.name] =
+        target.value;
 
       setFormState({ ...data });
       return;
+    } else {
+      setFormState({ ...formState, [target.name]: target.value });
     }
-
-    setFormState({ ...formState, [target.name]: target.value });
   }
 
   function resetFormState() {
@@ -87,6 +95,7 @@ export default function CreateTemplateContainer() {
   }
 
   async function handleSubmit(event) {
+    event.preventDefault();
     try {
       event.preventDefault();
       const mutationRes = await addTemplate({
@@ -117,7 +126,8 @@ export default function CreateTemplateContainer() {
     const exercise = {
       exerciseName: value,
       _id: e._id,
-      sets: [{ weight: 0, reps: 0 }],
+      restTime: 180,
+      sets: [{ weight: 135, reps: 8 }],
     };
 
     const data = { ...formState };
@@ -129,10 +139,18 @@ export default function CreateTemplateContainer() {
     close();
   }
 
-  function addSet(index) {
+  function addSet(exerciseIndex) {
     let data = { ...formState };
 
-    data.exercises[index].sets.push({ weight: 0, reps: 0 });
+    data.exercises[exerciseIndex].sets.push({
+      weight:
+        data.exercises[exerciseIndex].sets[
+          data.exercises[exerciseIndex].sets.length - 1
+        ].weight,
+      reps: data.exercises[exerciseIndex].sets[
+        data.exercises[exerciseIndex].sets.length - 1
+      ].reps,
+    });
 
     setFormState(data);
   }
@@ -194,19 +212,17 @@ export default function CreateTemplateContainer() {
           <Text>{errorMessage && errorMessage}</Text>
         </Box>
 
-        <SelectExerciseModal
-          opened={opened}
-          close={close}
-          addExercise={addExercise}
-          exercises={exercises}
-        />
-
-        <ScrollArea offsetScrollbars scrollbarSize={4} scrollHideDelay={1500}>
-          {formState?.exercises.map((_, index) => (
+        <ScrollArea
+          offsetScrollbars
+          scrollbarSize={4}
+          scrollHideDelay={1500}
+          h={500}
+        >
+          {formState?.exercises.map((_, exerciseIndex) => (
             <ExerciseForm
-              key={index}
+              key={exerciseIndex}
               handleChange={handleChange}
-              index={index}
+              exerciseIndex={exerciseIndex}
               formState={formState}
               removeExercise={removeExercise}
               addSet={addSet}
@@ -215,6 +231,13 @@ export default function CreateTemplateContainer() {
           ))}
         </ScrollArea>
       </Box>
+
+      <SelectExerciseModal
+        opened={opened}
+        close={close}
+        addExercise={addExercise}
+        exercises={exercises}
+      />
     </Container>
   );
 }

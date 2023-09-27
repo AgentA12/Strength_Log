@@ -37,6 +37,7 @@ const typeDefs = gql`
 
   input createTemplateExerciseInput {
     exerciseName: String
+    restTime: Int
     _id: ID
     sets: [Set]
   }

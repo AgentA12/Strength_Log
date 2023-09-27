@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { capitalizeFirstLetter } from "../../utils/helpers/functions";
 import TemplateMenu from "./TemplateMenu";
 import TemplateModal from "./TemplateModal";
@@ -24,11 +23,7 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
   const [opened, setOpened] = useState(false);
   return (
     <>
-      <motion.div
-        layout
-        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-        onClick={() => setOpened(!opened)}
-      >
+      <div onClick={() => setOpened(!opened)}>
         <Card
           shadow="lg"
           radius="md"
@@ -54,7 +49,11 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
           </Flex>
           <Text lineClamp={1} className={classes.exercises}>
             {template.exercises.map((exercise, i) => (
-              <Text tt="capitalize" component="span" key={exercise.exercise._id}>
+              <Text
+                tt="capitalize"
+                component="span"
+                key={exercise.exercise._id}
+              >
                 {template.exercises.length - 1 === i
                   ? capitalizeFirstLetter(exercise.exercise.exerciseName)
                   : capitalizeFirstLetter(exercise.exercise.exerciseName) +
@@ -63,7 +62,7 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
             ))}
           </Text>
         </Card>
-      </motion.div>
+      </div>
 
       <TemplateModal
         template={template}

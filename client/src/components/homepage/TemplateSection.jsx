@@ -85,24 +85,24 @@ export default function TemplateSection() {
 
   function displayQueryState() {
     // is the query loading?
-    return loading ? (
-      <Flex direction="column" align="center">
-        <Loader />
-        <Text>Loading...</Text>
-      </Flex>
-    ) : // does the array of templates have length? display the template cards
-    templates.length ? (
-      templates.map((template) => (
+    if (loading)
+      return (
+        <Flex direction="column" align="center">
+          <Loader />
+          <Text>Loading...</Text>
+        </Flex>
+      );
+    // does the array of templates have length? display the template cards
+    if (templates.length)
+      return templates.map((template) => (
         <TemplateCard
           template={template}
           refetch={refetch}
           handleTemplateDelete={handleTemplateDelete}
           key={template._id}
         />
-      ))
-    ) : (
-      <Text size={"xl"}>You have no templates saved yet.</Text>
-    );
+      ));
+    return <Text size={"xl"}>You have no templates saved yet.</Text>;
   }
 
   return (

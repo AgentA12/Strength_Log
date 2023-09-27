@@ -7,11 +7,12 @@ import {
   Text,
   Group,
   List,
+  Divider,
 } from "@mantine/core";
 
 export default function ExerciseForm({
   handleChange,
-  index,
+  exerciseIndex,
   formState,
   removeExercise,
   addSet,
@@ -20,47 +21,70 @@ export default function ExerciseForm({
   return (
     <Card withBorder my={10}>
       <Group position="apart">
-        <Title tt="capitalize" order={2} sx={(theme) => ({ color: theme.colors.brand[4] })}>
-          {formState.exercises[index].exercise
-            ? formState.exercises[index].exercise.exerciseName
-            : formState.exercises[index].exerciseName}
+        <Title
+          tt="capitalize"
+          order={2}
+          sx={(theme) => ({ color: theme.colors.brand[4] })}
+        >
+          {formState.exercises[exerciseIndex].exercise
+            ? formState.exercises[exerciseIndex].exercise.exerciseName
+            : formState.exercises[exerciseIndex].exerciseName}
         </Title>
         <NumberInput
           label="Rest time"
-          radius="xs"
           description="In Seconds"
           w={100}
-          defaultValue={180}
+          value={formState.exercises[exerciseIndex].restTime}
+          onChange={(value) =>
+            handleChange(exerciseIndex, {
+              target: {
+                name: "restTime",
+                value: value,
+              },
+            })
+          }
         />
       </Group>
-      <List withPadding mb={10} listStyleType="none">
-        {formState.exercises[index].sets.map((e, i) => (
-          <List.Item mb={5} key={i}>
+      <List withPadding listStyleType="none">
+        {formState.exercises[exerciseIndex].sets.map((_, setIndex) => (
+          <List.Item mb={14} key={setIndex}>
             <Group>
               <Text fz={20} fw="bold">
-                Set {i + 1}
+                Set {setIndex + 1}
               </Text>
-              <Button onClick={() => removeSet(index, i)}>Remove Set</Button>
+              {setIndex >= 1 && (
+                <Button onClick={() => removeSet(exerciseIndex, setIndex)}>
+                  Remove Set
+                </Button>
+              )}
             </Group>
             <Group>
               <NumberInput
                 label="Reps"
                 onChange={(value) =>
-                  handleChange(index, {
-                    target: { name: "reps", value: value, setIndex: i },
+                  handleChange(exerciseIndex, {
+                    target: { name: "reps", value: value, setIndex: setIndex },
                   })
                 }
-                value={parseInt(formState.exercises[index].sets[i].reps)}
+                value={parseInt(
+                  formState.exercises[exerciseIndex].sets[setIndex].reps
+                )}
               />
               <NumberInput
                 step={5}
                 label="Weight (Lbs)"
                 onChange={(value) =>
-                  handleChange(index, {
-                    target: { name: "weight", value: value, setIndex: i },
+                  handleChange(exerciseIndex, {
+                    target: {
+                      name: "weight",
+                      value: value,
+                      setIndex: setIndex,
+                    },
                   })
                 }
-                value={parseInt(formState.exercises[index].sets[i].weight)}
+                value={parseInt(
+                  formState.exercises[exerciseIndex].sets[setIndex].weight
+                )}
               />
             </Group>
           </List.Item>
@@ -68,10 +92,10 @@ export default function ExerciseForm({
       </List>
 
       <Group position="apart">
-        <Button onClick={() => addSet(index)}>Add Set</Button>
+        <Button onClick={() => addSet(exerciseIndex)}>Add Set</Button>
         <Button
           mt={10}
-          onClick={(event) => removeExercise(event, index)}
+          onClick={(event) => removeExercise(event, exerciseIndex)}
           rightIcon={<IoMdRemove color="" />}
           color="red"
         >

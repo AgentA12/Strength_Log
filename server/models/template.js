@@ -15,6 +15,7 @@ const templateSchema = mongoose.Schema(
     exercises: [
       {
         exercise: { type: mongoose.Schema.Types.ObjectId, ref: "Exercise" },
+        restTime: Number,
         sets: [setSchema],
       },
     ],

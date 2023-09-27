@@ -1,6 +1,6 @@
 import { Text, RingProgress } from "@mantine/core";
 
-export default function RestTimer() {
+export default function RestTimer({ timeInSeconds }) {
   return (
     <RingProgress
       size={290}

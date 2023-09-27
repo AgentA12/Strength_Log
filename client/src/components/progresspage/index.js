@@ -13,6 +13,7 @@ import UtilitiesContainer from "./UtilitiesContainer";
 import ExerciseChart from "./ExerciseChart"
 import ExerciseChartSection from "./ExerciseChartSection";
 import TemplateChartSection from "./TemplateChartSection";
+import OneRepMaxTable from "./OneRepMaxTable";
 export {
   SectionMenu,
   TemplateSelect,
@@ -28,5 +29,6 @@ export {
   UtilitiesContainer,
   ExerciseChart,
   ExerciseChartSection,
-  TemplateChartSection
+  TemplateChartSection,
+  OneRepMaxTable,
 };

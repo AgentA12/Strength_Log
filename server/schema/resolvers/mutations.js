@@ -51,7 +51,11 @@ const Mutation = {
         templateName: args.templateName,
         templateNotes: args.templateNotes,
         exercises: args.exercises.map((e) => {
-          return { exercise: e._id, sets: e.sets };
+          return {
+            exercise: e._id,
+            sets: e.sets,
+            restTime: e.restTime,
+          };
         }),
       };
 
@@ -135,7 +139,7 @@ const Mutation = {
               exercise: exercise.exercise._id,
               sets: exercise.sets.map((set) => set),
               belongsTo: templateId,
-              savedOn: new Date()
+              savedOn: new Date(),
             };
           }),
         },

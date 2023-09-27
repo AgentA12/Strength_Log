@@ -14,6 +14,8 @@ import {
 import { IoIosOptions } from "react-icons/io";
 import { BsPlus } from "react-icons/bs";
 import CountDown from "./CountDown";
+import { useState } from "react";
+import Resting from "./Resting";
 
 export default function WorkoutModal({
   opened,
@@ -22,6 +24,19 @@ export default function WorkoutModal({
   templateName,
   index,
 }) {
+  const [currentSet, setCurrentSet] = useState(1);
+  const [isResting, setIsResting] = useState(false);
+
+  function handleFinished() {
+    if (currentSet < exercise.sets.length) {
+      setIsResting(true);
+      // setCurrentSet(currentSet + 1);
+      // show rest time
+    } else {
+      // show complete component
+    }
+  }
+
   return (
     <Modal
       withCloseButton={false}
@@ -39,22 +54,7 @@ export default function WorkoutModal({
         >
           {templateName}
         </Title>
-        <Menu position="bottom-end">
-          <Menu.Target>
-            <ActionIcon size="md">
-              <IoIosOptions size={24} />
-            </ActionIcon>
-          </Menu.Target>
-          <Menu.Dropdown>
-            <Menu.Item onClick={close} color="green">
-              Finish Exercise
-            </Menu.Item>
-            <Menu.Divider></Menu.Divider>
-            <Menu.Item onClick={close} color="red">
-              Stop Exercise
-            </Menu.Item>
-          </Menu.Dropdown>
-        </Menu>
+        <Button onClick={close}>Stop Exercise</Button>
       </Group>
       <Stack align="center" spacing={5} justify="center">
         <Title
@@ -65,40 +65,32 @@ export default function WorkoutModal({
         >
           {exercise.exercise.exerciseName}
         </Title>
-        <Text c="dimmed">{`Set ${1} / ${5}`}</Text>
+        <Text c="dimmed">{`Set ${currentSet} / ${exercise.sets.length}`}</Text>
 
-        <Group justify="center" gap="xs" grow w="250px">
-          <NumberInput
-            ta="center"
-            label={<Text>Reps</Text>}
-            value={parseInt(5)}
-          />
-          <NumberInput
-            ta="center"
-            step={5}
-            label={<Text>Weight (Lbs)</Text>}
-            value={parseInt(225)}
-          />
-        </Group>
-        <Button mt="md">Set Done</Button>
+        {isResting ? (
+          <Resting setIsResting={setIsResting} isResting={isResting} />
+        ) : (
+          <>
+            <Group justify="center" gap="xs" grow w="250px">
+              <NumberInput
+                ta="center"
+                label={<Text>Reps</Text>}
+                value={parseInt(5)}
+              />
+              <NumberInput
+                ta="center"
+                step={5}
+                label={<Text>Weight (Lbs)</Text>}
+                value={parseInt(225)}
+              />
+            </Group>
+            <Button mt="md" onClick={handleFinished}>
+              Set Done
+            </Button>
+          </>
+        )}
 
-        <RingProgress
-          size={200}
-          label={
-            <Stack align="center">
-              <Text size="sm" ta="center">
-                Rest Time
-              </Text>
-              <CountDown />
-            </Stack>
-          }
-          thickness={4}
-          sections={[{ value: 20, color: "brand" }]}
-        />
-        <Button>Skip</Button>
-        <Button>Continue</Button>
-
-        <Stack align="center">
+        {/* <Stack align="center">
           <Text
             fw={500}
             size="xl"
@@ -112,7 +104,7 @@ export default function WorkoutModal({
           <Button size="md" color="green" w={175}>
             Exercise Done
           </Button>
-        </Stack>
+        </Stack> */}
       </Stack>
     </Modal>
   );

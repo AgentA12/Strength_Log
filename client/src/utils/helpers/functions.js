@@ -142,5 +142,5 @@ export {
   displayExercisesForTemplate,
   findFirstAndLastRange,
   getTotalVolume,
-  formatTime
+  formatTime,
 };
