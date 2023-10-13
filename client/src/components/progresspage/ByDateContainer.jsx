@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 import {
   Badge,
   Center,
@@ -15,14 +17,14 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_PROGRESS_BY_DATE } from "../../utils/graphql/queries";
 import { UserContext } from "../../App";
-import { Fragment, useContext } from "react";
-import { getTotalVolume } from "../../utils/helpers/functions";
+import { useContext, useState } from "react";
 
 const useStyles = createStyles((theme) => ({
   date: {
     color: theme.colors.brand[4],
     "&:hover": {
       textDecoration: "underline",
+      cursor: "pointer",
     },
   },
 }));
@@ -47,6 +49,7 @@ export default function ByDateContainer() {
         </Stack>
       </Center>
     );
+
   if (error) return error.message;
 
   const options = {
@@ -59,33 +62,42 @@ export default function ByDateContainer() {
   let total = Math.floor(data.getProgressByDate.length / 2);
 
   return (
-    <>
+    <Container fluid>
       {data.getProgressByDate.map((progress, i) => (
-        <Container size="sm" ml={0} mb={25}>
+        <Container key={uuidv4()} size="sm" ml={0} mb={25}>
           {i !== 0 ? <Divider variant="dashed"></Divider> : null}
-          <Text component={Link} className={classes.date} fz={28}>
-            {new Date(parseInt(progress.createdAt)).toLocaleDateString(
-              "en-us",
-              options
-            )}
-          </Text>
-          <Text fz={25} fw="bolder">
+          <Box>
+            <Text className={classes.date} fz={28}>
+              {new Date(parseInt(progress.createdAt)).toLocaleDateString(
+                "en-us",
+                options
+              )}
+            </Text>
+          </Box>
+          <Text
+            variant="gradient"
+            gradient={{ from: "#662D8C", to: " #ED1E79", deg: 90 }}
+            fw={900}
+            size={30}
+            span
+            tt="capitalize"
+          >
             {progress.template?.templateName}
           </Text>
 
-          {progress.exercises.map((exercise) => (
-            <Fragment key={exercise._id}>
-              <Badge>Total Volume {getTotalVolume(exercise.sets)} Lbs</Badge>{" "}
-              <Badge>Sets {exercise.sets.length}</Badge>{" "}
-              <Badge>Reps {getTotalReps(exercise.sets)}</Badge>
+          <Box>
+            <Badge>Total Volume {getTotalVolume(progress.exercises)} Lbs</Badge>{" "}
+            <Badge>Total Sets {getTotalSets(progress.exercises)}</Badge>{" "}
+            <Badge>Total Reps {getTotalReps(progress.exercises)}</Badge>
+            {progress.exercises.map((exercise) => (
               <TableSection exercise={exercise} />
-            </Fragment>
-          ))}
+            ))}
+          </Box>
         </Container>
       ))}
 
       <Pagination total={total} withEdges />
-    </>
+    </Container>
   );
 }
 
@@ -100,8 +112,8 @@ function TableSection({ exercise }) {
 
   return (
     <>
-      <Text my={5} fz={20} sx={(theme) => ({ color: theme.colors.brand[4] })}>
-        {exercise.exercise.exerciseName.toUpperCase()}
+      <Text mt={5} fz={20} sx={(theme) => ({ color: theme.colors.brand[4] })}>
+        {exercise.exercise.exerciseName}
       </Text>
 
       <Table>
@@ -117,5 +129,27 @@ function TableSection({ exercise }) {
     </>
   );
 }
-const getTotalReps = (sets) =>
-  sets.reduce((total, set) => (total += set.reps), 0);
+
+function getTotalVolume(exercises) {
+  let TotalVolume = 0;
+
+  exercises.map((exercise) =>
+    exercise.sets.map((set) => (TotalVolume += set.weight * set.reps))
+  );
+
+  return TotalVolume;
+}
+
+const getTotalReps = (exercises) =>
+  exercises.reduce(
+    (accumulator, currentValue) =>
+      accumulator +
+      currentValue.sets.reduce((total, set) => (total += set.reps), 0),
+    0
+  );
+
+const getTotalSets = (exercises) =>
+  exercises.reduce(
+    (accumulator, currentValue) => accumulator + currentValue.sets.length,
+    0
+  );

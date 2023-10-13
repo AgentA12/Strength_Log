@@ -1,16 +1,22 @@
-import { Group, Overlay, Card, Text, Button, Flex } from "@mantine/core";
+import { Group, Card, Text, Button, Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { WorkoutModal } from "./index";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 
-export default function ExerciseCard({ exercise, template }) {
+export default function ExerciseCard({
+  exercise,
+  template,
+  exerciseComplete,
+  handleChange,
+  exerciseIndex,
+}) {
   const [opened, { open, close }] = useDisclosure(false);
 
   function startExercise() {
     open();
   }
 
-  return exercise.completed ? (
+  return exercise?.completed ? (
     <Card
       p="md"
       withBorder
@@ -19,7 +25,7 @@ export default function ExerciseCard({ exercise, template }) {
       sx={(theme) => ({
         color: theme.colors.green[4],
       })}
-      key={exercise.exercise.exerciseName}
+      key={exercise.exercise._id}
     >
       <Flex mb={5} justify="space-between">
         <Text tt="uppercase" fw={700} fz="lg">
@@ -59,10 +65,13 @@ export default function ExerciseCard({ exercise, template }) {
       </Card>
       {open ? (
         <WorkoutModal
+          exerciseIndex={exerciseIndex}
           opened={opened}
           close={close}
           exercise={exercise}
           templateName={template.templateName}
+          handleChange={handleChange}
+          exerciseComplete={exerciseComplete}
         />
       ) : null}
     </>

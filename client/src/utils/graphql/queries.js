@@ -7,6 +7,7 @@ export const GET_TEMPLATES = gql`
       templateName
       templateNotes
       exercises {
+        restTime
         exercise {
           exerciseName
           _id
@@ -80,7 +81,6 @@ export const GET_PROGRESS_BY_DATE = gql`
         exercise {
           _id
           exerciseName
-
         }
         sets {
           weight

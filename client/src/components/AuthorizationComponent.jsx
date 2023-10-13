@@ -20,7 +20,7 @@ export default function AuthorizationComponent() {
     username: "",
     password: "",
   });
-  const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState(false);
 
   const [addUser, { loading: signupLoading }] = useMutation(ADD_USER, {
     variables: {
@@ -45,7 +45,7 @@ export default function AuthorizationComponent() {
   function handleTypeSwitch(type) {
     type === "Login" ? setType("Login") : setType("Signup");
 
-    setErrorMessage(null);
+    setError(null);
     setFormState({
       username: "",
       password: "",
@@ -53,7 +53,9 @@ export default function AuthorizationComponent() {
   }
 
   async function handleSubmit(event) {
+    setError(false);
     event.preventDefault();
+
     try {
       if (type === "Login") {
         const { data } = await loginUser({
@@ -73,7 +75,7 @@ export default function AuthorizationComponent() {
         Auth.login(data.createUser.token);
       }
     } catch (error) {
-      setErrorMessage(error.message);
+      setError(error.message);
     }
   }
 
@@ -98,7 +100,8 @@ export default function AuthorizationComponent() {
           name="username"
           required
           value={formState.username}
-          onFocus={() => setErrorMessage(null)}
+          onFocus={() => setError(null)}
+          error={error === "incorrect username" && error}
         />
 
         <PasswordInput
@@ -108,17 +111,9 @@ export default function AuthorizationComponent() {
           value={formState.password}
           label="Password"
           withAsterisk
-          onFocus={() => setErrorMessage(null)}
+          onFocus={() => setError(null)}
+          error={error === "incorrect password" && error}
         />
-
-        <Text
-          sx={(theme) => ({
-            color: theme.colors.red[6],
-            marginTop: 5,
-          })}
-        >
-          {errorMessage && errorMessage}
-        </Text>
 
         <Button
           mt={10}

@@ -21,7 +21,9 @@ const typeDefs = gql`
   }
 
   input saveWorkoutExerciseInput {
+    completed: Boolean
     exercise: exerciseInput
+    restTime: Int
     sets: [Set]
   }
 
@@ -50,13 +52,6 @@ const typeDefs = gql`
     sets: [Set]
   }
 
-  input editExerciseInput {
-    exerciseName: String
-    sets: Int
-    reps: Int
-    weight: Int
-  }
-
   type ExerciseType {
     _id: ID
     exerciseName: String
@@ -75,6 +70,7 @@ const typeDefs = gql`
   type Exercise {
     _id: ID
     exercise: ExerciseType
+    restTime: Int
     sets: [SetType]
   }
 
@@ -176,6 +172,14 @@ const typeDefs = gql`
     exerciseData: String
   }
 
+  input editExerciseInput {
+    exercise: exerciseInput
+    sets: [Set]
+    restTime: Int
+    completed: Boolean
+    _id: ID
+  }
+
   type Query {
     getAllExercises: [Exercises]
     getTemplates(userId: ID!): [Template]
@@ -205,7 +209,7 @@ const typeDefs = gql`
       templateId: ID!
       templateName: String!
       templateNotes: String
-      exercises: [TemplateInput!]
+      exercises: [createTemplateExerciseInput!]
     ): Template
     deleteTemplate(templateId: ID!): isDeleted
     saveWorkout(

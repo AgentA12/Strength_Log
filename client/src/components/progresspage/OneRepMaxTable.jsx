@@ -22,14 +22,13 @@ const rows = oneRepMaxAry.map((d) => (
       horizontalSpacing="xl"
       verticalSpacing="md"
       striped
-      withTableBorder
       withColumnBorders
     >
       <thead>
         <tr>
           <th>Percentage of 1RM</th>
           <th>Weight</th>
-          <th>Repititions</th>
+          <th>Repetitions</th>
         </tr>
       </thead>
       <tbody>{rows}</tbody>

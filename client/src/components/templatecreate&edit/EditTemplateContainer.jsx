@@ -30,7 +30,8 @@ const useStyles = createStyles(() => ({
 
 export default function EditTemplate() {
   const { state } = useLocation();
-  
+
+
   const { data, loading, error } = useQuery(GET_ALL_EXERCISES);
 
   const [opened, { open, close }] = useDisclosure(false);
@@ -41,29 +42,45 @@ export default function EditTemplate() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [formState, setFormState] = useState(state?.template);
 
+console.log(formState)
+
   const [editTemplate, { loading: editTemplateLoading }] =
     useMutation(EDIT_TEMPLATE);
 
   if (loading) return null;
+
   if (error) {
     return null;
   }
 
   let exercises = data?.getAllExercises.map((e) => {
-    return { value: e.exerciseName, label: e.exerciseName, _id: e._id, equipment: e.equipment, };
+    return {
+      value: e.exerciseName,
+      label: e.exerciseName,
+      _id: e._id,
+      equipment: e.equipment,
+    };
   });
 
-  function handleChange(index, { target }) {
+  function handleChange(exerciseIndex, { target }) {
     let data = { ...formState };
 
-    if (target.name !== "templateName" && target.name !== "templateNotes") {
-      data.exercises[index].sets[target.setIndex][target.name] = target.value;
+    if (target.name === "restTime") {
+      data.exercises[exerciseIndex][target.name] = target.value;
+      setFormState({ ...data });
+      return;
+    } else if (
+      target.name !== "templateName" &&
+      target.name !== "templateNotes"
+    ) {
+      data.exercises[exerciseIndex].sets[target.setIndex][target.name] =
+        target.value;
 
       setFormState({ ...data });
       return;
+    } else {
+      setFormState({ ...formState, [target.name]: target.value });
     }
-
-    setFormState({ ...formState, [target.name]: target.value });
   }
 
   function resetFormState() {
@@ -74,13 +91,15 @@ export default function EditTemplate() {
     });
   }
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event) {console.log(formState)
     try {
       event.preventDefault();
       const mutationRes = await editTemplate({
         variables: {
           templateId: formState._id,
-          ...formState,
+          templateName: formState.templateName,
+          templateNotes: formState.templateNotes,
+          exercises: formState.exercises,
         },
       });
 
@@ -117,10 +136,18 @@ export default function EditTemplate() {
     close();
   }
 
-  function addSet(index) {
+  function addSet(exerciseIndex) {
     let data = { ...formState };
 
-    data.exercises[index].sets.push({ weight: 0, reps: 0 });
+    data.exercises[exerciseIndex].sets.push({
+      weight:
+        data.exercises[exerciseIndex].sets[
+          data.exercises[exerciseIndex].sets.length - 1
+        ].weight,
+      reps: data.exercises[exerciseIndex].sets[
+        data.exercises[exerciseIndex].sets.length - 1
+      ].reps,
+    });
 
     setFormState(data);
   }
@@ -152,7 +179,7 @@ export default function EditTemplate() {
       <Divider
         my="lg"
         variant="dashed"
-        label={<Title tt="capitalize">Create A Template</Title>}
+        label={<Title tt="capitalize">Edit Template</Title>}
       />
 
       <Box className={classes.container}>
@@ -194,7 +221,7 @@ export default function EditTemplate() {
             <ExerciseForm
               key={index}
               handleChange={handleChange}
-              index={index}
+              exerciseIndex={index}
               formState={formState}
               removeExercise={removeExercise}
               addSet={addSet}

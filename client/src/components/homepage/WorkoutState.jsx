@@ -4,6 +4,7 @@ import {
   Table,
   useMantineTheme,
   NumberInput,
+  Flex,
 } from "@mantine/core";
 import { v4 as uuidv4 } from "uuid";
 
@@ -21,10 +22,16 @@ export default function WorkoutState({ setTemplateState, templateState }) {
   }
 
   const Tables = templateState.exercises.map((exercise, exerciseIndex) => (
-    <Container mb={10} key={exercise._id}>
-      <Text tt="capitalize" fz={23} fw="normal" color={theme.colors.brand[4]} mt={10}>
-        {exercise.exercise.exerciseName}
-      </Text>
+    <Container mb={10} key={uuidv4()}>
+      <Flex mt={10} justify="space-between" align="center">
+        <Text tt="capitalize" fz={23} fw="normal" color={theme.colors.brand[4]}>
+          {exercise.exercise.exerciseName}
+        </Text>
+        {exercise.restTime ? <Text fz={13} fw="normal" c="dimmed">
+          Rest: {exercise.restTime} seconds
+        </Text> : null}
+      </Flex>
+
       <Table withBorder withColumnBorders>
         <thead>
           <tr>

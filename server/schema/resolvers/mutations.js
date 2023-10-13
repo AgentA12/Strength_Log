@@ -8,13 +8,13 @@ const Mutation = {
     const user = await User.findOne({ username: username });
 
     if (!user) {
-      throw new AuthenticationError("Incorrect credentials");
+      throw new AuthenticationError("incorrect username");
     }
 
     const correctPassword = await user.isCorrectPassword(password);
 
     if (!correctPassword) {
-      throw new AuthenticationError("Incorrect credentials");
+      throw new AuthenticationError("incorrect password");
     }
 
     const token = signToken({
@@ -45,6 +45,7 @@ const Mutation = {
   },
 
   createTemplate: async function (_, args) {
+    console.log(args);
     try {
       const tempPayload = {
         belongsTo: args.userId,
@@ -54,7 +55,7 @@ const Mutation = {
           return {
             exercise: e._id,
             sets: e.sets,
-            restTime: e.restTime,
+            restTime: e.restTime ? e.restTime : null,
           };
         }),
       };
@@ -78,16 +79,17 @@ const Mutation = {
         {
           templateName: args.templateName,
           templateNotes: args.templateNotes,
-          exercises: args.exercises.map((exercise) => {
+          exercises: args.exercises.map((exercise, i) => {
             return {
               exercise: exercise.exercise[0]._id,
-              sets: [...exercise.sets],
+              sets: exercise.sets.map((set) => set),
             };
           }),
         },
 
         { new: true }
       );
+
       return template;
     } catch (error) {
       return error.message;

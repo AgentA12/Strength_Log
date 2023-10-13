@@ -118,10 +118,12 @@ function findFirstAndLastRange(dataSet) {
   return [smallestDate, greatestDate];
 }
 
-function getTotalVolume(sets) {
+function getTotalVolume(exercises) {
   let TotalVolume = 0;
 
-  sets.map((set) => (TotalVolume += set.weight * set.reps));
+  exercises.map((exercise) =>
+    exercise.sets.map((set) => (TotalVolume += set.weight * set.reps))
+  );
 
   return TotalVolume;
 }

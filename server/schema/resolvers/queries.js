@@ -129,6 +129,10 @@ const Query = {
         })
         .select("-password");
 
+      completedWorkouts.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+
       return completedWorkouts;
     } catch (error) {
       return error.message;

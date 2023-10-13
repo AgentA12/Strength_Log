@@ -34,7 +34,7 @@ export default function ExerciseForm({
           label="Rest time"
           description="In Seconds"
           w={100}
-          value={formState.exercises[exerciseIndex].restTime}
+          value={formState.exercises[exerciseIndex].restTime ? formState.exercises[exerciseIndex].restTime : 0 }
           onChange={(value) =>
             handleChange(exerciseIndex, {
               target: {
