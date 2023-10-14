@@ -47,7 +47,7 @@ const Query = {
 
   getChartDataForTemplates: async function (
     _,
-    { templateName, userId, shouldSortByTemplate }
+    { templateName, userId, shouldSortByTemplate, metric }
   ) {
     try {
       const user = await User.findById(userId)

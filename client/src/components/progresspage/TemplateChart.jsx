@@ -29,13 +29,12 @@ ChartJS.register(
   TimeScale
 );
 
-
 export default function TemplateChart({
   activeTemplate,
   userId,
   range,
   metric,
-  options
+  options,
 }) {
   const { loading, data, error } = useQuery(GET_CHART_PROGRESS_BY_TEMPLATE, {
     variables: {
@@ -45,9 +44,11 @@ export default function TemplateChart({
       range: range,
       metric: metric,
       exercise: null,
-      shouldSortByTemplate: true
+      shouldSortByTemplate: true,
     },
   });
+
+  console.log(data);
 
   if (loading)
     return (

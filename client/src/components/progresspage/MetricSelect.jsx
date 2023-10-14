@@ -1,14 +1,13 @@
 import { Select } from "@mantine/core";
 
-export default function TypeSelect({ metric, setMetric }) {
+export default function MetricSelect({ setMetric, metric }) {
   return (
     <Select
       sx={{ width: "fit-content" }}
-      data={["Total weight", "Weight", "1RM"]}
+      data={["Total Volume", "Total Reps", "Est 1 RM"]}
       onChange={(value) => setMetric(value)}
       placeholder="Select metric"
       defaultValue={metric}
-      description="Metric"
     />
   );
 }

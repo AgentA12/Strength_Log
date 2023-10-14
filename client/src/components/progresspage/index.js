@@ -5,7 +5,7 @@ import RenderExercises from "./RenderExercises";
 import TemplateChart from "./TemplateChart";
 import DateRangeSelect from "./DateRangeSelect";
 import ExerciseSelect from "./ExerciseSelect";
-import TypeSelect from "./TypeSelect";
+import MetricSelect from "./MetricSelect";
 import Table from "./Table";
 import ByChartContainer from "./ByChartContainer";
 import ByDateContainer from "./ByDateContainer";
@@ -14,6 +14,7 @@ import ExerciseChart from "./ExerciseChart"
 import ExerciseChartSection from "./ExerciseChartSection";
 import TemplateChartSection from "./TemplateChartSection";
 import OneRepMaxTable from "./OneRepMaxTable";
+
 export {
   SectionMenu,
   TemplateSelect,
@@ -22,7 +23,7 @@ export {
   TemplateChart,
   DateRangeSelect,
   ExerciseSelect,
-  TypeSelect,
+  MetricSelect,
   Table,
   ByChartContainer,
   ByDateContainer,

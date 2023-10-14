@@ -88,6 +88,7 @@ export default function ByTemplatesContainer() {
   const [activeTab, setActiveTab] = useState("Templates");
   const [activeTemplate, setActiveTemplate] = useState("All templates");
   const [activeExercise, setActiveExercise] = useState("All Exercises");
+  const [metric, setMetric] = useState("Total Volume");
 
   const {
     data: byTemplateData,
@@ -121,6 +122,8 @@ export default function ByTemplatesContainer() {
           userID={userID}
           options={options}
           classes={classes}
+          setMetric={setMetric}
+          metric={metric}
         />
       ) : (
         <ExerciseChartSection

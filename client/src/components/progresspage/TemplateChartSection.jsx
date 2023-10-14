@@ -1,5 +1,10 @@
 import { Box, Title, Flex } from "@mantine/core";
-import { TemplateSelect, TemplateChart, DateRangeSelect } from "./index";
+import {
+  TemplateSelect,
+  TemplateChart,
+  DateRangeSelect,
+  MetricSelect,
+} from "./index";
 
 export default function TemplateChartSection({
   activeTemplate,
@@ -10,6 +15,8 @@ export default function TemplateChartSection({
   userID,
   options,
   classes,
+  metric,
+  setMetric,
 }) {
   return (
     <>
@@ -37,13 +44,16 @@ export default function TemplateChartSection({
         />
 
         <DateRangeSelect setRange={setRange} />
+        <MetricSelect setMetric={setMetric} metric={metric} />
       </Flex>
+
       <Box className={classes.chartContainer}>
         <TemplateChart
           activeTemplate={activeTemplate}
           userId={userID}
           range={range}
           options={options}
+          metric={metric}
         />
       </Box>
     </>
