@@ -1,4 +1,4 @@
-const { User, Template, Exercise } = require("../../models/index");
+const { User, Template } = require("../../models/index");
 
 const { AuthenticationError } = require("apollo-server");
 const { signToken } = require("../../utils/auth");
@@ -45,7 +45,6 @@ const Mutation = {
   },
 
   createTemplate: async function (_, args) {
-    console.log(args);
     try {
       const tempPayload = {
         belongsTo: args.userId,
@@ -154,12 +153,15 @@ const Mutation = {
   },
 
   deleteAccount: async function (_, { userID }) {
-    const user = await User.findByIdAndDelete(userID);
+    try {
+      const user = await User.findByIdAndDelete(userID);
 
-    if (user) {
-      return { confirm: true };
-    } else {
+      if (user) {
+        return { confirm: true };
+      }
       return { confirm: false };
+    } catch (error) {
+      return error.message;
     }
   },
 };

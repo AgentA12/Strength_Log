@@ -1,4 +1,8 @@
 import dayjs from "dayjs";
+import { TbBarbell } from "react-icons/tb";
+import { MdCable, MdOutlineAirlineSeatFlatAngled } from "react-icons/md";
+import { LiaDumbbellSolid } from "react-icons/lia";
+import { GiBodyBalance } from "react-icons/gi";
 
 const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -133,6 +137,21 @@ function formatTime(num) {
   return `${num}`;
 }
 
+function getExerciseIcon(str) {
+  switch (str.toLowerCase()) {
+    case "barbell":
+      return <TbBarbell />;
+    case "dumbbell":
+      return <LiaDumbbellSolid />;
+    case "cable":
+      return <MdCable />;
+    case "machine":
+      return <MdOutlineAirlineSeatFlatAngled />;
+    case "bodyweight":
+      return <GiBodyBalance />;
+  }
+}
+
 export {
   formatDate,
   getOneRepMax,
@@ -145,4 +164,5 @@ export {
   findFirstAndLastRange,
   getTotalVolume,
   formatTime,
+  getExerciseIcon,
 };

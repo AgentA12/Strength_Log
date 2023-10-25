@@ -86,16 +86,9 @@ export default function TemplateModal({ template, opened, setOpened }) {
       size="lg"
     >
       <Container>
-        <Text c="dimmed">
+        <Text c="dimmed" mb={10}>
           {template.templateNotes.trim() ? `- ${template.templateNotes}` : null}
         </Text>
-
-        <WorkoutState
-          loading={loading}
-          handleSaveWorkout={handleSaveWorkout}
-          setTemplateState={setTemplateState}
-          templateState={templateState}
-        />
 
         <Flex justify="space-around" align="center">
           <SaveWorkoutBtn
@@ -105,6 +98,15 @@ export default function TemplateModal({ template, opened, setOpened }) {
           />
           <StartWorkoutBtn template={templateState} />
         </Flex>
+
+        <WorkoutState
+          loading={loading}
+          handleSaveWorkout={handleSaveWorkout}
+          setTemplateState={setTemplateState}
+          templateState={templateState}
+        />
+
+       
 
         {error ? (
           <Text color="red" mt={5}>

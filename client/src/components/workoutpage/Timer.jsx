@@ -11,7 +11,6 @@ export default function Timer({ textSize, workoutState, setWorkoutState }) {
   const interval = useInterval(() => setSeconds((s) => s + 1), 1000);
 
   if (workoutState.workoutFinished) {
-    console.log("rendered")
     let data = { ...workoutState };
 
     data.timeToComplete = seconds + minutes * 60 + hours * 3600;

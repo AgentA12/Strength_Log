@@ -1,17 +1,17 @@
 const mongoose = require("mongoose");
-const { setSchema } = require("./exercise");
+const { setSchema } = require("./user");
 
 const templateSchema = mongoose.Schema(
   {
     belongsTo: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     templateName: {
       type: String,
-      required: function () {
-        return this.templateName.length >= 1;
-      },
+      required: true,
       trim: true,
+      lowercase: true,
+      unique: true
     },
-    templateNotes: { type: String, trim: true },
+    templateNotes: { type: String, trim: true, required: false, default: null },
     exercises: [
       {
         exercise: { type: mongoose.Schema.Types.ObjectId, ref: "Exercise" },
@@ -25,4 +25,4 @@ const templateSchema = mongoose.Schema(
 
 const Template = mongoose.model("Template", templateSchema);
 
-module.exports = { templateSchema, Template };
+module.exports = { Template };

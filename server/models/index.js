@@ -1,5 +1,5 @@
 const { Exercise } = require("./exercise");
-const { Template, templateSchema } = require("./template");
-const User = require("./user");
+const { Template } = require("./template");
+const { User } = require("./user");
 
-module.exports = { Exercise, Template, User, templateSchema };
+module.exports = { Exercise, Template, User };

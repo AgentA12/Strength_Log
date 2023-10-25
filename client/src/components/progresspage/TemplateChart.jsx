@@ -48,8 +48,6 @@ export default function TemplateChart({
     },
   });
 
-  console.log(data);
-
   if (loading)
     return (
       <Box sx={{ position: "relative" }}>
@@ -81,12 +79,14 @@ export default function TemplateChart({
     ...findFirstAndLastRange(data?.getChartDataForTemplates)
   );
 
+  console.log(data);
+
   return (
     <Line
       options={options}
       data={{
         labels: labels,
-        datasets: data?.getChartDataForTemplates,
+        datasets: data.getChartDataForTemplates,
       }}
     />
   );

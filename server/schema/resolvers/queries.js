@@ -1,3 +1,4 @@
+const { getOneRepMax } = require("../../utils/helpers");
 const { User, Exercise } = require("../../models/index");
 
 const Query = {
@@ -49,8 +50,35 @@ const Query = {
     _,
     { templateName, userId, shouldSortByTemplate, metric }
   ) {
+    function formatChartData(exerciseArrs) {
+      let dataSet = exerciseArrs.map((exercise) => {
+        return {
+          label: exercise.exercise.exerciseName,
+          belongsTo: exercise.belongsTo
+            ? exercise.belongsTo.templateName
+            : null,
+          data: exercise.sets.map((set) => {
+            return {
+              x: new Date(exercise.savedOn).toLocaleDateString(),
+              y:
+                metric === "Total Volume"
+                  ? set.weight * set.reps * exercise.sets.length - 1
+                  : calculateEstOneRepMax(exercise),
+            };
+          }),
+        };
+      });
+      return dataSet;
+    }
+
+    const calculateEstOneRepMax = (exercise) => {
+      return Math.max(
+        ...exercise.sets.map((set) => getOneRepMax(set.weight, set.reps))
+      );
+    };
+
     try {
-      const user = await User.findById(userId)
+      const workoutData = await User.findById(userId)
         .populate({
           path: "completedExercises.exercise",
           model: "Exercise",
@@ -59,27 +87,10 @@ const Query = {
           path: "completedExercises.belongsTo",
           model: "Template",
         })
-        .select("-__v");
+        .sort({ createdAt: 1 })
+        .select("completedExercises");
 
-      function formatChartData(exerciseArrs) {
-        let dataSet = exerciseArrs.map((exercise) => {
-          return {
-            label: exercise.exercise.exerciseName,
-            belongsTo: exercise.belongsTo
-              ? exercise.belongsTo.templateName
-              : null,
-            data: exercise.sets.map((set) => {
-              return {
-                x: new Date(exercise.savedOn).toLocaleDateString(),
-                y: set.weight,
-              };
-            }),
-          };
-        });
-        return dataSet;
-      }
-
-      let dataSet = formatChartData(user.completedExercises);
+      let dataSet = formatChartData(workoutData.completedExercises);
 
       if (templateName != "All templates" || !shouldSortByTemplate)
         dataSet = dataSet.filter((data) => {
@@ -110,10 +121,6 @@ const Query = {
     } catch (error) {
       return error;
     }
-  },
-
-  getChartDataForExercises: async function (_, args) {
-    return;
   },
 
   async getProgressByDate(_, { userID }) {

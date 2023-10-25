@@ -90,7 +90,7 @@ export default function ByDateContainer() {
             <Badge>Total Sets {getTotalSets(progress.exercises)}</Badge>{" "}
             <Badge>Total Reps {getTotalReps(progress.exercises)}</Badge>
             {progress.exercises.map((exercise) => (
-              <TableSection exercise={exercise} />
+              <TableSection key={uuidv4()} exercise={exercise} />
             ))}
           </Box>
         </Container>

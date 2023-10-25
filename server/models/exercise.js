@@ -12,14 +12,9 @@ const exerciseSchema = mongoose.Schema({
   belongsToTemplate: [
     { type: mongoose.Schema.Types.ObjectId, model: "Template" },
   ],
-  isUserCreated: Boolean,
-});
-
-const setSchema = mongoose.Schema({
-  weight: Number,
-  reps: { type: Number, min: [1, "You must enter at lease one rep"] },
+  isUserCreated: { type: Boolean, default: false },
 });
 
 const Exercise = mongoose.model("Exercise", exerciseSchema);
 
-module.exports = { Exercise, exerciseSchema, setSchema };
+module.exports = { Exercise };

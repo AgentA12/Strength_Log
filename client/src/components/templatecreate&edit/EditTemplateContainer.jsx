@@ -31,7 +31,6 @@ const useStyles = createStyles(() => ({
 export default function EditTemplate() {
   const { state } = useLocation();
 
-
   const { data, loading, error } = useQuery(GET_ALL_EXERCISES);
 
   const [opened, { open, close }] = useDisclosure(false);
@@ -41,8 +40,6 @@ export default function EditTemplate() {
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [formState, setFormState] = useState(state?.template);
-
-console.log(formState)
 
   const [editTemplate, { loading: editTemplateLoading }] =
     useMutation(EDIT_TEMPLATE);
@@ -91,7 +88,7 @@ console.log(formState)
     });
   }
 
-  async function handleSubmit(event) {console.log(formState)
+  async function handleSubmit(event) {
     try {
       event.preventDefault();
       const mutationRes = await editTemplate({

@@ -9,4 +9,7 @@ function getDaysArray(start, end, range) {
   return a;
 }
 
-module.exports = { getDaysArray };
+const getOneRepMax = (weight, repetitions) =>
+  Math.round(Math.round((weight / [1.0278 - 0.0278 * repetitions]) * 10) / 10)
+
+module.exports = { getDaysArray, getOneRepMax };

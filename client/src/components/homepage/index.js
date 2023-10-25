@@ -14,6 +14,10 @@ import SaveWorkoutBtn from "./SaveWorkoutBtn";
 import TemplateMenu from "./TemplateMenu";
 import TemplateModal from "./TemplateModal";
 import WorkoutState from "./WorkoutState";
+import {
+  RecentlyCompletedCard,
+  CardsCarousel,
+} from "./RecentlyCompletedContainer";
 
 export {
   AddTemplateBtn,
@@ -32,4 +36,6 @@ export {
   TemplateMenu,
   TemplateModal,
   WorkoutState,
+  RecentlyCompletedCard,
+  CardsCarousel,
 };

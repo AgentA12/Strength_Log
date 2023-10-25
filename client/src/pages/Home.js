@@ -14,8 +14,8 @@ export default function HomePage() {
   const { classes } = useStyles();
 
   return (
-    <Container component="main" fluid className={classes.container}>
-      <Flex direction={{ base: "column", md: "row" }} gap={5}>
+    <Container  fluid className={classes.container}>
+      <Flex align="center" direction={{ base: "column", md: "row" }} gap={10}>
         <Calendar />
 
         <Divider orientation="vertical" variant="dotted" />
