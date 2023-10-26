@@ -1,6 +1,6 @@
 import { ExerciseSelect, ExerciseChart } from "./index";
 import { Title, Flex, Box } from "@mantine/core";
-import { DateRangeSelect } from "./index";
+import { DateRangeSelect, MetricSelect } from "./index";
 
 export default function ExerciseChartSection({
   activeExercise,
@@ -11,6 +11,8 @@ export default function ExerciseChartSection({
   activeTemplate,
   range,
   options,
+  metric,
+  setMetric,
 }) {
   return (
     <>
@@ -34,6 +36,7 @@ export default function ExerciseChartSection({
           setActiveExercise={setActiveExercise}
         />
         <DateRangeSelect setRange={setRange} />
+        <MetricSelect setMetric={setMetric} metric={metric} />
       </Flex>
       <Box className={classes.chartContainer}>
         <ExerciseChart
@@ -42,6 +45,7 @@ export default function ExerciseChartSection({
           range={range}
           activeExercise={activeExercise}
           options={options}
+          metric={metric}
         />
       </Box>
     </>

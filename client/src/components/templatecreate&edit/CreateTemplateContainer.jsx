@@ -20,7 +20,7 @@ import {
 import { UserContext } from "../../App";
 import { useDisclosure } from "@mantine/hooks";
 import { SelectExerciseModal } from "./index";
-import { GET_ALL_EXERCISES } from "../../utils/graphql/queries";
+import { GET_EXERCISES } from "../../utils/graphql/queries";
 
 const useStyles = createStyles(() => ({
   container: {
@@ -33,7 +33,7 @@ export default function CreateTemplateContainer() {
     data: { _id: userID },
   } = useContext(UserContext);
 
-  const { data, loading, error } = useQuery(GET_ALL_EXERCISES);
+  const { data, loading, error } = useQuery(GET_EXERCISES);
 
   const [opened, { open, close }] = useDisclosure(false);
 

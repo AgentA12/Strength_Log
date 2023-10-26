@@ -18,7 +18,7 @@ import {
   Box,
   createStyles,
 } from "@mantine/core";
-import { GET_ALL_EXERCISES } from "../../utils/graphql/queries";
+import { GET_EXERCISES } from "../../utils/graphql/queries";
 import { useDisclosure } from "@mantine/hooks";
 import { SelectExerciseModal } from "./index";
 
@@ -31,7 +31,7 @@ const useStyles = createStyles(() => ({
 export default function EditTemplate() {
   const { state } = useLocation();
 
-  const { data, loading, error } = useQuery(GET_ALL_EXERCISES);
+  const { data, loading, error } = useQuery(GET_EXERCISES);
 
   const [opened, { open, close }] = useDisclosure(false);
 

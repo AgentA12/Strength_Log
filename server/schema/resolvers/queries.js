@@ -1,4 +1,4 @@
-const { getOneRepMax } = require("../../utils/helpers");
+const { formatChartData } = require("../../utils/helpers");
 const { User, Exercise } = require("../../models/index");
 
 const Query = {
@@ -10,6 +10,7 @@ const Query = {
       if (completedWorkouts.length > 0) {
         const dates = completedWorkouts.map((p) => {
           return {
+            _id: p._id,
             date: p.createdAt,
             templateId: p._id,
           };
@@ -25,9 +26,7 @@ const Query = {
   },
 
   getAllExercises: async function () {
-    const exercises = await Exercise.find().select("-__v");
-
-    return exercises;
+    return Exercise.find().select("-__v");
   },
 
   getTemplates: async function (_, args) {
@@ -46,39 +45,12 @@ const Query = {
     }
   },
 
-  getChartDataForTemplates: async function (
+  getChartData: async function (
     _,
     { templateName, userId, shouldSortByTemplate, metric }
   ) {
-    function formatChartData(exerciseArrs) {
-      let dataSet = exerciseArrs.map((exercise) => {
-        return {
-          label: exercise.exercise.exerciseName,
-          belongsTo: exercise.belongsTo
-            ? exercise.belongsTo.templateName
-            : null,
-          data: exercise.sets.map((set) => {
-            return {
-              x: new Date(exercise.savedOn).toLocaleDateString(),
-              y:
-                metric === "Total Volume"
-                  ? set.weight * set.reps * exercise.sets.length - 1
-                  : calculateEstOneRepMax(exercise),
-            };
-          }),
-        };
-      });
-      return dataSet;
-    }
-
-    const calculateEstOneRepMax = (exercise) => {
-      return Math.max(
-        ...exercise.sets.map((set) => getOneRepMax(set.weight, set.reps))
-      );
-    };
-
     try {
-      const workoutData = await User.findById(userId)
+      const { completedExercises } = await User.findById(userId)
         .populate({
           path: "completedExercises.exercise",
           model: "Exercise",
@@ -90,7 +62,7 @@ const Query = {
         .sort({ createdAt: 1 })
         .select("completedExercises");
 
-      let dataSet = formatChartData(workoutData.completedExercises);
+      let dataSet = formatChartData(completedExercises, metric);
 
       if (templateName != "All templates" || !shouldSortByTemplate)
         dataSet = dataSet.filter((data) => {
@@ -125,7 +97,7 @@ const Query = {
 
   async getProgressByDate(_, { userID }) {
     try {
-      const { completedWorkouts } = await User.findById(userID)
+      const data = await User.findById(userID)
         .populate({
           path: "completedWorkouts.template",
           model: "Template",
@@ -134,13 +106,9 @@ const Query = {
           path: "completedWorkouts.exercises.exercise",
           model: "Exercise",
         })
-        .select("-password");
+        .select("completedWorkouts");
 
-      completedWorkouts.sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      );
-
-      return completedWorkouts;
+      return data.completedWorkouts.sort((a, b) => b.createdAt - a.createdAt);
     } catch (error) {
       return error.message;
     }

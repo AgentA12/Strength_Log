@@ -133,6 +133,7 @@ const typeDefs = gql`
 
   type dateType {
     date: String
+    _id: ID
     templateId: ID
   }
 
@@ -165,6 +166,7 @@ const typeDefs = gql`
   type CompletedWorkouts {
     createdAt: String
     template: Template
+    _id: ID
     exercises: [Exercise]
   }
 
@@ -183,7 +185,7 @@ const typeDefs = gql`
   type Query {
     getAllExercises: [Exercises]
     getTemplates(userId: ID!): [Template]
-    getChartDataForTemplates(
+    getChartData(
       templateName: String
       userId: ID!
       range: String
@@ -192,7 +194,7 @@ const typeDefs = gql`
       shouldSortByTemplate: Boolean
     ): [TemplateChartData]
     getChartDataForExercises(userId: ID!): [ExerciseChartData]
-    getProgressTimeStamps(userId: ID!): CalendarDates
+    getProgressTimeStamps(userId: ID!): CalendarDates 
     getProgressByDate(userID: ID!): [CompletedWorkouts]
   }
 

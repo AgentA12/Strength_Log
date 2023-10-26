@@ -13,7 +13,6 @@ import {
   createStyles,
   Box,
 } from "@mantine/core";
-import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_PROGRESS_BY_DATE } from "../../utils/graphql/queries";
 import { UserContext } from "../../App";
@@ -59,11 +58,11 @@ export default function ByDateContainer() {
     day: "numeric",
   };
 
-  let total = Math.floor(data.getProgressByDate.length / 2);
+  console.log(data)
 
   return (
     <Container fluid>
-      {data.getProgressByDate.map((progress, i) => (
+      {data?.getProgressByDate.map((progress, i) => (
         <Container key={uuidv4()} size="sm" ml={0} mb={25}>
           {i !== 0 ? <Divider variant="dashed"></Divider> : null}
           <Box>
@@ -95,8 +94,6 @@ export default function ByDateContainer() {
           </Box>
         </Container>
       ))}
-
-      <Pagination total={total} withEdges />
     </Container>
   );
 }

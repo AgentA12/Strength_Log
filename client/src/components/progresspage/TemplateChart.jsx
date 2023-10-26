@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { GET_CHART_PROGRESS_BY_TEMPLATE } from "../../utils/graphql/queries";
+import { GET_CHART_PROGRESS } from "../../utils/graphql/queries";
 import { Box, LoadingOverlay, Text } from "@mantine/core";
 import {
   Chart as ChartJS,
@@ -16,6 +16,7 @@ import {
 import { getRangeOfDates } from "../../utils/helpers/functions";
 import "chartjs-adapter-dayjs-4/dist/chartjs-adapter-dayjs-4.esm";
 import { Line } from "react-chartjs-2";
+import { findFirstAndLastRange } from "../../utils/helpers/functions";
 
 ChartJS.register(
   CategoryScale,
@@ -36,7 +37,7 @@ export default function TemplateChart({
   metric,
   options,
 }) {
-  const { loading, data, error } = useQuery(GET_CHART_PROGRESS_BY_TEMPLATE, {
+  const { loading, data, error } = useQuery(GET_CHART_PROGRESS, {
     variables: {
       userId: userId,
       templateName:
@@ -76,42 +77,17 @@ export default function TemplateChart({
 
   const labels = getRangeOfDates(
     range,
-    ...findFirstAndLastRange(data?.getChartDataForTemplates)
+    ...findFirstAndLastRange(data.getChartData)
   );
-
-  console.log(data);
 
   return (
     <Line
       options={options}
       data={{
         labels: labels,
-        datasets: data.getChartDataForTemplates,
+        datasets: data.getChartData,
       }}
     />
   );
 }
 
-function findFirstAndLastRange(dataSet) {
-  let greatestDate = new Date(0);
-
-  for (let i = 0; i < dataSet.length; i++) {
-    dataSet[i].data.map((d) =>
-      new Date(d.x).getTime() > new Date(greatestDate).getTime()
-        ? (greatestDate = d.x)
-        : null
-    );
-  }
-
-  let smallestDate = new Date(greatestDate);
-
-  for (let x = 0; x < dataSet.length; x++) {
-    dataSet[x].data.map((d) =>
-      new Date(d.x).getTime() < new Date(smallestDate).getTime()
-        ? (smallestDate = d.x)
-        : null
-    );
-  }
-
-  return [smallestDate, greatestDate];
-}

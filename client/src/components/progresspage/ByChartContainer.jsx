@@ -135,6 +135,8 @@ export default function ByTemplatesContainer() {
           activeTemplate={activeTemplate}
           range={range}
           options={options}
+          setMetric={setMetric}
+          metric={metric}
         />
       )}
     </Tabs>

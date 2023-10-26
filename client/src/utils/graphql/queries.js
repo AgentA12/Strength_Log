@@ -22,7 +22,7 @@ export const GET_TEMPLATES = gql`
   }
 `;
 
-export const GET_ALL_EXERCISES = gql`
+export const GET_EXERCISES = gql`
   query {
     getAllExercises {
       _id
@@ -33,15 +33,7 @@ export const GET_ALL_EXERCISES = gql`
   }
 `;
 
-export const GET_CHART_PROGRESS_BY_EXERCISE = gql`
-  query ($userId: ID!) {
-    getChartDataForExercises(userId: $userId) {
-      exerciseData
-    }
-  }
-`;
-
-export const GET_CHART_PROGRESS_BY_TEMPLATE = gql`
+export const GET_CHART_PROGRESS = gql`
   query (
     $templateName: String
     $userId: ID!
@@ -50,7 +42,7 @@ export const GET_CHART_PROGRESS_BY_TEMPLATE = gql`
     $exercise: String
     $shouldSortByTemplate: Boolean
   ) {
-    getChartDataForTemplates(
+    getChartData(
       templateName: $templateName
       userId: $userId
       range: $range
@@ -73,6 +65,7 @@ export const GET_PROGRESS_BY_DATE = gql`
   query ($userID: ID!) {
     getProgressByDate(userID: $userID) {
       createdAt
+      _id
       template {
         templateName
         _id
@@ -95,6 +88,7 @@ export const GET_CALENDAR_DATA = gql`
   query ($userId: ID!) {
     getProgressTimeStamps(userId: $userId) {
       dates {
+        _id
         date
         templateId
       }

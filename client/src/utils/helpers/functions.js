@@ -98,30 +98,6 @@ function displayExercisesForTemplate(templates, activeTemplate) {
       );
 }
 
-function findFirstAndLastRange(dataSet) {
-  let greatestDate = new Date(0);
-
-  for (let i = 0; i < dataSet.length; i++) {
-    dataSet[i].data.map((d) =>
-      new Date(d.x).getTime() > new Date(greatestDate).getTime()
-        ? (greatestDate = d.x)
-        : null
-    );
-  }
-
-  let smallestDate = new Date(greatestDate);
-
-  for (let x = 0; x < dataSet.length; x++) {
-    dataSet[x].data.map((d) =>
-      new Date(d.x).getTime() < new Date(smallestDate).getTime()
-        ? (smallestDate = d.x)
-        : null
-    );
-  }
-
-  return [smallestDate, greatestDate];
-}
-
 function getTotalVolume(exercises) {
   let TotalVolume = 0;
 
@@ -152,6 +128,30 @@ function getExerciseIcon(str) {
   }
 }
 
+function findFirstAndLastRange(dataSet) {
+  let greatestDate = new Date(0);
+
+  for (let i = 0; i < dataSet.length; i++) {
+    dataSet[i].data.map((d) =>
+      new Date(d.x).getTime() > new Date(greatestDate).getTime()
+        ? (greatestDate = d.x)
+        : null
+    );
+  }
+
+  let smallestDate = new Date(greatestDate);
+
+  for (let x = 0; x < dataSet.length; x++) {
+    dataSet[x].data.map((d) =>
+      new Date(d.x).getTime() < new Date(smallestDate).getTime()
+        ? (smallestDate = d.x)
+        : null
+    );
+  }
+
+  return [smallestDate, greatestDate];
+}
+
 export {
   formatDate,
   getOneRepMax,
@@ -165,4 +165,5 @@ export {
   getTotalVolume,
   formatTime,
   getExerciseIcon,
+  
 };

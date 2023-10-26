@@ -4,10 +4,10 @@ import { MdDateRange } from "react-icons/md";
 import { BsTools } from "react-icons/bs";
 import { useMediaQuery } from "@mantine/hooks";
 
-export default function SectionMenu({ setActiveSection }) {
+export default function SectionMenu({activeSection, setActiveSection }) {
   const isLargeScreen = useMediaQuery("(max-width: 48em)");
   return (
-    <Tabs defaultValue={"Chart"} onTabChange={setActiveSection} my={10}>
+    <Tabs value={activeSection} onTabChange={setActiveSection} my={10}>
       <Tabs.List position={isLargeScreen ? "center" : "left"}>
         <Tabs.Tab
           value="Chart"
