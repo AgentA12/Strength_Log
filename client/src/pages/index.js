@@ -5,6 +5,7 @@ import NotFoundPage from "./NotFound";
 import ProgressPage from "./Progress";
 import SettingsPage from "./Settings";
 import WorkoutPage from "./Workout";
+
 export {
   AuthPage,
   HomePage,

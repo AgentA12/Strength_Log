@@ -16,13 +16,13 @@ export default function WorkoutPage() {
     state: { template },
   } = useLocation();
 
-  const {
+const {
     data: { _id: userID },
   } = useContext(UserContext);
 
   const navigate = useNavigate();
 
-  const [saveWorkout, { data, loading, error }] = useMutation(SAVE_WORKOUT);
+  const [saveWorkout, { loading, error }] = useMutation(SAVE_WORKOUT);
 
   const [workoutState, setWorkoutState] = useState({
     template: template,
@@ -54,8 +54,8 @@ export default function WorkoutPage() {
   function handleChange(value, exerciseIndex, name, setIndex) {
     const data = { ...workoutState };
 
-    data.template.exercises[exerciseIndex].sets[setIndex][name] = value;
-    data.template.exercises[exerciseIndex].sets[setIndex][name] = value;
+    data.template[exerciseIndex].sets[setIndex][name] = value;
+    data.template[exerciseIndex].sets[setIndex][name] = value;
 
     setWorkoutState(data);
   }
@@ -63,11 +63,9 @@ export default function WorkoutPage() {
   function exerciseComplete(exerciseIndex) {
     const data = { ...workoutState };
 
-    data.template.exercises[exerciseIndex].completed = true;
+    data.template[exerciseIndex].completed = true;
 
-    let isWorkoutDone = data.template.exercises.every(
-      (e) => e.completed === true
-    );
+    let isWorkoutDone = data.template.every((e) => e.completed === true);
 
     data.workoutFinished = isWorkoutDone;
 
@@ -78,12 +76,13 @@ export default function WorkoutPage() {
 
     setWorkoutState(data);
   }
+
   function handleFinish() {
     saveWorkout({
       variables: {
-        templateId: workoutState.template._id,
+        templateId: workoutState.template.templateId,
         userID: userID,
-        exercises: workoutState.template.exercises,
+        exercises: workoutState.template,
       },
     })
       .then((res) => {
@@ -139,7 +138,7 @@ export default function WorkoutPage() {
         </>
       ) : (
         <Flex direction="column" gap={10}>
-          {workoutState.template.exercises.map((exercise, exerciseIndex) => (
+          {workoutState.template.map((exercise, exerciseIndex) => (
             <ExerciseCard
               exerciseIndex={exerciseIndex}
               template={workoutState.template}

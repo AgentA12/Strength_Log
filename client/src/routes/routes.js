@@ -7,8 +7,8 @@ import {
   SettingsPage,
   WorkoutPage,
 } from "../pages/index";
-import CreateTemplateContainer from "../components/templatecreate&edit/CreateTemplateContainer";
-import EditTemplateContainer from "../components/templatecreate&edit/EditTemplateContainer";
+import CreateTemplateContainer from "../components/create&edittemplates/CreateTemplateContainer";
+import EditTemplateContainer from "../components/create&edittemplates/EditTemplateContainer";
 import Protected from "../components/ProtectedRoute";
 import auth from "../utils/auth/auth";
 

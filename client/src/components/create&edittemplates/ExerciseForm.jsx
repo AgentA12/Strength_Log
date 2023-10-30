@@ -7,7 +7,6 @@ import {
   Text,
   Group,
   List,
-  Divider,
 } from "@mantine/core";
 
 export default function ExerciseForm({
@@ -94,6 +93,7 @@ export default function ExerciseForm({
       <Group position="apart">
         <Button onClick={() => addSet(exerciseIndex)}>Add Set</Button>
         <Button
+        
           mt={10}
           onClick={(event) => removeExercise(event, exerciseIndex)}
           rightIcon={<IoMdRemove color="" />}

@@ -3,8 +3,6 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { EDIT_TEMPLATE } from "../../utils/graphql/mutations";
 import { useQuery } from "@apollo/client";
-import AddExerciseBtn from "../homepage/AddExerciseBtn";
-import SaveTemplateBtn from "../homepage/SaveTemplateBtn";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   ScrollArea,
@@ -17,6 +15,7 @@ import {
   Flex,
   Box,
   createStyles,
+  Button,
 } from "@mantine/core";
 import { GET_EXERCISES } from "../../utils/graphql/queries";
 import { useDisclosure } from "@mantine/hooks";
@@ -197,11 +196,10 @@ export default function EditTemplate() {
             value={formState?.templateNotes}
           />
           <Flex mt={10} justify={"space-between"}>
-            <AddExerciseBtn clickHandler={open} />
-            <SaveTemplateBtn
-              loading={editTemplateLoading}
-              handleSubmit={handleSubmit}
-            />
+            <Button onClick={open}>Add Exercise</Button>
+            <Button loading={loading} onClick={handleSubmit}>
+              Save Template
+            </Button>
           </Flex>
           <Text>{errorMessage && errorMessage}</Text>
         </Box>

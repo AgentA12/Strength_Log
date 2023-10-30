@@ -11,7 +11,6 @@ import {
   NumberInput,
 } from "@mantine/core";
 
-import { IoIosOptions } from "react-icons/io";
 import { BsPlus } from "react-icons/bs";
 import { useState } from "react";
 import Resting from "./Resting";

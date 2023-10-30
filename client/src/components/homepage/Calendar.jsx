@@ -2,17 +2,21 @@ import { DatePicker } from "@mantine/dates";
 import { compareDatesByDay } from "../../utils/helpers/functions";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { GET_CALENDAR_DATA } from "../../utils/graphql/queries";
+import { CALENDAR_TIMESTAMPS } from "../../utils/graphql/queries";
 import { useContext } from "react";
 import { UserContext } from "../../App";
-import { Center, Text, LoadingOverlay, Box } from "@mantine/core";
+import { Text, LoadingOverlay, Overlay, Box } from "@mantine/core";
 
 export default function Calendar() {
   const {
     data: { _id: userID },
   } = useContext(UserContext);
 
-  const { data, loading, error } = useQuery(GET_CALENDAR_DATA, {
+  const {
+    data: { calendarTimeStamps } = [],
+    loading,
+    error,
+  } = useQuery(CALENDAR_TIMESTAMPS, {
     variables: {
       userId: userID,
     },
@@ -21,12 +25,11 @@ export default function Calendar() {
   const navigate = useNavigate();
 
   function handleDateClick(date) {
-    const dateSelected = data.getProgressTimeStamps.dates.filter((d) =>
-      compareDatesByDay(date, new Date(parseInt(d.date)))
+    const dateSelected = calendarTimeStamps.filter((d) =>
+      compareDatesByDay(date, new Date(parseInt(d.createdAt)))
     );
 
     if (dateSelected.length > 0) {
-      // route to summary page with template data and date
       navigate("/Progress", {
         state: {
           viewCurrentTemplate: dateSelected,
@@ -36,44 +39,38 @@ export default function Calendar() {
     }
   }
 
+  const datePickerDefaultProps = {
+    type: "multiple",
+    weekendDays: [],
+    size: "md",
+  };
+
   if (loading)
     return (
-      <Box pos="relative">
+      <Box pos="relative" w={301} h={343.797}>
         <LoadingOverlay visible={true} />
-        <DatePicker
-          sx={(theme) => ({
-            [theme.fn.smallerThan("sm")]: {
-              margin: "auto",
-            },
-          })}
-          type="multiple"
-          weekendDays={[]}
-          size="md"
-        />
+        <DatePicker {...datePickerDefaultProps} />
       </Box>
     );
 
   if (error)
     return (
-      <Box height={400}>
-        <Center w={343}>
-          <Text color="red">error message</Text>
-        </Center>
+      <Box pos="relative" w={301} h={343.797}>
+        <Overlay p={5} center={true}>
+          <Text ta="center" color="red">
+            {error.message}
+          </Text>
+        </Overlay>
+
+        <DatePicker {...datePickerDefaultProps} />
       </Box>
     );
 
   return (
     <DatePicker
-      sx={(theme) => ({
-        [theme.fn.smallerThan("sm")]: {
-          margin: "auto",
-        },
-      })}
-      type="multiple"
-      weekendDays={[]}
-      size="md"
-      value={data.getProgressTimeStamps?.dates?.map(
-        (d) => new Date(parseInt(d.date))
+      {...datePickerDefaultProps}
+      value={calendarTimeStamps.map(
+        (date) => new Date(parseInt(date.createdAt))
       )}
       getDayProps={(date) => ({
         onClick: () => handleDateClick(date),

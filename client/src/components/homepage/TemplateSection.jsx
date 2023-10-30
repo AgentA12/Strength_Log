@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { SearchTemplates, TemplateCard, AddTemplateBtn } from "./index";
+import { TemplateCard } from "./index";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import { DELETE_TEMPLATE } from "../../utils/graphql/mutations";
 import {
@@ -11,8 +11,13 @@ import {
   Flex,
   Loader,
   Center,
-  Group,
+  Button,
+  Input,
+
 } from "@mantine/core";
+import {FcSearch} from "react-icons/fc"
+import { HiPlus } from "react-icons/hi";
+import { Link } from "react-router-dom";
 import { UserContext } from "../../App";
 import { showNotification } from "@mantine/notifications";
 
@@ -124,13 +129,17 @@ export default function TemplateSection() {
           direction="row"
           wrap="wrap"
         >
-          <SearchTemplates
-            templates={templates}
-            filterTemplates={filterTemplates}
+          <Input
+            icon={<FcSearch />}
+            onChange={(event) => filterTemplates(event, templates)}
+            placeholder="Search templates..."
+            radius="md"
+            size="md"
           />
-          <Group>
-            <AddTemplateBtn />
-          </Group>
+
+          <Button component={Link} to="/Create-template" leftIcon={<HiPlus />}>
+            Template
+          </Button>
         </Flex>
       </Flex>
 

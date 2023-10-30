@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 const secret = "thisisthesecretkeyforstrengthLog!";
-const expiration = "24h";
+const expiration = "48h";
 
 module.exports = {
   authMiddleWare: function ({ req }) {

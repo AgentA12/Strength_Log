@@ -2,24 +2,13 @@ const { formatChartData } = require("../../utils/helpers");
 const { User, Exercise } = require("../../models/index");
 
 const Query = {
-  getProgressTimeStamps: async function (_, { userId }) {
+  calendarTimeStamps: async function (_, { userId }) {
     try {
-      const { completedWorkouts } = await User.findById(userId).select(
-        "-password"
+      const { completedWorkouts: dates } = await User.findById(userId).select(
+        "completedWorkouts._id completedWorkouts.createdAt"
       );
-      if (completedWorkouts.length > 0) {
-        const dates = completedWorkouts.map((p) => {
-          return {
-            _id: p._id,
-            date: p.createdAt,
-            templateId: p._id,
-          };
-        });
 
-        return { dates: dates };
-      }
-
-      return { dates: [] };
+      return dates.length ? dates : [];
     } catch (error) {
       return error;
     }

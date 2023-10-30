@@ -12,11 +12,7 @@ export default function ExerciseCard({
 }) {
   const [opened, { open, close }] = useDisclosure(false);
 
-  function startExercise() {
-    open();
-  }
-
-  return exercise?.completed ? (
+  return exercise.completed ? (
     <Card
       p="md"
       withBorder
@@ -58,7 +54,7 @@ export default function ExerciseCard({
           <Text c="dimmed" fz="sm" mt="md">
             {`${exercise.sets.length} set(s)`}
           </Text>
-          <Button size="xs" onClick={startExercise}>
+          <Button size="xs" onClick={open}>
             Start
           </Button>
         </Group>

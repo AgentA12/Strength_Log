@@ -5,15 +5,11 @@ import { BrowserRouter } from "react-router-dom";
 import { ModalsProvider } from "@mantine/modals";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
-// on updating/saving a workout and then navigating to progress page, apollo keeps old progress results unless the page is refreshed,
-// so for a quick fix set fetchPolicy to 'no-cache'
 const defaultOptions = {
   watchQuery: {
-    fetchPolicy: "no-cache",
     errorPolicy: "ignore",
   },
   query: {
-    fetchPolicy: "no-cache",
     errorPolicy: "all",
   },
 };

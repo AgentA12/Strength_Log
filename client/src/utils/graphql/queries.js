@@ -84,14 +84,11 @@ export const GET_PROGRESS_BY_DATE = gql`
   }
 `;
 
-export const GET_CALENDAR_DATA = gql`
+export const CALENDAR_TIMESTAMPS = gql`
   query ($userId: ID!) {
-    getProgressTimeStamps(userId: $userId) {
-      dates {
-        _id
-        date
-        templateId
-      }
+    calendarTimeStamps(userId: $userId) {
+      _id
+      createdAt
     }
   }
 `;

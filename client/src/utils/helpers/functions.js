@@ -98,16 +98,6 @@ function displayExercisesForTemplate(templates, activeTemplate) {
       );
 }
 
-function getTotalVolume(exercises) {
-  let TotalVolume = 0;
-
-  exercises.map((exercise) =>
-    exercise.sets.map((set) => (TotalVolume += set.weight * set.reps))
-  );
-
-  return TotalVolume;
-}
-
 function formatTime(num) {
   if (num < 10) return `0${num}`;
   return `${num}`;
@@ -152,6 +142,30 @@ function findFirstAndLastRange(dataSet) {
   return [smallestDate, greatestDate];
 }
 
+function getTotalVolume(exercises) {
+  let TotalVolume = 0;
+
+  exercises.map((exercise) =>
+    exercise.sets.map((set) => (TotalVolume += set.weight * set.reps))
+  );
+
+  return TotalVolume;
+}
+
+const getTotalReps = (exercises) =>
+  exercises.reduce(
+    (accumulator, currentValue) =>
+      accumulator +
+      currentValue.sets.reduce((total, set) => (total += set.reps), 0),
+    0
+  );
+
+const getTotalSets = (exercises) =>
+  exercises.reduce(
+    (accumulator, currentValue) => accumulator + currentValue.sets.length,
+    0
+  );
+
 export {
   formatDate,
   getOneRepMax,
@@ -165,5 +179,6 @@ export {
   getTotalVolume,
   formatTime,
   getExerciseIcon,
-  
+  getTotalReps,
+  getTotalSets,
 };

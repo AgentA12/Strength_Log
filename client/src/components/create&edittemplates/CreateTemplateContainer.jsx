@@ -2,8 +2,6 @@ import ExerciseForm from "./ExerciseForm";
 import { useState, useContext } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_TEMPLATE } from "../../utils/graphql/mutations";
-import AddExerciseBtn from "../homepage/AddExerciseBtn";
-import SaveTemplateBtn from "../homepage/SaveTemplateBtn";
 import { useNavigate } from "react-router-dom";
 import {
   ScrollArea,
@@ -16,6 +14,7 @@ import {
   Flex,
   createStyles,
   Box,
+  Button,
 } from "@mantine/core";
 import { UserContext } from "../../App";
 import { useDisclosure } from "@mantine/hooks";
@@ -48,10 +47,11 @@ export default function CreateTemplateContainer() {
     exercises: [],
   });
 
-  const [addTemplate, { loading: createTemplateLoading }] =
+  const [addTemplate, { loading: submitLoading }] =
     useMutation(CREATE_TEMPLATE);
 
   if (loading) return null;
+
   if (error) {
     return null;
   }
@@ -203,11 +203,10 @@ export default function CreateTemplateContainer() {
             value={formState?.templateNotes}
           />
           <Flex mt={10} justify={"space-between"}>
-            <AddExerciseBtn clickHandler={open} />
-            <SaveTemplateBtn
-              loading={createTemplateLoading}
-              handleSubmit={handleSubmit}
-            />
+            <Button onClick={open}>Add Exercise</Button>
+            <Button loading={submitLoading} onClick={handleSubmit}>
+              Save Template
+            </Button>
           </Flex>
           <Text>{errorMessage && errorMessage}</Text>
         </Box>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SectionMenu } from "../components/progresspage/index";
 import { Container, createStyles } from "@mantine/core";
 import {
@@ -21,17 +21,16 @@ export default function ProgressPage() {
   // if routing from calendar in homepage set activeSection to "Date"
   const { state } = useLocation();
 
-  const [activeSection, setActiveSection] = useState();
-
-  useEffect(() => {
-    setActiveSection(state ? "Date" : "Chart");
-  }, []);
+  const [activeSection, setActiveSection] = useState(state ? "Date" : "Chart");
 
   const { classes } = useStyles();
 
   return (
     <Container fluid className={classes.container}>
-      <SectionMenu activeSection={activeSection} setActiveSection={setActiveSection} />
+      <SectionMenu
+        activeSection={activeSection}
+        setActiveSection={setActiveSection}
+      />
       {activeSection === "Chart" ? (
         <ByChartContainer />
       ) : activeSection === "Date" ? (

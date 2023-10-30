@@ -5,7 +5,6 @@ import {
   Center,
   Container,
   Divider,
-  Pagination,
   Loader,
   Stack,
   Table,
@@ -16,7 +15,8 @@ import {
 import { useQuery } from "@apollo/client";
 import { GET_PROGRESS_BY_DATE } from "../../utils/graphql/queries";
 import { UserContext } from "../../App";
-import { useContext, useState } from "react";
+import { useContext } from "react";
+import { getTotalReps, getTotalSets, getTotalVolume } from "../../utils/helpers/functions";
 
 const useStyles = createStyles((theme) => ({
   date: {
@@ -58,11 +58,9 @@ export default function ByDateContainer() {
     day: "numeric",
   };
 
-  console.log(data)
-
   return (
     <Container fluid>
-      {data?.getProgressByDate.map((progress, i) => (
+      {data.getProgressByDate.map((progress, i) => (
         <Container key={uuidv4()} size="sm" ml={0} mb={25}>
           {i !== 0 ? <Divider variant="dashed"></Divider> : null}
           <Box>
@@ -126,27 +124,3 @@ function TableSection({ exercise }) {
     </>
   );
 }
-
-function getTotalVolume(exercises) {
-  let TotalVolume = 0;
-
-  exercises.map((exercise) =>
-    exercise.sets.map((set) => (TotalVolume += set.weight * set.reps))
-  );
-
-  return TotalVolume;
-}
-
-const getTotalReps = (exercises) =>
-  exercises.reduce(
-    (accumulator, currentValue) =>
-      accumulator +
-      currentValue.sets.reduce((total, set) => (total += set.reps), 0),
-    0
-  );
-
-const getTotalSets = (exercises) =>
-  exercises.reduce(
-    (accumulator, currentValue) => accumulator + currentValue.sets.length,
-    0
-  );
