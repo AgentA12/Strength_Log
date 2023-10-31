@@ -1,10 +1,10 @@
-import AuthPage from "./Auth";
-import HomePage from "./Home";
-import LandingPage from "./Landing";
-import NotFoundPage from "./NotFound";
-import ProgressPage from "./Progress";
-import SettingsPage from "./Settings";
-import WorkoutPage from "./Workout";
+import AuthPage from "./auth";
+import HomePage from "./home";
+import LandingPage from "./landing";
+import NotFoundPage from "./notFound";
+import ProgressPage from "./progress";
+import SettingsPage from "./settings";
+import WorkoutPage from "./workout";
 
 export {
   AuthPage,

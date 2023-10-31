@@ -1,7 +1,6 @@
 import SectionMenu from "./SectionMenu";
 import TemplateSelect from "./TemplateSelect";
 import ProgressCard from "./ProgressCard";
-import RenderExercises from "./RenderExercises";
 import TemplateChart from "./TemplateChart";
 import DateRangeSelect from "./DateRangeSelect";
 import ExerciseSelect from "./ExerciseSelect";
@@ -19,7 +18,6 @@ export {
   SectionMenu,
   TemplateSelect,
   ProgressCard,
-  RenderExercises,
   TemplateChart,
   DateRangeSelect,
   ExerciseSelect,

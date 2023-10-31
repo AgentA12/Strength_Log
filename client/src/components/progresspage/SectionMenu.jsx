@@ -25,7 +25,7 @@ export default function SectionMenu({activeSection, setActiveSection }) {
           Date
         </Tabs.Tab>
         <Tabs.Tab
-          value="Compare"
+          value="Utilities"
           icon={<BsTools size={14} />}
           onClick={() => setActiveSection("Utilities")}
         >

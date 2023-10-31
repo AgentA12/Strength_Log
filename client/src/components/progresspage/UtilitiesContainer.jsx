@@ -18,18 +18,14 @@ export default function UtilitiesContainer() {
 
   const form = useForm({
     initialValues: {
-      weight: 0,
-      reps: 0,
+      weight: undefined,
+      reps: undefined,
     },
     validate: {
       weight: (value) =>
-        checkIsValidNum(value)
-          ? "Please enter a valid number reater than 0"
-          : null,
+        value <= 0 ? "Enter a number greater than 0" : null,
       reps: (value) =>
-        checkIsValidNum(value)
-          ? "Please enter a valid number greater than 0"
-          : null,
+        value <= 0 ? "Enter a number greater than 0" : null,
     },
   });
 
@@ -47,7 +43,7 @@ export default function UtilitiesContainer() {
 
   return (
     <Container maw={1000} ml={0}>
-      <Accordion >
+      <Accordion defaultValue="oneRepMaxCalc">
         <Accordion.Item key={title} value={title}>
           <Accordion.Control>
             <Text
@@ -72,7 +68,6 @@ export default function UtilitiesContainer() {
                     {...form.getInputProps("weight")}
                   />
                   <NumberInput
-                  
                     size="sm"
                     label="Number of repetitions"
                     {...form.getInputProps("reps")}
@@ -105,12 +100,4 @@ export default function UtilitiesContainer() {
       </Accordion>
     </Container>
   );
-}
-
-function checkIsValidNum(num) {
-  if (num <= 0) return false;
-
-  if (typeof num === "number") return false;
-
-  return true;
 }

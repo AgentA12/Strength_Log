@@ -1,9 +1,10 @@
 import { Table, Text } from "@mantine/core";
+import { getPercentageOf1RM } from "../../utils/helpers/functions";
 
 export default function OneRepMaxTable({ oneRepMax }) {
   const oneRepMaxAry = getPercentageOf1RM(oneRepMax);
 
-const rows = oneRepMaxAry.map((d) => (
+  const rows = oneRepMaxAry.map((d) => (
     <tr key={d.percentage}>
       <td>
         <Text size="md">{d.percentage}%</Text>
@@ -34,31 +35,4 @@ const rows = oneRepMaxAry.map((d) => (
       <tbody>{rows}</tbody>
     </Table>
   );
-}
-
-function getPercentageOf1RM(oneRepMax) {
-  const repMax = parseFloat(oneRepMax);
-  let reps = 30;
-  let data = [];
-  let percentage = 50;
-
-  while (reps >= 2) {
-    data.unshift({
-      percentage: percentage,
-      reps: reps,
-      weight: parseFloat(((percentage / 100) * repMax).toFixed(1)),
-    });
-    if (reps === 30) {
-      reps = reps - 6;
-    } else if (reps >= 16) {
-      reps = reps - 4;
-    } else {
-      reps = reps - 2;
-    }
-    percentage = percentage + 5;
-  }
-
-  data.unshift({ weight: parseFloat(oneRepMax), percentage: 100, reps: 1 });
-
-  return data;
 }

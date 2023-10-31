@@ -6,7 +6,28 @@ import {
   ThemeIcon,
   createStyles,
 } from "@mantine/core";
-import { getExerciseIcon } from "../../utils/helpers/functions";
+import { TbBarbell } from "react-icons/tb";
+import { MdCable, MdOutlineAirlineSeatFlatAngled } from "react-icons/md";
+import { LiaDumbbellSolid } from "react-icons/lia";
+import { GiBodyBalance } from "react-icons/gi";
+
+
+function getExerciseIcon(str) {
+  switch (str.toLowerCase()) {
+    case "barbell":
+      return <TbBarbell />;
+    case "dumbbell":
+      return <LiaDumbbellSolid />;
+    case "cable":
+      return <MdCable />;
+    case "machine":
+      return <MdOutlineAirlineSeatFlatAngled />;
+    case "bodyweight":
+      return <GiBodyBalance />;
+    default:
+      <TbBarbell />;
+  }
+}
 
 const useStyles = createStyles((theme) => ({
   list: {
@@ -21,8 +42,6 @@ const useStyles = createStyles((theme) => ({
     },
   },
 }));
-
-
 
 export default function SelectExerciseModal({
   opened,
