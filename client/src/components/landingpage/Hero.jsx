@@ -165,7 +165,7 @@ const useStyles = createStyles((theme) => ({
 export default function Hero() {
   const {classes} = useStyles();
   return (
-    <Container className={classes.wrapper} size={1400}>
+    <Container mt={50} className={classes.wrapper} size={1400}>
     
       <Dots className={classes.dots} style={{ left: 60, top: 0 }} />
       <Dots className={classes.dots} style={{ left: 0, top: 140 }} />

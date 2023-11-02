@@ -46,6 +46,10 @@ const Mutation = {
 
   createTemplate: async function (_, args) {
     try {
+      console.log(args);
+      // if the templateName already exists return an error saying so
+
+      
       const tempPayload = {
         belongsTo: args.userId,
         templateName: args.templateName,

@@ -6,6 +6,7 @@ import {
   NotFoundPage,
   SettingsPage,
   WorkoutPage,
+  LandingPage,
 } from "../pages/index";
 import CreateTemplateContainer from "../components/create&edittemplates/CreateTemplateContainer";
 import EditTemplateContainer from "../components/create&edittemplates/EditTemplateContainer";
@@ -75,6 +76,8 @@ export default function RouteContainer() {
       />
 
       <Route path="*" element={<NotFoundPage />} />
+
+      <Route path="/landing" element={<LandingPage />} />
     </Routes>
   );
 }

@@ -20,6 +20,8 @@ import { UserContext } from "../../App";
 import { useDisclosure } from "@mantine/hooks";
 import { SelectExerciseModal } from "./index";
 import { GET_EXERCISES } from "../../utils/graphql/queries";
+import { useForm } from "@mantine/form";
+import { showNotification } from "@mantine/notifications";
 
 const useStyles = createStyles(() => ({
   container: {
@@ -41,13 +43,28 @@ export default function CreateTemplateContainer() {
   const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = useState(null);
-  const [formState, setFormState] = useState({
-    templateName: "",
-    templateNotes: "",
-    exercises: [],
+
+  const form = useForm({
+    initialValues: {
+      templateName: "",
+      templateNotes: "",
+      exercises: [],
+    },
+
+    validate: {
+      templateName: (value) =>
+        value.trim().length ? null : "Please enter a template name",
+      exercises: {
+        sets: {
+          weight: (value) => (value > 1 ? null : "Please enter a valid weight"),
+          reps: (value) =>
+            value > 1 ? null : "Please enter a valid number of reps",
+        },
+      },
+    },
   });
 
-  const [addTemplate, { loading: submitLoading }] =
+  const [addTemplate, { loading: submitLoading, error: submitError }] =
     useMutation(CREATE_TEMPLATE);
 
   if (loading) return null;
@@ -66,11 +83,11 @@ export default function CreateTemplateContainer() {
   });
 
   function handleChange(exerciseIndex, { target }) {
-    let data = { ...formState };
+    let data = { ...form.values };
 
     if (target.name === "restTime") {
       data.exercises[exerciseIndex][target.name] = target.value;
-      setFormState({ ...data });
+      form.setValues({ ...data });
       return;
     } else if (
       target.name !== "templateName" &&
@@ -78,43 +95,37 @@ export default function CreateTemplateContainer() {
     ) {
       data.exercises[exerciseIndex].sets[target.setIndex][target.name] =
         target.value;
-
-      setFormState({ ...data });
+      form.setValues({ ...data });
       return;
     } else {
-      setFormState({ ...formState, [target.name]: target.value });
+      form.setValues({ ...data, [target.name]: target.value });
     }
-  }
-
-  function resetFormState() {
-    setFormState({
-      templateName: "",
-      templateNotes: "",
-      exercises: [],
-    });
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
-    try {
-      event.preventDefault();
-      const mutationRes = await addTemplate({
-        variables: {
-          ...formState,
-          userId: userID,
-        },
-      });
+    console.log(form.validate());
+    if (!form.validate().hasErrors) {
+      try {
+        const mutationRes = await addTemplate({
+          variables: {
+            ...form.values,
+            userId: userID,
+          },
+        });
 
-      if (mutationRes) {
-        //if template is added, reset form and refetch new templates and remove the error message
-        resetFormState();
-        // refetch();
-        setErrorMessage(null);
-        navigate("/Home");
-      }
-    } catch (error) {
-      if (error.message) {
-        setErrorMessage(error.message);
+        if (mutationRes) {
+          showNotification({
+            title: `${form.values.templateName} is ready`,
+            message: "Your template was successfully created",
+            autoClose: 3000,
+          });
+          navigate("/Home");
+        }
+      } catch (error) {
+        if (error.message) {
+          setErrorMessage(error.message);
+        }
       }
     }
   }
@@ -130,17 +141,17 @@ export default function CreateTemplateContainer() {
       sets: [{ weight: 135, reps: 8 }],
     };
 
-    const data = { ...formState };
+    const data = { ...form.values };
 
     data.exercises.push(exercise);
 
-    setFormState(data);
+    form.setValues({ ...data });
 
     close();
   }
 
   function addSet(exerciseIndex) {
-    let data = { ...formState };
+    let data = { ...form.values };
 
     data.exercises[exerciseIndex].sets.push({
       weight:
@@ -152,30 +163,32 @@ export default function CreateTemplateContainer() {
       ].reps,
     });
 
-    setFormState(data);
+    form.setValues({ ...data });
   }
 
   function removeSet(index, i) {
-    let data = { ...formState };
+    let data = { ...form.values };
 
     data.exercises[index].sets = data.exercises[index].sets.filter(
       (_, x) => i !== x
     );
 
-    setFormState(data);
+    form.setValues({ ...data });
   }
 
   function removeExercise(_, index) {
-    let data = { ...formState };
+    let data = { ...form.values };
 
-    const filteredExercises = formState.exercises.filter((_, i) => {
+    const filteredExercises = form.values.exercises.filter((_, i) => {
       return i !== index;
     });
 
     data.exercises = filteredExercises;
 
-    setFormState(data);
+    form.setValues({ ...data });
   }
+
+  if (submitError) console.log(submitError);
 
   return (
     <Container component="main" fluid>
@@ -184,53 +197,59 @@ export default function CreateTemplateContainer() {
         variant="dashed"
         label={<Title tt="capitalize">Create A Template</Title>}
       />
-
-      <Box className={classes.container}>
-        <TextInput
-          onChange={(event) => handleChange(null, event)}
-          name="templateName"
-          value={formState?.templateName}
-          placeholder="Template Name"
-          size="xl"
-          mb={15}
-        />
-        <Box>
-          <Textarea
-            minRows={10}
+      <form>
+        <Box className={classes.container}>
+          <TextInput
             onChange={(event) => handleChange(null, event)}
-            name="templateNotes"
-            placeholder="Template notes"
-            value={formState?.templateNotes}
+            name="templateName"
+            value={form.values.templateName}
+            placeholder="Template Name"
+            size="xl"
+            mb={15}
+            {...form.getInputProps("templateName")}
           />
-          <Flex mt={10} justify={"space-between"}>
-            <Button onClick={open}>Add Exercise</Button>
-            <Button loading={submitLoading} onClick={handleSubmit}>
-              Save Template
-            </Button>
-          </Flex>
-          <Text>{errorMessage && errorMessage}</Text>
-        </Box>
-
-        <ScrollArea
-          offsetScrollbars
-          scrollbarSize={4}
-          scrollHideDelay={1500}
-          h={500}
-        >
-          {formState?.exercises.map((_, exerciseIndex) => (
-            <ExerciseForm
-              key={exerciseIndex}
-              handleChange={handleChange}
-              exerciseIndex={exerciseIndex}
-              formState={formState}
-              removeExercise={removeExercise}
-              addSet={addSet}
-              removeSet={removeSet}
+          <Box>
+            <Textarea
+              minRows={10}
+              onChange={(event) => handleChange(null, event)}
+              name="templateNotes"
+              placeholder="Template notes"
+              value={form.values.templateNotes}
+              {...form.getInputProps("templateNotes")}
             />
-          ))}
-        </ScrollArea>
-      </Box>
+            <Flex mt={10} justify={"space-between"}>
+              <Button onClick={open}>Add Exercise</Button>
+              <Button
+                type="submit"
+                loading={submitLoading}
+                onClick={handleSubmit}
+              >
+                Save Template
+              </Button>
+            </Flex>
+            <Text>{errorMessage && errorMessage}</Text>
+          </Box>
 
+          <ScrollArea
+            offsetScrollbars
+            scrollbarSize={4}
+            scrollHideDelay={1500}
+            h={500}
+          >
+            {form.values?.exercises.map((_, exerciseIndex) => (
+              <ExerciseForm
+                key={Math.random() * 200}
+                handleChange={handleChange}
+                exerciseIndex={exerciseIndex}
+                form={form}
+                removeExercise={removeExercise}
+                addSet={addSet}
+                removeSet={removeSet}
+              />
+            ))}
+          </ScrollArea>
+        </Box>
+      </form>
       <SelectExerciseModal
         opened={opened}
         close={close}
