@@ -7,7 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"cd server && npm start \" \"cd client && npm start\"",
     "start": "node server/server.js",
-    "install": "cd server && npm i && cd ../client && npm i"
+    "install": "cd server && npm i && cd ../client && npm i",
+    "install-server": "cd server && npm install",
+    "start-server": "cd server && node server.js",
+    "install-client": "cd client && npm install",
+    "build-client": "cd client && npm run build",
+    "start-client": "cd client && npm run start"
   },
   "keywords": [],
   "author": "",
