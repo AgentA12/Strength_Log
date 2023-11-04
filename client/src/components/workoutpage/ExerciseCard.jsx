@@ -43,7 +43,7 @@ export default function ExerciseCard({
         key={exercise.exercise.exerciseName}
       >
         <Text
-          sx={(theme) => ({ color: theme.colors.brand[4] })}
+          
           tt="uppercase"
           fw={700}
           fz="lg"

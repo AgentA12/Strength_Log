@@ -53,8 +53,7 @@ export default function WorkoutModal({
         <Title
           tt="capitalize"
           component="span"
-          variant="gradient"
-          gradient={{ from: "#662D8C", to: " #ED1E79", deg: 90 }}
+          
         >
           {templateName}
         </Title>
@@ -64,7 +63,7 @@ export default function WorkoutModal({
         <Title
           tt="capitalize"
           order={2}
-          sx={(theme) => ({ color: theme.colors.brand[4] })}
+        
           mt={5}
         >
           {exercise.exercise.exerciseName}

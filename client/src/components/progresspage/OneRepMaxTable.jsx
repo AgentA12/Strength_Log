@@ -29,7 +29,7 @@ export default function OneRepMaxTable({ oneRepMax }) {
         <tr>
           <th>Percentage of 1RM</th>
           <th>Weight</th>
-          <th>Repetitions</th>
+          <th>Repetition(s)</th>
         </tr>
       </thead>
       <tbody>{rows}</tbody>

@@ -6,8 +6,11 @@ import { CALENDAR_TIMESTAMPS } from "../../utils/graphql/queries";
 import { useContext } from "react";
 import { UserContext } from "../../App";
 import { Text, LoadingOverlay, Overlay, Box } from "@mantine/core";
+import { useViewportSize } from "@mantine/hooks";
 
 export default function Calendar() {
+  const { height, width } = useViewportSize();
+
   const {
     data: { _id: userID },
   } = useContext(UserContext);
@@ -42,8 +45,7 @@ export default function Calendar() {
   const datePickerDefaultProps = {
     type: "multiple",
     weekendDays: [],
-    size: "md",
-  };
+    size: width <= 340 ? "xs" : "md",  };
 
   if (loading)
     return (

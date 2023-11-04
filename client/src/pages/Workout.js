@@ -16,7 +16,7 @@ export default function WorkoutPage() {
     state: { template },
   } = useLocation();
 
-const {
+  const {
     data: { _id: userID },
   } = useContext(UserContext);
 
@@ -110,15 +110,7 @@ const {
 
   return (
     <Stack justify="center" spacing={1} align="center">
-      <Title
-        variant="gradient"
-        gradient={
-          workoutState.workoutFinished
-            ? { from: "#30C543", to: "#30C589", deg: 90 }
-            : { from: "#662D8C", to: " #ED1E79", deg: 90 }
-        }
-        mt={5}
-      >
+      <Title color={workoutState.workoutFinished && "green"} mt={5}>
         {workoutState.template.templateName}
       </Title>
 

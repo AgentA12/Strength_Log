@@ -2,14 +2,12 @@ import {
   Container,
   Text,
   Table,
-  useMantineTheme,
   NumberInput,
   Flex,
 } from "@mantine/core";
 import { v4 as uuidv4 } from "uuid";
 
 export default function WorkoutState({ setTemplateState, templateState }) {
-  const theme = useMantineTheme();
 
   function handleChange({ target }, exerciseIndex, setIndex) {
     let data = JSON.parse(JSON.stringify(templateState));
@@ -24,7 +22,7 @@ export default function WorkoutState({ setTemplateState, templateState }) {
   const Tables = templateState.exercises.map((exercise, exerciseIndex) => (
     <Container mb={10} key={uuidv4()}>
       <Flex mt={10} justify="space-between" align="center">
-        <Text tt="capitalize" fz={23} fw="normal" color={theme.colors.brand[4]}>
+        <Text tt="capitalize" fz={23} fw="normal">
           {exercise.exercise.exerciseName}
         </Text>
         {exercise.restTime ? <Text fz={13} fw="normal" c="dimmed">
@@ -32,7 +30,7 @@ export default function WorkoutState({ setTemplateState, templateState }) {
         </Text> : null}
       </Flex>
 
-      <Table withBorder withColumnBorders>
+      <Table  >
         <thead>
           <tr>
             <th>Set</th>
@@ -46,6 +44,7 @@ export default function WorkoutState({ setTemplateState, templateState }) {
               <td>{setIndex + 1}</td>
               <td>
                 <NumberInput
+                  data-autofocus
                   w={75}
                   min={1}
                   max={99}

@@ -22,10 +22,8 @@ export default function UtilitiesContainer() {
       reps: undefined,
     },
     validate: {
-      weight: (value) =>
-        value <= 0 ? "Enter a number greater than 0" : null,
-      reps: (value) =>
-        value <= 0 ? "Enter a number greater than 0" : null,
+      weight: (value) => (value <= 0 ? "Enter a number greater than 0" : null),
+      reps: (value) => (value <= 0 ? "Enter a number greater than 0" : null),
     },
   });
 
@@ -46,13 +44,7 @@ export default function UtilitiesContainer() {
       <Accordion defaultValue="oneRepMaxCalc">
         <Accordion.Item key={title} value={title}>
           <Accordion.Control>
-            <Text
-              tt="capitalize"
-              size={30}
-              fw={500}
-              fs="oblique"
-              sx={(theme) => ({ color: theme.colors.brand[5] })}
-            >
+            <Text tt="capitalize" size={30} fw={500} fs="oblique">
               One Rep Max Calculator
             </Text>
           </Accordion.Control>
@@ -83,13 +75,8 @@ export default function UtilitiesContainer() {
                   <Text size="xl" mt={10}>
                     Estimated 1RM:
                   </Text>
-                  <Text
-                    component="span"
-                    sx={(theme) => ({ color: theme.colors.brand[5] })}
-                    fw="bold"
-                    size={30}
-                  >
-                    {oneRepMax}
+                  <Text component="span" fw="bold" size={30}>
+                    {oneRepMax} Lbs
                   </Text>
                   <OneRepMaxTable oneRepMax={oneRepMax} />
                 </Box>

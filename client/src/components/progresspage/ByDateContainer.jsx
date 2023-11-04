@@ -20,10 +20,11 @@ import { getTotalReps, getTotalSets, getTotalVolume } from "../../utils/helpers/
 
 const useStyles = createStyles((theme) => ({
   date: {
-    color: theme.colors.brand[4],
+    color: theme.colors.brand[6],
+    textDecoration: "underline",
     "&:hover": {
-      textDecoration: "underline",
       cursor: "pointer",
+      color: theme.colors.brand[2]
     },
   },
 }));
@@ -64,7 +65,7 @@ export default function ByDateContainer() {
         <Container key={uuidv4()} size="sm" ml={0} mb={25}>
           {i !== 0 ? <Divider variant="dashed"></Divider> : null}
           <Box>
-            <Text className={classes.date} fz={28}>
+            <Text className={classes.date} fz={28} component="span">
               {new Date(parseInt(progress.createdAt)).toLocaleDateString(
                 "en-us",
                 options
@@ -72,11 +73,11 @@ export default function ByDateContainer() {
             </Text>
           </Box>
           <Text
-            variant="gradient"
-            gradient={{ from: "#662D8C", to: " #ED1E79", deg: 90 }}
+          
             fw={900}
             size={30}
             span
+           
             tt="capitalize"
           >
             {progress.template?.templateName}
@@ -107,7 +108,7 @@ function TableSection({ exercise }) {
 
   return (
     <>
-      <Text mt={5} fz={20} sx={(theme) => ({ color: theme.colors.brand[4] })}>
+      <Text mt={5} fz={20}>
         {exercise.exercise.exerciseName}
       </Text>
 

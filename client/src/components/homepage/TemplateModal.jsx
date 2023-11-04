@@ -1,10 +1,10 @@
 import {
-  Container,
   Modal,
   Text,
   useMantineTheme,
   Flex,
   Button,
+  ScrollArea,
 } from "@mantine/core";
 import { useContext, useState } from "react";
 import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
@@ -22,7 +22,7 @@ export default function TemplateModal({ template, opened, setOpened }) {
   } = useContext(UserContext);
 
   const [templateState, setTemplateState] = useState(template);
-  
+
   const theme = useMantineTheme();
 
   const [saveWorkoutFunction, { loading, error }] = useMutation(SAVE_WORKOUT);
@@ -75,8 +75,6 @@ export default function TemplateModal({ template, opened, setOpened }) {
       title={
         <Text
           tt="capitalize"
-          variant="gradient"
-          gradient={{ from: "#662D8C", to: " #ED1E79", deg: 90 }}
           sx={(theme) => ({
             fontSize: 30,
             fontWeight: "bolder",
@@ -92,34 +90,34 @@ export default function TemplateModal({ template, opened, setOpened }) {
       overlayblur={3}
       size="lg"
     >
-      <Container>
-        <Text c="dimmed" mb={10}>
-          {template.templateNotes.trim() ? `- ${template.templateNotes}` : null}
-        </Text>
+      <Text c="dimmed" mb={10}>
+        {template.templateNotes.trim() ? `- ${template.templateNotes}` : null}
+      </Text>
 
-        <Flex justify="space-around" align="center">
-          <Button
-            onClick={() => handleSaveWorkout(templateState)}
-            loading={loading}
-          >
-            Quick Save
-          </Button>
-          <StartWorkoutBtn template={template} />
-        </Flex>
+      <Flex justify="space-around" align="center">
+        <Button
+          onClick={() => handleSaveWorkout(templateState)}
+          loading={loading}
+        >
+          Quick Save
+        </Button>
+        <StartWorkoutBtn template={template} />
+      </Flex>
 
+     
         <WorkoutState
           loading={loading}
           handleSaveWorkout={handleSaveWorkout}
           setTemplateState={setTemplateState}
           templateState={templateState}
         />
+    
 
-        {error ? (
-          <Text color="red" mt={5}>
-            {error.message}
-          </Text>
-        ) : null}
-      </Container>
+      {error ? (
+        <Text color="red" mt={5}>
+          {error.message}
+        </Text>
+      ) : null}
     </Modal>
   );
 }

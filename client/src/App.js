@@ -22,6 +22,16 @@ export function App() {
           variant: "outline",
         },
       },
+      Modal: {
+        styles: (theme) => ({
+          content: {
+            border: "1px solid",
+            borderColor: theme.colors.dark[4],
+            borderRadius: "0.5em",
+           
+          },
+        }),
+      },
     },
 
     globalStyles: () => ({}),
@@ -29,17 +39,17 @@ export function App() {
     colorScheme: colorScheme,
     loader: "bars",
     colors: {
-      brand: myColors.magenta,
+      brand: myColors.peterriver,
       dark: [
         "#E2E2E2",
         "#AFAFAF",
         "#888888",
         "#616161",
-        "#454545",
-        "#313131",
-        "#232323",
-        "#191919",
-        "#111111",
+        "#404040",
+        "#1A1A1A",
+        "#000000",
+        "#000000",
+        "#000000",
       ],
     },
 

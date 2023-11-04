@@ -1,5 +1,5 @@
 import { Container, createStyles } from "@mantine/core";
-import { Calendar, TemplateSection, } from "../components/homepage/index";
+import { Calendar, TemplateSection } from "../components/homepage/index";
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -8,6 +8,7 @@ const useStyles = createStyles((theme) => ({
     marginBottom: 50,
     [theme.fn.smallerThan("sm")]: {
       margin: "auto",
+      alignItems: " center",
     },
   },
 }));
@@ -18,7 +19,7 @@ export default function HomePage() {
   return (
     <Container fluid className={classes.container}>
       <Calendar />
-     
+
       <TemplateSection />
     </Container>
   );

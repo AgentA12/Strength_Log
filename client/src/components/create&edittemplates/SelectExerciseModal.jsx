@@ -71,7 +71,7 @@ export default function SelectExerciseModal({
         {exercises.map((e) => (
           <List.Item
             className={classes.list}
-            onClick={() => addExercise(e.value)}
+            onClick={() => addExercise(e.value, e._id)}
             p={5}
             icon={
               <ThemeIcon size={24} radius="xl">

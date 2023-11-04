@@ -8,10 +8,9 @@ import {
   WorkoutPage,
   LandingPage,
 } from "../pages/index";
-import CreateTemplateContainer from "../components/create&edittemplates/CreateTemplateContainer";
-import EditTemplateContainer from "../components/create&edittemplates/EditTemplateContainer";
 import Protected from "../components/ProtectedRoute";
 import auth from "../utils/auth/auth";
+import TemplateDashBoard from "../components/create&edittemplates/TemplateDashBoard";
 
 const isLoggedIn = auth.isLoggedIn();
 
@@ -43,16 +42,7 @@ export default function RouteContainer() {
         path="/Create-template"
         element={
           <Protected isLoggedIn={isLoggedIn}>
-            <CreateTemplateContainer />
-          </Protected>
-        }
-      />
-
-      <Route
-        path="/Edit-template"
-        element={
-          <Protected isLoggedIn={isLoggedIn}>
-            <EditTemplateContainer />
+            <TemplateDashBoard />
           </Protected>
         }
       />

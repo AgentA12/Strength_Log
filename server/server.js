@@ -25,36 +25,7 @@ const server = new ApolloServer({
   context: authMiddleWare,
   cache: "bounded",
   formatError: (error) => {
-    console.log(error);
-    if (
-      error.message ===
-      "User validation failed: username: Path `username` is required., password: Path `password` is required."
-    ) {
-      return new Error("Username and password is required.");
-    }
-
-    if (
-      error.message ===
-      "User validation failed: password: Path `password` is required."
-    ) {
-      return new Error("Password is required");
-    }
-
-    if (
-      error.message ===
-      'Expected Iterable, but did not find one for field "Mutation.createTemplate".'
-    ) {
-      return new Error("You must fill out all fields.");
-    }
-
-    if (error.message.startsWith("Exercise")) {
-      return new Error("You must fill in all Exercise fields");
-    }
-
-    if (error.message.startsWith("Template")) {
-      return new Error("You must add a template name");
-    }
-
+    console.log(error.message);
     return new Error(error.message.toString());
   },
 });

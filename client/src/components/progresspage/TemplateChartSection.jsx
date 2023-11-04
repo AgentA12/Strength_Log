@@ -20,14 +20,7 @@ export default function TemplateChartSection({
 }) {
   return (
     <>
-      <Title
-        tt="capitalize"
-        gradient={{ from: "#662D8C", to: " #ED1E79", deg: 90 }}
-        variant="gradient"
-        sx={(theme) => ({ color: theme.colors.brand[4] })}
-        fw={800}
-        component="span"
-      >
+      <Title tt="capitalize" my={10} fw={800} >
         {activeTemplate && activeTemplate}
       </Title>
 

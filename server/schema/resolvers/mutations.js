@@ -46,10 +46,18 @@ const Mutation = {
 
   createTemplate: async function (_, args) {
     try {
-      console.log(args);
-      // if the templateName already exists return an error saying so
+      // returns an array of templates. If the array has a length greater than 0, a template with the same name exists. return an error
+      const template = await Template.find({
+        templateName: args.templateName,
+        belongsTo: args.userId,
+      });
 
-      
+      if (template.length > 0) {
+        return new Error(
+          `Template with name "${template[0].templateName}" already exists`
+        );
+      }
+
       const tempPayload = {
         belongsTo: args.userId,
         templateName: args.templateName,
@@ -82,10 +90,12 @@ const Mutation = {
         {
           templateName: args.templateName,
           templateNotes: args.templateNotes,
-          exercises: args.exercises.map((exercise, i) => {
+
+          exercises: args.exercises.map((exercise) => {
             return {
-              exercise: exercise.exercise[0]._id,
-              sets: exercise.sets.map((set) => set),
+              exercise: exercise._id,
+              restTime: exercise.restTime,
+              sets: [...exercise.sets],
             };
           }),
         },
@@ -118,7 +128,13 @@ const Mutation = {
   },
 
   saveWorkout: async function (_, { templateId, userID, exercises }) {
+    const compareDatesByDay = (firstDate, secondDate) =>
+      firstDate.getFullYear() === secondDate.getFullYear() &&
+      firstDate.getMonth() === secondDate.getMonth() &&
+      firstDate.getDate() === secondDate.getDate();
     try {
+      // check if the same template was saved in the last 24 hours
+
       const user = await User.findByIdAndUpdate(
         userID,
         {

@@ -3,6 +3,20 @@ import { Menu, Button } from "@mantine/core";
 import { FaTrash, FaEdit } from "react-icons/fa";
 
 export default function TemplateMenu({ template, handleTemplateDelete }) {
+  const editState = {
+    templateName: template.templateName,
+    templateNotes: template.templateNotes,
+    templateId: template._id,
+    exercises: template.exercises.map((exercise) => {
+      return {
+        exerciseName: exercise.exercise.exerciseName,
+        sets: [...exercise.sets],
+        restTime: exercise.restTime ? exercise.restTime : 0,
+        _id: exercise.exercise._id
+      };
+    }),
+  };
+
   const menuList = (
     <Menu.Dropdown
       onClick={(event) => {
@@ -11,8 +25,8 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
     >
       <Menu.Item
         component={Link}
-        to="/Edit-template"
-        state={{ template: template }}
+        to="/Create-template"
+        state={{ template: editState }}
         icon={<FaEdit size={14} />}
       >
         Edit
@@ -37,9 +51,11 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
       trigger="hover"
       closeDelay={100}
       transition="fade"
+      ml={5}
     >
       <Menu.Target>
         <Button
+          variant="subtle"
           onClick={(event) => {
             event.stopPropagation();
           }}

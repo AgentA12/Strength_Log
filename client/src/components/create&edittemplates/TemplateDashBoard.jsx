@@ -1,7 +1,7 @@
 import ExerciseForm from "./ExerciseForm";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { CREATE_TEMPLATE } from "../../utils/graphql/mutations";
+import { CREATE_TEMPLATE, EDIT_TEMPLATE } from "../../utils/graphql/mutations";
 import { useNavigate } from "react-router-dom";
 import {
   ScrollArea,
@@ -10,7 +10,6 @@ import {
   Divider,
   Container,
   Title,
-  Text,
   Flex,
   createStyles,
   Box,
@@ -22,6 +21,7 @@ import { SelectExerciseModal } from "./index";
 import { GET_EXERCISES } from "../../utils/graphql/queries";
 import { useForm } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
+import { useLocation } from "react-router-dom";
 
 const useStyles = createStyles(() => ({
   container: {
@@ -29,12 +29,14 @@ const useStyles = createStyles(() => ({
   },
 }));
 
-export default function CreateTemplateContainer() {
+export default function TemplateDashBoard() {
   const {
     data: { _id: userID },
   } = useContext(UserContext);
 
-  const { data, loading, error } = useQuery(GET_EXERCISES);
+  const { state } = useLocation();
+
+  const { data, loading } = useQuery(GET_EXERCISES);
 
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -42,18 +44,17 @@ export default function CreateTemplateContainer() {
 
   const navigate = useNavigate();
 
-  const [errorMessage, setErrorMessage] = useState(null);
-
   const form = useForm({
-    initialValues: {
-      templateName: "",
-      templateNotes: "",
-      exercises: [],
-    },
+    initialValues: state
+      ? { ...state.template }
+      : { templateName: "", templateNotes: "", exercises: [] },
 
     validate: {
       templateName: (value) =>
         value.trim().length ? null : "Please enter a template name",
+      exercises: (value) => {
+        return value.length ? null : "You must add at lease one exercise";
+      },
       exercises: {
         sets: {
           weight: (value) => (value > 1 ? null : "Please enter a valid weight"),
@@ -64,16 +65,15 @@ export default function CreateTemplateContainer() {
     },
   });
 
-  const [addTemplate, { loading: submitLoading, error: submitError }] =
+  const [addTemplate, { loading: submitLoading }] =
     useMutation(CREATE_TEMPLATE);
+
+  const [editTemplate, { loading: editTemplateLoading }] =
+    useMutation(EDIT_TEMPLATE);
 
   if (loading) return null;
 
-  if (error) {
-    return null;
-  }
-
-  let exercises = data.getAllExercises.map((e) => {
+  const exercises = data.getAllExercises.map((e) => {
     return {
       value: e.exerciseName,
       label: e.exerciseName,
@@ -82,39 +82,32 @@ export default function CreateTemplateContainer() {
     };
   });
 
-  function handleChange(exerciseIndex, { target }) {
-    let data = { ...form.values };
-
-    if (target.name === "restTime") {
-      data.exercises[exerciseIndex][target.name] = target.value;
-      form.setValues({ ...data });
-      return;
-    } else if (
-      target.name !== "templateName" &&
-      target.name !== "templateNotes"
-    ) {
-      data.exercises[exerciseIndex].sets[target.setIndex][target.name] =
-        target.value;
-      form.setValues({ ...data });
-      return;
-    } else {
-      form.setValues({ ...data, [target.name]: target.value });
-    }
-  }
-
   async function handleSubmit(event) {
     event.preventDefault();
-    console.log(form.validate());
     if (!form.validate().hasErrors) {
       try {
-        const mutationRes = await addTemplate({
-          variables: {
-            ...form.values,
-            userId: userID,
-          },
-        });
+        let mutationRes;
+
+        if (state) {
+          console.log("edit template is called");
+          mutationRes = await editTemplate({
+            variables: {
+              ...form.values,
+            },
+          });
+        } else {
+          console.log("add template is called");
+
+          mutationRes = await addTemplate({
+            variables: {
+              ...form.values,
+              userId: userID,
+            },
+          });
+        }
 
         if (mutationRes) {
+          console.log(mutationRes);
           showNotification({
             title: `${form.values.templateName} is ready`,
             message: "Your template was successfully created",
@@ -124,7 +117,7 @@ export default function CreateTemplateContainer() {
         }
       } catch (error) {
         if (error.message) {
-          setErrorMessage(error.message);
+          form.setFieldError("templateName", error.message);
         }
       }
     }
@@ -188,32 +181,32 @@ export default function CreateTemplateContainer() {
     form.setValues({ ...data });
   }
 
-  if (submitError) console.log(submitError);
-
   return (
     <Container component="main" fluid>
       <Divider
         my="lg"
         variant="dashed"
-        label={<Title tt="capitalize">Create A Template</Title>}
+        label={
+          <Title tt="capitalize">
+            {state ? `Edit template` : "Create template"}
+          </Title>
+        }
       />
       <form>
         <Box className={classes.container}>
           <TextInput
-            onChange={(event) => handleChange(null, event)}
+            label="Template Name"
             name="templateName"
             value={form.values.templateName}
-            placeholder="Template Name"
-            size="xl"
             mb={15}
+            withAsterisk
             {...form.getInputProps("templateName")}
           />
           <Box>
             <Textarea
-              minRows={10}
-              onChange={(event) => handleChange(null, event)}
+              minRows={5}
               name="templateNotes"
-              placeholder="Template notes"
+              label="Template Notes"
               value={form.values.templateNotes}
               {...form.getInputProps("templateNotes")}
             />
@@ -221,13 +214,12 @@ export default function CreateTemplateContainer() {
               <Button onClick={open}>Add Exercise</Button>
               <Button
                 type="submit"
-                loading={submitLoading}
+                loading={submitLoading || editTemplateLoading}
                 onClick={handleSubmit}
               >
                 Save Template
               </Button>
             </Flex>
-            <Text>{errorMessage && errorMessage}</Text>
           </Box>
 
           <ScrollArea
@@ -236,10 +228,9 @@ export default function CreateTemplateContainer() {
             scrollHideDelay={1500}
             h={500}
           >
-            {form.values?.exercises.map((_, exerciseIndex) => (
+            {form.values.exercises.map((_, exerciseIndex) => (
               <ExerciseForm
                 key={Math.random() * 200}
-                handleChange={handleChange}
                 exerciseIndex={exerciseIndex}
                 form={form}
                 removeExercise={removeExercise}

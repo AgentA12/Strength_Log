@@ -66,11 +66,11 @@ export default function NotFoundPage() {
         className={classes.description}
       >
         Unfortunately, this is only a 404 page. You may have mistyped the
-        address, or the page has been moved to another URL.
+        address, the page has been removed or moved to another URL.
       </Text>
       <Group position="center">
         <Button variant="subtle" size="md" component={Link} to="/Home">
-          Take me back to home page
+          Take me home 
         </Button>
       </Group>
     </Container>

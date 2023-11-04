@@ -13,9 +13,8 @@ import {
   Center,
   Button,
   Input,
-
 } from "@mantine/core";
-import {FcSearch} from "react-icons/fc"
+import { FcSearch } from "react-icons/fc";
 import { HiPlus } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../App";
@@ -31,6 +30,7 @@ export default function TemplateSection() {
   const [deleteTemplate] = useMutation(DELETE_TEMPLATE);
 
   const { loading, data, error, refetch } = useQuery(GET_TEMPLATES, {
+    fetchPolicy: "network-only", // Used for first execution
     variables: {
       userId: _id,
     },
@@ -120,7 +120,7 @@ export default function TemplateSection() {
         wrap="wrap"
         mt={20}
       >
-        <Title tt="capitalize">Your Templates</Title>
+        <Title align="center" tt="capitalize">Your Templates</Title>
 
         <Flex
           gap="lg"

@@ -16,12 +16,7 @@ export default function ExerciseChartSection({
 }) {
   return (
     <>
-      <Title
-        sx={(theme) => ({ color: theme.colors.brand[4] })}
-        fw={800}
-        component="span"
-        tt="capitalize"
-      >
+      <Title my={10} fw={800} tt="capitalize">
         {activeExercise && activeExercise}
       </Title>
       <Flex

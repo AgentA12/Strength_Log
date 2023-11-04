@@ -7,14 +7,22 @@ import { Text, Card, Flex, Title, createStyles } from "@mantine/core";
 const useStyles = createStyles((theme) => ({
   card: {
     width: 300,
+    height: 100,
     overflow: "visible",
-    "&:hover": { cursor: "pointer" },
+    "&:hover": {
+      cursor: "pointer",
+      backgroundColor:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[5]
+          : theme.colors.gray[1],
+    },
     [theme.fn.smallerThan("sm")]: {
-      width: 240,
+      width: 250,
     },
   },
+
   exercises: {
-    color: theme.colors.brand[4],
+    color: theme.colors.dimmed,
   },
 }));
 
@@ -25,22 +33,15 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
   return (
     <>
       <Card
-        shadow="lg"
+        shadow="sm"
         radius="md"
-        p="sm"
+        p="xs"
         withBorder
         className={classes.card}
         onClick={() => setOpened(!opened)}
       >
         <Flex justify="space-between" align="center" mb={10}>
-          <Title
-            variant="gradient"
-            gradient={{ from: "#662D8C", to: " #ED1E79", deg: 90 }}
-            order={3}
-            span
-            fw={600}
-            tt="capitalize"
-          >
+          <Title lineClamp={1} order={3} span fw={600} tt="capitalize">
             {template.templateName}
           </Title>
           <TemplateMenu
@@ -48,7 +49,7 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
             handleTemplateDelete={handleTemplateDelete}
           />
         </Flex>
-        <Text lineClamp={1} className={classes.exercises}>
+        <Text c="dimmed" lineClamp={1}>
           {template.exercises.map((exercise, i) => (
             <Text tt="capitalize" component="span" key={exercise.exercise._id}>
               {template.exercises.length - 1 === i

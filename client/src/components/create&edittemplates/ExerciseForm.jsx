@@ -10,7 +10,6 @@ import {
 } from "@mantine/core";
 
 export default function ExerciseForm({
-  handleChange,
   exerciseIndex,
   form,
   removeExercise,
@@ -20,32 +19,19 @@ export default function ExerciseForm({
   return (
     <Card withBorder my={10}>
       <Group position="apart">
-        <Title
-          tt="capitalize"
-          order={2}
-          sx={(theme) => ({ color: theme.colors.brand[4] })}
-        >
-          {form.values.exercises[exerciseIndex].exerciseName
-            ? form.values.exercises[exerciseIndex].exerciseName
-            : form.values.exercises[exerciseIndex].exerciseName}
+        <Title tt="capitalize" order={2}>
+          {form.values.exercises[exerciseIndex].exerciseName}
         </Title>
         <NumberInput
           size="xs"
           label="Rest time"
-          suffix="(s)"
+          description="In Seconds"
           min={0}
           max={999}
-          w={100}
+          w={120}
+          {...form.getInputProps(`exercises.${exerciseIndex}.restTime`)}
           value={
             form.getInputProps(`exercises.${exerciseIndex}.restTime`).value
-          }
-          onChange={(value) =>
-            handleChange(exerciseIndex, {
-              target: {
-                name: "restTime",
-                value: value,
-              },
-            })
           }
         />
       </Group>
@@ -67,11 +53,9 @@ export default function ExerciseForm({
                 label="Reps"
                 min={1}
                 size="xs"
-                onChange={(value) =>
-                  handleChange(exerciseIndex, {
-                    target: { name: "reps", value: value, setIndex: setIndex },
-                  })
-                }
+                {...form.getInputProps(
+                  `exercises.${exerciseIndex}.sets.${setIndex}.reps`
+                )}
                 value={parseInt(
                   form.getInputProps(
                     `exercises.${exerciseIndex}.sets.${setIndex}.reps`
@@ -83,15 +67,9 @@ export default function ExerciseForm({
                 size="xs"
                 min={1}
                 label="Weight (Lbs)"
-                onChange={(value) =>
-                  handleChange(exerciseIndex, {
-                    target: {
-                      name: "weight",
-                      value: value,
-                      setIndex: setIndex,
-                    },
-                  })
-                }
+                {...form.getInputProps(
+                  `exercises.${exerciseIndex}.sets.${setIndex}.weight`
+                )}
                 value={parseInt(
                   form.getInputProps(
                     `exercises.${exerciseIndex}.sets.${setIndex}.weight`

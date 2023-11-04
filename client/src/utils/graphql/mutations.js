@@ -53,7 +53,7 @@ export const EDIT_TEMPLATE = gql`
     $templateId: ID!
     $templateName: String!
     $templateNotes: String
-    $exercises: [editExerciseInput!]
+    $exercises: [createTemplateExerciseInput!]
   ) {
     editTemplate(
       templateId: $templateId
