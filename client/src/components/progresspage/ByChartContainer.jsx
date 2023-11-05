@@ -90,11 +90,7 @@ export default function ByTemplatesContainer() {
   const [activeExercise, setActiveExercise] = useState("All Exercises");
   const [metric, setMetric] = useState("Total Volume");
 
-  const {
-    data: byTemplateData,
-    loading: byTemplateLoading,
-    error: byTemplateError,
-  } = useQuery(GET_TEMPLATES, {
+  const { data: byTemplateData } = useQuery(GET_TEMPLATES, {
     variables: {
       userId: userID,
     },
