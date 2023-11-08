@@ -2,10 +2,7 @@ import {
   Stack,
   Modal,
   Title,
-  ActionIcon,
-  Menu,
   Button,
-  RingProgress,
   Group,
   Text,
   NumberInput,
@@ -29,7 +26,7 @@ export default function WorkoutModal({
   const [setDone, setSetDone] = useState(false);
 
   function handleSetFinished() {
-    if (currentSet != exercise.sets.length - 1) {
+    if (currentSet !== exercise.sets.length - 1) {
       setIsResting(true);
     } else {
       setSetDone(true);
@@ -50,22 +47,13 @@ export default function WorkoutModal({
       onClose={close}
     >
       <Group position="apart">
-        <Title
-          tt="capitalize"
-          component="span"
-          
-        >
+        <Title tt="capitalize" component="span">
           {templateName}
         </Title>
         <Button onClick={close}>Stop Exercise</Button>
       </Group>
       <Stack align="center" spacing={5} justify="center">
-        <Title
-          tt="capitalize"
-          order={2}
-        
-          mt={5}
-        >
+        <Title tt="capitalize" order={2} mt={5}>
           {exercise.exercise.exerciseName}
         </Title>
 

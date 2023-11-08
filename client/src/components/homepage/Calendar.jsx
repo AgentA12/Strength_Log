@@ -9,7 +9,7 @@ import { Text, LoadingOverlay, Overlay, Box } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 
 export default function Calendar() {
-  const { height, width } = useViewportSize();
+  const { width } = useViewportSize();
 
   const {
     data: { _id: userID },
@@ -45,7 +45,8 @@ export default function Calendar() {
   const datePickerDefaultProps = {
     type: "multiple",
     weekendDays: [],
-    size: width <= 340 ? "xs" : "md",  };
+    size: width <= 340 ? "xs" : "md",
+  };
 
   if (loading)
     return (

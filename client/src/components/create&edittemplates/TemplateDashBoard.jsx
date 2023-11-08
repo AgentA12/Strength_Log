@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 import ExerciseForm from "./ExerciseForm";
 import { useContext } from "react";
 import { useMutation, useQuery } from "@apollo/client";
@@ -230,7 +232,7 @@ export default function TemplateDashBoard() {
           >
             {form.values.exercises.map((_, exerciseIndex) => (
               <ExerciseForm
-                key={Math.random() * 200}
+                key={uuidv4()}
                 exerciseIndex={exerciseIndex}
                 form={form}
                 removeExercise={removeExercise}

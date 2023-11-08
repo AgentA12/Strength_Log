@@ -1,11 +1,4 @@
-import {
-  Modal,
-  Text,
-  useMantineTheme,
-  Flex,
-  Button,
-  ScrollArea,
-} from "@mantine/core";
+import { Modal, Text, useMantineTheme, Flex, Button } from "@mantine/core";
 import { useContext, useState } from "react";
 import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
 import { useMutation } from "@apollo/client";
@@ -104,14 +97,12 @@ export default function TemplateModal({ template, opened, setOpened }) {
         <StartWorkoutBtn template={template} />
       </Flex>
 
-     
-        <WorkoutState
-          loading={loading}
-          handleSaveWorkout={handleSaveWorkout}
-          setTemplateState={setTemplateState}
-          templateState={templateState}
-        />
-    
+      <WorkoutState
+        loading={loading}
+        handleSaveWorkout={handleSaveWorkout}
+        setTemplateState={setTemplateState}
+        templateState={templateState}
+      />
 
       {error ? (
         <Text color="red" mt={5}>

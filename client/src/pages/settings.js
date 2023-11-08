@@ -6,23 +6,12 @@ import {
   Title,
   Tabs,
   Box,
-  createStyles,
   Card,
   Text,
   Stack,
 } from "@mantine/core";
 
-const useStyles = createStyles((theme) => ({
-  inputGroup: {
-    border: "1px solid",
-    borderColor: theme.colors.dark[7],
-    borderRadius: "0.5em",
-    padding: 10,
-  },
-}));
-
 export default function SettingsPage() {
-  const { classes } = useStyles();
   return (
     <Container fluid>
       <Divider

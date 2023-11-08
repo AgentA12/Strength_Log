@@ -1,6 +1,5 @@
 import {
   Accordion,
-  Table,
   Text,
   Container,
   NumberInput,

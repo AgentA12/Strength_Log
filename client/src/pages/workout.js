@@ -22,7 +22,7 @@ export default function WorkoutPage() {
 
   const navigate = useNavigate();
 
-  const [saveWorkout, { loading, error }] = useMutation(SAVE_WORKOUT);
+  const [saveWorkout, { loading }] = useMutation(SAVE_WORKOUT);
 
   const [workoutState, setWorkoutState] = useState({
     template: template,
@@ -39,7 +39,7 @@ export default function WorkoutPage() {
   useEffect(() => {
     interval.start();
     return interval.stop;
-  }, []);
+  }, [interval]);
 
   if (seconds >= 60) {
     setSeconds(0);

@@ -16,7 +16,7 @@ export default function Resting({ restTime, handleContinue }) {
   useEffect(() => {
     interval.start();
     return interval.stop;
-  }, []);
+  }, [interval]);
 
   if (seconds <= 0) {
     return (
