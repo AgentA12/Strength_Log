@@ -1,5 +1,5 @@
 import { createStyles, Tabs, useMantineColorScheme } from "@mantine/core";
-import { UserContext } from "../../App";
+import { UserContext } from "../../app";
 import { useState, useContext } from "react";
 import { useQuery } from "@apollo/client";
 import { ExerciseChartSection, TemplateChartSection } from "./index";

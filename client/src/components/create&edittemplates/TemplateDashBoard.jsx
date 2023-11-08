@@ -15,7 +15,7 @@ import {
   Box,
   Button,
 } from "@mantine/core";
-import { UserContext } from "../../App";
+import { UserContext } from "../../app";
 import { useDisclosure } from "@mantine/hooks";
 import { SelectExerciseModal } from "./index";
 import { GET_EXERCISES } from "../../utils/graphql/queries";

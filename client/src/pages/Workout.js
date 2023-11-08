@@ -6,7 +6,7 @@ import { useInterval } from "@mantine/hooks";
 import { formatTime } from "../utils/helpers/functions";
 import { useMutation } from "@apollo/client";
 import { SAVE_WORKOUT } from "../utils/graphql/mutations";
-import { UserContext } from "../App";
+import { UserContext } from "../app";
 import { showNotification } from "@mantine/notifications";
 import { AiOutlineCheck } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";

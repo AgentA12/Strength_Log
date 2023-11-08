@@ -17,7 +17,7 @@ import {
 import { FcSearch } from "react-icons/fc";
 import { HiPlus } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import { UserContext } from "../../App";
+import { UserContext } from "../../app";
 import { showNotification } from "@mantine/notifications";
 
 export default function TemplateSection() {

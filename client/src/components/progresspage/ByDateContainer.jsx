@@ -14,7 +14,7 @@ import {
 } from "@mantine/core";
 import { useQuery } from "@apollo/client";
 import { GET_PROGRESS_BY_DATE } from "../../utils/graphql/queries";
-import { UserContext } from "../../App";
+import { UserContext } from "../../app";
 import { useContext } from "react";
 import { getTotalReps, getTotalSets, getTotalVolume } from "../../utils/helpers/functions";
 

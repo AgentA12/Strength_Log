@@ -13,7 +13,7 @@ import WorkoutState from "./WorkoutState";
 import { showNotification } from "@mantine/notifications";
 import { AiOutlineCheck } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
-import { UserContext } from "../../App";
+import { UserContext } from "../../app";
 import { StartWorkoutBtn } from "./index";
 
 export default function TemplateModal({ template, opened, setOpened }) {

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { CALENDAR_TIMESTAMPS } from "../../utils/graphql/queries";
 import { useContext } from "react";
-import { UserContext } from "../../App";
+import { UserContext } from "../../app";
 import { Text, LoadingOverlay, Overlay, Box } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 
