@@ -1,4 +1,3 @@
-
 const getOneRepMax = (weight, repetitions) =>
   Math.round(Math.round((weight / [1.0278 - 0.0278 * repetitions]) * 10) / 10);
 
@@ -27,8 +26,4 @@ const calculateEstOneRepMax = (exercise) => {
   );
 };
 
-module.exports = {
-  getOneRepMax,
-  calculateEstOneRepMax,
-  formatChartData,
-};
+export { getOneRepMax, calculateEstOneRepMax, formatChartData };

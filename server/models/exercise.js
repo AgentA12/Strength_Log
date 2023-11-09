@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const exerciseSchema = mongoose.Schema({
   exerciseName: { type: String, unique: true, required: true, minLength: 1 },
@@ -17,4 +17,4 @@ const exerciseSchema = mongoose.Schema({
 
 const Exercise = mongoose.model("Exercise", exerciseSchema);
 
-module.exports = { Exercise };
+export { Exercise };

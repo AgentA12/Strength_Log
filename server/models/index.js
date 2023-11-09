@@ -1,5 +1,5 @@
-const { Exercise } = require("./exercise");
-const { Template } = require("./template");
-const { User } = require("./user");
+import { Exercise } from "./exercise.js";
+import { Template } from "./template.js";
+import { User } from "./user.js";
 
-module.exports = { Exercise, Template, User };
+export { Exercise, Template, User };

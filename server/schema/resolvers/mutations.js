@@ -1,7 +1,7 @@
-const { User, Template } = require("../../models/index");
+import { User, Template } from "../../models/index.js";
 
-const { AuthenticationError } = require("apollo-server");
-const { signToken } = require("../../utils/auth");
+import { AuthenticationError } from "apollo-server";
+import  signToken  from "../../utils/auth.js";
 
 const Mutation = {
   login: async function (_, { username, password }) {
@@ -186,4 +186,4 @@ const Mutation = {
   },
 };
 
-module.exports = Mutation;
+export { Mutation };

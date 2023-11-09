@@ -34,7 +34,6 @@ export default function TemplateDashBoard() {
   const {
     data: { _id: userID },
   } = useContext(UserContext);
-  console.log(userID);
 
   const { state } = useLocation();
 

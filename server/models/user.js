@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 const setSchema = mongoose.Schema({
   weight: Number,
@@ -55,4 +55,4 @@ userSchema.methods.isCorrectPassword = async function (password) {
 
 const User = mongoose.model("User", userSchema);
 
-module.exports = { User, setSchema };
+export { User, setSchema };

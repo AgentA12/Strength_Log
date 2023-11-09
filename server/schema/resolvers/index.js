@@ -1,6 +1,6 @@
-const Query = require("./queries");
-const Mutation = require("./mutations");
+import { Query } from "./queries.js";
+import { Mutation } from "./mutations.js";
 
 const resolvers = { Query, Mutation };
 
-module.exports = resolvers;
+export { resolvers };

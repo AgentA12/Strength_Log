@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 mongoose.connect(
   process.env.MONGO_URL || "mongodb://localhost:27017/strength_log",
@@ -8,4 +8,4 @@ mongoose.connect(
   }
 );
 
-module.exports = mongoose.connection;
+export default mongoose.connection;

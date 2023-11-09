@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const { setSchema } = require("./user");
+import mongoose from "mongoose";
+import { setSchema } from "./user.js";
 
 const templateSchema = mongoose.Schema(
   {
@@ -25,4 +25,4 @@ const templateSchema = mongoose.Schema(
 
 const Template = mongoose.model("Template", templateSchema);
 
-module.exports = { Template };
+export { Template };

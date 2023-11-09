@@ -1,5 +1,5 @@
-const { formatChartData } = require("../../utils/helpers");
-const { User, Exercise } = require("../../models/index");
+import { formatChartData } from "../../utils/helpers.js";
+import { User, Exercise } from "../../models/index.js";
 
 const Query = {
   calendarTimeStamps: async function (_, { userId }) {
@@ -104,4 +104,4 @@ const Query = {
   },
 };
 
-module.exports = Query;
+export { Query };

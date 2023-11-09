@@ -1,5 +1,5 @@
-const db = require("../config/connection");
-const { Exercise } = require("../models/index");
+import db from "../config/connection";
+import { Exercise } from "../models/index";
 
 const seedExercises = [
   {
