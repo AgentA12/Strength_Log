@@ -17,13 +17,13 @@ import {
   Box,
   Button,
 } from "@mantine/core";
-import { UserContext } from "../../app";
 import { useDisclosure } from "@mantine/hooks";
 import { SelectExerciseModal } from "./index";
 import { GET_EXERCISES } from "../../utils/graphql/queries";
 import { useForm } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 import { useLocation } from "react-router-dom";
+import { UserContext } from "../../app";
 
 const useStyles = createStyles(() => ({
   container: {
@@ -35,6 +35,7 @@ export default function TemplateDashBoard() {
   const {
     data: { _id: userID },
   } = useContext(UserContext);
+  console.log(userID)
 
   const { state } = useLocation();
 

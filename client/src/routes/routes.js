@@ -6,7 +6,6 @@ import {
   NotFoundPage,
   SettingsPage,
   WorkoutPage,
-  LandingPage,
 } from "../pages/index";
 import Protected from "../components/ProtectedRoute";
 import auth from "../utils/auth/auth";
@@ -66,8 +65,6 @@ export default function RouteContainer() {
       />
 
       <Route path="*" element={<NotFoundPage />} />
-
-      <Route path="/landing" element={<LandingPage />} />
     </Routes>
   );
 }
