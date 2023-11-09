@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
 
-import ExerciseForm from "./ExerciseForm";
 import { useContext } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_TEMPLATE, EDIT_TEMPLATE } from "../../utils/graphql/mutations";
@@ -18,7 +17,7 @@ import {
   Button,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { SelectExerciseModal } from "./index";
+import { SelectExerciseModal, ExerciseForm } from "./index";
 import { GET_EXERCISES } from "../../utils/graphql/queries";
 import { useForm } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
@@ -35,7 +34,7 @@ export default function TemplateDashBoard() {
   const {
     data: { _id: userID },
   } = useContext(UserContext);
-  console.log(userID)
+  console.log(userID);
 
   const { state } = useLocation();
 
