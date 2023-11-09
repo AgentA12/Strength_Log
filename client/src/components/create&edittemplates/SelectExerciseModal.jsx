@@ -11,7 +11,6 @@ import { MdCable, MdOutlineAirlineSeatFlatAngled } from "react-icons/md";
 import { LiaDumbbellSolid } from "react-icons/lia";
 import { GiBodyBalance } from "react-icons/gi";
 
-
 function getExerciseIcon(str) {
   switch (str.toLowerCase()) {
     case "barbell":
@@ -50,6 +49,7 @@ export default function SelectExerciseModal({
   exercises,
 }) {
   const { classes } = useStyles();
+
   return (
     <Modal
       title={<Text>Select an Exercise</Text>}
@@ -78,7 +78,7 @@ export default function SelectExerciseModal({
                 {getExerciseIcon(e.equipment)}
               </ThemeIcon>
             }
-            key={e.id}
+            key={e._id}
           >
             <Text fz={15} fw="bold">
               {e.label}

@@ -54,9 +54,7 @@ export default function TemplateDashBoard() {
     validate: {
       templateName: (value) =>
         value.trim().length ? null : "Please enter a template name",
-      exercises: (value) => {
-        return value.length ? null : "You must add at lease one exercise";
-      },
+
       exercises: {
         sets: {
           weight: (value) => (value > 1 ? null : "Please enter a valid weight"),
@@ -91,15 +89,12 @@ export default function TemplateDashBoard() {
         let mutationRes;
 
         if (state) {
-          console.log("edit template is called");
           mutationRes = await editTemplate({
             variables: {
               ...form.values,
             },
           });
         } else {
-          console.log("add template is called");
-
           mutationRes = await addTemplate({
             variables: {
               ...form.values,
@@ -109,7 +104,6 @@ export default function TemplateDashBoard() {
         }
 
         if (mutationRes) {
-          console.log(mutationRes);
           showNotification({
             title: `${form.values.templateName} is ready`,
             message: "Your template was successfully created",
