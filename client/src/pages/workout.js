@@ -1,4 +1,12 @@
-import { Title, Flex, Stack, Button, Text } from "@mantine/core";
+import {
+  Title,
+  Flex,
+  Stack,
+  Button,
+  Text,
+  Divider,
+  Container,
+} from "@mantine/core";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ExerciseCard } from "../components/workoutpage/index";
 import { useState, useEffect, useContext } from "react";
@@ -109,40 +117,53 @@ export default function WorkoutPage() {
   }
 
   return (
-    <Stack justify="center" spacing={1} align="center">
-      <Title color={workoutState.workoutFinished && "green"} mt={5}>
-        {workoutState.template.templateName}
-      </Title>
+    <Container fluid>
+      <Divider
+        ce
+        label={
+          <Title color={workoutState.workoutFinished && "green"} mt={5}>
+            Training{" "}
+            <Text
+              component="span"
+              sx={(theme) => ({ color: theme.colors.brand[5] })}
+            >
+              {workoutState.template.templateName}
+            </Text>
+          </Title>
+        }
+        variant="dashed"
+      />
+      <Stack align="center" justify="center">
+        <Text c="dimmed" fz="lg">{`${hours}:${formatTime(minutes)}:${formatTime(
+          seconds
+        )}`}</Text>
 
-      <Text c="dimmed" fz="lg">{`${hours}h:${formatTime(minutes)}m:${formatTime(
-        seconds
-      )}s`}</Text>
+        {workoutState.workoutFinished ? (
+          <>
+            <Text sx={(theme) => ({ color: theme.colors.green[4] })} size="xl">
+              Completed
+            </Text>
 
-      {workoutState.workoutFinished ? (
-        <>
-          <Text sx={(theme) => ({ color: theme.colors.green[4] })} size="xl">
-            Completed
-          </Text>
-
-          <Button mt={10} color="green" onClick={handleFinish}>
-            Finish
-          </Button>
-        </>
-      ) : (
-        <Flex direction="column" gap={10}>
-          {workoutState.template.map((exercise, exerciseIndex) => (
-            <ExerciseCard
-              exerciseIndex={exerciseIndex}
-              template={workoutState.template}
-              exercise={exercise}
-              completed={exercise.completed}
-              key={exercise.exercise._id}
-              handleChange={handleChange}
-              exerciseComplete={exerciseComplete}
-            />
-          ))}
-        </Flex>
-      )}
-    </Stack>
+            <Button mt={10} color="green" onClick={handleFinish}>
+              Finish
+            </Button>
+          </>
+        ) : (
+          <Flex direction="column" gap={10}>
+            {workoutState.template.map((exercise, exerciseIndex) => (
+              <ExerciseCard
+                exerciseIndex={exerciseIndex}
+                template={workoutState.template}
+                exercise={exercise}
+                completed={exercise.completed}
+                key={exercise.exercise._id}
+                handleChange={handleChange}
+                exerciseComplete={exerciseComplete}
+              />
+            ))}
+          </Flex>
+        )}
+      </Stack>
+    </Container>
   );
 }

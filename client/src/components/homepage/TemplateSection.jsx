@@ -7,18 +7,17 @@ import {
   Box,
   Title,
   Text,
-  Divider,
   Flex,
-  Loader,
   Center,
-  Button,
   Input,
+  Button,
+  Skeleton,
+  Grid,
 } from "@mantine/core";
-import { FcSearch } from "react-icons/fc";
-import { HiPlus } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { AiOutlineSearch } from "react-icons/ai";
 import { UserContext } from "../../app";
 import { showNotification } from "@mantine/notifications";
+import { Link } from "react-router-dom";
 
 export default function TemplateSection() {
   const {
@@ -92,10 +91,14 @@ export default function TemplateSection() {
     // is the query loading?
     if (loading)
       return (
-        <Flex direction="column" align="center">
-          <Loader />
-          <Text>Loading...</Text>
-        </Flex>
+        <>
+          <Skeleton width={"auto"} height={120} />{" "}
+          <Skeleton width={"auto"} height={120} />{" "}
+          <Skeleton width={"auto"} height={120} />{" "}
+          <Skeleton width={"auto"} height={120} />{" "}
+          <Skeleton width={"auto"} height={120} />{" "}
+          <Skeleton width={"auto"} height={120} />{" "}
+        </>
       );
     // does the array of templates have length? display the template cards
     if (templates.length)
@@ -107,43 +110,34 @@ export default function TemplateSection() {
           key={template._id}
         />
       ));
-    return <Text size={"xl"}>You have no templates saved yet.</Text>;
+    return <Text size={"xl"}>You have no templates saved.</Text>;
   }
 
   return (
     <Box component="section">
       <Flex
         gap="lg"
-        justify={{ base: "center", sm: "flex-start" }}
+        justify={{ base: "center", lg: "flex-start" }}
         align="center"
-        direction="row"
         wrap="wrap"
-        mt={20}
+        mb={20}
       >
-        <Title align="center" tt="capitalize">Your Templates</Title>
+        <Title order={2} align="center" tt="capitalize">
+          Your Templates
+        </Title>
 
-        <Flex
-          gap="lg"
-          justify={{ base: "center", sm: "flex-start" }}
-          align="center"
-          direction="row"
-          wrap="wrap"
-        >
-          <Input
-            icon={<FcSearch />}
-            onChange={(event) => filterTemplates(event, templates)}
-            placeholder="Search templates..."
-            radius="md"
-            size="md"
-          />
-
-          <Button component={Link} to="/Create-template" leftIcon={<HiPlus />}>
-            Template
-          </Button>
-        </Flex>
+        <Input
+          sx={{
+            flexGrow: 1,
+          }}
+          onChange={(event) => filterTemplates(event, templates)}
+          placeholder="Search templates..."
+          icon={<AiOutlineSearch size={20} />}
+        />
+        <Button component={Link} to="/Create-template">
+          Create new Template
+        </Button>
       </Flex>
-
-      <Divider my="md" variant="dashed" />
 
       {error ? (
         <Center>
@@ -152,13 +146,15 @@ export default function TemplateSection() {
           </Text>
         </Center>
       ) : (
-        <Flex
-          wrap={"wrap"}
-          justify={{ base: "center", sm: "flex-start" }}
-          gap="md"
+        <Grid
+          style={{
+            display: "grid",
+            gap: 8,
+            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+          }}
         >
           {displayQueryState()}
-        </Flex>
+        </Grid>
       )}
     </Box>
   );

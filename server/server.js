@@ -1,9 +1,12 @@
-import { ApolloServer } from "apollo-server-express"
+import { ApolloServer } from "apollo-server-express";
 import { typeDefs, resolvers } from "./schema/index.js";
 import db from "./config/connection.js";
 import express from "express";
-import  authMiddleWare  from "./utils/auth.js";
-import path from "path"
+import { authMiddleWare } from "./utils/auth.js";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const PORT = process.env.PORT || 3001;
 const app = express();

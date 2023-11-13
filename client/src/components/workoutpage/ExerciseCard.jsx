@@ -30,7 +30,9 @@ export default function ExerciseCard({
 
         <AiOutlineCheckCircle size={28} />
       </Flex>
-      <Text>{`${exercise.sets.length} Set(s) completed`}</Text>
+      <Text>{`${exercise.sets.length} Set${
+        exercise.sets.length != 1 ? "s" : ""
+      } completed`}</Text>
     </Card>
   ) : (
     <>
@@ -42,17 +44,14 @@ export default function ExerciseCard({
         w={275}
         key={exercise.exercise.exerciseName}
       >
-        <Text
-          
-          tt="uppercase"
-          fw={700}
-          fz="lg"
-        >
+        <Text tt="uppercase" fw={700} fz="lg">
           {exercise.exercise.exerciseName}
         </Text>
         <Group position="apart" align="center" mt={10}>
           <Text c="dimmed" fz="sm" mt="md">
-            {`${exercise.sets.length} set(s)`}
+            {`${exercise.sets.length} Set${
+              exercise.sets.length != 1 ? "s" : ""
+            }`}
           </Text>
           <Button size="xs" onClick={open}>
             Start

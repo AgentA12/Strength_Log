@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Menu, Button } from "@mantine/core";
-import { FaTrash, FaEdit } from "react-icons/fa";
+import { FaTrash, FaEdit, FaRegChartBar } from "react-icons/fa";
 
 export default function TemplateMenu({ template, handleTemplateDelete }) {
   const editState = {
@@ -12,7 +12,7 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
         exerciseName: exercise.exercise.exerciseName,
         sets: [...exercise.sets],
         restTime: exercise.restTime ? exercise.restTime : 0,
-        _id: exercise.exercise._id
+        _id: exercise.exercise._id,
       };
     }),
   };
@@ -23,6 +23,15 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
         event.stopPropagation();
       }}
     >
+      <Menu.Item
+        component={Link}
+        to="/Progress"
+        state={{ template: editState }}
+        icon={<FaRegChartBar size={14} />}
+      >
+        Progress
+      </Menu.Item>
+
       <Menu.Item
         component={Link}
         to="/Create-template"
@@ -48,7 +57,7 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
       zindex={99}
       shadow="lg"
       width={175}
-      trigger="hover"
+      trigger="click"
       closeDelay={100}
       transition="fade"
       ml={5}

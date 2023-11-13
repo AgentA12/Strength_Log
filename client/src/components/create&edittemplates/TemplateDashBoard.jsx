@@ -5,16 +5,16 @@ import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_TEMPLATE, EDIT_TEMPLATE } from "../../utils/graphql/mutations";
 import { useNavigate } from "react-router-dom";
 import {
-  ScrollArea,
   TextInput,
+  Text,
   Textarea,
   Divider,
   Container,
   Title,
   Flex,
   createStyles,
-  Box,
   Button,
+  Grid,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { SelectExerciseModal, ExerciseForm } from "./index";
@@ -23,12 +23,6 @@ import { useForm } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 import { useLocation } from "react-router-dom";
 import { UserContext } from "../../app";
-
-const useStyles = createStyles(() => ({
-  container: {
-    maxWidth: "600px",
-  },
-}));
 
 export default function TemplateDashBoard() {
   const {
@@ -40,8 +34,6 @@ export default function TemplateDashBoard() {
   const { data, loading } = useQuery(GET_EXERCISES);
 
   const [opened, { open, close }] = useDisclosure(false);
-
-  const { classes } = useStyles();
 
   const navigate = useNavigate();
 
@@ -188,41 +180,37 @@ export default function TemplateDashBoard() {
         }
       />
       <form>
-        <Box className={classes.container}>
+        <Container>
           <TextInput
-            label="Template Name"
+            label={<Text>Template Name</Text>}
             name="templateName"
             value={form.values.templateName}
             mb={15}
-            withAsterisk
             {...form.getInputProps("templateName")}
           />
-          <Box>
-            <Textarea
-              minRows={5}
-              name="templateNotes"
-              label="Template Notes"
-              value={form.values.templateNotes}
-              {...form.getInputProps("templateNotes")}
-            />
-            <Flex mt={10} justify={"space-between"}>
-              <Button onClick={open}>Add Exercise</Button>
-              <Button
-                type="submit"
-                loading={submitLoading || editTemplateLoading}
-                onClick={handleSubmit}
-              >
-                Save Template
-              </Button>
-            </Flex>
-          </Box>
 
-          <ScrollArea
-            offsetScrollbars
-            scrollbarSize={4}
-            scrollHideDelay={1500}
-            h={500}
-          >
+          <Textarea
+            minRows={5}
+            name="templateNotes"
+            label={<Text>Template Notes</Text>}
+            value={form.values.templateNotes}
+            {...form.getInputProps("templateNotes")}
+          />
+          <Flex mt={10} justify={"space-between"}>
+            <Button
+              type="submit"
+              loading={submitLoading || editTemplateLoading}
+              onClick={handleSubmit}
+            >
+              Save Template
+            </Button>
+          </Flex>
+
+          <Flex direction="column">
+            <Flex align="center" gap={20}>
+              <Title>Exercises</Title>
+              <Button onClick={open}>Add Exercise</Button>
+            </Flex>
             {form.values.exercises.map((_, exerciseIndex) => (
               <ExerciseForm
                 key={uuidv4()}
@@ -233,8 +221,8 @@ export default function TemplateDashBoard() {
                 removeSet={removeSet}
               />
             ))}
-          </ScrollArea>
-        </Box>
+          </Flex>
+        </Container>
       </form>
       <SelectExerciseModal
         opened={opened}

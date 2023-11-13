@@ -6,8 +6,6 @@ import { Text, Card, Flex, Title, createStyles } from "@mantine/core";
 
 const useStyles = createStyles((theme) => ({
   card: {
-    width: 300,
-    height: 100,
     overflow: "visible",
     "&:hover": {
       cursor: "pointer",
@@ -15,9 +13,6 @@ const useStyles = createStyles((theme) => ({
         theme.colorScheme === "dark"
           ? theme.colors.dark[5]
           : theme.colors.gray[1],
-    },
-    [theme.fn.smallerThan("sm")]: {
-      width: 250,
     },
   },
 
@@ -34,8 +29,8 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
     <>
       <Card
         shadow="sm"
-        radius="md"
-        p="xs"
+        radius="xs"
+        p="md"
         withBorder
         className={classes.card}
         onClick={() => setOpened(!opened)}

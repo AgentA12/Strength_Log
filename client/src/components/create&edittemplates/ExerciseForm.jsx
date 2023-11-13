@@ -1,4 +1,3 @@
-import { IoMdRemove } from "react-icons/io";
 import {
   Card,
   Button,
@@ -9,6 +8,8 @@ import {
   List,
 } from "@mantine/core";
 
+
+
 export default function ExerciseForm({
   exerciseIndex,
   form,
@@ -16,6 +17,7 @@ export default function ExerciseForm({
   addSet,
   removeSet,
 }) {
+
   return (
     <Card withBorder my={10}>
       <Group position="apart">
@@ -85,9 +87,8 @@ export default function ExerciseForm({
         <Button onClick={() => addSet(exerciseIndex)}>Add Set</Button>
         <Button
           mt={10}
-          onClick={(event) => removeExercise(event, exerciseIndex)}
-          rightIcon={<IoMdRemove color="" />}
           color="red"
+          onClick={(event) => removeExercise(event, exerciseIndex)}
         >
           Remove Exercise
         </Button>

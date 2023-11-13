@@ -45,7 +45,7 @@ export default function Calendar() {
   const datePickerDefaultProps = {
     type: "multiple",
     weekendDays: [],
-    size: width <= 340 ? "xs" : "md",
+    size: width <= 1300 ? 'sm' : "md",
   };
 
   if (loading)

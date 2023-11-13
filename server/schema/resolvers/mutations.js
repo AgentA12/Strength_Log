@@ -1,7 +1,7 @@
 import { User, Template } from "../../models/index.js";
 
 import { AuthenticationError } from "apollo-server";
-import  signToken  from "../../utils/auth.js";
+import { signToken } from "../../utils/auth.js";
 
 const Mutation = {
   login: async function (_, { username, password }) {

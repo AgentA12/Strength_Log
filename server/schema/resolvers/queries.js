@@ -20,6 +20,11 @@ const Query = {
 
   getTemplates: async function (_, args) {
     try {
+      // const { templates } = await User.findById(userID).populate(
+      //   "templates",
+      //   "templateName _id"
+      // );
+
       const { templates } = await User.findById(args.userId).populate({
         path: "templates",
         populate: {
@@ -31,6 +36,29 @@ const Query = {
       return templates.length > 0 ? templates : [];
     } catch (error) {
       return error;
+    }
+  },
+
+  getTemplateProgress: async function (_, { userID, templateID }) {
+    try {
+      const { completedWorkouts } = await User.findById(userID)
+        .select("completedWorkouts")
+        .populate({
+          path: "completedWorkouts.template",
+          model: "Template",
+          populate: {
+            path: "exercises.exercise",
+            model: "Exercise",
+          },
+        });
+
+      const workouts = completedWorkouts
+        .filter((workout) => workout?.template?._id.toString() === templateID)
+        .sort((a, b) => b.createdAt - a.createdAt);
+
+      return workouts;
+    } catch (error) {
+      return error.message;
     }
   },
 

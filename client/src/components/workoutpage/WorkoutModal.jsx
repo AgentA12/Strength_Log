@@ -79,7 +79,7 @@ export default function WorkoutModal({
                 exerciseComplete(exerciseIndex);
               }}
             >
-              Exercise Done
+              Done
             </Button>
           </>
         ) : (

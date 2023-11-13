@@ -1,26 +1,21 @@
-import { Container, createStyles } from "@mantine/core";
+import { Container, Grid, Divider, Title, Stack } from "@mantine/core";
 import { Calendar, TemplateSection } from "../components/homepage/index";
 
-const useStyles = createStyles((theme) => ({
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    marginBottom: 50,
-    [theme.fn.smallerThan("sm")]: {
-      margin: "auto",
-      alignItems: " center",
-    },
-  },
-}));
-
 export default function HomePage() {
-  const { classes } = useStyles();
-
   return (
-    <Container fluid className={classes.container}>
-      <Calendar />
+    <Container fluid>
+      <Divider variant="dashed" label={<Title>DashBoard</Title>} />
+      <Grid columns={7} gutter={0}>
+        <Grid.Col order={2} orderLg={1} span={4} lg={5} mt={20}>
+          <TemplateSection />
+        </Grid.Col>
 
-      <TemplateSection />
+        <Grid.Col order={1} orderLg={2} span={4} lg={2}>
+          <Stack align="center" justify="start">
+            <Calendar />
+          </Stack>
+        </Grid.Col>
+      </Grid>
     </Container>
   );
 }

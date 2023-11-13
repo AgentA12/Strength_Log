@@ -28,7 +28,6 @@ export function App() {
             border: "1px solid",
             borderColor: theme.colors.dark[4],
             borderRadius: "0.5em",
-           
           },
         }),
       },
@@ -39,7 +38,8 @@ export function App() {
     colorScheme: colorScheme,
     loader: "bars",
     colors: {
-      brand: myColors.peterriver,
+      brand: myColors.sunflower,
+
       dark: [
         "#E2E2E2",
         "#AFAFAF",

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SectionMenu } from "../components/progresspage/index";
-import { Container, createStyles } from "@mantine/core";
+import { Container, createStyles, Divider, Title } from "@mantine/core";
 import {
   ByChartContainer,
   ByDateContainer,
@@ -27,6 +27,8 @@ export default function ProgressPage() {
 
   return (
     <Container fluid className={classes.container}>
+      <Divider variant="dashed" label={<Title>Progress</Title>} />
+
       <SectionMenu
         activeSection={activeSection}
         setActiveSection={setActiveSection}
