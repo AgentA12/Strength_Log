@@ -7,8 +7,7 @@ import ExerciseSelect from "./ExerciseSelect";
 import MetricSelect from "./MetricSelect";
 import ByChartContainer from "./ByChartContainer";
 import ByDateContainer from "./ByDateContainer";
-import UtilitiesContainer from "./UtilitiesContainer";
-import ExerciseChart from "./ExerciseChart"
+import ExerciseChart from "./ExerciseChart";
 import ExerciseChartSection from "./ExerciseChartSection";
 import TemplateChartSection from "./TemplateChartSection";
 import OneRepMaxTable from "./OneRepMaxTable";
@@ -23,7 +22,6 @@ export {
   MetricSelect,
   ByChartContainer,
   ByDateContainer,
-  UtilitiesContainer,
   ExerciseChart,
   ExerciseChartSection,
   TemplateChartSection,

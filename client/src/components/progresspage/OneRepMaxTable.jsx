@@ -5,34 +5,29 @@ export default function OneRepMaxTable({ oneRepMax }) {
   const oneRepMaxAry = getPercentageOf1RM(oneRepMax);
 
   const rows = oneRepMaxAry.map((d) => (
-    <tr key={d.percentage}>
-      <td>
-        <Text size="md">{d.percentage}%</Text>
-      </td>
-      <td>
-        <Text size="md">{d.weight} lb</Text>
-      </td>
-      <td>
+    <Table.Tr key={d.percentage}>
+      <Table.Td>
+        <Text size="md">{d.percentage} %</Text>
+      </Table.Td>
+      <Table.Td>
+        <Text size="md">{d.weight} lbs</Text>
+      </Table.Td>
+      <Table.Td>
         <Text size="md">{d.reps}</Text>
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ));
 
   return (
-    <Table
-      horizontalSpacing="xl"
-      verticalSpacing="md"
-      striped
-      withColumnBorders
-    >
-      <thead>
-        <tr>
-          <th>Percentage of 1RM</th>
-          <th>Weight</th>
-          <th>Repetition(s)</th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
+    <Table highlightOnHover withTableBorder withColumnBorders>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Percentage of 1RM</Table.Th>
+          <Table.Th>Weight</Table.Th>
+          <Table.Th>Repetitions</Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
     </Table>
   );
 }

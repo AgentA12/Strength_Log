@@ -8,8 +8,6 @@ import {
   List,
 } from "@mantine/core";
 
-
-
 export default function ExerciseForm({
   exerciseIndex,
   form,
@@ -17,7 +15,6 @@ export default function ExerciseForm({
   addSet,
   removeSet,
 }) {
-
   return (
     <Card withBorder my={10}>
       <Group position="apart">
@@ -83,10 +80,9 @@ export default function ExerciseForm({
         ))}
       </List>
 
-      <Group position="apart">
+      <Group mt={5} justify="left" align="">
         <Button onClick={() => addSet(exerciseIndex)}>Add Set</Button>
         <Button
-          mt={10}
           color="red"
           onClick={(event) => removeExercise(event, exerciseIndex)}
         >

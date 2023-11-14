@@ -14,13 +14,13 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
-}
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "../dist/build")));
+// }
 
-app.get("*", (_, res) => {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
-});
+// app.get("*", (_, res) => {
+//   res.sendFile(path.join(__dirname, "../client/index.html"));
+// });
 
 const server = new ApolloServer({
   typeDefs,

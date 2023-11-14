@@ -4,7 +4,7 @@ class Auth {
   login(token) {
     window.localStorage.setItem("token", token);
 
-    window.location.assign("/Home");
+    window.location.assign("/DashBoard");
   }
 
   isLoggedIn() {

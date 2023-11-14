@@ -1,4 +1,4 @@
-import { createStyles, Tabs, useMantineColorScheme } from "@mantine/core";
+import { Tabs, useMantineColorScheme } from "@mantine/core";
 import { UserContext } from "../../app";
 import { useState, useContext } from "react";
 import { useQuery } from "@apollo/client";
@@ -35,11 +35,9 @@ ChartJS.register(
   TimeScale
 );
 
-const useStyles = createStyles(() => ({
-  chartContainer: {
-    height: "700px",
-  },
-}));
+// chartContainer: {
+//   height: "700px",
+// },
 
 export default function ByTemplatesContainer() {
   const {
@@ -82,8 +80,6 @@ export default function ByTemplatesContainer() {
     },
   };
 
-  const { classes } = useStyles();
-
   const [range, setRange] = useState("Last month");
   const [activeTab, setActiveTab] = useState("Templates");
   const [activeTemplate, setActiveTemplate] = useState("All templates");
@@ -95,9 +91,10 @@ export default function ByTemplatesContainer() {
       userId: userID,
     },
   });
+  console.log(activeTab)
 
   return (
-    <Tabs value={activeTab} onTabChange={(value) => setActiveTab(value)}>
+    <Tabs value={activeTab} onChange={(value) => setActiveTab(value)}>
       <Tabs.List position={isLargeScreen ? "center" : "left"}>
         <Tabs.Tab value="Templates" icon={<HiOutlineTemplate />}>
           Templates
@@ -117,7 +114,6 @@ export default function ByTemplatesContainer() {
           range={range}
           userID={userID}
           options={options}
-          classes={classes}
           setMetric={setMetric}
           metric={metric}
         />
@@ -127,7 +123,6 @@ export default function ByTemplatesContainer() {
           setActiveExercise={setActiveExercise}
           userID={userID}
           setRange={setRange}
-          classes={classes}
           activeTemplate={activeTemplate}
           range={range}
           options={options}

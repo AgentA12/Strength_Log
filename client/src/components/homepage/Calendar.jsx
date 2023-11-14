@@ -1,3 +1,4 @@
+import "@mantine/dates/styles.css";
 import { DatePicker } from "@mantine/dates";
 import { compareDatesByDay } from "../../utils/helpers/functions";
 import { useNavigate } from "react-router-dom";
@@ -45,7 +46,7 @@ export default function Calendar() {
   const datePickerDefaultProps = {
     type: "multiple",
     weekendDays: [],
-    size: width <= 1300 ? 'sm' : "md",
+    size: width <= 1300 ? (width < 400 ? "xs" : "sm") : "md",
   };
 
   if (loading)

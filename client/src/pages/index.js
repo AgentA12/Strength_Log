@@ -1,5 +1,5 @@
 import AuthPage from "./auth";
-import HomePage from "./home";
+import DashBoardPage from "./dashboard";
 import LandingPage from "./landing";
 import NotFoundPage from "./notFound";
 import ProgressPage from "./progress";
@@ -8,7 +8,7 @@ import WorkoutPage from "./workout";
 
 export {
   AuthPage,
-  HomePage,
+  DashBoardPage,
   LandingPage,
   NotFoundPage,
   ProgressPage,

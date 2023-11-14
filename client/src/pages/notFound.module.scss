@@ -1,0 +1,13 @@
+.root {
+  padding-top: rem(80);
+  text-align: center;
+  padding-bottom: rem(80);
+}
+
+.label {
+  font-weight: 900;
+  font-size: rem(60);
+  line-height: 1;
+  margin-bottom: 30px;
+  color: light-dark(var(--mantine-colors-gray-2), var(--mantine-colors-dark-4));
+}

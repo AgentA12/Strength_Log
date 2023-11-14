@@ -143,7 +143,7 @@ export default function ByDateContainer() {
       </Text>
 
       <Box>
-        <Text className={classes.date} fz={28} component="span">
+        <Text  fz={28} component="span">
           {new Date(parseInt(workout.createdAt)).toLocaleDateString(
             "en-us",
             options

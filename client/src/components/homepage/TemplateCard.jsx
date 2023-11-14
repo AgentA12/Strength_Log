@@ -2,43 +2,24 @@ import { useState } from "react";
 import { capitalizeFirstLetter } from "../../utils/helpers/functions";
 import TemplateMenu from "./TemplateMenu";
 import TemplateModal from "./TemplateModal";
-import { Text, Card, Flex, Title, createStyles } from "@mantine/core";
-
-const useStyles = createStyles((theme) => ({
-  card: {
-    overflow: "visible",
-    "&:hover": {
-      cursor: "pointer",
-      backgroundColor:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[5]
-          : theme.colors.gray[1],
-    },
-  },
-
-  exercises: {
-    color: theme.colors.dimmed,
-  },
-}));
+import { Text, Card, Flex } from "@mantine/core";
+import classes from "./homepage.module.scss";
 
 export default function TemplateCard({ template, handleTemplateDelete }) {
-  const { classes } = useStyles();
   const [opened, setOpened] = useState(false);
 
   return (
     <>
       <Card
-        shadow="sm"
-        radius="xs"
-        p="md"
-        withBorder
         className={classes.card}
+        withBorder
+        padding="md"
         onClick={() => setOpened(!opened)}
       >
         <Flex justify="space-between" align="center" mb={10}>
-          <Title lineClamp={1} order={3} span fw={600} tt="capitalize">
+          <Text lineClamp={1} size="xl" fw={800}  tt="capitalize">
             {template.templateName}
-          </Title>
+          </Text>
           <TemplateMenu
             template={template}
             handleTemplateDelete={handleTemplateDelete}

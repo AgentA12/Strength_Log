@@ -45,7 +45,7 @@ export default function Resting({ restTime, handleContinue }) {
         label={
           <Stack align="center">
             <Text size="sm" ta="center">
-              Rest Time
+              Rest
             </Text>
             <Text>
               {minutes > 0 ? `${minutes} min` : null}{" "}
@@ -56,7 +56,7 @@ export default function Resting({ restTime, handleContinue }) {
         thickness={4}
         sections={[{ value: percentage, color: "brand" }]}
       />
-      <Button onClick={handleContinue}>Skip Rest</Button>
+      <Button onClick={handleContinue}>Skip</Button>
     </Stack>
   );
 }

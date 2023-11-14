@@ -9,10 +9,11 @@ import {
   Text,
   Flex,
   Center,
-  Input,
+  TextInput,
   Button,
   Skeleton,
   Grid,
+  Group,
 } from "@mantine/core";
 import { AiOutlineSearch } from "react-icons/ai";
 import { UserContext } from "../../app";
@@ -103,12 +104,14 @@ export default function TemplateSection() {
     // does the array of templates have length? display the template cards
     if (templates.length)
       return templates.map((template) => (
-        <TemplateCard
-          template={template}
-          refetch={refetch}
-          handleTemplateDelete={handleTemplateDelete}
-          key={template._id}
-        />
+        <Grid.Col>
+          <TemplateCard
+            template={template}
+            refetch={refetch}
+            handleTemplateDelete={handleTemplateDelete}
+            key={template._id}
+          />
+        </Grid.Col>
       ));
     return <Text size={"xl"}>You have no templates saved.</Text>;
   }
@@ -122,18 +125,16 @@ export default function TemplateSection() {
         wrap="wrap"
         mb={20}
       >
-        <Title order={2} align="center" tt="capitalize">
+        <Title order={2} tt="capitalize" align="center">
           Your Templates
         </Title>
-
-        <Input
-          sx={{
-            flexGrow: 1,
-          }}
+        <TextInput
+          style={{ flexGrow: 1 }}
           onChange={(event) => filterTemplates(event, templates)}
           placeholder="Search templates..."
-          icon={<AiOutlineSearch size={20} />}
+          leftSection={<AiOutlineSearch size={20} />}
         />
+
         <Button component={Link} to="/Create-template">
           Create new Template
         </Button>
@@ -146,15 +147,18 @@ export default function TemplateSection() {
           </Text>
         </Center>
       ) : (
-        <Grid
+        <Box
+          gutter="sm"
+          grow
           style={{
+            width: "100%",
+            flexGrow: true,
             display: "grid",
-            gap: 8,
             gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
           }}
         >
           {displayQueryState()}
-        </Grid>
+        </Box>
       )}
     </Box>
   );

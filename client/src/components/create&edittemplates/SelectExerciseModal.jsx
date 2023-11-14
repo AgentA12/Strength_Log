@@ -4,7 +4,6 @@ import {
   Select,
   Text,
   ThemeIcon,
-  createStyles,
 } from "@mantine/core";
 import { TbBarbell } from "react-icons/tb";
 import { MdCable, MdOutlineAirlineSeatFlatAngled } from "react-icons/md";
@@ -28,19 +27,17 @@ function getExerciseIcon(str) {
   }
 }
 
-const useStyles = createStyles((theme) => ({
-  list: {
-    borderRadius: 5,
-    margin: 2,
-    "&:hover": {
-      backgroundColor:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[5]
-          : theme.colors.gray[1],
-      cursor: "pointer",
-    },
-  },
-}));
+// list: {
+//   borderRadius: 5,
+//   margin: 2,
+//   "&:hover": {
+//     backgroundColor:
+//       theme.colorScheme === "dark"
+//         ? theme.colors.dark[5]
+//         : theme.colors.gray[1],
+//     cursor: "pointer",
+//   },
+// },
 
 export default function SelectExerciseModal({
   opened,
@@ -48,8 +45,6 @@ export default function SelectExerciseModal({
   addExercise,
   exercises,
 }) {
-  const { classes } = useStyles();
-
   return (
     <Modal
       title={<Text>Select an Exercise</Text>}
@@ -70,7 +65,6 @@ export default function SelectExerciseModal({
       <List withPadding mt={10}>
         {exercises.map((e) => (
           <List.Item
-            className={classes.list}
             onClick={() => addExercise(e.value, e._id)}
             p={5}
             icon={

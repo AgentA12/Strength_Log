@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import {
   ProgressPage,
   AuthPage,
-  HomePage,
+  DashBoardPage,
   NotFoundPage,
   SettingsPage,
   WorkoutPage,
@@ -10,6 +10,7 @@ import {
 import Protected from "../components/ProtectedRoute";
 import auth from "../utils/auth/auth";
 import TemplateDashBoard from "../components/create&edittemplates/TemplateDashBoard";
+import UtilitiesPage from "../pages/utilities";
 
 const isLoggedIn = auth.isLoggedIn();
 
@@ -21,10 +22,10 @@ export default function RouteContainer() {
       <Route path="/login" element={<AuthPage isLoggedIn={isLoggedIn} />} />
 
       <Route
-        path="/Home"
+        path="/DashBoard"
         element={
           <Protected isLoggedIn={isLoggedIn}>
-            <HomePage />
+            <DashBoardPage />
           </Protected>
         }
       />
@@ -60,6 +61,15 @@ export default function RouteContainer() {
         element={
           <Protected isLoggedIn={isLoggedIn}>
             <WorkoutPage />
+          </Protected>
+        }
+      />
+
+      <Route
+        path="/Utilities"
+        element={
+          <Protected isLoggedIn={isLoggedIn}>
+            <UtilitiesPage />{" "}
           </Protected>
         }
       />

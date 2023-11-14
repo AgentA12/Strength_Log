@@ -6,6 +6,7 @@ import {
   Text,
   Divider,
   Container,
+  Group,
 } from "@mantine/core";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ExerciseCard } from "../components/workoutpage/index";
@@ -113,23 +114,18 @@ export default function WorkoutPage() {
         });
       });
 
-    navigate("/Home");
+    navigate("/DashBoard");
   }
 
   return (
     <Container fluid>
       <Divider
-        ce
+        labelPosition={{base: "center", sm: "left"}}
+        color="brand"
         label={
-          <Title color={workoutState.workoutFinished && "green"} mt={5}>
-            Training{" "}
-            <Text
-              component="span"
-              sx={(theme) => ({ color: theme.colors.brand[5] })}
-            >
-              {workoutState.template.templateName}
-            </Text>
-          </Title>
+          <Group justify="center" align="center">
+            <Title order={2} mt={5}>Training {workoutState.template.templateName}</Title>
+          </Group>
         }
         variant="dashed"
       />

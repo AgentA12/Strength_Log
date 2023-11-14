@@ -4,7 +4,7 @@ import AuthorizationComponent from "../components/AuthorizationComponent";
 export default function AuthPage({ isLoggedIn }) {
   const navigate = useNavigate();
 
-  if (isLoggedIn) navigate("/Home");
+  if (isLoggedIn) navigate("/DashBoard");
 
   return <AuthorizationComponent />;
 }

@@ -14,7 +14,7 @@ export default function TemplateChartSection({
   range,
   userID,
   options,
-  classes,
+
   metric,
   setMetric,
 }) {
@@ -40,7 +40,7 @@ export default function TemplateChartSection({
         <MetricSelect setMetric={setMetric} metric={metric} />
       </Flex>
 
-      <Box className={classes.chartContainer}>
+      <Box >
         <TemplateChart
           activeTemplate={activeTemplate}
           userId={userID}

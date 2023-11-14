@@ -7,7 +7,7 @@ export default function ExerciseChartSection({
   setActiveExercise,
   userID,
   setRange,
-  classes,
+ 
   activeTemplate,
   range,
   options,
@@ -33,7 +33,7 @@ export default function ExerciseChartSection({
         <DateRangeSelect setRange={setRange} />
         <MetricSelect setMetric={setMetric} metric={metric} />
       </Flex>
-      <Box className={classes.chartContainer}>
+      <Box >
         <ExerciseChart
           activeTemplate={activeTemplate}
           userId={userID}

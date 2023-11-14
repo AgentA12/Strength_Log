@@ -1,118 +1,55 @@
-import { Navbar, createStyles, Flex } from "@mantine/core";
+import { Flex, Text, Group, ActionIcon } from "@mantine/core";
 import {
-  AiFillThunderbolt,
   AiFillHome,
   AiFillSetting,
   AiOutlineLineChart,
+  AiOutlineTool,
 } from "react-icons/ai";
 import { HiLogout } from "react-icons/hi";
-import { ToggleTheme, NavbarLink } from "./index.js";
+import { ToggleTheme } from "./index.js";
 import auth from "../../utils/auth/auth.js";
-import { useLocation } from "react-router-dom";
-
-const useStyles = createStyles((theme) => ({
-  container: {
-    position: "fixed",
-    width: 80,
-    [theme.fn.smallerThan("sm")]: {
-      right: 0,
-      bottom: 0,
-      height: "auto",
-      width: "100%",
-      borderTopStyle: "solid",
-      borderTopWidth: 1,
-      borderTopColor: "gray",
-    },
-  },
-
-  linkContainer: {
-    direction: "column",
-    height: "100%",
-    justifyContent: "space-between",
-    flexDirection: "column",
-    [theme.fn.smallerThan("sm")]: {
-      flexDirection: "row",
-      justifyContent: "space-around",
-      flexWrap: "wrap",
-    },
-
-    [theme.fn.smallerThan("xs")]: {
-      justifyContent: "center",
-    },
-  },
-
-  iconFlex: {
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    [theme.fn.smallerThan("sm")]: {
-      flexDirection: "row",
-      display: "none",
-    },
-  },
-
-  navLinks: {
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    [theme.fn.smallerThan("sm")]: {
-      flexDirection: "row",
-      gap: 20,
-    },
-    [theme.fn.smallerThan("xs")]: {},
-  },
-
-  bottomLinks: {
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    [theme.fn.smallerThan("sm")]: {
-      flexDirection: "row",
-      gap: 20,
-    },
-
-    [theme.fn.smallerThan("xs")]: {
-      display: "none",
-    },
-  },
-}));
+import classes from "./navbar.module.scss";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const linkData = [
-  { icon: AiFillHome, label: "Home", link: "/Home" },
+  { icon: AiFillHome, label: "Dashboard", link: "/DashBoard" },
   { icon: AiOutlineLineChart, label: "Progress", link: "/Progress" },
+  { icon: AiOutlineTool, label: "Utilities", link: "/Utilities" },
   { icon: AiFillSetting, label: "Settings", link: "/Settings" },
 ];
 
-export default function SideNav() {
-  const { pathname } = useLocation();
-  const { classes } = useStyles();
-
-  const links = linkData.map((link) => (
-    <NavbarLink {...link} key={link.label} active={link.link === pathname} />
+export default function SideNav({ toggleMobile }) {
+  const [active, setActive] = useState("Dashboard");
+  const links = linkData.map((item) => (
+    <Text
+      component={Link}
+      to={item.link}
+      className={classes.link}
+      href={item.link}
+      key={item.label}
+      data-active={item.label === active || undefined}
+      onClick={() => {
+        setActive(item.label);
+        toggleMobile();
+      }}
+    >
+      <item.icon  size={18} stroke={1.5} />
+      <Text span>{item.label}</Text>
+    </Text>
   ));
+
   return (
-    <Navbar className={classes.container} p="md">
-      <Flex className={classes.linkContainer}>
-        <Flex sx={classes.iconFlex}>
-          <AiFillThunderbolt size={30} />
-        </Flex>
+    <Flex h="100%" justify="space-between" direction="column">
+      <Group>{...links}</Group>
 
-        <Navbar.Section>
-          <Flex className={classes.navLinks}>{links}</Flex>
-        </Navbar.Section>
+      <Group style={{ alignSelf: "center" }}>
+        <ToggleTheme />
 
-        <Navbar.Section className={classes.innerSection}>
-          <Flex className={classes.bottomLinks}>
-            <ToggleTheme />
-
-            <NavbarLink
-              icon={HiLogout}
-              label="Logout"
-              clickHandler={auth.logout}
-            />
-          </Flex>
-        </Navbar.Section>
-      </Flex>
-    </Navbar>
+        <ActionIcon variant="outline" label="Logout" clickHandler={auth.logout}>
+          <HiLogout />
+        </ActionIcon>
+      </Group>
+    </Flex>
   );
 }

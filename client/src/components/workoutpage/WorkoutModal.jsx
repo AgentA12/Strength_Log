@@ -46,24 +46,20 @@ export default function WorkoutModal({
       opened={opened}
       onClose={close}
     >
-      <Group position="apart">
+      <Group justify="space-between">
         <Title tt="capitalize" component="span">
           {templateName}
         </Title>
         <Button onClick={close}>Stop Exercise</Button>
       </Group>
-      <Stack align="center" spacing={5} justify="center">
-        <Title tt="capitalize" order={2} mt={5}>
+      <Stack align="center">
+        <Title tt="capitalize" order={3} mt={30}>
           {exercise.exercise.exerciseName}
         </Title>
 
         {setDone ? (
           <>
-            <Text
-              fw={500}
-              size="xl"
-              sx={(theme) => ({ color: theme.colors.green[5] })}
-            >
+            <Text fw={500}>
               {`${exercise.sets.length} / ${exercise.sets.length}`} Sets
               Completed
             </Text>

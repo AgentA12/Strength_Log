@@ -31,18 +31,18 @@ export default function WorkoutState({ setTemplateState, templateState }) {
       </Flex>
 
       <Table  >
-        <thead>
-          <tr>
-            <th>Set</th>
-            <th>Reps</th>
-            <th>Weight</th>
-          </tr>
-        </thead>
-        <tbody>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Set</Table.Th>
+            <Table.Th>Reps</Table.Th>
+            <Table.Th>Weight</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
           {exercise.sets.map((set, setIndex) => (
-            <tr key={uuidv4()}>
-              <td>{setIndex + 1}</td>
-              <td>
+            <Table.Tr key={uuidv4()}>
+              <Table.Td>{setIndex + 1}</Table.Td>
+              <Table.Td>
                 <NumberInput
                   data-autofocus
                   w={75}
@@ -57,8 +57,8 @@ export default function WorkoutState({ setTemplateState, templateState }) {
                     )
                   }
                 />
-              </td>
-              <td>
+              </Table.Td>
+              <Table.Td>
                 <NumberInput
                   w={75}
                   step={5}
@@ -73,10 +73,10 @@ export default function WorkoutState({ setTemplateState, templateState }) {
                     )
                   }
                 />
-              </td>
-            </tr>
+              </Table.Td>
+            </Table.Tr>
           ))}
-        </tbody>
+        </Table.Tbody>
       </Table>
     </Container>
   ));
