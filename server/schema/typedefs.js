@@ -186,6 +186,11 @@ const typeDefs = gql`
     updatedAt: String
   }
 
+  type TotalData {
+    label: String
+    stat: Int
+  }
+
   type Query {
     getAllExercises: [Exercises]
     getTemplates(userId: ID!): [Template]
@@ -201,6 +206,7 @@ const typeDefs = gql`
     calendarTimeStamps(userId: ID!): [CalendarDates]
     getProgressByDate(userID: ID!): [CompletedWorkouts]
     getTemplateProgress(userID: ID!, templateID: ID!): [workout]
+    getDataSummary(userID: ID!): [TotalData]
   }
 
   type Mutation {

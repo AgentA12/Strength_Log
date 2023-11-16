@@ -6,6 +6,7 @@ import {
   Card,
   Text,
   Stack,
+  PasswordInput,
 } from "@mantine/core";
 
 export default function SettingsPage() {
@@ -28,7 +29,7 @@ export default function SettingsPage() {
 
         <Card withBorder>
           <Box>
-            <TextInput
+            <PasswordInput
               size="md"
               label={
                 <Text fz={25} fw={500}>

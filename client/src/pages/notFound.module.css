@@ -1,13 +1,12 @@
 .root {
-  padding-top: rem(80);
+  padding-top: 10rem;
   text-align: center;
-  padding-bottom: rem(80);
 }
 
 .label {
   font-weight: 900;
-  font-size: rem(60);
+  font-size: 4rem;
   line-height: 1;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   color: light-dark(var(--mantine-colors-gray-2), var(--mantine-colors-dark-4));
 }

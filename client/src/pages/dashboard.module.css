@@ -1,0 +1,6 @@
+.calendarContainer {
+  justify-self: flex-end;
+  align-self: flex-start;
+
+ order: 0;
+}

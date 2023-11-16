@@ -20,11 +20,6 @@ const Query = {
 
   getTemplates: async function (_, args) {
     try {
-      // const { templates } = await User.findById(userID).populate(
-      //   "templates",
-      //   "templateName _id"
-      // );
-
       const { templates } = await User.findById(args.userId).populate({
         path: "templates",
         populate: {
@@ -129,6 +124,22 @@ const Query = {
     } catch (error) {
       return error.message;
     }
+  },
+
+  async getDataSummary(_, { userID }) {
+    const {
+      totalSetsCompleted,
+      totalRepsCompleted,
+      totalWeight,
+      completedWorkouts,
+    } = await User.findById(userID);
+
+    return [
+      { label: "total weight lifted", stat: totalWeight },
+      { label: "repetitions", stat: totalRepsCompleted },
+      { label: "sets", stat: totalSetsCompleted },
+      { label: "workouts", stat: completedWorkouts.length },
+    ];
   },
 };
 

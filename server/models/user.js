@@ -37,6 +37,9 @@ const userSchema = mongoose.Schema(
     templates: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
     completedWorkouts: [completedWorkoutSchema],
     completedExercises: [completedExerciseSchema],
+    totalRepsCompleted: { type: Number, default: 0 },
+    totalSetsCompleted: { type: Number, default: 0 },
+    totalWeight: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
@@ -51,6 +54,21 @@ userSchema.pre("save", async function (next) {
 
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
+};
+
+userSchema.methods.getNumberOfWorkouts = async function () {
+  return this.completedWorkouts.length;
+};
+
+userSchema.methods.getTotalSetsCompleted = async function () {
+  return;
+};
+
+userSchema.methods.getTotalWeightLifted = async function () {
+  return;
+};
+userSchema.methods.getTotalRepsCompleted = async function () {
+  return;
 };
 
 const User = mongoose.model("User", userSchema);

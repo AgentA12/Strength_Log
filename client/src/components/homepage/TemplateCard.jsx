@@ -3,7 +3,7 @@ import { capitalizeFirstLetter } from "../../utils/helpers/functions";
 import TemplateMenu from "./TemplateMenu";
 import TemplateModal from "./TemplateModal";
 import { Text, Card, Flex } from "@mantine/core";
-import classes from "./homepage.module.scss";
+import classes from "./homepage.module.css";
 
 export default function TemplateCard({ template, handleTemplateDelete }) {
   const [opened, setOpened] = useState(false);

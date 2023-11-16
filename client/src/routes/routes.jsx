@@ -11,6 +11,7 @@ import Protected from "../components/ProtectedRoute";
 import auth from "../utils/auth/auth";
 import TemplateDashBoard from "../components/create&edittemplates/TemplateDashBoard";
 import UtilitiesPage from "../pages/utilities";
+import AppLayout from "../components/AppLayout";
 
 const isLoggedIn = auth.isLoggedIn();
 
@@ -25,7 +26,9 @@ export default function RouteContainer() {
         path="/DashBoard"
         element={
           <Protected isLoggedIn={isLoggedIn}>
-            <DashBoardPage />
+            <AppLayout>
+              <DashBoardPage />
+            </AppLayout>
           </Protected>
         }
       />
@@ -33,7 +36,9 @@ export default function RouteContainer() {
         path="/Settings"
         element={
           <Protected isLoggedIn={isLoggedIn}>
-            <SettingsPage />
+            <AppLayout>
+              <SettingsPage />
+            </AppLayout>
           </Protected>
         }
       />
@@ -42,7 +47,9 @@ export default function RouteContainer() {
         path="/Create-template"
         element={
           <Protected isLoggedIn={isLoggedIn}>
-            <TemplateDashBoard />
+            <AppLayout>
+              <TemplateDashBoard />
+            </AppLayout>
           </Protected>
         }
       />
@@ -51,7 +58,9 @@ export default function RouteContainer() {
         path="/Progress"
         element={
           <Protected isLoggedIn={isLoggedIn}>
-            <ProgressPage />
+            <AppLayout>
+              <ProgressPage />
+            </AppLayout>
           </Protected>
         }
       />
@@ -60,7 +69,9 @@ export default function RouteContainer() {
         path="/Workout"
         element={
           <Protected isLoggedIn={isLoggedIn}>
-            <WorkoutPage />
+            <AppLayout>
+              <WorkoutPage />
+            </AppLayout>
           </Protected>
         }
       />
@@ -69,7 +80,9 @@ export default function RouteContainer() {
         path="/Utilities"
         element={
           <Protected isLoggedIn={isLoggedIn}>
-            <UtilitiesPage />{" "}
+            <AppLayout>
+              <UtilitiesPage />
+            </AppLayout>
           </Protected>
         }
       />

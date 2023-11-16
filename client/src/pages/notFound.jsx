@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { Title, Text, Button, Container, Group, Box } from "@mantine/core";
-import classes from "./notFound.module.scss";
+import classes from "./notFound.module.css";
 
 export default function NotFoundPage() {
   return (
-    <Container className={classes.root}>
-      <Box className={classes.label}>404</Box>
+    <Container className={classes.root} >
+      <Box className={classes.label}>404 Error</Box>
       <Text className={classes.label}>¯\_(ツ)_/¯</Text>
       <Title>You have found a secret place.</Title>
       <Text color="dimmed" size="lg" align="center">
@@ -13,7 +13,7 @@ export default function NotFoundPage() {
         address, the page has been removed or moved to another URL.
       </Text>
       <Group align="center" justify="center">
-        <Button variant="subtle" size="md" component={Link} to="/DashBoard">
+        <Button variant="subtle" size="md" mt={12} style={{textDecoration: "underline"}} component={Link} to="/DashBoard">
           Take me home
         </Button>
       </Group>

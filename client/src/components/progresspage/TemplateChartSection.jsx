@@ -1,3 +1,4 @@
+import classes from "./chart.module.css";
 import { Box, Title, Flex } from "@mantine/core";
 import {
   TemplateSelect,
@@ -14,21 +15,16 @@ export default function TemplateChartSection({
   range,
   userID,
   options,
-
   metric,
   setMetric,
 }) {
   return (
     <>
-      <Title tt="capitalize" my={10} fw={800} >
-        {activeTemplate && activeTemplate}
-      </Title>
-
       <Flex
         wrap="wrap"
         gap={5}
         justify={{ base: "center", sm: "left" }}
-        mb={30}
+        my={15}
       >
         <TemplateSelect
           templates={templates ? templates : []}
@@ -40,7 +36,7 @@ export default function TemplateChartSection({
         <MetricSelect setMetric={setMetric} metric={metric} />
       </Flex>
 
-      <Box >
+      <Box className={classes.chartContainer}>
         <TemplateChart
           activeTemplate={activeTemplate}
           userId={userID}

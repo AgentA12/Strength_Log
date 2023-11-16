@@ -12,13 +12,13 @@ import {
   TextInput,
   Button,
   Skeleton,
-  Grid,
-  Group,
+  Pagination,
 } from "@mantine/core";
 import { AiOutlineSearch } from "react-icons/ai";
 import { UserContext } from "../../app";
 import { showNotification } from "@mantine/notifications";
 import { Link } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function TemplateSection() {
   const {
@@ -33,6 +33,8 @@ export default function TemplateSection() {
     fetchPolicy: "network-only", // Used for first execution
     variables: {
       userId: _id,
+      // offset: 0,
+      // limit: 10
     },
   });
 
@@ -103,15 +105,29 @@ export default function TemplateSection() {
       );
     // does the array of templates have length? display the template cards
     if (templates.length)
-      return templates.map((template) => (
-        <Grid.Col>
-          <TemplateCard
-            template={template}
-            refetch={refetch}
-            handleTemplateDelete={handleTemplateDelete}
-            key={template._id}
-          />
-        </Grid.Col>
+      return templates.slice(0, 12).map((template, i) => (
+        <div>
+          <AnimatePresence>
+            <motion.div
+              layout
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: i * 0.08,
+                type: "spring",
+                stiffness: 700,
+                damping: 30,
+              }}
+            >
+              <TemplateCard
+                template={template}
+                refetch={refetch}
+                handleTemplateDelete={handleTemplateDelete}
+                key={template._id}
+              />
+            </motion.div>
+          </AnimatePresence>
+        </div>
       ));
     return <Text size={"xl"}>You have no templates saved.</Text>;
   }
@@ -147,19 +163,19 @@ export default function TemplateSection() {
           </Text>
         </Center>
       ) : (
-        <Box
-          gutter="sm"
-          grow
+        <div
           style={{
-            width: "100%",
-            flexGrow: true,
             display: "grid",
+            gap: "15px",
             gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
           }}
         >
           {displayQueryState()}
-        </Box>
+        </div>
       )}
+      {/* <Center mt={50}>
+        <Pagination total={2} />
+      </Center> */}
     </Box>
   );
 }

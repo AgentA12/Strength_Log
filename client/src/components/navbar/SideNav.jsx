@@ -1,29 +1,27 @@
 import { Flex, Text, Group, ActionIcon } from "@mantine/core";
-import {
-  AiFillHome,
-  AiFillSetting,
-  AiOutlineLineChart,
-  AiOutlineTool,
-} from "react-icons/ai";
+import { AiOutlineLineChart, AiOutlineTool } from "react-icons/ai";
 import { HiLogout } from "react-icons/hi";
 import { ToggleTheme } from "./index.js";
 import auth from "../../utils/auth/auth.js";
-import classes from "./navbar.module.scss";
-import { Link } from "react-router-dom";
+import classes from "./navbar.module.css";
+import { NavLink } from "react-router-dom";
 import { useState } from "react";
-
+import { GoHome } from "react-icons/go";
+import { CiSettings } from "react-icons/ci";
 const linkData = [
-  { icon: AiFillHome, label: "Dashboard", link: "/DashBoard" },
+  { icon: GoHome, label: "Dashboard", link: "/DashBoard" },
   { icon: AiOutlineLineChart, label: "Progress", link: "/Progress" },
   { icon: AiOutlineTool, label: "Utilities", link: "/Utilities" },
-  { icon: AiFillSetting, label: "Settings", link: "/Settings" },
+  { icon: CiSettings, label: "Settings", link: "/Settings" },
 ];
 
 export default function SideNav({ toggleMobile }) {
   const [active, setActive] = useState("Dashboard");
+  
   const links = linkData.map((item) => (
     <Text
-      component={Link}
+      variant="subtle"
+      component={NavLink}
       to={item.link}
       className={classes.link}
       href={item.link}
@@ -34,7 +32,7 @@ export default function SideNav({ toggleMobile }) {
         toggleMobile();
       }}
     >
-      <item.icon  size={18} stroke={1.5} />
+      <item.icon size={18} stroke={1.5} />
       <Text span>{item.label}</Text>
     </Text>
   ));
@@ -46,7 +44,7 @@ export default function SideNav({ toggleMobile }) {
       <Group style={{ alignSelf: "center" }}>
         <ToggleTheme />
 
-        <ActionIcon variant="outline" label="Logout" clickHandler={auth.logout}>
+        <ActionIcon variant="outline" label="Logout" onClick={auth.logout}>
           <HiLogout />
         </ActionIcon>
       </Group>

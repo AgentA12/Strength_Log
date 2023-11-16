@@ -3,7 +3,7 @@ import { Select } from "@mantine/core";
 export default function DateRangeSelect({ range, setRange }) {
   return (
     <Select
-      sx={{ width: "fit-content" }}
+     
       data={[
         "Last month",
         "Last 3 months",

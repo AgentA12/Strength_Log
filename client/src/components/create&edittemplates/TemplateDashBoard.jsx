@@ -1,5 +1,5 @@
+import classes from "./templatedashboard.module.css";
 import { v4 as uuidv4 } from "uuid";
-
 import { useContext } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_TEMPLATE, EDIT_TEMPLATE } from "../../utils/graphql/mutations";
@@ -172,9 +172,10 @@ export default function TemplateDashBoard() {
         my="xs"
         labelPosition="left"
         variant="dashed"
+       
         label={
-          <Title order={2} tt="capitalize">
-            {state ? `Edit` : "Create a template"}
+          <Title  className={classes.title} order={2} tt="capitalize">
+            {state ? `Edit ${form.values.templateName}` : "Create a template"}
           </Title>
         }
       />

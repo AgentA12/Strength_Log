@@ -1,4 +1,4 @@
-import { Tabs, useMantineColorScheme } from "@mantine/core";
+import { Container, Tabs, Text, useMantineColorScheme } from "@mantine/core";
 import { UserContext } from "../../app";
 import { useState, useContext } from "react";
 import { useQuery } from "@apollo/client";
@@ -34,10 +34,6 @@ ChartJS.register(
   Colors,
   TimeScale
 );
-
-// chartContainer: {
-//   height: "700px",
-// },
 
 export default function ByTemplatesContainer() {
   const {
@@ -91,19 +87,20 @@ export default function ByTemplatesContainer() {
       userId: userID,
     },
   });
-  console.log(activeTab)
 
   return (
     <Tabs value={activeTab} onChange={(value) => setActiveTab(value)}>
-      <Tabs.List position={isLargeScreen ? "center" : "left"}>
-        <Tabs.Tab value="Templates" icon={<HiOutlineTemplate />}>
-          Templates
-        </Tabs.Tab>
+      
+        <Tabs.List position={isLargeScreen ? "center" : "left"} grow w={'450px'}>
+          <Tabs.Tab value="Templates" leftSection={<HiOutlineTemplate />}>
+            <Text>Templates</Text>
+          </Tabs.Tab>
 
-        <Tabs.Tab value="Exercises" icon={<IoMdFitness />}>
-          Exercises
-        </Tabs.Tab>
-      </Tabs.List>
+          <Tabs.Tab value="Exercises" leftSection={<IoMdFitness />}>
+            <Text> Exercises</Text>
+          </Tabs.Tab>
+        </Tabs.List>
+      
 
       {activeTab === "Templates" ? (
         <TemplateChartSection

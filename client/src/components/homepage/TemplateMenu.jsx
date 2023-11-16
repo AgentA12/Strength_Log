@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Menu, Button } from "@mantine/core";
-import { FaTrash, FaEdit, FaRegChartBar } from "react-icons/fa";
+import { FaEdit, FaRegChartBar } from "react-icons/fa";
+import { BsTrash3 } from "react-icons/bs";
 
 export default function TemplateMenu({ template, handleTemplateDelete }) {
   const editState = {
@@ -27,7 +28,7 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
         component={Link}
         to="/Progress"
         state={{ template: editState }}
-        icon={<FaRegChartBar size={14} />}
+        leftSection={<FaRegChartBar size={14} />}
       >
         Progress
       </Menu.Item>
@@ -36,7 +37,7 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
         component={Link}
         to="/Create-template"
         state={{ template: editState }}
-        icon={<FaEdit size={14} />}
+        leftSection={<FaEdit size={14} />}
       >
         Edit
       </Menu.Item>
@@ -44,7 +45,7 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
       <Menu.Item
         color="red"
         onClick={() => handleTemplateDelete(template._id)}
-        icon={<FaTrash size={14} />}
+        leftSection={<BsTrash3 size={14} />}
       >
         Delete
       </Menu.Item>

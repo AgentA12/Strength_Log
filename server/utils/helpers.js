@@ -26,4 +26,35 @@ const calculateEstOneRepMax = (exercise) => {
   );
 };
 
-export { getOneRepMax, calculateEstOneRepMax, formatChartData };
+function getTotalVolume(exercises) {
+  let TotalVolume = 0;
+
+  exercises.map((exercise) =>
+    exercise.sets.map((set) => (TotalVolume += set.weight * set.reps))
+  );
+
+  return TotalVolume;
+}
+
+const getTotalReps = (exercises) =>
+  exercises.reduce(
+    (accumulator, currentValue) =>
+      accumulator +
+      currentValue.sets.reduce((total, set) => (total += set.reps), 0),
+    0
+  );
+
+const getTotalSets = (exercises) =>
+  exercises.reduce(
+    (accumulator, currentValue) => accumulator + currentValue.sets.length,
+    0
+  );
+
+export {
+  getOneRepMax,
+  calculateEstOneRepMax,
+  formatChartData,
+  getTotalReps,
+  getTotalSets,
+  getTotalVolume,
+};

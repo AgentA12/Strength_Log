@@ -84,7 +84,11 @@ export default function AuthorizationComponent() {
       shadow="lg"
       radius="md"
       withBorder
-      sx={{ maxWidth: 450, margin: "auto", marginTop: 120 }}
+      style={{
+        maxWidth: 450,
+        margin: "auto",
+        marginTop: 120,
+      }}
     >
       <Flex justify={"space-between"}>
         <Title order={2}>ACCOUNT {type.toUpperCase()}</Title>
@@ -102,6 +106,7 @@ export default function AuthorizationComponent() {
           value={formState.username}
           onFocus={() => setError(null)}
           error={error === "incorrect username" && error}
+          disabled={loginLoading ? loginLoading : signupLoading}
         />
 
         <PasswordInput
@@ -113,6 +118,7 @@ export default function AuthorizationComponent() {
           withAsterisk
           onFocus={() => setError(null)}
           error={error === "incorrect password" && error}
+          disabled={loginLoading ? loginLoading : signupLoading}
         />
 
         <Button
@@ -126,13 +132,11 @@ export default function AuthorizationComponent() {
 
       <Text
         span
-        sx={() => ({
+        style={{
           marginTop: 12,
           display: "inline-block",
-          "&:hover": {
-            cursor: "pointer",
-          },
-        })}
+          cursor: "pointer",
+        }}
         td="underline"
         onClick={() => handleTypeSwitch(type === "Login" ? "Signup" : "Login")}
       >

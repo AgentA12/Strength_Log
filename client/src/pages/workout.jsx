@@ -1,3 +1,4 @@
+import classes from "./workout.module.css";
 import {
   Title,
   Flex,
@@ -120,11 +121,12 @@ export default function WorkoutPage() {
   return (
     <Container fluid>
       <Divider
-        labelPosition={{base: "center", sm: "left"}}
-        color="brand"
+        labelPosition={{ base: "center", sm: "left" }}
         label={
           <Group justify="center" align="center">
-            <Title order={2} mt={5}>Training {workoutState.template.templateName}</Title>
+            <Title className={classes.title} order={2} mt={5}>
+              Training {workoutState.template.templateName}
+            </Title>
           </Group>
         }
         variant="dashed"

@@ -2,9 +2,7 @@ import "@mantine/notifications/styles.css";
 import { useHotkeys, useLocalStorage } from "@mantine/hooks";
 import { Notifications } from "@mantine/notifications";
 import { createContext, useEffect } from "react";
-import Layout from "./components/AppLayout";
 import RouteContainer from "./routes/routes";
-
 import auth from "./utils/auth/auth";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -41,14 +39,10 @@ export function App() {
   }, []);
 
   return (
-    <>
+    <UserContext.Provider value={auth.getInfo()}>
       <Notifications position="bottom-right" limit={5} />
-      <UserContext.Provider value={auth.getInfo()}>
-        <Layout>
-          <RouteContainer />
-          <ScrollToTop />
-        </Layout>
-      </UserContext.Provider>
-    </>
+      <RouteContainer />
+      <ScrollToTop />
+    </UserContext.Provider>
   );
 }

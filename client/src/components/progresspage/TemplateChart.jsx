@@ -37,7 +37,6 @@ export default function TemplateChart({
   metric,
   options,
 }) {
-  
   const { loading, data, error } = useQuery(GET_CHART_PROGRESS, {
     variables: {
       userId: userId,
@@ -83,6 +82,7 @@ export default function TemplateChart({
 
   return (
     <Line
+    style={{width: "100%"}}
       options={options}
       data={{
         labels: labels,
@@ -91,4 +91,3 @@ export default function TemplateChart({
     />
   );
 }
-

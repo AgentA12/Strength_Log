@@ -2,7 +2,7 @@ import { AppShell, Burger, Title, Group } from "@mantine/core";
 import { SideNav } from "./navbar";
 import { useLocation } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
-import { AiFillThunderbolt } from "react-icons/ai";
+import { AiOutlineThunderbolt } from "react-icons/ai";
 const pathHasNavBar = {
   "/": false,
   "/login": false,
@@ -29,7 +29,7 @@ export default function AppLayout({ children }) {
         breakpoint: "sm",
         collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
       }}
-      padding={{base: "xs", sm: "md"}}
+      padding={{ base: "xs", sm: "md" }}
     >
       <AppShell.Header>
         <Group h="100%" px="md">
@@ -48,9 +48,9 @@ export default function AppLayout({ children }) {
 
           <Group gap={0} align="center" justify="center">
             <Title order={2}>Strength Log</Title>
-            <AiFillThunderbolt
+            <AiOutlineThunderbolt
               style={{ alignSelf: "start", justifySelf: "start" }}
-              size={20}
+              size={25}
             />
           </Group>
         </Group>

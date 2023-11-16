@@ -10,9 +10,7 @@ import {
 import { IoMdArrowDropdown } from "react-icons/io";
 import { GiMineExplosion } from "react-icons/gi";
 import { BsMoon, BsSun } from "react-icons/bs";
-import { FiLogOut } from "react-icons/fi";
 import { useState } from "react";
-import LogoutBtn from "./LogoutBtn";
 import { useMutation } from "@apollo/client";
 import { DELETE_ACCOUNT } from "../../utils/graphql/mutations";
 import auth from "../../utils/auth/auth";
@@ -72,10 +70,6 @@ export default function SettingsNavBtn() {
           icon={dark ? <BsSun size={14} /> : <BsMoon size={14} />}
         >
           Change Theme
-        </Menu.Item>
-
-        <Menu.Item icon={<FiLogOut />}>
-          <LogoutBtn />
         </Menu.Item>
 
         <Menu.Divider />

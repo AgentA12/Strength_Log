@@ -18,9 +18,7 @@ export default function ExerciseCard({
       withBorder
       radius="md"
       w={275}
-      sx={(theme) => ({
-        color: theme.colors.green[4],
-      })}
+      c="dimmed"
       key={exercise.exercise._id}
     >
       <Flex mb={5} justify="space-between">
@@ -47,8 +45,8 @@ export default function ExerciseCard({
         <Text tt="uppercase" fw={700} fz="lg">
           {exercise.exercise.exerciseName}
         </Text>
-        <Group position="apart" align="center" mt={10}>
-          <Text c="dimmed" fz="sm" mt="md">
+        <Group justify="space-between" align="center" mt={10}>
+          <Text c="dimmed" fz="sm">
             {`${exercise.sets.length} Set${
               exercise.sets.length != 1 ? "s" : ""
             }`}

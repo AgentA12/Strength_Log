@@ -51,7 +51,7 @@ export default function Calendar() {
 
   if (loading)
     return (
-      <Box pos="relative" w={301} h={343.797}>
+      <Box style={{ borderRadius: "50px" }} pos="relative">
         <LoadingOverlay visible={true} />
         <DatePicker {...datePickerDefaultProps} />
       </Box>
@@ -59,11 +59,9 @@ export default function Calendar() {
 
   if (error)
     return (
-      <Box pos="relative" w={301} h={343.797}>
+      <Box pos="relative">
         <Overlay p={5} center={true}>
-          <Text ta="center" color="red">
-            {error.message}
-          </Text>
+          <Text ta="center">{error.message}</Text>
         </Overlay>
 
         <DatePicker {...datePickerDefaultProps} />

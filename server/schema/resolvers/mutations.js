@@ -1,7 +1,11 @@
 import { User, Template } from "../../models/index.js";
-
 import { AuthenticationError } from "apollo-server";
 import { signToken } from "../../utils/auth.js";
+import {
+  getTotalReps,
+  getTotalSets,
+  getTotalVolume,
+} from "../../utils/helpers.js";
 
 const Mutation = {
   login: async function (_, { username, password }) {
@@ -128,16 +132,15 @@ const Mutation = {
   },
 
   saveWorkout: async function (_, { templateId, userID, exercises }) {
-    const compareDatesByDay = (firstDate, secondDate) =>
-      firstDate.getFullYear() === secondDate.getFullYear() &&
-      firstDate.getMonth() === secondDate.getMonth() &&
-      firstDate.getDate() === secondDate.getDate();
-    try {
-      // check if the same template was saved in the last 24 hours
+    const totalWeight = getTotalVolume(exercises);
+    const totalSets = getTotalSets(exercises);
+    const totalReps = getTotalReps(exercises);
 
+    try {
       const user = await User.findByIdAndUpdate(
         userID,
         {
+          // adding workout
           $push: {
             completedWorkouts: {
               template: templateId,
@@ -148,6 +151,12 @@ const Mutation = {
                 };
               }),
             },
+          },
+          // increment by totals being saved
+          $inc: {
+            totalRepsCompleted: totalReps,
+            totalSetsCompleted: totalSets,
+            totalWeight: totalWeight,
           },
         },
         { new: true }
