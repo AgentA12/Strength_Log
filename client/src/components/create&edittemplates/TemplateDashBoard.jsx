@@ -13,6 +13,7 @@ import {
   Title,
   Flex,
   Button,
+  Box,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { SelectExerciseModal, ExerciseForm } from "./index";
@@ -167,68 +168,69 @@ export default function TemplateDashBoard() {
   }
 
   return (
-    <Container fluid>
-      <Divider
-        my="xs"
-        labelPosition="left"
-        variant="dashed"
-       
-        label={
-          <Title  className={classes.title} order={2} tt="capitalize">
-            {state ? `Edit ${form.values.templateName}` : "Create a template"}
-          </Title>
-        }
-      />
-      <form>
-        <TextInput
-          label={<Text>Template Name</Text>}
-          name="templateName"
-          value={form.values.templateName}
-          mb={15}
-          {...form.getInputProps("templateName")}
+    <Box>
+      <Container>
+        <Divider
+          my="xs"
+          labelPosition="left"
+          variant="dashed"
+          label={
+            <Title className={classes.title} order={2} tt="capitalize">
+              {state ? `Edit ${form.values.templateName}` : "Create a template"}
+            </Title>
+          }
         />
-
-        <Textarea
-          minRows={5}
-          name="templateNotes"
-          label={<Text>Template Notes</Text>}
-          value={form.values.templateNotes}
-          {...form.getInputProps("templateNotes")}
-        />
-        <Flex mt={10} justify={"space-between"}>
-          <Button
-            type="submit"
+        <form>
+          <TextInput
+            label={<Text>Template Name</Text>}
+            name="templateName"
+            value={form.values.templateName}
             mb={15}
-            loading={submitLoading || editTemplateLoading}
-            onClick={handleSubmit}
-          >
-            Save Template
-          </Button>
-        </Flex>
+            {...form.getInputProps("templateName")}
+          />
 
-        <Flex direction="column">
-          <Flex align="center" gap={20}>
-            <Title>Exercises</Title>
-            <Button onClick={open}>Add Exercise</Button>
+          <Textarea
+            minRows={5}
+            name="templateNotes"
+            label={<Text>Template Notes</Text>}
+            value={form.values.templateNotes}
+            {...form.getInputProps("templateNotes")}
+          />
+          <Flex mt={10} justify="space-between">
+            <Button
+              type="submit"
+              mb={15}
+              loading={submitLoading || editTemplateLoading}
+              onClick={handleSubmit}
+            >
+              Save Template
+            </Button>
           </Flex>
-          {form.values.exercises.map((_, exerciseIndex) => (
-            <ExerciseForm
-              key={uuidv4()}
-              exerciseIndex={exerciseIndex}
-              form={form}
-              removeExercise={removeExercise}
-              addSet={addSet}
-              removeSet={removeSet}
-            />
-          ))}
-        </Flex>
-      </form>
-      <SelectExerciseModal
-        opened={opened}
-        close={close}
-        addExercise={addExercise}
-        exercises={exercises}
-      />
-    </Container>
+
+          <Flex direction="column">
+            <Flex align="center" wrap="wrap" gap={20}>
+              <Title>Exercises</Title>
+              <Button onClick={open}>Add Exercise</Button>
+            </Flex>
+            {form.values.exercises.map((_, exerciseIndex) => (
+              <ExerciseForm
+                key={uuidv4()}
+                exerciseIndex={exerciseIndex}
+                form={form}
+                removeExercise={removeExercise}
+                addSet={addSet}
+                removeSet={removeSet}
+              />
+            ))}
+          </Flex>
+        </form>
+        <SelectExerciseModal
+          opened={opened}
+          close={close}
+          addExercise={addExercise}
+          exercises={exercises}
+        />
+      </Container>
+    </Box>
   );
 }

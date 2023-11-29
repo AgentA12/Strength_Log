@@ -66,17 +66,7 @@ const theme = createTheme({
   loader: "bars",
   colors: {
     brand: colors.magenta,
-    dark: [
-      "#E2E2E2",
-      "#AFAFAF",
-      "#888888",
-      "#616161",
-      "#404040",
-      "#1A1A1A",
-      "#000000",
-      "#000000",
-      "#000000",
-    ],
+   
   },
   primaryColor: "brand",
 });

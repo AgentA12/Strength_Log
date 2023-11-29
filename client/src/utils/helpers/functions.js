@@ -154,6 +154,13 @@ const getTotalSets = (exercises) =>
     0
   );
 
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  const randomNumber = Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+  return Intl.NumberFormat("en-US").format(randomNumber);
+}
+
 export {
   getOneRepMax,
   capitalizeFirstLetter,
@@ -167,4 +174,5 @@ export {
   getTotalReps,
   getTotalSets,
   getPercentageOf1RM,
+  getRandomInt,
 };

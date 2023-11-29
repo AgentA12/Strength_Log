@@ -58,8 +58,8 @@ export default function TemplateModal({ template, opened, setOpened }) {
           theme.colorScheme === "dark"
             ? theme.colors.dark[9]
             : theme.colors.gray[2],
-        opacity: 0.55,
-        blur: 3,
+            backgroundOpacity: 0.55,
+            blur: 3,
       }}
       transitionProps={{ transition: "rotate-left" }}
       lockScroll={false}
@@ -68,19 +68,15 @@ export default function TemplateModal({ template, opened, setOpened }) {
       title={
         <Text
           tt="capitalize"
-          sx={(theme) => ({
-            fontSize: 30,
+          style={{
+            fontSize: 25,
             fontWeight: "bolder",
-            [theme.fn.smallerThan("sm")]: {
-              fontSize: 18,
-            },
-          })}
+          }}
         >
           {template.templateName}
         </Text>
       }
-      overlayopacity={0.55}
-      overlayblur={3}
+     
       size="lg"
     >
       <Text c="dimmed" mb={10}>

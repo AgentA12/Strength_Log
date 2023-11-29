@@ -51,7 +51,7 @@ export default function ExerciseChart({
 
   if (loading)
     return (
-      <Box sx={{ position: "relative" }}>
+      <Box style={{ position: "relative" }}>
         <LoadingOverlay visible={true} overlayBlur={2} />
         <Line
           options={options}

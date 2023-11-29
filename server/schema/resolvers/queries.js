@@ -141,6 +141,14 @@ const Query = {
       { label: "workouts", stat: completedWorkouts.length },
     ];
   },
+
+  async getUserSettings(_, { userID }) {
+    const user = await User.findById(userID).select(
+      "-completedExercises -completedWorkouts -password"
+    );
+
+    return user;
+  },
 };
 
 export { Query };

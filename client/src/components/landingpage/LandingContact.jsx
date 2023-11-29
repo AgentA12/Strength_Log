@@ -11,12 +11,11 @@ import {
 
 export default function LandingContact() {
   return (
-    <Center mx="auto" sx={{ paddingBottom: 50 }} >
+    <Center mx="auto" style={{ paddingBottom: 50 }} >
       <Box>
         <Title
           order={2}
           size="h1"
-          sx={(theme) => ({ fontFamily: `Greycliff CF, ${theme.fontFamily}`})}
           weight={900}
           align="center"
         >

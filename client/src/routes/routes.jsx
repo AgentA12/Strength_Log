@@ -12,6 +12,7 @@ import auth from "../utils/auth/auth";
 import TemplateDashBoard from "../components/create&edittemplates/TemplateDashBoard";
 import UtilitiesPage from "../pages/utilities";
 import AppLayout from "../components/AppLayout";
+import DatePage from "../components/progresspage/DatePage";
 
 const isLoggedIn = auth.isLoggedIn();
 
@@ -21,6 +22,7 @@ export default function RouteContainer() {
       <Route path="/" index element={<AuthPage isLoggedIn={isLoggedIn} />} />
 
       <Route path="/login" element={<AuthPage isLoggedIn={isLoggedIn} />} />
+      <Route path="/test" element={<DatePage isLoggedIn={isLoggedIn} />} />
 
       <Route
         path="/DashBoard"

@@ -207,6 +207,7 @@ const typeDefs = gql`
     getProgressByDate(userID: ID!): [CompletedWorkouts]
     getTemplateProgress(userID: ID!, templateID: ID!): [workout]
     getDataSummary(userID: ID!): [TotalData]
+    getUserSettings(userID: ID!): User
   }
 
   type Mutation {

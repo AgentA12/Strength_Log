@@ -46,7 +46,7 @@ export default function SettingsNavBtn() {
   }
 
   if (data?.deleteAccount?.confirm === true) {
-    auth.logout();
+    auth.logout("/");
     return <Navigate to="/login" replace />;
   }
 
@@ -89,20 +89,20 @@ export default function SettingsNavBtn() {
         opened={opened}
         size={"lg"}
       >
-        <Text sx={{ marginBottom: 4 }}>
+        <Text stylee={{ marginBottom: 4 }}>
           Are you sure you want to delete your account? Deleting your account is
           permanent and will delete all your templates and progress forever.
         </Text>
         <Text>
           Type
-          <Text fw={900} component="span" sx={{ margin: 5 }}>
+          <Text fw={900} component="span" style={{ margin: 5 }}>
             I confirm that I am about to delete my account
           </Text>
           to confirm
         </Text>
 
         <TextInput
-          sx={{ marginBottom: 10, marginTop: 10 }}
+          style={{ marginBottom: 10, marginTop: 10 }}
           onChange={handleChange}
         ></TextInput>
 
@@ -113,7 +113,7 @@ export default function SettingsNavBtn() {
           <Button
             color={"red"}
             disabled={!deleteAllowed}
-            sx={{ "&[disabled]": { pointerEvents: "all" } }}
+            style={{ "&[disabled]": { pointerEvents: "all" } }}
             onClick={handleDelete}
             loading={loading}
           >

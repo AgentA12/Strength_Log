@@ -44,7 +44,7 @@ export default function SideNav({ toggleMobile }) {
       <Group style={{ alignSelf: "center" }}>
         <ToggleTheme />
 
-        <ActionIcon variant="outline" label="Logout" onClick={auth.logout}>
+        <ActionIcon variant="outline" label="Logout" onClick={() => auth.logout("/")}>
           <HiLogout />
         </ActionIcon>
       </Group>

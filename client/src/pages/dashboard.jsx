@@ -7,7 +7,6 @@ import {
   Title,
   Skeleton,
   Container,
-  Group,
   Center,
   Stack,
 } from "@mantine/core";
@@ -31,22 +30,18 @@ const q = gql`
 function DataDisplay({ label, stat, icon, loading }) {
   if (loading) {
     return (
-      <Flex direction="column">
+      <Flex direction="column" justify="center">
         <Flex align="center" mb={5}>
           <Skeleton h={30} w={30} radius="md" />
-          <Text span ml={5}>
-            <Skeleton height={20} w={70} />
-          </Text>
+          <Skeleton ml={5} height={20} w={70} />
         </Flex>
-        <Text fw={400} c="dimmed">
-          <Skeleton height={20} w={150} />
-        </Text>
+        <Skeleton height={20} w={150} />
       </Flex>
     );
   }
   return (
     <Flex direction="column" justify="center">
-      <Flex justify={{ base: "center", lg: "flex-start"} } align="center">
+      <Flex justify={{ base: "center", lg: "flex-start" }} align="center">
         {icon()}
         <Text ml={5}>{Intl.NumberFormat("en-US").format(stat)}</Text>
       </Flex>
@@ -63,14 +58,14 @@ export default function DashBoardPage() {
       <Divider
         variant="dashed"
         labelPosition="left"
-        label={<Title c={"white"}>DashBoard</Title>}
+        label={<Title className={classes.dividerTitle}>DashBoard</Title>}
         mb={10}
       />
       <Flex
         direction={{ base: "column", lg: "row" }}
         justify={{ base: "center", lg: "space-between" }}
         gap="xl"
-        grow
+        grow="true"
       >
         <Stack style={{ flexGrow: 2, order: 2 }}>
           <DataOverView />
@@ -126,16 +121,9 @@ function DataOverView() {
       wrap="wrap"
       gap={{ base: "25px", xs: "60px" }}
     >
-      {stats.map((theData) => (
-        <DataDisplay {...theData} />
+      {stats.map((theData, i) => (
+        <DataDisplay key={i} {...theData} />
       ))}
     </Flex>
   );
-}
-
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  const randomNumber = Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
-  return Intl.NumberFormat("en-US").format(randomNumber);
 }

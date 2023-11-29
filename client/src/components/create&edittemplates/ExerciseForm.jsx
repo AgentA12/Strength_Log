@@ -80,7 +80,7 @@ export default function ExerciseForm({
         ))}
       </List>
 
-      <Group mt={5} justify="left" align="">
+      <Group mt={5} justify="left">
         <Button onClick={() => addSet(exerciseIndex)}>Add Set</Button>
         <Button
           color="red"

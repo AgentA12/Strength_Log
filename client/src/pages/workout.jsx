@@ -43,22 +43,25 @@ export default function WorkoutPage() {
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [hours, setHours] = useState(0);
+  const [workoutDone, setWorkoutDone] = useState(false);
 
   const interval = useInterval(() => setSeconds((s) => s + 1), 1000);
 
   useEffect(() => {
-    interval.start();
+    !workoutDone && interval.start();
     return interval.stop;
-  }, [interval]);
+  }, [interval, workoutDone]);
 
-  if (seconds >= 60) {
-    setSeconds(0);
-    setMinutes((m) => m + 1);
-  }
+  if (!workoutDone) {
+    if (seconds >= 60) {
+      setSeconds(0);
+      setMinutes((m) => m + 1);
+    }
 
-  if (minutes >= 60) {
-    setMinutes(0);
-    setHours((h) => h + 1);
+    if (minutes >= 60) {
+      setMinutes(0);
+      setHours((h) => h + 1);
+    }
   }
 
   function handleChange(value, exerciseIndex, name, setIndex) {
@@ -81,9 +84,9 @@ export default function WorkoutPage() {
 
     if (isWorkoutDone) {
       data.timeToComplete = seconds + minutes * 60 + hours * 3600;
-      interval.toggle();
+      setWorkoutDone(true);
+      interval.stop();
     }
-
     setWorkoutState(data);
   }
 
@@ -124,7 +127,7 @@ export default function WorkoutPage() {
         labelPosition={{ base: "center", sm: "left" }}
         label={
           <Group justify="center" align="center">
-            <Title className={classes.title} order={2} mt={5}>
+            <Title className={classes.title} mt={5}>
               Training {workoutState.template.templateName}
             </Title>
           </Group>
@@ -138,16 +141,14 @@ export default function WorkoutPage() {
 
         {workoutState.workoutFinished ? (
           <>
-            <Text sx={(theme) => ({ color: theme.colors.green[4] })} size="xl">
-              Completed
-            </Text>
+            <Text size="xl">Completed</Text>
 
             <Button mt={10} color="green" onClick={handleFinish}>
               Finish
             </Button>
           </>
         ) : (
-          <Flex direction="column" gap={10}>
+          <Flex direction="column" gap={12}>
             {workoutState.template.map((exercise, exerciseIndex) => (
               <ExerciseCard
                 exerciseIndex={exerciseIndex}

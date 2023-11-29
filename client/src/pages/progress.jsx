@@ -1,5 +1,6 @@
 import { Container, Divider, Title } from "@mantine/core";
 import { ByChartContainer } from "../components/progresspage/index";
+import classes from "./dashboard.module.css";
 
 export default function ProgressPage() {
   return (
@@ -7,7 +8,7 @@ export default function ProgressPage() {
       <Divider
         variant="dashed"
         labelPosition="left"
-        label={<Title c={"white"}>Progress</Title>}
+        label={<Title className={classes.dividerTitle}>Progress</Title>}
       />
       <ByChartContainer />
     </Container>

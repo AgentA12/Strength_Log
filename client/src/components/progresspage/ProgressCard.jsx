@@ -8,7 +8,7 @@ export default function ProgressCard({ progressInfo, handleSummary }) {
       whileHover={{ translateY: -5, cursor: "pointer" }}
       onClick={() => handleSummary(progressInfo)}
     >
-      <Card shadow="lg" withBorder p="sm" radius="md" sx={{ width: 275, marginBottom: 5 }}>
+      <Card shadow="lg" withBorder p="sm" radius="md" style={{ width: 275, marginBottom: 5 }}>
         <Flex direction="column" gap={5}>
           <Text fw={700} size={27}>
             {progressInfo.dateCompleted}

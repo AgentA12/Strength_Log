@@ -75,6 +75,7 @@ export default function AuthorizationComponent() {
         Auth.login(data.createUser.token);
       }
     } catch (error) {
+      console.log(error);
       setError(error.message);
     }
   }
@@ -105,7 +106,10 @@ export default function AuthorizationComponent() {
           required
           value={formState.username}
           onFocus={() => setError(null)}
-          error={error === "incorrect username" && error}
+          error={
+            error === "incorrect username" ||
+            (error === "Username is taken" && error)
+          }
           disabled={loginLoading ? loginLoading : signupLoading}
         />
 

@@ -12,7 +12,7 @@ import {
   TextInput,
   Button,
   Skeleton,
-  Pagination,
+  Group,
 } from "@mantine/core";
 import { AiOutlineSearch } from "react-icons/ai";
 import { UserContext } from "../../app";
@@ -105,8 +105,8 @@ export default function TemplateSection() {
       );
     // does the array of templates have length? display the template cards
     if (templates.length)
-      return templates.slice(0, 12).map((template, i) => (
-        <div>
+      return templates.map((template, i) => (
+        <div key={template._id}>
           <AnimatePresence>
             <motion.div
               layout
@@ -129,7 +129,7 @@ export default function TemplateSection() {
           </AnimatePresence>
         </div>
       ));
-    return <Text size={"xl"}>You have no templates saved.</Text>;
+    return <Text size="xl">You have no templates saved.</Text>;
   }
 
   return (
@@ -150,15 +150,17 @@ export default function TemplateSection() {
           placeholder="Search templates..."
           leftSection={<AiOutlineSearch size={20} />}
         />
-
-        <Button component={Link} to="/Create-template">
-          Create new Template
-        </Button>
+        <Group justify="center">
+          <Button>Start a workout</Button>
+          <Button component={Link} to="/Create-template">
+            Create new Template
+          </Button>
+        </Group>
       </Flex>
 
       {error ? (
         <Center>
-          <Text color="red" size="lg" fw={500}>
+          <Text size="lg" fw={500}>
             {error.message}
           </Text>
         </Center>
@@ -173,9 +175,6 @@ export default function TemplateSection() {
           {displayQueryState()}
         </div>
       )}
-      {/* <Center mt={50}>
-        <Pagination total={2} />
-      </Center> */}
     </Box>
   );
 }

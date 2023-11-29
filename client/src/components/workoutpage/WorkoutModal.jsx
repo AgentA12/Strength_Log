@@ -63,7 +63,7 @@ export default function WorkoutModal({
               {`${exercise.sets.length} / ${exercise.sets.length}`} Sets
               Completed
             </Text>
-            <Button size="md" w={175} p={0} leftIcon={<BsPlus size={20} />}>
+            <Button size="md" w={175} p={0} leftSection={<BsPlus size={20} />}>
               One More Set?
             </Button>
             <Button
@@ -92,7 +92,7 @@ export default function WorkoutModal({
               />
             ) : (
               <>
-                <Group justify="center" gap="xs" grow w="250px">
+                <Group justify="center" gap="xs" grow="true" w="250px">
                   <NumberInput
                     ta="center"
                     label={<Text>Reps</Text>}

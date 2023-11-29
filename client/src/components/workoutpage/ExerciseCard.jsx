@@ -1,3 +1,4 @@
+import classes from "./exerciseCard.module.css";
 import { Group, Card, Text, Button, Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { WorkoutModal } from "./index";
@@ -17,7 +18,7 @@ export default function ExerciseCard({
       p="md"
       withBorder
       radius="md"
-      w={275}
+      className={classes.exerciseCard}
       c="dimmed"
       key={exercise.exercise._id}
     >
@@ -39,7 +40,7 @@ export default function ExerciseCard({
         withBorder
         p="md"
         radius="md"
-        w={275}
+        className={classes.exerciseCard}
         key={exercise.exercise.exerciseName}
       >
         <Text tt="uppercase" fw={700} fz="lg">

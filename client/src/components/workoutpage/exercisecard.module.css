@@ -1,0 +1,6 @@
+.exerciseCard {
+    width: 300px;
+    @media (max-width: $mantine-breakpoint-xs) {
+        width: 185px;
+    }
+}
