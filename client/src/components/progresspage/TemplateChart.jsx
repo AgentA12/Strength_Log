@@ -52,7 +52,12 @@ export default function TemplateChart({
   if (loading)
     return (
       <Box style={{ position: "relative" }}>
-        <LoadingOverlay visible={true} overlayBlur={2} />
+        <LoadingOverlay
+          visible={true}
+          overlayProps={{
+            blur: 1,
+          }}
+        />
         <Line
           options={options}
           data={{
@@ -82,7 +87,7 @@ export default function TemplateChart({
 
   return (
     <Line
-    style={{width: "100%"}}
+      style={{ width: "100%" }}
       options={options}
       data={{
         labels: labels,

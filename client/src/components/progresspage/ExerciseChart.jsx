@@ -52,7 +52,12 @@ export default function ExerciseChart({
   if (loading)
     return (
       <Box style={{ position: "relative" }}>
-        <LoadingOverlay visible={true} overlayBlur={2} />
+        <LoadingOverlay
+          visible={true}
+          overlayProps={{
+            blur: 1,
+          }}
+        />
         <Line
           options={options}
           data={{
