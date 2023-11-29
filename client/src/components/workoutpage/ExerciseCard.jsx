@@ -1,4 +1,4 @@
-import classes from "./exerciseCard.module.css";
+import classes from "./exercisecard.module.css";
 import { Group, Card, Text, Button, Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { WorkoutModal } from "./index";
