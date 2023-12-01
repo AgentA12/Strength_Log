@@ -58,7 +58,7 @@ export default function DashBoardPage() {
       <Divider
         variant="dashed"
         labelPosition="left"
-        label={<Title className={classes.dividerTitle}>DashBoard</Title>}
+        label={<Title className={classes.dividerTitle}>Dashboard</Title>}
         mb={10}
       />
       <Flex

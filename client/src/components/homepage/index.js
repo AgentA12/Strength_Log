@@ -7,6 +7,7 @@ import ExerciseForm from "../create&edittemplates/ExerciseForm";
 import TemplateMenu from "./TemplateMenu";
 import TemplateModal from "./TemplateModal";
 import WorkoutState from "./WorkoutState";
+import StartWorkoutModal from "./StartWorkoutModal";
 
 export {
   Calendar,
@@ -18,4 +19,5 @@ export {
   TemplateMenu,
   TemplateModal,
   WorkoutState,
+  StartWorkoutModal,
 };

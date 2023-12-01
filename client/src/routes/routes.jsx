@@ -25,7 +25,7 @@ export default function RouteContainer() {
       <Route path="/test" element={<DatePage isLoggedIn={isLoggedIn} />} />
 
       <Route
-        path="/DashBoard"
+        path="/Dashboard"
         element={
           <Protected isLoggedIn={isLoggedIn}>
             <AppLayout>

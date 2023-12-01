@@ -99,7 +99,7 @@ export default function TemplateDashBoard() {
             message: "Your template was successfully created",
             autoClose: 3000,
           });
-          navigate("/DashBoard");
+          navigate("/Dashboard");
         }
       } catch (error) {
         if (error.message) {

@@ -18,7 +18,7 @@ import { useMutation } from "@apollo/client";
 import { SAVE_WORKOUT } from "../utils/graphql/mutations";
 import { UserContext } from "../app";
 import { showNotification } from "@mantine/notifications";
-import { AiOutlineCheck } from "react-icons/ai";
+import { AiOutlineCheck, AiOutlineConsoleSql } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
 
 export default function WorkoutPage() {
@@ -118,7 +118,7 @@ export default function WorkoutPage() {
         });
       });
 
-    navigate("/DashBoard");
+    navigate("/Dashboard");
   }
 
   return (
@@ -127,15 +127,19 @@ export default function WorkoutPage() {
         labelPosition={{ base: "center", sm: "left" }}
         label={
           <Group justify="center" align="center">
-            <Title className={classes.title} mt={5}>
-              Training {workoutState.template.templateName}
+            <Title className={classes.dividerTitle}>Training</Title>
+            <Title span className={classes.title}>
+              {workoutState.template.templateName}
             </Title>
           </Group>
         }
         variant="dashed"
       />
-      <Stack align="center" justify="center">
-        <Text c="dimmed" fz="lg">{`${hours}:${formatTime(minutes)}:${formatTime(
+      <Stack gap={0}  align="center" justify="center">
+        <Text c="dimmed" fz="xl">
+          {new Date().toDateString()}
+        </Text>
+        <Text mb={12} c="dimmed" fz="lg">{`${hours}:${formatTime(minutes)}:${formatTime(
           seconds
         )}`}</Text>
 

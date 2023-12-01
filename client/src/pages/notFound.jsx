@@ -13,7 +13,7 @@ export default function NotFoundPage() {
         address, the page has been removed or moved to another URL.
       </Text>
       <Group align="center" justify="center">
-        <Button variant="subtle" size="md" mt={12} style={{textDecoration: "underline"}} component={Link} to="/DashBoard">
+        <Button variant="subtle" size="md" mt={12} style={{textDecoration: "underline"}} component={Link} to="/Dashboard">
           Take me home
         </Button>
       </Group>

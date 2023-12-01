@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { TemplateCard } from "./index";
+import { TemplateCard, StartWorkoutModal } from "./index";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import { DELETE_TEMPLATE } from "../../utils/graphql/mutations";
 import {
@@ -19,6 +19,7 @@ import { UserContext } from "../../app";
 import { showNotification } from "@mantine/notifications";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { useDisclosure } from "@mantine/hooks";
 
 export default function TemplateSection() {
   const {
@@ -26,6 +27,7 @@ export default function TemplateSection() {
   } = useContext(UserContext);
 
   const [templates, setTemplates] = useState([]);
+  const [opened, { open, close }] = useDisclosure(false);
 
   const [deleteTemplate] = useMutation(DELETE_TEMPLATE);
 
@@ -134,6 +136,12 @@ export default function TemplateSection() {
 
   return (
     <Box component="section">
+      <StartWorkoutModal
+        opened={opened}
+        close={close}
+        loading={loading}
+        templates={templates}
+      />
       <Flex
         gap="lg"
         justify={{ base: "center", lg: "flex-start" }}
@@ -151,7 +159,7 @@ export default function TemplateSection() {
           leftSection={<AiOutlineSearch size={20} />}
         />
         <Group justify="center">
-          <Button>Start a workout</Button>
+          <Button onClick={open}>Start a workout</Button>
           <Button component={Link} to="/Create-template">
             Create new Template
           </Button>

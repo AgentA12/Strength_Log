@@ -161,6 +161,21 @@ function getRandomInt(min, max) {
   return Intl.NumberFormat("en-US").format(randomNumber);
 }
 
+function formatWorkoutState(template) {
+  let workoutState = template.exercises.map((exercise) => {
+    return {
+      ...exercise,
+      completed: false,
+    };
+  });
+
+  workoutState.templateName = template.templateName;
+  workoutState.templateId = template._id;
+
+  return workoutState;
+}
+
+
 export {
   getOneRepMax,
   capitalizeFirstLetter,
@@ -175,4 +190,5 @@ export {
   getTotalSets,
   getPercentageOf1RM,
   getRandomInt,
+  formatWorkoutState
 };

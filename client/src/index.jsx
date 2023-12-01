@@ -140,9 +140,21 @@ const theme = createTheme({
   globalStyles: () => ({}),
   fontFamily: "Inter",
   colorScheme: "dark",
-  loader: "bars",
+  loader: "spinner",
   colors: {
-    brand: colors.magenta,
+    brand: colors.sunflower,
+    dark: [
+      "#fff",
+      "#fff",
+      "#666",
+      "#333",
+      "#333",
+      "#111",
+      "#000",
+      "#000",
+      "#000",
+      "#000",
+    ],
   },
   primaryColor: "brand",
 });

@@ -8,7 +8,7 @@ const pathHasNavBar = {
   "/login": false,
   "/Create-template": true,
   "/Edit-template": true,
-  "/DashBoard": true,
+  "/Dashboard": true,
   "/Progress": true,
   "/Settings": true,
   "/Workout": true,
