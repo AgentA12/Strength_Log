@@ -4,10 +4,8 @@ import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { typeDefs, resolvers } from "./schema/index.js";
 import { authMiddleWare } from "./utils/auth.js";
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
+import http from "http";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = Number.parseInt(process.env.PORT) || 3001;
 const app = express();
 
@@ -15,13 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
 
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname, "../dist/build")));
-// }
-
-// app.get("*", (_, res) => {
-//   res.sendFile(path.join(__dirname, "../client/dist/index.html"));
-// });
+const httpServer = http.createServer(app);
 
 const server = new ApolloServer({
   typeDefs,
@@ -33,7 +25,7 @@ const server = new ApolloServer({
   },
 });
 
-function startApolloServer() {
+function startApolloServer(app, server) {
   db.once("open", async () => {
     await server.start();
     server.applyMiddleware({ path: "/graphql", app });
@@ -41,4 +33,6 @@ function startApolloServer() {
   });
 }
 
-startApolloServer();
+startApolloServer(app, server);
+
+export default httpServer;
