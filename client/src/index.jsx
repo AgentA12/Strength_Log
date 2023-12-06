@@ -96,7 +96,7 @@ const defaultOptions = {
 };
 
 const client = new ApolloClient({
-  uri: "/graphql",
+  uri: "https://strength-log-frontend-7q001jkla-agenta12.vercel.app/graphql",
   cache: new InMemoryCache({
     addTypename: false,
   }),
