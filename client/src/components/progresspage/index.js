@@ -6,7 +6,6 @@ import DateRangeSelect from "./DateRangeSelect";
 import ExerciseSelect from "./ExerciseSelect";
 import MetricSelect from "./MetricSelect";
 import ByChartContainer from "./ByChartContainer";
-import ByDateContainer from "./ByDateContainer";
 import ExerciseChart from "./ExerciseChart";
 import ExerciseChartSection from "./ExerciseChartSection";
 import TemplateChartSection from "./TemplateChartSection";
@@ -21,7 +20,6 @@ export {
   ExerciseSelect,
   MetricSelect,
   ByChartContainer,
-  ByDateContainer,
   ExerciseChart,
   ExerciseChartSection,
   TemplateChartSection,

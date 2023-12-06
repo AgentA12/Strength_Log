@@ -45,11 +45,11 @@ export default function Resting({ restTime, handleContinue }) {
         label={
           <Stack align="center">
             <Text size="sm" ta="center">
-              Rest
+              Resting
             </Text>
             <Text>
               {minutes > 0 ? `${minutes} min` : null}{" "}
-              {secondsRemaining === 0 ? 60 : secondsRemaining} seconds
+              {secondsRemaining === 0 ? 60 : secondsRemaining} secs
             </Text>
           </Stack>
         }

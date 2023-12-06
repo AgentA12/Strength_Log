@@ -18,10 +18,13 @@ import { useMutation } from "@apollo/client";
 import { SAVE_WORKOUT } from "../utils/graphql/mutations";
 import { UserContext } from "../app";
 import { showNotification } from "@mantine/notifications";
-import { AiOutlineCheck, AiOutlineConsoleSql } from "react-icons/ai";
+import { AiOutlineCheck } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
 
 export default function WorkoutPage() {
+  window.addEventListener("beforeunload", () => {
+    console.log("user is leaving");
+  });
   const {
     state: { template },
   } = useLocation();
@@ -52,6 +55,18 @@ export default function WorkoutPage() {
     return interval.stop;
   }, [interval, workoutDone]);
 
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      // Perform actions before the component unloads
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
   if (!workoutDone) {
     if (seconds >= 60) {
       setSeconds(0);
@@ -71,6 +86,21 @@ export default function WorkoutPage() {
     data.template[exerciseIndex].sets[setIndex][name] = value;
 
     setWorkoutState(data);
+  }
+
+  function addSet(exercise, exerciseIndex, setIsResting, setSetDone) {
+    const data = { ...workoutState };
+
+    // the set to add is just a copy of the last set completed
+    const setToAdd = exercise.sets[exercise.sets.length - 1];
+
+    data.template[exerciseIndex].completed = false;
+
+    data.template[exerciseIndex].sets.push(setToAdd);
+
+    setWorkoutState(data);
+    setSetDone(false);
+    setIsResting(true);
   }
 
   function exerciseComplete(exerciseIndex) {
@@ -124,24 +154,24 @@ export default function WorkoutPage() {
   return (
     <Container fluid>
       <Divider
-        labelPosition={{ base: "center", sm: "left" }}
+        mb={10}
         label={
-          <Group justify="center" align="center">
-            <Title className={classes.dividerTitle}>Training</Title>
-            <Title span className={classes.title}>
+          <Group justify="center" gap="xs" align="center">
+            <Title className={classes.dividerTitle}>Training </Title>
+            <Title tt="capitalize" className={classes.title}>
               {workoutState.template.templateName}
             </Title>
           </Group>
         }
         variant="dashed"
       />
-      <Stack gap={0}  align="center" justify="center">
+      <Stack gap={0} align="center" justify="center">
         <Text c="dimmed" fz="xl">
           {new Date().toDateString()}
         </Text>
-        <Text mb={12} c="dimmed" fz="lg">{`${hours}:${formatTime(minutes)}:${formatTime(
-          seconds
-        )}`}</Text>
+        <Text mb={12} c="dimmed" fz="lg">{`${hours}:${formatTime(
+          minutes
+        )}:${formatTime(seconds)}`}</Text>
 
         {workoutState.workoutFinished ? (
           <>
@@ -162,6 +192,7 @@ export default function WorkoutPage() {
                 key={exercise.exercise._id}
                 handleChange={handleChange}
                 exerciseComplete={exerciseComplete}
+                addSet={addSet}
               />
             ))}
           </Flex>

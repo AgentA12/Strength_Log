@@ -8,20 +8,20 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const PORT = process.env.PORT || 3001;
+const PORT = Number.parseInt(process.env.PORT) || 3001;
 const app = express();
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../dist/build")));
-}
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "../dist/build")));
+// }
 
-app.get("*", (_, res) => {
-  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
-});
+// app.get("*", (_, res) => {
+//   res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+// });
 
 const server = new ApolloServer({
   typeDefs,
@@ -29,7 +29,6 @@ const server = new ApolloServer({
   context: authMiddleWare,
   cache: "bounded",
   formatError: (error) => {
-    console.log(error.message);
     return new Error(error.message.toString());
   },
 });

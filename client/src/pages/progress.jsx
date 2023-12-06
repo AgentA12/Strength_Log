@@ -6,8 +6,6 @@ export default function ProgressPage() {
   return (
     <Container fluid>
       <Divider
-        variant="dashed"
-        labelPosition="left"
         label={<Title className={classes.dividerTitle}>Progress</Title>}
       />
       <ByChartContainer />

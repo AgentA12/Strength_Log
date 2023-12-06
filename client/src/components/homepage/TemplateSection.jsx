@@ -56,7 +56,7 @@ export default function TemplateSection() {
         title: `Template was deleted.`,
         message: (
           <>
-            <Text span={true} size="md" weight="bold">
+            <Text span size="md" weight="bold">
               {res.data.deleteTemplate.templateName}
             </Text>{" "}
             was successfully deleted

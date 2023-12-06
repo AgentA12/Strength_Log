@@ -170,7 +170,7 @@ export default function Hero() {
         </Text>
         <Title>
           Less Writing. More{" "}
-          <Text component="span" inherit>
+          <Text span inherit>
             Lifting.
           </Text>
         </Title>

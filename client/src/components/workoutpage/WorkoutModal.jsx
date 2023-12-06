@@ -20,6 +20,7 @@ export default function WorkoutModal({
   handleChange,
   exerciseIndex,
   exerciseComplete,
+  addSet,
 }) {
   const [currentSet, setCurrentSet] = useState(0);
   const [isResting, setIsResting] = useState(false);
@@ -46,8 +47,8 @@ export default function WorkoutModal({
       opened={opened}
       onClose={close}
     >
-      <Group justify="space-between">
-        <Title tt="capitalize" component="span">
+      <Group justify="space-between" align="center">
+        <Title ta="center" tt="capitalize">
           {templateName}
         </Title>
         <Button onClick={close}>Stop Exercise</Button>
@@ -60,29 +61,29 @@ export default function WorkoutModal({
         {setDone ? (
           <>
             <Text fw={500}>
-              {`${exercise.sets.length} / ${exercise.sets.length}`} Sets
-              Completed
+              {`${currentSet + 1} / ${exercise.sets.length}`} Sets Completed
             </Text>
-            <Button size="md" w={175} p={0} leftSection={<BsPlus size={20} />}>
+            <Button
+              onClick={() => {
+                addSet(exercise, exerciseIndex, setIsResting, setSetDone);
+              }}
+              leftSection={<BsPlus size={20} />}
+            >
               One More Set?
             </Button>
             <Button
-              size="md"
               color="green"
-              w={175}
               onClick={() => {
                 close();
                 exerciseComplete(exerciseIndex);
               }}
             >
-              Done
+              Finish Exercise
             </Button>
           </>
         ) : (
           <>
-            <Text c="dimmed">{`Set ${currentSet + 1} / ${
-              exercise.sets.length
-            }`}</Text>
+            <Text>{`Set ${currentSet + 1} / ${exercise.sets.length}`}</Text>
 
             {isResting ? (
               <Resting

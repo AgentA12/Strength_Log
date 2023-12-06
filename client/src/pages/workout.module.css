@@ -1,6 +1,6 @@
 .title {
   color: var(--mantine-color-brand-5);
-
+  margin-bottom: 0;
   @media (max-width: $mantine-breakpoint-md) {
     font-size: 20px;
   }
@@ -8,4 +8,7 @@
 
 .dividerTitle {
   color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  @media (max-width: $mantine-breakpoint-md) {
+    font-size: 20px;
+  }
 }

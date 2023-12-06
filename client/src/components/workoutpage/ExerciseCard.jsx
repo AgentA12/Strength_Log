@@ -10,6 +10,7 @@ export default function ExerciseCard({
   exerciseComplete,
   handleChange,
   exerciseIndex,
+  addSet,
 }) {
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -66,6 +67,7 @@ export default function ExerciseCard({
           templateName={template.templateName}
           handleChange={handleChange}
           exerciseComplete={exerciseComplete}
+          addSet={addSet}
         />
       ) : null}
     </>

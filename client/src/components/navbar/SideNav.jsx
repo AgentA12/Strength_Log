@@ -27,7 +27,6 @@ export default function SideNav({ toggleMobile }) {
 
   const links = linkData.map((item) => (
     <Text
-      variant="subtle"
       component={NavLink}
       to={item.link}
       className={classes.link}

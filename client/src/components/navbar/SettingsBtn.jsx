@@ -95,7 +95,7 @@ export default function SettingsNavBtn() {
         </Text>
         <Text>
           Type
-          <Text fw={900} component="span" style={{ margin: 5 }}>
+          <Text fw={900} span style={{ margin: 5 }}>
             I confirm that I am about to delete my account
           </Text>
           to confirm

@@ -27,7 +27,7 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
         </Flex>
         <Text c="dimmed" lineClamp={1}>
           {template.exercises.map((exercise, i) => (
-            <Text tt="capitalize" component="span" key={exercise.exercise._id}>
+            <Text tt="capitalize" span key={exercise.exercise._id}>
               {template.exercises.length - 1 === i
                 ? capitalizeFirstLetter(exercise.exercise.exerciseName)
                 : capitalizeFirstLetter(exercise.exercise.exerciseName) + ", "}

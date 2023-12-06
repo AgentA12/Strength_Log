@@ -87,7 +87,6 @@ export default function TemplateChart({
 
   return (
     <Line
-      style={{ width: "100%" }}
       options={options}
       data={{
         labels: labels,

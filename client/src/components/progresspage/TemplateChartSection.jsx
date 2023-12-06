@@ -1,5 +1,4 @@
-import classes from "./chart.module.css";
-import { Box, Title, Flex } from "@mantine/core";
+import { Box, Flex } from "@mantine/core";
 import {
   TemplateSelect,
   TemplateChart,
@@ -36,7 +35,7 @@ export default function TemplateChartSection({
         <MetricSelect setMetric={setMetric} metric={metric} />
       </Flex>
 
-      <Box className={classes.chartContainer}>
+      <Box >
         <TemplateChart
           activeTemplate={activeTemplate}
           userId={userID}

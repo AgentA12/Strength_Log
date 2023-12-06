@@ -1,4 +1,4 @@
-import { Container, Tabs, Text, useMantineColorScheme } from "@mantine/core";
+import {  Tabs, Text, useMantineColorScheme } from "@mantine/core";
 import { UserContext } from "../../app";
 import { useState, useContext } from "react";
 import { useQuery } from "@apollo/client";
@@ -90,16 +90,15 @@ export default function ByTemplatesContainer() {
 
   return (
     <Tabs value={activeTab} onChange={(value) => setActiveTab(value)}>
-        <Tabs.List position={isLargeScreen ? "center" : "left"} grow="true" w={'450px'}>
-          <Tabs.Tab value="Templates" leftSection={<HiOutlineTemplate />}>
-            <Text>Templates</Text>
-          </Tabs.Tab>
+      <Tabs.List >
+        <Tabs.Tab value="Templates" leftSection={<HiOutlineTemplate />}>
+          <Text>Templates</Text>
+        </Tabs.Tab>
 
-          <Tabs.Tab value="Exercises" leftSection={<IoMdFitness />}>
-            <Text> Exercises</Text>
-          </Tabs.Tab>
-        </Tabs.List>
-      
+        <Tabs.Tab value="Exercises" leftSection={<IoMdFitness />}>
+          <Text> Exercises</Text>
+        </Tabs.Tab>
+      </Tabs.List>
 
       {activeTab === "Templates" ? (
         <TemplateChartSection

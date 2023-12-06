@@ -135,6 +135,14 @@ const theme = createTheme({
         },
       }),
     },
+
+    Divider: {
+      defaultProps: {
+        variant: "dashed",
+        labelPosition: "left"
+      },
+      styles: (theme) => ({}),
+    },
   },
 
   globalStyles: () => ({}),

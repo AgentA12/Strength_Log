@@ -3,6 +3,7 @@ import { SideNav } from "./navbar";
 import { useLocation } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
 import { AiOutlineThunderbolt } from "react-icons/ai";
+
 const pathHasNavBar = {
   "/": false,
   "/login": false,

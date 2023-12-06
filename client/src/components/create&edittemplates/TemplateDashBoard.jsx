@@ -171,9 +171,6 @@ export default function TemplateDashBoard() {
     <Box>
       <Container>
         <Divider
-          my="xs"
-          labelPosition="left"
-          variant="dashed"
           label={
             <Title className={classes.title} order={2} tt="capitalize">
               {state ? `Edit ${form.values.templateName}` : "Create a template"}

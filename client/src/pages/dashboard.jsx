@@ -56,8 +56,6 @@ export default function DashBoardPage() {
   return (
     <Container fluid>
       <Divider
-        variant="dashed"
-        labelPosition="left"
         label={<Title className={classes.dividerTitle}>Dashboard</Title>}
         mb={10}
       />
