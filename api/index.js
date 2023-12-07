@@ -12,13 +12,15 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number.parseInt(process.env.PORT) || 3001;
 const app = express();
 
+app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cors());
 
-if (process.env.environment === "production") {
-  app.use(express.static(path.join(__dirname, "../client/dist")));
-}
+app.use(express.static(path.join(__dirname, "../client/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+});
 
 const server = new ApolloServer({
   typeDefs,
@@ -34,7 +36,9 @@ function startApolloServer(app, server) {
   db.once("open", async () => {
     await server.start();
     server.applyMiddleware({ path: "/graphql", app });
-    app.listen(PORT, () => {});
+    app.listen(PORT, () => {
+      console.log(process.env);
+    });
   });
 }
 
