@@ -96,7 +96,10 @@ const defaultOptions = {
 };
 
 const client = new ApolloClient({
-  uri: "/graphql",
+  uri:
+    process.env.environment === production
+      ? "strength-log-backend-lcnykx2bd-agenta12.vercel.app/graphql"
+      : "/graphql",
   cache: new InMemoryCache({
     addTypename: false,
   }),
@@ -139,7 +142,7 @@ const theme = createTheme({
     Divider: {
       defaultProps: {
         variant: "dashed",
-        labelPosition: "left"
+        labelPosition: "left",
       },
       styles: (theme) => ({}),
     },
