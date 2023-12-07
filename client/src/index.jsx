@@ -97,7 +97,7 @@ const defaultOptions = {
 
 const client = new ApolloClient({
   uri:
-    process.env.environment === production
+    process.env.environment === "production"
       ? "strength-log-backend-lcnykx2bd-agenta12.vercel.app/graphql"
       : "/graphql",
   cache: new InMemoryCache({
