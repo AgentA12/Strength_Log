@@ -6,6 +6,7 @@ import { typeDefs, resolvers } from "./schema/index.js";
 import { authMiddleWare } from "./utils/auth.js";
 import path from "path";
 import { fileURLToPath } from "url";
+import "dotenv/config";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number.parseInt(process.env.PORT) || 3001;
@@ -14,11 +15,10 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
-app.use(express.static(path.join(__dirname, "../client/dist")));
 
-app.get("*", (_, res) => {
-  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
-});
+if (process.env.environment === "production") {
+  app.use(express.static(path.join(__dirname, "../client/dist")));
+}
 
 const server = new ApolloServer({
   typeDefs,
@@ -39,3 +39,5 @@ function startApolloServer(app, server) {
 }
 
 startApolloServer(app, server);
+
+export default startApolloServer;

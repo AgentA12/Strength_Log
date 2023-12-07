@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"cd server && npm run dev \" \"cd client && npm start\"",
+    "dev": "concurrently \"cd api && npm run dev \" \"cd client && npm start\"",
     "start": "node server/index.js",
-    "install": "cd server && npm install && cd ../client && npm install"
+    "install": "cd api && npm install && cd ../client && npm install"
   },
   "keywords": [],
   "author": "",

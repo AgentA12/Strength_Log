@@ -1,4 +1,4 @@
-import db from "../config/connection";
+import db from "../config/connection.js";
 import { Exercise } from "../models/index";
 
 const seedExercises = [
