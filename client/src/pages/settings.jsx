@@ -1,12 +1,11 @@
 import {
-  Container,
   Button,
   TextInput,
   Box,
   Card,
   Text,
   Stack,
-  PasswordInput,
+  Select,
 } from "@mantine/core";
 import { useQuery, gql } from "@apollo/client";
 import { UserContext } from "../app";
@@ -32,7 +31,7 @@ export default function SettingsPage() {
   });
 
   return (
-    <Container fluid>
+    <Box style={{ maxWidth: "700px" }}>
       <Stack>
         <Card withBorder>
           <Box>
@@ -48,21 +47,27 @@ export default function SettingsPage() {
             />
           </Box>
         </Card>
-
         <Card withBorder>
           <Box>
-            <PasswordInput
-              size="md"
+            <Select
               label={
                 <Text fz={25} fw={500}>
-                  Password
+                  Theme
                 </Text>
               }
-              description="Your password for this account"
+              placeholder="Pick value"
+              description="A theme color"
+              data={[
+                "cyan",
+                "magenta",
+                "peterriver",
+                "nephritis",
+                "teal",
+                "sunflower",
+              ]}
             />
           </Box>
         </Card>
-
         <Card withBorder>
           <Box>
             <Text fz={25} fw={500}>
@@ -79,6 +84,6 @@ export default function SettingsPage() {
           </Box>
         </Card>
       </Stack>
-    </Container>
+    </Box>
   );
 }
