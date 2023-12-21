@@ -107,8 +107,9 @@ const Query = {
     }
   },
 
-  async getProgressByDate(_, { userID }) {
+  async getProgressByDate(_, { userID, offset, limit }) {
     try {
+      console.log(offset, limit);
       const data = await User.findById(userID)
         .populate({
           path: "completedWorkouts.template",
@@ -120,7 +121,9 @@ const Query = {
         })
         .select("completedWorkouts");
 
-      return data.completedWorkouts.sort((a, b) => b.createdAt - a.createdAt);
+      return data.completedWorkouts
+        .sort((a, b) => b.createdAt - a.createdAt)
+        .slice(offset, limit);
     } catch (error) {
       return error.message;
     }

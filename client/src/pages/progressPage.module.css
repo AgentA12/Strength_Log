@@ -1,0 +1,8 @@
+.dateLink {
+    color: var(--mantine-color-brand-5);
+    text-decoration: underline;
+    cursor: pointer;
+    width: fit-content;
+    font-size: 25px;
+    margin-right: 12px
+}

@@ -204,7 +204,7 @@ const typeDefs = gql`
     ): [TemplateChartData]
     getChartDataForExercises(userId: ID!): [ExerciseChartData]
     calendarTimeStamps(userId: ID!): [CalendarDates]
-    getProgressByDate(userID: ID!): [CompletedWorkouts]
+    getProgressByDate(userID: ID!, offset: Int, limit: Int): [CompletedWorkouts]
     getTemplateProgress(userID: ID!, templateID: ID!): [workout]
     getDataSummary(userID: ID!): [TotalData]
     getUserSettings(userID: ID!): User

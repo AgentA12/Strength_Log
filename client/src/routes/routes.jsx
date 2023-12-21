@@ -1,11 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import {
-  ProgressPage,
+  ProgressPageTwo,
   AuthPage,
   DashBoardPage,
   NotFoundPage,
   SettingsPage,
   WorkoutPage,
+  ProgressPage
 } from "../pages/index";
 import Protected from "../components/ProtectedRoute";
 import auth from "../utils/auth/auth";
@@ -13,6 +14,7 @@ import TemplateDashBoard from "../components/create&edittemplates/TemplateDashBo
 import UtilitiesPage from "../pages/utilities";
 import AppLayout from "../components/AppLayout";
 import DatePage from "../components/progresspage/DatePage";
+import { Progress } from "@mantine/core";
 
 const isLoggedIn = auth.isLoggedIn();
 
