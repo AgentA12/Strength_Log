@@ -1,24 +1,9 @@
 import { AppShell, Burger, Title, Group } from "@mantine/core";
 import { SideNav } from "./navbar";
-import { useLocation } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 
-const pathHasNavBar = {
-  "/": false,
-  "/login": false,
-  "/Create-template": true,
-  "/Edit-template": true,
-  "/Dashboard": true,
-  "/Progress": true,
-  "/Settings": true,
-  "/Workout": true,
-  "/Utilities": true,
-  "/notFound": false,
-};
-
-export default function AppLayout({ children }) {
-  const { pathname } = useLocation();
+export default function AppLayout({ children, hasNav }) {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
 
@@ -57,7 +42,7 @@ export default function AppLayout({ children }) {
         </Group>
       </AppShell.Header>
 
-      {pathHasNavBar[pathname] && (
+      {hasNav && (
         <AppShell.Navbar p="md">
           <SideNav toggleDesktop={toggleDesktop} toggleMobile={toggleMobile} />
         </AppShell.Navbar>

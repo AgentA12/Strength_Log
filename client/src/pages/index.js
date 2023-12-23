@@ -6,6 +6,9 @@ import ProgressPage from "./progress";
 import SettingsPage from "./settings";
 import WorkoutPage from "./workout";
 import ProgressPageTwo from "./progressPageTwo";
+import SingleWorkout from "./SingleWorkout";
+import RecentProgressPage from "./recentProgress";
+
 export {
   AuthPage,
   DashBoardPage,
@@ -15,4 +18,6 @@ export {
   SettingsPage,
   WorkoutPage,
   ProgressPageTwo,
+  SingleWorkout,
+  RecentProgressPage
 };

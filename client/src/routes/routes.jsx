@@ -1,20 +1,21 @@
 import { Route, Routes } from "react-router-dom";
 import {
   ProgressPageTwo,
+  SingleWorkout,
   AuthPage,
   DashBoardPage,
   NotFoundPage,
   SettingsPage,
   WorkoutPage,
-  ProgressPage
+  ProgressPage,
 } from "../pages/index";
+
 import Protected from "../components/ProtectedRoute";
 import auth from "../utils/auth/auth";
 import TemplateDashBoard from "../components/create&edittemplates/TemplateDashBoard";
 import UtilitiesPage from "../pages/utilities";
 import AppLayout from "../components/AppLayout";
 import DatePage from "../components/progresspage/DatePage";
-import { Progress } from "@mantine/core";
 
 const isLoggedIn = auth.isLoggedIn();
 
@@ -24,13 +25,13 @@ export default function RouteContainer() {
       <Route path="/" index element={<AuthPage isLoggedIn={isLoggedIn} />} />
 
       <Route path="/login" element={<AuthPage isLoggedIn={isLoggedIn} />} />
-      <Route path="/test" element={<DatePage isLoggedIn={isLoggedIn} />} />
+      {/* <Route path="/test" element={<DatePage isLoggedIn={isLoggedIn} />} /> */}
 
       <Route
         path="/Dashboard"
         element={
           <Protected isLoggedIn={isLoggedIn}>
-            <AppLayout>
+            <AppLayout hasNav={true}>
               <DashBoardPage />
             </AppLayout>
           </Protected>
@@ -40,7 +41,7 @@ export default function RouteContainer() {
         path="/Settings"
         element={
           <Protected isLoggedIn={isLoggedIn}>
-            <AppLayout>
+            <AppLayout hasNav={true}>
               <SettingsPage />
             </AppLayout>
           </Protected>
@@ -51,7 +52,7 @@ export default function RouteContainer() {
         path="/Create-template"
         element={
           <Protected isLoggedIn={isLoggedIn}>
-            <AppLayout>
+            <AppLayout hasNav={true}>
               <TemplateDashBoard />
             </AppLayout>
           </Protected>
@@ -62,8 +63,19 @@ export default function RouteContainer() {
         path="/Progress"
         element={
           <Protected isLoggedIn={isLoggedIn}>
-            <AppLayout>
+            <AppLayout hasNav={true}>
               <ProgressPage />
+            </AppLayout>
+          </Protected>
+        }
+      />
+
+      <Route
+        path="/Progress/:workoutId"
+        element={
+          <Protected isLoggedIn={isLoggedIn}>
+            <AppLayout hasNav={true}>
+              <SingleWorkout />
             </AppLayout>
           </Protected>
         }
@@ -73,7 +85,7 @@ export default function RouteContainer() {
         path="/Workout"
         element={
           <Protected isLoggedIn={isLoggedIn}>
-            <AppLayout>
+            <AppLayout hasNav={true}>
               <WorkoutPage />
             </AppLayout>
           </Protected>
@@ -84,7 +96,7 @@ export default function RouteContainer() {
         path="/Utilities"
         element={
           <Protected isLoggedIn={isLoggedIn}>
-            <AppLayout>
+            <AppLayout hasNav={true}>
               <UtilitiesPage />
             </AppLayout>
           </Protected>
