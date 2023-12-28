@@ -1,4 +1,4 @@
-import {  Tabs, Text, useMantineColorScheme } from "@mantine/core";
+import { Container, Tabs, Text, useMantineColorScheme } from "@mantine/core";
 import { UserContext } from "../../app";
 import { useState, useContext } from "react";
 import { useQuery } from "@apollo/client";
@@ -35,12 +35,12 @@ ChartJS.register(
   TimeScale
 );
 
-export default function ByTemplatesContainer() {
+export default function ByTemplatesContainer({ activeTab = "templates" }) {
   const {
     data: { _id: userID },
   } = useContext(UserContext);
 
-  const isLargeScreen = useMediaQuery("(max-width: 48em)");
+  // const isLargeScreen = useMediaQuery("(max-width: 48em)");
 
   const unit = " Lbs";
 
@@ -77,7 +77,7 @@ export default function ByTemplatesContainer() {
   };
 
   const [range, setRange] = useState("Last month");
-  const [activeTab, setActiveTab] = useState("Templates");
+  // const [activeTab, setActiveTab] = useState("Templates");
   const [activeTemplate, setActiveTemplate] = useState("All templates");
   const [activeExercise, setActiveExercise] = useState("All Exercises");
   const [metric, setMetric] = useState("Total Volume");
@@ -89,18 +89,18 @@ export default function ByTemplatesContainer() {
   });
 
   return (
-    <Tabs value={activeTab} onChange={(value) => setActiveTab(value)}>
-      <Tabs.List >
-        <Tabs.Tab value="Templates" leftSection={<HiOutlineTemplate />}>
-          <Text>Templates</Text>
-        </Tabs.Tab>
+    // <Tabs value={activeTab} onChange={(value) => setActiveTab(value)}>
+    //   <Tabs.List >
+    //     <Tabs.Tab value="Templates" leftSection={<HiOutlineTemplate />}>
+    //       <Text>Templates</Text>
+    //     </Tabs.Tab>
 
-        <Tabs.Tab value="Exercises" leftSection={<IoMdFitness />}>
-          <Text> Exercises</Text>
-        </Tabs.Tab>
-      </Tabs.List>
-
-      {activeTab === "Templates" ? (
+    //     <Tabs.Tab value="Exercises" leftSection={<IoMdFitness />}>
+    //       <Text> Exercises</Text>
+    //     </Tabs.Tab>
+    //   </Tabs.List>
+    <Container fluid style={{maxWidth: 1200}}>
+      {activeTab === "templates" ? (
         <TemplateChartSection
           templates={byTemplateData?.getTemplates}
           activeTemplate={activeTemplate}
@@ -118,13 +118,13 @@ export default function ByTemplatesContainer() {
           setActiveExercise={setActiveExercise}
           userID={userID}
           setRange={setRange}
-          activeTemplate={activeTemplate}
           range={range}
           options={options}
           setMetric={setMetric}
           metric={metric}
         />
       )}
-    </Tabs>
+    </Container>
+    // </Tabs>
   );
 }

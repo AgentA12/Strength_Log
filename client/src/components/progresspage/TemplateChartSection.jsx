@@ -19,23 +19,24 @@ export default function TemplateChartSection({
 }) {
   return (
     <>
+      <Box mt={25} style={{ width: "fit-content" }}>
+        <TemplateSelect
+          templates={templates ? templates : []}
+          activeTemplate={activeTemplate}
+          setActiveTemplate={setActiveTemplate}
+        />
+      </Box>
       <Flex
         wrap="wrap"
         gap={5}
         justify={{ base: "center", sm: "left" }}
         my={15}
       >
-        <TemplateSelect
-          templates={templates ? templates : []}
-          activeTemplate={activeTemplate}
-          setActiveTemplate={setActiveTemplate}
-        />
-
         <DateRangeSelect setRange={setRange} />
         <MetricSelect setMetric={setMetric} metric={metric} />
       </Flex>
 
-      <Box >
+      <Box>
         <TemplateChart
           activeTemplate={activeTemplate}
           userId={userID}

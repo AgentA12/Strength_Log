@@ -87,9 +87,9 @@ let colors = {
 };
 
 const defaultOptions = {
-  watchQuery: {
-    errorPolicy: "ignore",
-  },
+  // watchQuery: {
+  //   errorPolicy: "ignore",
+  // },
   query: {
     errorPolicy: "all",
   },
@@ -150,19 +150,19 @@ const theme = createTheme({
   colorScheme: "dark",
   loader: "spinner",
   colors: {
-    brand: colors.sunflower,
-    dark: [
-      "#fff",
-      "#fff",
-      "#666",
-      "#333",
-      "#333",
-      "#111",
-      "#000",
-      "#000",
-      "#000",
-      "#000",
-    ],
+    brand: colors.magenta,
+    // dark: [
+    //   "#fff",
+    //   "#fff",
+    //   "#666",
+    //   "#333",
+    //   "#333",
+    //   "#111",
+    //   "#000",
+    //   "#000",
+    //   "#000",
+    //   "#000",
+    // ],
   },
   primaryColor: "brand",
 });

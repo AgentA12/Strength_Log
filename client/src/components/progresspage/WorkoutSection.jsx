@@ -12,9 +12,13 @@ export default function SingleWorkout({ workout }) {
         className={classes.dateLink}
         component={Link}
         to={`/progress/${workout._id}`}
-        state={{ workout: workout }}
+        state={{ workoutID: workout._id }}
       >
-        {new Date(parseInt(workout.createdAt)).toLocaleDateString()}
+        {new Date(parseInt(workout.createdAt)).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}
       </Text>
       <Text>
         {workout.template
@@ -28,7 +32,7 @@ export default function SingleWorkout({ workout }) {
       </Stack>
 
       {workout.exercises.map((exercise) => (
-        <Box key={uuidv4()} style={{ maxWidth: "1000px" }}>
+        <Box key={uuidv4()} style={{ maxWidth: "900px" }}>
           <ExerciseTable exercise={exercise} />
         </Box>
       ))}

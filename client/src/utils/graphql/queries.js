@@ -86,8 +86,8 @@ export const GET_TEMPLATE_PROGRESS = gql`
 `;
 
 export const GET_PROGRESS_BY_DATE = gql`
-  query ($userID: ID!, $offset: Int, $limit: Int) {
-    getProgressByDate(userID: $userID, offset: $offset, limit: $limit) {
+  query ($userID: ID!, $workoutID: ID) {
+    getProgressByDate(userID: $userID, workoutID: $workoutID) {
       createdAt
       _id
       template {

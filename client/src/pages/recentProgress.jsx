@@ -31,11 +31,9 @@ export default function RecentProgressPage() {
 
   useEffect(() => {
     if (data) setWorkouts(chunk(data.getProgressByDate, limitPerPage));
-  }, [data]);
+  }, [loading]);
 
   if (loading) return "loading...";
-
-  if (error) return <Text>{error.message}</Text>;
 
   function filterWorkouts(sortBy) {
     let bufferData = [...workouts].flat();
@@ -59,6 +57,8 @@ export default function RecentProgressPage() {
     setPage(1);
   }
 
+  if (error) return <Text color="red">{error.message}</Text>;
+
   if (workouts)
     return (
       <Container fluid mt={12}>
@@ -71,16 +71,17 @@ export default function RecentProgressPage() {
             onChange={filterWorkouts}
           />
         </Group>
+
+        {workouts[activePage - 1].map((workout) => (
+          <WorkoutSection key={workout._id} workout={workout} />
+        ))}
+
         <Pagination
           total={workouts.length}
           value={activePage}
           onChange={setPage}
           withEdges
         />
-
-        {workouts[activePage - 1].map((workout) => (
-          <WorkoutSection key={workout._id} workout={workout} />
-        ))}
       </Container>
     );
 }

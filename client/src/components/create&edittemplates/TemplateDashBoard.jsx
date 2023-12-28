@@ -74,6 +74,7 @@ export default function TemplateDashBoard() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+
     if (!form.validate().hasErrors) {
       try {
         let mutationRes;
@@ -199,6 +200,7 @@ export default function TemplateDashBoard() {
               mb={15}
               loading={submitLoading || editTemplateLoading}
               onClick={handleSubmit}
+              disabled={form.values.exercises.length < 1}
             >
               Save Template
             </Button>

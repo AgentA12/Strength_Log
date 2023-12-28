@@ -107,25 +107,74 @@ const Query = {
     }
   },
 
-  async getProgressByDate(_, { userID, offset, limit }) {
+  async getProgressByDate(_, { userID, workoutID }) {
     try {
-      console.log(offset, limit);
-      const data = await User.findById(userID)
-        .populate({
-          path: "completedWorkouts.template",
-          model: "Template",
-        })
-        .populate({
-          path: "completedWorkouts.exercises.exercise",
-          model: "Exercise",
-        })
-        .select("completedWorkouts");
+      if (workoutID) {
+        // get the specific workout with workout id,
+        // get all previous workouts that include the same template as the specific workout
+        // write a compareWorkouts function that shows the different weights completed
 
-      return data.completedWorkouts
-        .sort((a, b) => b.createdAt - a.createdAt)
-        .slice(offset, limit);
+        // const user = await User.findById(userID).populate({
+        //   path: "completedWorkouts.template",
+        //   model: "Template",
+        //   match: { _id: workoutID },
+        //   options: {},
+        // });
+
+        const { completedWorkouts } = await User.findById(userID)
+          .populate({
+            path: "completedWorkouts.template",
+            model: "Template",
+          })
+          .populate({
+            path: "completedWorkouts.exercises.exercise",
+            model: "Exercise",
+          })
+          .select("completedWorkouts");
+
+        const sortedWorkoutHistory = completedWorkouts.sort(
+          (a, b) => b.createdAt - a.createdAt
+        );
+
+        const filteredWorkout = sortedWorkoutHistory.map(function (workout, i) {
+          if (workout._id.toString() === workoutID.toString()) {
+            return { workout: workout, workoutBefore: sortedWorkoutHistory[i] };
+          }
+        })[0];
+
+        function compareExercises(exerciseArrayOne, exerciseArrayTwo) {
+          exerciseArrayOne.map((exercise, i) => {
+            exerciseArrayTwo.map((exerciseTwo, x) => {
+              if (
+                exercise.exercise._id.toString() ===
+                exercise.exercise._id.toString()
+              ) {
+              }
+            });
+          });
+        }
+
+        compareExercises(
+          filteredWorkout.workout.exercises,
+          filteredWorkout.workoutBefore.exercises
+        );
+      } else {
+        const data = await User.findOne({ _id: userID })
+          .populate({
+            path: "completedWorkouts.template",
+            model: "Template",
+          })
+          .populate({
+            path: "completedWorkouts.exercises.exercise",
+            model: "Exercise",
+          })
+          .select("completedWorkouts");
+
+        return data.completedWorkouts.sort((a, b) => b.createdAt - a.createdAt);
+      }
     } catch (error) {
-      return error.message;
+      console.log(error);
+      return error;
     }
   },
 
