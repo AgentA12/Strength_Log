@@ -17,7 +17,7 @@ export default function ExerciseForm({
 }) {
   return (
     <Card withBorder my={10}>
-      <Group position="apart">
+      <Group justify="space-between">
         <Title tt="capitalize" order={2}>
           {form.values.exercises[exerciseIndex].exerciseName}
         </Title>

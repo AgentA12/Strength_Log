@@ -1,12 +1,17 @@
 import { useLocation } from "react-router-dom";
-import { WorkoutSection } from "../components/progresspage/index";
-import { gql, useQuery } from "@apollo/client";
-import { Loader, Box, Stack, Text } from "@mantine/core";
+import { useQuery } from "@apollo/client";
+import { Group, Loader, Box, Stack, Text, Title } from "@mantine/core";
 import { GET_PROGRESS_BY_DATE } from "../utils/graphql/queries";
 import { useContext } from "react";
 import { UserContext } from "../app";
 import { ExerciseTable } from "../components/progresspage/index";
 import { v4 as uuidv4 } from "uuid";
+import {
+  getTotalReps,
+  getTotalSets,
+  getTotalVolume,
+  getTotalVolumeForExercise,
+} from "../utils/helpers/functions";
 
 export default function SingleWorkout() {
   const {
@@ -25,43 +30,86 @@ export default function SingleWorkout() {
 
   if (error) return <Text color="red">{error.message}</Text>;
 
-  const workout = {
-    createdAt: Date.now(),
-    exercises: [
-      {
-        exercise: { exerciseName: "Bench press" },
-        change: 12,
-        sets: [
-          {
-            weight: 155,
-            reps: 5,
-          },
-        ],
-      },
-    ],
-  };
+  const selectedWorkout = data.getProgressByDate[0];
+  const previousWorkout = data.getProgressByDate[1];
+
+  function compareExerciseSets(setsOne, setsTwo) {
+    let result;
+    result = setsOne.map((set, i) => {
+      if (setsTwo[i] != undefined) {
+        return {
+          ...set,
+          change: set.weight - setsTwo[i].weight,
+        };
+      } else {
+        return {
+          ...set,
+          change: "added set",
+        };
+      }
+    });
+    return result;
+  }
+
+  function compareWorkouts(selectedWorkout, previousWorkout) {
+    let result = [];
+    selectedWorkout.exercises.map((exercise) => {
+      previousWorkout.exercises.map((exerciseTwo) => {
+        if (exercise.exercise._id === exerciseTwo.exercise._id) {
+          result.push({
+            exerciseName: exercise.exercise.exerciseName,
+            sets: compareExerciseSets(exercise.sets, exerciseTwo.sets),
+          });
+        }
+      });
+    });
+
+    return result;
+  }
+
+  const workout = compareWorkouts(selectedWorkout, previousWorkout);
 
   return (
-    <Box key={uuidv4()}>
-      <Text>
-        {new Date(parseInt(workout.createdAt)).toLocaleDateString("en-US", {
+    <Stack gap={0} key={uuidv4()} mb={120}>
+      <Title fw={600} c="teal.4">
+        {new Date(
+          parseInt(data.getProgressByDate[0].createdAt)
+        ).toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",
           day: "numeric",
         })}
-      </Text>
-      <Text>Upper Body</Text>
+      </Title>
 
       <Stack gap={0}>
-        <Text>Total Volume</Text>
-        <Text>123455</Text>
+        <Title order={2} tt="capitalize">
+          {data.getProgressByDate[0].template.templateName.toString()}
+        </Title>
+        <Text size="xl">
+          Total Volume: {getTotalVolume(selectedWorkout.exercises)} Lbs
+        </Text>
       </Stack>
 
-      {workout.exercises.map((exercise) => (
-        <Box key={uuidv4()} style={{ maxWidth: "900px" }}>
+      {workout.map((exercise) => (
+        <Box key={uuidv4()} mx={12} my={20} style={{ maxWidth: "900px" }}>
+          <Group>
+            <Text
+              style={{ cursor: "pointer" }}
+              td="underline"
+              size="xl"
+              c="teal.4"
+              tt="capitalize"
+              fw={700}
+            >
+              {exercise.exerciseName}
+            </Text>
+            <Text>Volume: {getTotalVolumeForExercise(exercise)}</Text>
+            <Text>Reps: {getTotalReps(exercise)}</Text>
+            <Text>Sets: {exercise.sets.length}</Text>
+          </Group>
           <ExerciseTable exercise={exercise} />
         </Box>
       ))}
-    </Box>
+    </Stack>
   );
 }

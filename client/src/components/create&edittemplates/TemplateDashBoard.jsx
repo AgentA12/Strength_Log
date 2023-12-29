@@ -169,15 +169,15 @@ export default function TemplateDashBoard() {
   }
 
   return (
-    <Box>
-      <Container>
-        <Divider
-          label={
-            <Title className={classes.title} order={2} tt="capitalize">
-              {state ? `Edit ${form.values.templateName}` : "Create a template"}
-            </Title>
-          }
-        />
+    <Container fluid>
+      <Divider
+        label={
+          <Title className={classes.title} order={2} tt="capitalize">
+            {state ? `Edit ${form.values.templateName}` : "Create a template"}
+          </Title>
+        }
+      />
+      <Box maw={1200}>
         <form>
           <TextInput
             label={<Text>Template Name</Text>}
@@ -212,24 +212,26 @@ export default function TemplateDashBoard() {
               <Button onClick={open}>Add Exercise</Button>
             </Flex>
             {form.values.exercises.map((_, exerciseIndex) => (
-              <ExerciseForm
-                key={uuidv4()}
-                exerciseIndex={exerciseIndex}
-                form={form}
-                removeExercise={removeExercise}
-                addSet={addSet}
-                removeSet={removeSet}
-              />
+              <Box maw={475} key={uuidv4()}>
+                <ExerciseForm
+                  exerciseIndex={exerciseIndex}
+                  form={form}
+                  removeExercise={removeExercise}
+                  addSet={addSet}
+                  removeSet={removeSet}
+                />
+              </Box>
             ))}
           </Flex>
         </form>
-        <SelectExerciseModal
-          opened={opened}
-          close={close}
-          addExercise={addExercise}
-          exercises={exercises}
-        />
-      </Container>
-    </Box>
+      </Box>
+
+      <SelectExerciseModal
+        opened={opened}
+        close={close}
+        addExercise={addExercise}
+        exercises={exercises}
+      />
+    </Container>
   );
 }

@@ -116,3 +116,12 @@ export const CALENDAR_TIMESTAMPS = gql`
     }
   }
 `;
+
+export const GET_STAT_SUMMARY = gql`
+  query ($userID: ID!) {
+    getDataSummary(userID: $userID) {
+      label
+      stat
+    }
+  }
+`;

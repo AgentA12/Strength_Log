@@ -54,7 +54,7 @@ export default function Resting({ restTime, handleContinue }) {
           </Stack>
         }
         thickness={4}
-        sections={[{ value: percentage, color: "brand" }]}
+        sections={[{ value: percentage, color: "teal" }]}
       />
       <Button onClick={handleContinue}>Skip</Button>
     </Stack>

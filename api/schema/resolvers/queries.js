@@ -110,18 +110,13 @@ const Query = {
   async getProgressByDate(_, { userID, workoutID }) {
     try {
       if (workoutID) {
-        // get the specific workout with workout id,
-        // get all previous workouts that include the same template as the specific workout
-        // write a compareWorkouts function that shows the different weights completed
+        // query the user by userID
+        // on that returned query select only the completedWorkouts
 
-        // const user = await User.findById(userID).populate({
-        //   path: "completedWorkouts.template",
-        //   model: "Template",
-        //   match: { _id: workoutID },
-        //   options: {},
-        // });
-
-        const { completedWorkouts } = await User.findById(userID)
+        const { completedWorkouts } = await User.findById(
+          userID,
+          "completedWorkouts"
+        )
           .populate({
             path: "completedWorkouts.template",
             model: "Template",
@@ -129,35 +124,31 @@ const Query = {
           .populate({
             path: "completedWorkouts.exercises.exercise",
             model: "Exercise",
-          })
-          .select("completedWorkouts");
+          });
 
-        const sortedWorkoutHistory = completedWorkouts.sort(
-          (a, b) => b.createdAt - a.createdAt
+        const completedWorkout = completedWorkouts.find(
+          (workout) => workout._id.toString() === workoutID
         );
 
-        const filteredWorkout = sortedWorkoutHistory.map(function (workout, i) {
+        const templateID = completedWorkout.template._id.toString();
+
+        const sameTemplates = completedWorkouts
+          .filter(
+            (workout) =>
+              workout?.template?._id?.toString() === templateID.toString()
+          )
+          .sort((a, b) => b.createdAt - a.createdAt);
+
+        const summary = sameTemplates.map(function (workout, i) {
           if (workout._id.toString() === workoutID.toString()) {
-            return { workout: workout, workoutBefore: sortedWorkoutHistory[i] };
+            return [
+              workout,
+              sameTemplates[i + 1] ? sameTemplates[i + 1] : null,
+            ];
           }
         })[0];
 
-        function compareExercises(exerciseArrayOne, exerciseArrayTwo) {
-          exerciseArrayOne.map((exercise, i) => {
-            exerciseArrayTwo.map((exerciseTwo, x) => {
-              if (
-                exercise.exercise._id.toString() ===
-                exercise.exercise._id.toString()
-              ) {
-              }
-            });
-          });
-        }
-
-        compareExercises(
-          filteredWorkout.workout.exercises,
-          filteredWorkout.workoutBefore.exercises
-        );
+        return summary;
       } else {
         const data = await User.findOne({ _id: userID })
           .populate({
@@ -173,7 +164,6 @@ const Query = {
         return data.completedWorkouts.sort((a, b) => b.createdAt - a.createdAt);
       }
     } catch (error) {
-      console.log(error);
       return error;
     }
   },

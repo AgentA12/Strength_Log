@@ -18,7 +18,6 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { UserContext } from "../../app";
 import { showNotification } from "@mantine/notifications";
 import { Link } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
 import { useDisclosure } from "@mantine/hooks";
 
 export default function TemplateSection() {
@@ -35,8 +34,6 @@ export default function TemplateSection() {
     fetchPolicy: "network-only", // Used for first execution
     variables: {
       userId: _id,
-      // offset: 0,
-      // limit: 10
     },
   });
 
@@ -59,7 +56,7 @@ export default function TemplateSection() {
             <Text span size="md" weight="bold">
               {res.data.deleteTemplate.templateName}
             </Text>{" "}
-            was successfully deleted
+            was successfully deleted.
           </>
         ),
         autoClose: 3000,
@@ -93,7 +90,6 @@ export default function TemplateSection() {
   }
 
   function displayQueryState() {
-    // is the query loading?
     if (loading)
       return (
         <>
@@ -102,40 +98,36 @@ export default function TemplateSection() {
           <Skeleton width={"auto"} height={120} />{" "}
           <Skeleton width={"auto"} height={120} />{" "}
           <Skeleton width={"auto"} height={120} />{" "}
-          <Skeleton width={"auto"} height={120} />{" "}
         </>
       );
-    // does the array of templates have length? display the template cards
+
     if (templates.length)
       return templates.map((template, i) => (
         <div key={template._id}>
-          <AnimatePresence>
-            <motion.div
-              layout
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: i * 0.08,
-                type: "spring",
-                stiffness: 700,
-                damping: 30,
-              }}
-            >
-              <TemplateCard
-                template={template}
-                refetch={refetch}
-                handleTemplateDelete={handleTemplateDelete}
-                key={template._id}
-              />
-            </motion.div>
-          </AnimatePresence>
+          <div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: i * 0.08,
+              type: "spring",
+              stiffness: 700,
+              damping: 30,
+            }}
+          >
+            <TemplateCard
+              template={template}
+              refetch={refetch}
+              handleTemplateDelete={handleTemplateDelete}
+              key={template._id}
+            />
+          </div>
         </div>
       ));
     return <Text size="xl">You have no templates saved.</Text>;
   }
 
   return (
-    <Box component="section">
+    <Box component="section" mb={100}>
       <StartWorkoutModal
         opened={opened}
         close={close}

@@ -1,14 +1,9 @@
-import {
-  List,
-  Modal,
-  Select,
-  Text,
-  ThemeIcon,
-} from "@mantine/core";
+import { List, Modal, Select, Text, ThemeIcon } from "@mantine/core";
 import { TbBarbell } from "react-icons/tb";
 import { MdCable, MdOutlineAirlineSeatFlatAngled } from "react-icons/md";
 import { LiaDumbbellSolid } from "react-icons/lia";
 import { GiBodyBalance } from "react-icons/gi";
+import classes from "./templatedashboard.module.css";
 
 function getExerciseIcon(str) {
   switch (str.toLowerCase()) {
@@ -26,18 +21,6 @@ function getExerciseIcon(str) {
       <TbBarbell />;
   }
 }
-
-// list: {
-//   borderRadius: 5,
-//   margin: 2,
-//   "&:hover": {
-//     backgroundColor:
-//       theme.colorScheme === "dark"
-//         ? theme.colors.dark[5]
-//         : theme.colors.gray[1],
-//     cursor: "pointer",
-//   },
-// },
 
 export default function SelectExerciseModal({
   opened,
@@ -72,6 +55,7 @@ export default function SelectExerciseModal({
                 {getExerciseIcon(e.equipment)}
               </ThemeIcon>
             }
+            className={classes.listStyles}
             key={e._id}
           >
             <Text fz={15} fw="bold">

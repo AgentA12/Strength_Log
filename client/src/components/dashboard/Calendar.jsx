@@ -32,14 +32,10 @@ export default function Calendar() {
     const dateSelected = calendarTimeStamps.filter((d) =>
       compareDatesByDay(date, new Date(parseInt(d.createdAt)))
     );
-
     if (dateSelected.length > 0) {
-      navigate("/Progress", {
-        state: {
-          viewCurrentTemplate: dateSelected,
-          activeSectionParam: "Date",
-        },
-      });
+      const workoutID = dateSelected[0]._id;
+
+      navigate(`/progress/${workoutID}`, { state: { workoutID: workoutID } });
     }
   }
 

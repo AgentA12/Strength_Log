@@ -1,3 +1,16 @@
 .title {
-    color: var(--mantine-color-brand-4)
+  color: var(--mantine-color-teal-4);
 }
+
+.listStyles {
+  border-radius: 5;
+  margin: 2;
+  cursor: pointer;
+}
+
+.listStyles:hover {
+    background-color: light-dark(
+      var(--mantine-color-gray-1),
+      var(--mantine-color-dark-5)
+    );
+  }

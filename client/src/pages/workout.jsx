@@ -22,9 +22,9 @@ import { AiOutlineCheck } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
 
 export default function WorkoutPage() {
-  window.addEventListener("beforeunload", () => {
-    console.log("user is leaving");
-  });
+  // window.addEventListener("beforeunload", () => {
+  //   console.log("user is leaving");
+  // });
   const {
     state: { template },
   } = useLocation();

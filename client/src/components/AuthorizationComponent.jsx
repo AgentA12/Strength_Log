@@ -13,6 +13,13 @@ import {
 } from "@mantine/core";
 import { AiOutlineThunderbolt, AiFillLock } from "react-icons/ai";
 
+const linkStyles = {
+  marginTop: 12,
+  display: "inline-block",
+  cursor: "pointer",
+  width: "fit-content",
+};
+
 export default function AuthorizationComponent() {
   const [type, setType] = useState("Login");
 
@@ -55,7 +62,6 @@ export default function AuthorizationComponent() {
   async function handleSubmit(event) {
     setError(false);
     event.preventDefault();
-
     try {
       if (type === "Login") {
         const { data } = await loginUser({
@@ -66,6 +72,9 @@ export default function AuthorizationComponent() {
 
         Auth.login(data.login.token);
       } else {
+        if (!formState.password.trim()) {
+          setError("invalid password");
+        }
         const { data } = await addUser({
           variables: {
             ...formState,
@@ -75,7 +84,6 @@ export default function AuthorizationComponent() {
         Auth.login(data.createUser.token);
       }
     } catch (error) {
-      console.log(error);
       setError(error.message);
     }
   }
@@ -107,8 +115,9 @@ export default function AuthorizationComponent() {
           value={formState.username}
           onFocus={() => setError(null)}
           error={
-            error === "incorrect username" ||
-            (error === "Username is taken" && error)
+            error === "incorrect username"
+              ? error
+              : error === "Username is taken" && error
           }
           disabled={loginLoading ? loginLoading : signupLoading}
         />
@@ -136,11 +145,7 @@ export default function AuthorizationComponent() {
 
       <Text
         span
-        style={{
-          marginTop: 12,
-          display: "inline-block",
-          cursor: "pointer",
-        }}
+        style={linkStyles}
         td="underline"
         onClick={() => handleTypeSwitch(type === "Login" ? "Signup" : "Login")}
       >

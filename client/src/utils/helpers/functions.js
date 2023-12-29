@@ -140,13 +140,26 @@ function getTotalVolume(exercises) {
   return TotalVolume;
 }
 
-const getTotalReps = (exercises) =>
-  exercises.reduce(
-    (accumulator, currentValue) =>
-      accumulator +
-      currentValue.sets.reduce((total, set) => (total += set.reps), 0),
+const getTotalVolumeForExercise = (exercise) => {
+  console.log(exercise);
+  return exercise.sets.reduce(
+    (total, set) => (total += set.weight * set.reps),
     0
   );
+};
+
+const getTotalReps = (exercises) => {
+  if (exercises?.length != undefined) {
+    return exercises.reduce(
+      (accumulator, currentValue) =>
+        accumulator +
+        currentValue.sets.reduce((total, set) => (total += set.reps), 0),
+      0
+    );
+  } else {
+    return exercises.sets.reduce((total, set) => (total += set.reps), 0);
+  }
+};
 
 const getTotalSets = (exercises) =>
   exercises.reduce(
@@ -175,7 +188,6 @@ function formatWorkoutState(template) {
   return workoutState;
 }
 
-
 export {
   getOneRepMax,
   capitalizeFirstLetter,
@@ -190,5 +202,6 @@ export {
   getTotalSets,
   getPercentageOf1RM,
   getRandomInt,
-  formatWorkoutState
+  formatWorkoutState,
+  getTotalVolumeForExercise,
 };

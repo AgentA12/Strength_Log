@@ -150,7 +150,6 @@ const theme = createTheme({
   colorScheme: "dark",
   loader: "spinner",
   colors: {
-    brand: colors.magenta,
     // dark: [
     //   "#fff",
     //   "#fff",
@@ -164,7 +163,7 @@ const theme = createTheme({
     //   "#000",
     // ],
   },
-  primaryColor: "brand",
+  primaryColor: "teal",
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
