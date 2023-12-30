@@ -12,6 +12,7 @@
     "@mantine/hooks": "^7.2.2",
     "@mantine/modals": "^7.2.2",
     "@mantine/notifications": "^7.2.2",
+    "@tabler/icons-react": "^2.44.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/user-event": "^13.5.0",
     "chart.js": "^4.3.0",

@@ -92,7 +92,7 @@ function ProgressTable({ exercise }) {
   return (
     <Container fluid>
       <Text>{exercise.exerciseName}</Text>
-      <Table>
+      <Table highlightOnHover withTableBorder withColumnBorders>
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Set</Table.Th>

@@ -141,7 +141,6 @@ function getTotalVolume(exercises) {
 }
 
 const getTotalVolumeForExercise = (exercise) => {
-  console.log(exercise);
   return exercise.sets.reduce(
     (total, set) => (total += set.weight * set.reps),
     0

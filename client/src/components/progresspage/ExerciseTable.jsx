@@ -17,7 +17,7 @@ export default function ExerciseTable({ exercise }) {
   ));
 
   return (
-    <Table>
+    <Table highlightOnHover withTableBorder withColumnBorders>
       <Table.Thead>
         <Table.Tr>
           <Table.Th>Set</Table.Th>

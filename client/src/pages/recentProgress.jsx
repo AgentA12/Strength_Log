@@ -79,7 +79,9 @@ export default function RecentProgressPage() {
         <Pagination
           total={workouts.length}
           value={activePage}
-          onChange={setPage}
+          onChange={(val) => {
+            setPage(val), window.scrollTo(0, 0);
+          }}
           withEdges
         />
       </Container>

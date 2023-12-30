@@ -12,6 +12,7 @@ import TemplateChartSection from "./TemplateChartSection";
 import OneRepMaxTable from "./OneRepMaxTable";
 import WorkoutSection from "./WorkoutSection";
 import ExerciseTable from "./ExerciseTable";
+import TotalStatDisplay from "./TotalStatDisplay";
 
 export {
   SectionMenu,
@@ -28,4 +29,5 @@ export {
   OneRepMaxTable,
   WorkoutSection,
   ExerciseTable,
+  TotalStatDisplay,
 };
