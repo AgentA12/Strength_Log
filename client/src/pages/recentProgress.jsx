@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { UserContext } from "../../src/app";
-import { Group, Select, Text, Pagination, Container } from "@mantine/core";
+import { Group, Select, Text, Pagination, Container, Loader } from "@mantine/core";
 import { useQuery } from "@apollo/client";
 import { GET_PROGRESS_BY_DATE } from "../utils/graphql/queries";
 import { WorkoutSection } from "../components/progresspage/index";
@@ -33,7 +33,7 @@ export default function RecentProgressPage() {
     if (data) setWorkouts(chunk(data.getProgressByDate, limitPerPage));
   }, [loading]);
 
-  if (loading) return "loading...";
+  if (loading) return <Loader />;
 
   function filterWorkouts(sortBy) {
     let bufferData = [...workouts].flat();
@@ -57,7 +57,7 @@ export default function RecentProgressPage() {
     setPage(1);
   }
 
-  if (error) return <Text color="red">{error.message}</Text>;
+  if (error) return <Text c="red">{error.message}</Text>;
 
   if (workouts)
     return (

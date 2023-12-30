@@ -1,8 +1,8 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { Group, Loader, Box, Stack, Text, Title, Select } from "@mantine/core";
-import { GET_PROGRESS_BY_DATE } from "../utils/graphql/queries";
-import { useContext } from "react";
+import { COMPARE_WORKOUTS } from "../utils/graphql/queries";
+import { useContext, useState } from "react";
 import { UserContext } from "../app";
 import {
   ExerciseTable,
@@ -25,25 +25,45 @@ export default function SingleWorkout() {
     data: { _id: userID },
   } = useContext(UserContext);
 
-  const { data, error, loading } = useQuery(GET_PROGRESS_BY_DATE, {
+  const { data, error, loading } = useQuery(COMPARE_WORKOUTS, {
     variables: { userID: userID, workoutID: workoutID },
   });
 
   if (loading) return <Loader />;
 
-  if (error) return <Text color="red">{error.message}</Text>;
+  if (error) return <Text c="red">{error.message}</Text>;
 
-  const selectedWorkout = data.getProgressByDate[0];
-  const previousWorkout =
-    data.getProgressByDate[1] === null ? null : data.getProgressByDate[1];
+  console.log(data.compareWorkouts);
 
+  if (data.compareWorkouts.hasLatterWorkout != true)
+    return (
+      <Stack gap={0} key={uuidv4()} mb={120}>
+        <Title fw={600} c="teal.4">
+          {new Date(
+            parseInt(data.compareWorkouts.formerWorkout.createdAt)
+          ).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </Title>
+
+        <Title order={2} tt="capitalize">
+          {data.compareWorkouts.formerWorkout.template.templateName.toString()}
+        </Title>
+        <Text>No previous workouts saved</Text>
+      </Stack>
+    );
+
+  const selectedWorkout = data.compareWorkouts.formerWorkout;
+  const previousWorkout = data.compareWorkouts.latterWorkout;
   const workout = compareWorkouts(selectedWorkout, previousWorkout);
 
   return (
     <Stack gap={0} key={uuidv4()} mb={120}>
       <Title fw={600} c="teal.4">
         {new Date(
-          parseInt(data.getProgressByDate[0].createdAt)
+          parseInt(data.compareWorkouts.formerWorkout.createdAt)
         ).toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",
@@ -53,12 +73,23 @@ export default function SingleWorkout() {
 
       <Stack gap={0}>
         <Title order={2} tt="capitalize">
-          {data.getProgressByDate[0].template.templateName.toString()}
+          {data.compareWorkouts.formerWorkout.template.templateName.toString()}
         </Title>
+        <Text fw={300} size="xl">
+          Compared to Previous workout{" "}
+          <Text span c="teal.4" td="underline">
+            {new Date(
+              parseInt(data.compareWorkouts.latterWorkout.createdAt)
+            ).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </Text>
+        </Text>
         <Select
           my={5}
           w={"fit-content"}
-          description="Compare To"
           defaultValue={"Previous Workout"}
           data={["Previous Workout", "Orginal Template"]}
         />
@@ -181,21 +212,14 @@ function compareExerciseSets(setsOne, setsTwo) {
 function compareWorkouts(selectedWorkout, previousWorkout) {
   let result = [];
   selectedWorkout.exercises.map((exercise) => {
-    if (previousWorkout === null) {
-      result.push({
-        exerciseName: exercise.exercise.exerciseName,
-        sets: exercise.sets,
-      });
-    } else {
-      previousWorkout.exercises.map((exerciseTwo) => {
-        if (exercise.exercise._id === exerciseTwo.exercise._id) {
-          result.push({
-            exerciseName: exercise.exercise.exerciseName,
-            sets: compareExerciseSets(exercise.sets, exerciseTwo.sets),
-          });
-        }
-      });
-    }
+    previousWorkout.exercises.map((exerciseTwo) => {
+      if (exercise.exercise._id === exerciseTwo.exercise._id) {
+        result.push({
+          exerciseName: exercise.exercise.exerciseName,
+          sets: compareExerciseSets(exercise.sets, exerciseTwo.sets),
+        });
+      }
+    });
   });
 
   return result;

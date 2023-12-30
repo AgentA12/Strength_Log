@@ -125,3 +125,55 @@ export const GET_STAT_SUMMARY = gql`
     }
   }
 `;
+
+export const COMPARE_WORKOUTS = gql`
+  query ($userID: ID!, $workoutID: ID!) {
+    compareWorkouts(userID: $userID, workoutID: $workoutID) {
+      formerWorkout {
+        createdAt
+        template {
+          _id
+          belongsTo
+          templateName
+          templateNotes
+        }
+        _id
+        exercises {
+          restTime
+          exercise {
+            _id
+            exerciseName
+            equipment
+            isUserCreated
+          }
+          sets {
+            weight
+            reps
+          }
+        }
+      }
+      latterWorkout {
+        createdAt
+        _id
+        template {
+          _id
+        }
+        exercises {
+          _id
+          restTime
+          exercise {
+            _id
+            exerciseName
+            equipment
+            isUserCreated
+          }
+          sets {
+            weight
+            reps
+          }
+        }
+      }
+      hasLatterWorkout
+    }
+  }
+`;

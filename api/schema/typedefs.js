@@ -158,7 +158,7 @@ const typeDefs = gql`
     isUserCreated: String
   }
 
-  type CompletedWorkouts {
+  type CompletedWorkout {
     createdAt: String
     template: Template
     _id: ID
@@ -191,6 +191,12 @@ const typeDefs = gql`
     stat: Int
   }
 
+  type WorkoutComparison {
+    formerWorkout: CompletedWorkout
+    latterWorkout: CompletedWorkout
+    hasLatterWorkout: Boolean
+  }
+
   type Query {
     getAllExercises: [Exercises]
     getTemplates(userId: ID!): [Template]
@@ -204,10 +210,14 @@ const typeDefs = gql`
     ): [TemplateChartData]
     getChartDataForExercises(userId: ID!): [ExerciseChartData]
     calendarTimeStamps(userId: ID!): [CalendarDates]
-    getProgressByDate(userID: ID!, workoutID: ID): [CompletedWorkouts]
+    getProgressByDate(userID: ID!, workoutID: ID): [CompletedWorkout]
     getTemplateProgress(userID: ID!, templateID: ID!): [workout]
     getDataSummary(userID: ID!): [TotalData]
     getUserSettings(userID: ID!): User
+    compareWorkouts(
+      userID: ID!
+      workoutID: ID!
+    ): WorkoutComparison
   }
 
   type Mutation {

@@ -30,6 +30,7 @@ const server = new ApolloServer({
   context: authMiddleWare,
   cache: "bounded",
   formatError: (error) => {
+    console.log(error.message)
     return new Error(error.message.toString());
   },
 });

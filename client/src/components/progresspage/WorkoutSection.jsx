@@ -33,6 +33,7 @@ export default function SingleWorkout({ workout }) {
 
       {workout.exercises.map((exercise) => (
         <Box key={uuidv4()} style={{ maxWidth: "900px" }}>
+          <Text>{exercise.exercise.exerciseName}</Text>
           <ExerciseTable exercise={exercise} />
         </Box>
       ))}

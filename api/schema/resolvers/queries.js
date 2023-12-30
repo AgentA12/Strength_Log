@@ -107,12 +107,56 @@ const Query = {
     }
   },
 
+  async compareWorkouts(_, { userID, workoutID }) {
+    try {
+      const { completedWorkouts } = await User.findById(
+        userID,
+        "completedWorkouts"
+      )
+        .populate({
+          path: "completedWorkouts.template",
+          model: "Template",
+        })
+        .populate({
+          path: "completedWorkouts.exercises.exercise",
+          model: "Exercise",
+        });
+
+      const completedWorkout = completedWorkouts.find(
+        (workout) => workout._id.toString() === workoutID
+      );
+
+      const templateID = completedWorkout.template._id.toString();
+
+      const sameTemplates = completedWorkouts
+        .filter(
+          (workout) =>
+            workout?.template?._id?.toString() === templateID.toString()
+        )
+        .sort((a, b) => b.createdAt - a.createdAt);
+
+      let summary;
+
+      for (let i = 0; i < sameTemplates.length; i++) {
+        if (sameTemplates[i]._id.toString() === workoutID.toString()) {
+          summary = {
+            formerWorkout: sameTemplates[i],
+            hasLatterWorkout: sameTemplates[i + 1] ? true : false,
+            latterWorkout: sameTemplates[i + 1] ? sameTemplates[i + 1] : null,
+          };
+        }
+      }
+      return summary;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  // this resolver is use to get a complete list of recent workouts AND to get a single workout,
+  // if the workoutID is present (not undefined or null) its querying a single workout
   async getProgressByDate(_, { userID, workoutID }) {
     try {
       if (workoutID) {
-        // query the user by userID
-        // on that returned query select only the completedWorkouts
-
         const { completedWorkouts } = await User.findById(
           userID,
           "completedWorkouts"
@@ -126,29 +170,9 @@ const Query = {
             model: "Exercise",
           });
 
-        const completedWorkout = completedWorkouts.find(
+        return completedWorkouts.find(
           (workout) => workout._id.toString() === workoutID
         );
-
-        const templateID = completedWorkout.template._id.toString();
-
-        const sameTemplates = completedWorkouts
-          .filter(
-            (workout) =>
-              workout?.template?._id?.toString() === templateID.toString()
-          )
-          .sort((a, b) => b.createdAt - a.createdAt);
-
-        const summary = sameTemplates.map(function (workout, i) {
-          if (workout._id.toString() === workoutID.toString()) {
-            return [
-              workout,
-              sameTemplates[i + 1] ? sameTemplates[i + 1] : null,
-            ];
-          }
-        })[0];
-
-        return summary;
       } else {
         const data = await User.findOne({ _id: userID })
           .populate({

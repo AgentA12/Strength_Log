@@ -13,7 +13,6 @@ export default function TotalStatDisplay({
   diff,
   unit,
 }) {
-  // console.log(title, value, previousValue, diff, unit);
   const DiffIcon =
     diff > 0 ? IconArrowUpRight : diff === 0 ? IconEqual : IconArrowDownRight;
 
