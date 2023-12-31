@@ -1,5 +1,5 @@
 .title {
-  color: var(--mantine-color-teal-5);
+  color: var(--mantine-color-teal-6);
   margin-bottom: 0;
   @media (max-width: $mantine-breakpoint-md) {
     font-size: 20px;

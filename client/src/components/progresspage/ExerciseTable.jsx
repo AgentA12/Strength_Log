@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { Group, Table, Text, Box } from "@mantine/core";
+import { Group, Table } from "@mantine/core";
 import { MdChangeHistory } from "react-icons/md";
 
 export default function ExerciseTable({ exercise }) {
@@ -8,11 +8,6 @@ export default function ExerciseTable({ exercise }) {
       <Table.Td>{i + 1}</Table.Td>
       <Table.Td>{set.reps}</Table.Td>
       <Table.Td>{set.weight}</Table.Td>
-      {set.change ? (
-        <Table.Td>
-          {set.change > 0 ? `+ ${set.change}` : `${set.change}`} Lbs
-        </Table.Td>
-      ) : null}
     </Table.Tr>
   ));
 

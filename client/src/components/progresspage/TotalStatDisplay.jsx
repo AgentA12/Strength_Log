@@ -44,7 +44,7 @@ export default function TotalStatDisplay({
           style={{
             color:
               diff > 0
-                ? "var(--mantine-color-teal-6)"
+                ? "var(--mantine-color-green-6)"
                 : diff < 0
                 ? "var(--mantine-color-red-6)"
                 : "var(mantine-color-gray-6)",

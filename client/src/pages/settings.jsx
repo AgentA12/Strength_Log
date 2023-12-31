@@ -47,27 +47,7 @@ export default function SettingsPage() {
             />
           </Box>
         </Card>
-        <Card withBorder>
-          <Box>
-            <Select
-              label={
-                <Text fz={25} fw={500}>
-                  Theme
-                </Text>
-              }
-              placeholder="Pick value"
-              description="A theme color"
-              data={[
-                "cyan",
-                "magenta",
-                "peterriver",
-                "nephritis",
-                "teal",
-                "sunflower",
-              ]}
-            />
-          </Box>
-        </Card>
+
         <Card withBorder>
           <Box>
             <Text fz={25} fw={500}>

@@ -20,14 +20,14 @@ const linkStyles = {
   width: "fit-content",
 };
 
-export default function AuthorizationComponent() {
+export default function AuthorizationComponent(): React.JSX.Element {
   const [type, setType] = useState("Login");
 
   const [formState, setFormState] = useState({
     username: "",
     password: "",
   });
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | false>(false);
 
   const [addUser, { loading: signupLoading }] = useMutation(ADD_USER, {
     variables: {
@@ -42,24 +42,24 @@ export default function AuthorizationComponent() {
     },
   });
 
-  function handleFormChange({ target }) {
+  function handleFormChange({ target }: {target: HTMLInputElement}) {
     setFormState({
       ...formState,
       [target.name]: target.value,
     });
   }
 
-  function handleTypeSwitch(type) {
+  function handleTypeSwitch(type: string) {
     type === "Login" ? setType("Login") : setType("Signup");
 
-    setError(null);
+    setError(false);
     setFormState({
       username: "",
       password: "",
     });
   }
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: React.SyntheticEvent) {
     setError(false);
     event.preventDefault();
     try {
@@ -83,7 +83,7 @@ export default function AuthorizationComponent() {
 
         Auth.login(data.createUser.token);
       }
-    } catch (error) {
+    } catch (error: any) {
       setError(error.message);
     }
   }
@@ -113,7 +113,7 @@ export default function AuthorizationComponent() {
           name="username"
           required
           value={formState.username}
-          onFocus={() => setError(null)}
+          onFocus={() => setError(false)}
           error={
             error === "incorrect username"
               ? error
@@ -129,7 +129,7 @@ export default function AuthorizationComponent() {
           value={formState.password}
           label="Password"
           withAsterisk
-          onFocus={() => setError(null)}
+          onFocus={() => setError(false)}
           error={error === "incorrect password" && error}
           disabled={loginLoading ? loginLoading : signupLoading}
         />

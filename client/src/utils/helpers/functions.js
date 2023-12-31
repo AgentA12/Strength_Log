@@ -140,12 +140,8 @@ function getTotalVolume(exercises) {
   return TotalVolume;
 }
 
-const getTotalVolumeForExercise = (exercise) => {
-  return exercise.sets.reduce(
-    (total, set) => (total += set.weight * set.reps),
-    0
-  );
-};
+const getTotalVolumeForExercise = (sets) =>
+  sets.reduce((total, set) => (total += set.weight * set.reps), 0);
 
 const getTotalReps = (exercises) => {
   if (exercises?.length != undefined) {
