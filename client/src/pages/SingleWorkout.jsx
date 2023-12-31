@@ -9,6 +9,7 @@ import {
   Text,
   Title,
   Select,
+  Paper,
 } from "@mantine/core";
 import { COMPARE_WORKOUTS } from "../utils/graphql/queries";
 import { useContext } from "react";
@@ -63,7 +64,9 @@ export default function SingleWorkout() {
   const previousWorkout = data.compareWorkouts.latterWorkout;
 
   const workout = compareWorkouts(selectedWorkout, previousWorkout);
+
   console.log(workout);
+
   return (
     <Stack gap={0} key={uuidv4()} mb={120}>
       <Title fw={600} c="teal.6">
@@ -146,12 +149,15 @@ export default function SingleWorkout() {
             >
               {exercise.exerciseName}
             </Text>
-            <Text>
-              Volume:{" "}
-              {getTotalVolumeForExercise(
-                exercise.sets.concat(exercise.increasedSets)
-              )}{" "}
-              Lbs{" "}
+            <Paper>
+              <Text span>
+                {" "}
+                Volume:{" "}
+                {getTotalVolumeForExercise(
+                  exercise.sets.concat(exercise.increasedSets)
+                )}{" "}
+                Lbs{" "}
+              </Text>
               <Text span>
                 {getColorForChange(
                   getTotalVolumeForExercise(
@@ -162,8 +168,27 @@ export default function SingleWorkout() {
                     )
                 )}
               </Text>
-            </Text>
-            <Text>Reps: {getTotalReps(exercise)}</Text>
+            </Paper>
+            <Paper>
+              <Text span>
+                Reps:{" "}
+                {getTotalReps(exercise) +
+                  getTotalReps(
+                    exercise.increasedSets
+                      ? { sets: exercise.increasedSets }
+                      : null
+                  )}{" "}
+              </Text>
+              <Text span>
+                {getColorForChange(
+                  getTotalReps(exercise) +
+                    getTotalReps({
+                      sets: exercise.increasedSets,
+                    }) -
+                    getTotalReps(workout.previousWorkout.exercises[i])
+                )}
+              </Text>
+            </Paper>
             <Text>
               Sets: {exercise.sets.length}{" "}
               {exercise.increasedSets.length
@@ -287,7 +312,6 @@ function CompareExerciseTable({ exercise }) {
 }
 
 function getColorForChange(num, unit) {
-  console.log(typeof num);
   if (num > 0) {
     return (
       <Text c="green.6" span>
