@@ -65,8 +65,6 @@ export default function SingleWorkout() {
 
   const workout = compareWorkouts(selectedWorkout, previousWorkout);
 
-  console.log(workout);
-
   return (
     <Stack gap={0} key={uuidv4()} mb={120}>
       <Title fw={600} c="teal.6">
