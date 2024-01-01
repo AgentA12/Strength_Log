@@ -10,13 +10,13 @@ import {
   Group,
 } from "@mantine/core";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ExerciseCard } from "../components/workoutpage/index";
+import { ExerciseCard } from "./index";
 import { useState, useEffect, useContext } from "react";
 import { useInterval } from "@mantine/hooks";
-import { formatTime } from "../utils/helpers/functions";
+import { formatTime } from "../../utils/helpers/functions";
 import { useMutation } from "@apollo/client";
-import { SAVE_WORKOUT } from "../utils/graphql/mutations";
-import { UserContext } from "../app";
+import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
+import { UserContext } from "../../app";
 import { showNotification } from "@mantine/notifications";
 import { AiOutlineCheck } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";

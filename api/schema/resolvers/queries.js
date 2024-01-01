@@ -1,5 +1,5 @@
 import { formatChartData } from "../../utils/helpers.js";
-import { User, Exercise } from "../../models/index.js";
+import { User, Exercise, Template } from "../../models/index.js";
 
 const Query = {
   calendarTimeStamps: async function (_, { userId }) {
@@ -128,6 +128,10 @@ const Query = {
 
       const templateID = completedWorkout.template._id.toString();
 
+      const originalTemplate = await Template.findById(templateID)
+        .populate({ model: "Exercise", path: "exercises.exercise" })
+        .select("-belongsTo");
+
       const sameTemplates = completedWorkouts
         .filter(
           (workout) =>
@@ -146,6 +150,8 @@ const Query = {
           };
         }
       }
+      
+      summary.originalTemplate = originalTemplate;
       return summary;
     } catch (error) {
       return error;

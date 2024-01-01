@@ -13,6 +13,7 @@ import OneRepMaxTable from "./OneRepMaxTable";
 import WorkoutSection from "./WorkoutSection";
 import ExerciseTable from "./ExerciseTable";
 import TotalStatDisplay from "./TotalStatDisplay";
+import RecentProgress from "./RecentProgress";
 
 export {
   SectionMenu,
@@ -30,4 +31,5 @@ export {
   WorkoutSection,
   ExerciseTable,
   TotalStatDisplay,
+  RecentProgress
 };

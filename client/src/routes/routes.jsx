@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import {
-  ProgressPageTwo,
+
   SingleWorkout,
   AuthPage,
   DashBoardPage,
@@ -13,9 +13,8 @@ import {
 import Protected from "../components/ProtectedRoute";
 import auth from "../utils/auth/auth";
 import TemplateDashBoard from "../components/create&edittemplates/TemplateDashBoard";
-import UtilitiesPage from "../pages/utilities";
+import UtilitiesPage from "../pages/utilitiespage";
 import AppLayout from "../components/AppLayout";
-import DatePage from "../components/progresspage/DatePage";
 
 const isLoggedIn = auth.isLoggedIn();
 

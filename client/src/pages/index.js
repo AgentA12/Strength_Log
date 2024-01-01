@@ -1,13 +1,11 @@
-import AuthPage from "./auth";
-import DashBoardPage from "./dashboard";
-import LandingPage from "./landing";
-import NotFoundPage from "./notFound";
-import ProgressPage from "./progress";
-import SettingsPage from "./settings";
-import WorkoutPage from "./workout";
-import ProgressPageTwo from "./progressPageTwo";
-import SingleWorkout from "./SingleWorkout";
-import RecentProgressPage from "./recentProgress";
+import AuthPage from "./authpage";
+import DashBoardPage from "./dashboardPage";
+import LandingPage from "./landingpage";
+import NotFoundPage from "./notFoundpage";
+import ProgressPage from "./progresspage";
+import SettingsPage from "./settingspage";
+import WorkoutPage from "../components/workoutpage/workout";
+import SingleWorkout from "./singleworkoutpage";
 
 export {
   AuthPage,
@@ -17,7 +15,5 @@ export {
   ProgressPage,
   SettingsPage,
   WorkoutPage,
-  ProgressPageTwo,
   SingleWorkout,
-  RecentProgressPage
 };

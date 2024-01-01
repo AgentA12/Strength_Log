@@ -1,9 +1,9 @@
 import { useLocation } from "react-router-dom";
 import { useQuery } from "@apollo/client";
+import { useState } from "react";
 import {
   Group,
   Loader,
-  Box,
   Table,
   Stack,
   Text,
@@ -32,13 +32,20 @@ export default function SingleWorkout() {
     data: { _id: userID },
   } = useContext(UserContext);
 
+  const [compareToOriginal, setCompareToOriginal] = useState(false);
+
   const { data, error, loading } = useQuery(COMPARE_WORKOUTS, {
     variables: { userID: userID, workoutID: workoutID },
   });
 
   if (loading) return <Loader />;
 
-  if (error) return <Text c="red">{error.message}</Text>;
+  if (error)
+    return (
+      <Text c="red.6" fw={600}>
+        {error.message}
+      </Text>
+    );
 
   if (data.compareWorkouts.hasLatterWorkout != true)
     return (
@@ -62,8 +69,11 @@ export default function SingleWorkout() {
 
   const selectedWorkout = data.compareWorkouts.formerWorkout;
   const previousWorkout = data.compareWorkouts.latterWorkout;
+  const originalTemplate = data.compareWorkouts.originalTemplate;
 
-  const workout = compareWorkouts(selectedWorkout, previousWorkout);
+  const workout = compareToOriginal
+    ? compareWorkouts(selectedWorkout, originalTemplate)
+    : compareWorkouts(selectedWorkout, previousWorkout);
 
   return (
     <Stack gap={0} key={uuidv4()} mb={120}>
@@ -81,8 +91,8 @@ export default function SingleWorkout() {
         <Title order={2} tt="capitalize">
           {data.compareWorkouts.formerWorkout.template.templateName.toString()}
         </Title>
-        <Text fw={300} size="xl">
-          Compared to Previous workout{" "}
+        <Text fw={300} size="lg">
+          Compared to{" "}
           <Text span c="teal.6" td="underline">
             {new Date(
               parseInt(data.compareWorkouts.latterWorkout.createdAt)
@@ -95,112 +105,171 @@ export default function SingleWorkout() {
         </Text>
         <Select
           my={5}
+          description="Compare to"
           w={"fit-content"}
           defaultValue={"Previous Workout"}
           data={["Previous Workout", "Original Template"]}
+          value={compareToOriginal ? "Original Template" : "Previous Workout"}
+          onChange={() => setCompareToOriginal(!compareToOriginal)}
         />
 
         <Group mt={12}>
-          <TotalStatDisplay
-            diff={
-              getTotalVolume(selectedWorkout.exercises) -
-              getTotalVolume(previousWorkout.exercises)
-            }
-            value={getTotalVolume(selectedWorkout.exercises)}
-            title={"Total Volume"}
-            previousValue={getTotalVolume(previousWorkout.exercises)}
-            unit={"Lbs"}
-          />
-          <TotalStatDisplay
-            diff={
-              getTotalReps(selectedWorkout.exercises) -
-              getTotalReps(previousWorkout.exercises)
-            }
-            value={getTotalReps(selectedWorkout.exercises)}
-            title={"Total Reps"}
-            previousValue={getTotalReps(previousWorkout.exercises)}
-            unit={null}
-          />
-          <TotalStatDisplay
-            diff={
-              getTotalSets(selectedWorkout.exercises) -
-              getTotalSets(previousWorkout.exercises)
-            }
-            value={getTotalSets(selectedWorkout.exercises)}
-            title={"Total Sets"}
-            previousValue={getTotalSets(previousWorkout.exercises)}
-            unit={null}
-          />
+          {compareToOriginal ? (
+            <>
+              {" "}
+              <TotalStatDisplay
+                diff={
+                  getTotalVolume(selectedWorkout.exercises) -
+                  getTotalVolume(originalTemplate.exercises)
+                }
+                value={getTotalVolume(selectedWorkout.exercises)}
+                title={"Total Volume"}
+                previousValue={getTotalVolume(originalTemplate.exercises)}
+                unit={"Lbs"}
+              />
+              <TotalStatDisplay
+                diff={
+                  getTotalReps(selectedWorkout.exercises) -
+                  getTotalReps(originalTemplate.exercises)
+                }
+                value={getTotalReps(selectedWorkout.exercises)}
+                title={"Total Reps"}
+                previousValue={getTotalReps(originalTemplate.exercises)}
+                unit={null}
+              />
+              <TotalStatDisplay
+                diff={
+                  getTotalSets(selectedWorkout.exercises) -
+                  getTotalSets(originalTemplate.exercises)
+                }
+                value={getTotalSets(selectedWorkout.exercises)}
+                title={"Total Sets"}
+                previousValue={getTotalSets(originalTemplate.exercises)}
+                unit={null}
+              />{" "}
+            </>
+          ) : (
+            <>
+              {" "}
+              <TotalStatDisplay
+                diff={
+                  getTotalVolume(selectedWorkout.exercises) -
+                  getTotalVolume(previousWorkout.exercises)
+                }
+                value={getTotalVolume(selectedWorkout.exercises)}
+                title={"Total Volume"}
+                previousValue={getTotalVolume(previousWorkout.exercises)}
+                unit={"Lbs"}
+              />
+              <TotalStatDisplay
+                diff={
+                  getTotalReps(selectedWorkout.exercises) -
+                  getTotalReps(previousWorkout.exercises)
+                }
+                value={getTotalReps(selectedWorkout.exercises)}
+                title={"Total Reps"}
+                previousValue={getTotalReps(previousWorkout.exercises)}
+                unit={null}
+              />
+              <TotalStatDisplay
+                diff={
+                  getTotalSets(selectedWorkout.exercises) -
+                  getTotalSets(previousWorkout.exercises)
+                }
+                value={getTotalSets(selectedWorkout.exercises)}
+                title={"Total Sets"}
+                previousValue={getTotalSets(previousWorkout.exercises)}
+                unit={null}
+              />{" "}
+            </>
+          )}
         </Group>
       </Stack>
 
       {workout.comparedWorkout.map((exercise, i) => (
-        <Box key={uuidv4()} mx={12} my={20} style={{ maxWidth: "900px" }}>
-          <Group>
-            <Text
-              style={{ cursor: "pointer" }}
-              td="underline"
-              size="xl"
-              c="teal.4"
-              tt="capitalize"
-              fw={700}
-            >
-              {exercise.exerciseName}
-            </Text>
-            <Paper>
-              <Text span>
-                {" "}
-                Volume:{" "}
-                {getTotalVolumeForExercise(
-                  exercise.sets.concat(exercise.increasedSets)
-                )}{" "}
-                Lbs{" "}
-              </Text>
-              <Text span>
-                {getColorForChange(
-                  getTotalVolumeForExercise(
-                    exercise.sets.concat(exercise.increasedSets)
-                  ) -
-                    getTotalVolumeForExercise(
-                      workout.previousWorkout.exercises[i].sets
-                    )
-                )}
-              </Text>
-            </Paper>
-            <Paper>
-              <Text span>
-                Reps:{" "}
-                {getTotalReps(exercise) +
-                  getTotalReps(
-                    exercise.increasedSets
-                      ? { sets: exercise.increasedSets }
-                      : null
-                  )}{" "}
-              </Text>
-              <Text span>
-                {getColorForChange(
-                  getTotalReps(exercise) +
-                    getTotalReps({
-                      sets: exercise.increasedSets,
-                    }) -
-                    getTotalReps(workout.previousWorkout.exercises[i])
-                )}
-              </Text>
-            </Paper>
-            <Text>
-              Sets: {exercise.sets.length}{" "}
-              {exercise.increasedSets.length
-                ? getColorForChange(exercise.increasedSets.length)
-                : null}
-              {exercise.decreasedSets.length
-                ? getColorForChange(-exercise.decreasedSets.length)
-                : null}
-            </Text>
-          </Group>
+        <Paper
+          maw={900}
+          radius="lg"
+          shadow="xs"
+          p="md"
+          withBorder
+          key={uuidv4()}
+          mx={12}
+          my={20}
+          style={{ maxWidth: "900px" }}
+        >
+          <ExerciseTableHeader
+            exercise={exercise}
+            workout={workout}
+            exerciseIndex={i}
+          />
           <CompareExerciseTable exercise={exercise} />
-        </Box>
+        </Paper>
       ))}
     </Stack>
+  );
+}
+
+function ExerciseTableHeader({ exercise, workout, exerciseIndex }) {
+  return (
+    <Group>
+      <Text
+        style={{ cursor: "pointer" }}
+        td="underline"
+        size="xl"
+        c="teal.4"
+        tt="capitalize"
+        fw={700}
+      >
+        {exercise.exerciseName}
+      </Text>
+      <Paper>
+        <Text span>
+          Volume:{" "}
+          {getTotalVolumeForExercise(
+            exercise.sets.concat(exercise.increasedSets)
+          )}{" "}
+          Lbs{" "}
+        </Text>
+        <Text span>
+          {getColorForChange(
+            getTotalVolumeForExercise(
+              exercise.sets.concat(exercise.increasedSets)
+            ) -
+              getTotalVolumeForExercise(
+                workout.previousWorkout.exercises[exerciseIndex].sets
+              )
+          )}
+        </Text>
+      </Paper>
+      <Paper>
+        <Text span>
+          Reps:{" "}
+          {getTotalReps(exercise) +
+            getTotalReps(
+              exercise.increasedSets ? { sets: exercise.increasedSets } : null
+            )}{" "}
+        </Text>
+        <Text span>
+          {getColorForChange(
+            getTotalReps(exercise) +
+              getTotalReps({
+                sets: exercise.increasedSets,
+              }) -
+              getTotalReps(workout.previousWorkout.exercises[exerciseIndex])
+          )}
+        </Text>
+      </Paper>
+      <Text>
+        Sets: {exercise.sets.length}{" "}
+        {exercise.increasedSets.length
+          ? getColorForChange(exercise.increasedSets.length)
+          : null}
+        {exercise.decreasedSets.length
+          ? getColorForChange(-exercise.decreasedSets.length)
+          : null}
+      </Text>
+    </Group>
   );
 }
 

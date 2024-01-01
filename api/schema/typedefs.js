@@ -194,6 +194,7 @@ const typeDefs = gql`
   type WorkoutComparison {
     formerWorkout: CompletedWorkout
     latterWorkout: CompletedWorkout
+    originalTemplate: Template
     hasLatterWorkout: Boolean
   }
 
@@ -214,10 +215,7 @@ const typeDefs = gql`
     getTemplateProgress(userID: ID!, templateID: ID!): [workout]
     getDataSummary(userID: ID!): [TotalData]
     getUserSettings(userID: ID!): User
-    compareWorkouts(
-      userID: ID!
-      workoutID: ID!
-    ): WorkoutComparison
+    compareWorkouts(userID: ID!, workoutID: ID!): WorkoutComparison
   }
 
   type Mutation {

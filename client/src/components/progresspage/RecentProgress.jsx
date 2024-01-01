@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { UserContext } from "../../src/app";
+import { UserContext } from "../../app";
 import {
   Group,
   Select,
@@ -9,10 +9,13 @@ import {
   Loader,
 } from "@mantine/core";
 import { useQuery } from "@apollo/client";
-import { GET_PROGRESS_BY_DATE, GET_TEMPLATES } from "../utils/graphql/queries";
-import { WorkoutSection } from "../components/progresspage/index";
-import { TbTxt } from "react-icons/tb";
+import {
+  GET_PROGRESS_BY_DATE,
+  GET_TEMPLATES,
+} from "../../utils/graphql/queries";
+import { WorkoutSection } from "./index";
 
+// "chunk" is used to create a two dimensional array for pagination
 function chunk(array, size) {
   if (!array.length) {
     return [];
@@ -23,8 +26,8 @@ function chunk(array, size) {
   return [head, ...chunk(tail, size)];
 }
 
-export default function RecentProgressPage() {
-  let limitPerPage = 12;
+export default function RecentProgress() {
+  let limitPerPage = 10;
 
   const {
     data: { _id: userID },
@@ -34,26 +37,23 @@ export default function RecentProgressPage() {
     variables: { userID: userID },
   });
 
-  const {
-    data: templates,
-    loading: templatesLoading,
-    error: templatesError,
-  } = useQuery(GET_TEMPLATES, {
+  // used for select template filter
+  const { data: templates } = useQuery(GET_TEMPLATES, {
     variables: {
       userId: userID,
     },
   });
 
-  const [workouts, setWorkouts] = useState(null);
   const [activePage, setPage] = useState(1);
-
+  const [workouts, setWorkouts] = useState(null);
+  // can't use the data returned from query because filtering pages on client
   useEffect(() => {
     if (data) setWorkouts(chunk(data.getProgressByDate, limitPerPage));
   }, [loading]);
 
   if (loading) return <Loader />;
 
-  function filterWorkouts(sortBy) {
+  function filterWorkoutsByDate(sortBy) {
     let bufferData = [...workouts].flat();
 
     if (sortBy === "oldest first") {
@@ -71,7 +71,6 @@ export default function RecentProgressPage() {
         )
       );
     }
-
     setPage(1);
   }
 
@@ -101,12 +100,12 @@ export default function RecentProgressPage() {
 
   if (error) return <Text c="red">{error.message}</Text>;
 
+  // formatting template data for select template input
   const templateSelectData = templates
     ? templates.getTemplates.map((temp) => {
         return { label: temp.templateName, value: temp._id };
       })
     : [{ value: "all templates", label: "all templates" }];
-
   templateSelectData.unshift({
     value: "all templates",
     label: "all templates",
@@ -121,11 +120,11 @@ export default function RecentProgressPage() {
             label={<Text c="dimmed">Sort by</Text>}
             defaultValue="newest first"
             data={["newest first", "oldest first"]}
-            onChange={filterWorkouts}
+            onChange={filterWorkoutsByDate}
           />
           <Select
             mb={10}
-            label={<Text c="dimmed">Template</Text>}
+            label={<Text c="dimmed">Templates</Text>}
             defaultValue={"all templates"}
             data={[...templateSelectData]}
             onChange={filterWorkoutsByTemplates}
@@ -137,10 +136,12 @@ export default function RecentProgressPage() {
             <WorkoutSection key={workout._id} workout={workout} />
           ))
         ) : (
-          <Text>no saved workouts for template</Text>
+          <Text>No saved workouts for this template.</Text>
         )}
 
         <Pagination
+          mb={45}
+          mt={20}
           total={workouts.length}
           value={activePage}
           onChange={(val) => {

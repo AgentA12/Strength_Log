@@ -129,6 +129,23 @@ export const GET_STAT_SUMMARY = gql`
 export const COMPARE_WORKOUTS = gql`
   query ($userID: ID!, $workoutID: ID!) {
     compareWorkouts(userID: $userID, workoutID: $workoutID) {
+      originalTemplate {
+        _id
+        templateName
+        exercises {
+          restTime
+          exercise {
+            _id
+            exerciseName
+            equipment
+            isUserCreated
+          }
+          sets {
+            weight
+            reps
+          }
+        }
+      }
       formerWorkout {
         createdAt
         template {
