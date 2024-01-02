@@ -1,28 +1,29 @@
 .link {
-  display: flex;
-  gap: var(--mantine-spacing-xs);
-  justify-content: left;
-  padding: 10px;
-  align-items: center;
   font-size: var(--mantine-font-size-xs);
-  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
-  border-radius: var(--mantine-radius-sm);
-  width: 100%;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  position: relative;
   color: light-dark(var(--mantine-color-gray-8), var(--mantine-color-dark-2));
+  width: 100%;
   &[data-active] {
     color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
-    background-color: light-dark(
-      var(--mantine-color-gray-2),
-      #292929
-    );
-   
   }
 }
 
 .link:hover {
   color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
-  background-color: light-dark(
-    var(--mantine-color-gray-2),
-   #292929
-  );
+  transition: all 0.2s ease-in-out;
+}
+
+.hoverAnimation {
+  background-color: light-dark(var(--mantine-color-gray-2), #292929);
+  position: absolute;
+  top: 0;
+      left: 0;
+      width: 100%; /* Inherit width from the parent */
+      height: 100%; /* Inherit height from the parent */
+  padding: 10px;
+  border-radius: var(--mantine-radius-sm);
+  z-index: -1;
 }

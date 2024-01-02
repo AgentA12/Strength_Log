@@ -8,6 +8,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { GoHome } from "react-icons/go";
 import { CiSettings } from "react-icons/ci";
+import { motion } from "framer-motion";
 
 const linkData = [
   { icon: GoHome, label: "Dashboard", link: "/Dashboard" },
@@ -24,11 +25,15 @@ export default function SideNav({ toggleMobile }) {
   }, [pathname]);
 
   const [active, setActive] = useState(pathname.replace("/", ""));
+  const [hoveredTab, setHoveredTab] = useState(null);
+
+  function handleMouseLeave({ target }) {}
 
   const links = linkData.map((item) => (
     <Box
       component={NavLink}
       to={item.link}
+      onMouseEnter={() => setHoveredTab(item.label)}
       className={classes.link}
       href={item.link}
       key={item.label}
@@ -38,14 +43,30 @@ export default function SideNav({ toggleMobile }) {
         toggleMobile();
       }}
     >
-      <item.icon size={18} stroke={1.5} />
-      <Text span>{item.label}</Text>
+      <Group gap={8} align="center">
+        <item.icon size={20} />
+        <Text span>{item.label}</Text>
+      </Group>
+      {item.label === hoveredTab ? (
+        <motion.div
+          className={classes.hoverAnimation}
+          layoutId="hoverAnimation"
+          transition={{
+            duration: 0.05,
+            type: "spring",
+            bounce: 0.3,
+            mass: 0.2,
+          }}
+        ></motion.div>
+      ) : null}
     </Box>
   ));
 
   return (
     <Flex h="100%" justify="space-between" direction="column">
-      <Group>{...links}</Group>
+      <Group onMouseLeave={() => setHoveredTab(null)} gap={5} justify="left">
+        {...links}
+      </Group>
 
       <Group style={{ alignSelf: "center" }}>
         <ToggleTheme />

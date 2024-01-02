@@ -43,7 +43,7 @@ export default function AppLayout({ children, hasNav }) {
       </AppShell.Header>
 
       {hasNav && (
-        <AppShell.Navbar p="md">
+        <AppShell.Navbar p="sm">
           <SideNav toggleDesktop={toggleDesktop} toggleMobile={toggleMobile} />
         </AppShell.Navbar>
       )}

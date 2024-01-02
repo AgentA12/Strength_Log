@@ -5,6 +5,7 @@ export default function TemplateSelect({
   setActiveTemplate,
   activeTemplate,
 }) {
+  
   const templateData = templates.map((template) => {
     return {
       label: template.templateName,
@@ -12,13 +13,11 @@ export default function TemplateSelect({
     };
   });
 
-  templateData.push({ label: "All templates", value: "All templates" });
-
   return (
     <Select
       data={templateData}
       searchable
-      defaultValue={"All templates"}
+      defaultValue={templateData[0] ? templateData[0] : []}
       value={activeTemplate}
       onChange={(value) => {
         setActiveTemplate(value);

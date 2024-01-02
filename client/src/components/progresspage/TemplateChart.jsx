@@ -40,8 +40,7 @@ export default function TemplateChart({
   const { loading, data, error } = useQuery(GET_CHART_PROGRESS, {
     variables: {
       userId: userId,
-      templateName:
-        activeTemplate === "All templates" ? "All templates" : activeTemplate,
+      templateName: activeTemplate,
       range: range,
       metric: metric,
       exercise: null,

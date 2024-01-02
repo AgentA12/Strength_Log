@@ -72,7 +72,7 @@ export default function ByTemplatesContainer({ activeTab = "templates" }) {
   };
 
   const [range, setRange] = useState("Last month");
-  const [activeTemplate, setActiveTemplate] = useState("All templates");
+  const [activeTemplate, setActiveTemplate] = useState("");
   const [activeExercise, setActiveExercise] = useState("All Exercises");
   const [metric, setMetric] = useState("Total Volume");
 
