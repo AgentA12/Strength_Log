@@ -3,7 +3,7 @@ import { Menu, Button } from "@mantine/core";
 import { FaEdit, FaRegChartBar } from "react-icons/fa";
 import { BsTrash3 } from "react-icons/bs";
 
-export default function TemplateMenu({ template, handleTemplateDelete }) {
+export default function TemplateMenu({ template, setModalOpen }) {
   const editState = {
     templateName: template.templateName,
     templateNotes: template.templateNotes,
@@ -44,7 +44,7 @@ export default function TemplateMenu({ template, handleTemplateDelete }) {
 
       <Menu.Item
         color="red"
-        onClick={() => handleTemplateDelete(template._id)}
+        onClick={setModalOpen}
         leftSection={<BsTrash3 size={14} />}
       >
         Delete

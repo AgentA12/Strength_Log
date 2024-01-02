@@ -1,4 +1,4 @@
-import { Flex, Text, Group, ActionIcon } from "@mantine/core";
+import { Flex, Text, Group, ActionIcon, Box } from "@mantine/core";
 import { AiOutlineLineChart, AiOutlineTool } from "react-icons/ai";
 import { HiLogout } from "react-icons/hi";
 import { ToggleTheme } from "./index.js";
@@ -26,7 +26,7 @@ export default function SideNav({ toggleMobile }) {
   const [active, setActive] = useState(pathname.replace("/", ""));
 
   const links = linkData.map((item) => (
-    <Text
+    <Box
       component={NavLink}
       to={item.link}
       className={classes.link}
@@ -40,7 +40,7 @@ export default function SideNav({ toggleMobile }) {
     >
       <item.icon size={18} stroke={1.5} />
       <Text span>{item.label}</Text>
-    </Text>
+    </Box>
   ));
 
   return (

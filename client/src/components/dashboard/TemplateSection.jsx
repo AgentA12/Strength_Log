@@ -13,6 +13,7 @@ import {
   Button,
   Skeleton,
   Group,
+  Modal,
 } from "@mantine/core";
 import { AiOutlineSearch } from "react-icons/ai";
 import { UserContext } from "../../app";
@@ -103,25 +104,12 @@ export default function TemplateSection() {
 
     if (templates.length)
       return templates.map((template, i) => (
-        <div key={template._id}>
-          <div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              delay: i * 0.08,
-              type: "spring",
-              stiffness: 700,
-              damping: 30,
-            }}
-          >
-            <TemplateCard
-              template={template}
-              refetch={refetch}
-              handleTemplateDelete={handleTemplateDelete}
-              key={template._id}
-            />
-          </div>
-        </div>
+        <TemplateCard
+          template={template}
+          refetch={refetch}
+          handleTemplateDelete={handleTemplateDelete}
+          key={template._id}
+        />
       ));
     return <Text size="xl">You have no templates saved.</Text>;
   }
