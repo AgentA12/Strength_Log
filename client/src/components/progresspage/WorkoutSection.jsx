@@ -5,7 +5,7 @@ import { ExerciseTable } from "./index";
 import { Box, Paper, Stack, Text } from "@mantine/core";
 import { v4 as uuidv4 } from "uuid";
 
-export default function SingleWorkout({ workout }) {
+export default function SingleWorkout({ workout, setActiveTab }) {
   const DateLinkProps = {
     className: classes.dateLink,
     component: Link,
@@ -67,6 +67,13 @@ export default function SingleWorkout({ workout }) {
             fw={700}
             mt={10}
             w={"fit-content"}
+            component={Link}
+            state={{
+              activeTab: "exercises",
+              exerciseName: exercise.exercise.exerciseName,
+            }}
+            to={`/Progress`}
+            onClick={() => setActiveTab("exercises")}
           >
             {exercise.exercise.exerciseName}
           </Text>

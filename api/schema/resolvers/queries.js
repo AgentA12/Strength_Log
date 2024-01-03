@@ -1,4 +1,7 @@
-import { formatChartData } from "../../utils/helpers.js";
+import {
+  formatChartData,
+  getOneRepMax as calcOneRepMax,
+} from "../../utils/helpers.js";
 import { User, Exercise, Template } from "../../models/index.js";
 
 const Query = {
@@ -150,7 +153,7 @@ const Query = {
           };
         }
       }
-      
+
       summary.originalTemplate = originalTemplate;
       return summary;
     } catch (error) {
@@ -220,6 +223,60 @@ const Query = {
     );
 
     return user;
+  },
+
+  async getOneRepMax(_, { exerciseName = "bench press", userID }) {
+    // find the best set in the users completed workouts or exercises
+
+    try {
+      const { completedExercises } = await User.findById(userID)
+        .populate("completedExercises.exercise")
+        .select(
+          "completedExercises.exercise completedExercises.sets completedExercises._id"
+        );
+
+      const exercises = completedExercises.filter(
+        (exercise) => exercise.exercise.exerciseName === exerciseName
+      );
+
+      let greatest = 0;
+      exercises.map((exercise) => {
+        exercise.sets.map((set) => {
+          if (calcOneRepMax(set.weight, set.reps) > greatest) {
+            greatest = calcOneRepMax(set.weight, set.reps);
+          }
+        });
+      });
+
+      return greatest;
+      // const result = await User.aggregate([
+      //   {
+      //     $lookup: {
+      //       from: "exercise", // The name of the referenced collection (case-sensitive)
+      //       localField: "completedExercises.exercise",
+      //       foreignField: "_id",
+      //       as: "exerciseInfo",
+      //     },
+      //   },
+      //   {
+      //     $match: {
+      //       "exerciseInfo.exerciseName": "bench press",
+      //     },
+      //   },
+
+      //   {
+      //     $project: {
+      //       _id: 0,
+      //       itemName: "$exercise.product",
+      //       itemQuantity: "$items.quantity",
+      //     },
+      //   },
+      // ]);
+      return 500;
+    } catch (error) {
+      console.log(error);
+      return error.message;
+    }
   },
 };
 

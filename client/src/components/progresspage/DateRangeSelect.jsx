@@ -1,9 +1,8 @@
-import { Select } from "@mantine/core";
+import { Select, Text } from "@mantine/core";
 
-export default function DateRangeSelect({ range, setRange }) {
+export default function DateRangeSelect({ range = "All time", setRange }) {
   return (
     <Select
-     
       data={[
         "Last month",
         "Last 3 months",
@@ -11,7 +10,6 @@ export default function DateRangeSelect({ range, setRange }) {
         "Last 12 months",
         "All time",
       ]}
-      defaultValue={"Last month"}
       value={range}
       onChange={(value) => setRange(value)}
     />

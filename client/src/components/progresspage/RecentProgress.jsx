@@ -7,6 +7,8 @@ import {
   Pagination,
   Container,
   Loader,
+  Divider,
+  Title,
 } from "@mantine/core";
 import { useQuery } from "@apollo/client";
 import {
@@ -26,7 +28,7 @@ function chunk(array, size) {
   return [head, ...chunk(tail, size)];
 }
 
-export default function RecentProgress() {
+export default function RecentProgress({ setActiveTab }) {
   let limitPerPage = 10;
 
   const {
@@ -106,14 +108,11 @@ export default function RecentProgress() {
         return { label: temp.templateName, value: temp._id };
       })
     : [{ value: "all templates", label: "all templates" }];
-  templateSelectData.unshift({
-    value: "all templates",
-    label: "all templates",
-  });
 
   if (workouts)
     return (
       <Container fluid mt={12}>
+        <Divider label={<Title c="teal.6">Recents</Title>} />
         <Group>
           <Select
             mb={10}
@@ -133,7 +132,11 @@ export default function RecentProgress() {
 
         {workouts.length ? (
           workouts[activePage - 1].map((workout) => (
-            <WorkoutSection key={workout._id} workout={workout} />
+            <WorkoutSection
+              key={workout._id}
+              workout={workout}
+              setActiveTab={setActiveTab}
+            />
           ))
         ) : (
           <Text>No saved workouts for this template.</Text>

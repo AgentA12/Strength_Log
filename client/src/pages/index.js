@@ -6,6 +6,8 @@ import ProgressPage from "./progresspage";
 import SettingsPage from "./settingspage";
 import WorkoutPage from "../components/workoutpage/workout";
 import SingleWorkout from "./singleworkoutpage";
+import ExerciseProgressPage from "./exerciseProgressPage";
+import TemplateProgressPage from "./TemplateProgressPage";
 
 export {
   AuthPage,
@@ -16,4 +18,6 @@ export {
   SettingsPage,
   WorkoutPage,
   SingleWorkout,
+  ExerciseProgressPage,
+  TemplateProgressPage,
 };

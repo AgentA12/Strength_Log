@@ -26,8 +26,8 @@ export default function TemplateMenu({ template, setModalOpen }) {
     >
       <Menu.Item
         component={Link}
-        to="/Progress"
-        state={{ template: editState }}
+        to={`/Progress`}
+        state={{ activeTab: "templates", templateName: template.templateName }}
         leftSection={<FaRegChartBar size={14} />}
       >
         Progress

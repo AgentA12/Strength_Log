@@ -31,5 +31,5 @@ export {
   WorkoutSection,
   ExerciseTable,
   TotalStatDisplay,
-  RecentProgress
+  RecentProgress,
 };

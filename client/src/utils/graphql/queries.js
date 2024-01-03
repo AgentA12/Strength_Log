@@ -194,3 +194,9 @@ export const COMPARE_WORKOUTS = gql`
     }
   }
 `;
+
+export const GET_ONE_REP_MAX = gql`
+  query ($exerciseName: String, $userID: ID!) {
+    getOneRepMax(exerciseName: $exerciseName, userID: $userID)
+  }
+`;

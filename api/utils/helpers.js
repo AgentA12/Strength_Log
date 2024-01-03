@@ -1,5 +1,7 @@
 const getOneRepMax = (weight, repetitions) =>
-  Math.round(Math.round((weight / [1.0278 - 0.0278 * repetitions]) * 10) / 10);
+  weight <= 0 || repetitions <= 0
+    ? null
+    : Math.round(((weight / [1.0278 - 0.0278 * repetitions]) * 10) / 10);
 
 function formatChartData(exerciseArrs, metric) {
   let dataSet = exerciseArrs.map((exercise) => {

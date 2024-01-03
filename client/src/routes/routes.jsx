@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import {
-
   SingleWorkout,
   AuthPage,
   DashBoardPage,
@@ -15,6 +14,7 @@ import auth from "../utils/auth/auth";
 import TemplateDashBoard from "../components/create&edittemplates/TemplateDashBoard";
 import UtilitiesPage from "../pages/utilitiespage";
 import AppLayout from "../components/AppLayout";
+import { RecentProgress } from "../components/progresspage";
 
 const isLoggedIn = auth.isLoggedIn();
 
@@ -24,7 +24,6 @@ export default function RouteContainer() {
       <Route path="/" index element={<AuthPage isLoggedIn={isLoggedIn} />} />
 
       <Route path="/login" element={<AuthPage isLoggedIn={isLoggedIn} />} />
-      {/* <Route path="/test" element={<DatePage isLoggedIn={isLoggedIn} />} /> */}
 
       <Route
         path="/Dashboard"

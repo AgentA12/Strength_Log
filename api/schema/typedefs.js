@@ -216,6 +216,7 @@ const typeDefs = gql`
     getDataSummary(userID: ID!): [TotalData]
     getUserSettings(userID: ID!): User
     compareWorkouts(userID: ID!, workoutID: ID!): WorkoutComparison
+    getOneRepMax(exerciseName: String, userID: ID!): Int
   }
 
   type Mutation {

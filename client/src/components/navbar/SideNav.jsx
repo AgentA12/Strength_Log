@@ -8,7 +8,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { GoHome } from "react-icons/go";
 import { CiSettings } from "react-icons/ci";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const linkData = [
   { icon: GoHome, label: "Dashboard", link: "/Dashboard" },
@@ -51,6 +51,9 @@ export default function SideNav({ toggleMobile }) {
         <motion.div
           className={classes.hoverAnimation}
           layoutId="hoverAnimation"
+          // animate={{ opacity: 1 }}
+          // initial={{ opacity: 0 }}
+          // exit={{ opacity: 0 }}
           transition={{
             duration: 0.05,
             type: "spring",
