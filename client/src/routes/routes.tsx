@@ -14,7 +14,6 @@ import auth from "../utils/auth/auth";
 import TemplateDashBoard from "../components/create&edittemplates/TemplateDashBoard";
 import UtilitiesPage from "../pages/utilitiespage";
 import AppLayout from "../components/AppLayout";
-import { RecentProgress } from "../components/progresspage";
 
 const isLoggedIn = auth.isLoggedIn();
 

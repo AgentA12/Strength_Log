@@ -79,6 +79,8 @@ export default function TemplateChart({
       </Box>
     );
 
+  console.log(data.getChartData);
+
   const labels = getRangeOfDates(
     range,
     ...findFirstAndLastRange(data.getChartData)

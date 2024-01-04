@@ -217,6 +217,7 @@ const typeDefs = gql`
     getUserSettings(userID: ID!): User
     compareWorkouts(userID: ID!, workoutID: ID!): WorkoutComparison
     getOneRepMax(exerciseName: String, userID: ID!): Int
+    isCorrectPass(userID: ID!, password: String): Boolean
   }
 
   type Mutation {
@@ -241,6 +242,8 @@ const typeDefs = gql`
       exercises: [saveWorkoutExerciseInput!]
     ): User
     deleteAccount(userID: ID!): Confirm
+    changeUsername(userID: ID!, username: String!): Confirm
+    updatePassword(userID: ID!, password: String!): Boolean
   }
 `;
 

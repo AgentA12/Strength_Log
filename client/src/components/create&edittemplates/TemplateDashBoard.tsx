@@ -23,6 +23,12 @@ import { showNotification } from "@mantine/notifications";
 import { useLocation } from "react-router-dom";
 import { UserContext } from "../../app";
 
+type Exercise ={
+  exerciseName: String,
+  _id: String,
+  equipment: String
+}
+
 export default function TemplateDashBoard() {
   const {
     data: { _id: userID },
@@ -63,7 +69,7 @@ export default function TemplateDashBoard() {
 
   if (loading) return null;
 
-  const exercises = data.getAllExercises.map((e) => {
+  const exercises = data.getAllExercises.map((e: Exercise) => {
     return {
       value: e.exerciseName,
       label: e.exerciseName,
@@ -72,7 +78,7 @@ export default function TemplateDashBoard() {
     };
   });
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: Event) {
     event.preventDefault();
 
     if (!form.validate().hasErrors) {
@@ -102,7 +108,7 @@ export default function TemplateDashBoard() {
           });
           navigate("/Dashboard");
         }
-      } catch (error) {
+      } catch (error: any) {
         if (error.message) {
           form.setFieldError("templateName", error.message);
         }
@@ -130,7 +136,7 @@ export default function TemplateDashBoard() {
     close();
   }
 
-  function addSet(exerciseIndex) {
+  function addSet(exerciseIndex : number) {
     let data = { ...form.values };
 
     data.exercises[exerciseIndex].sets.push({
@@ -146,7 +152,7 @@ export default function TemplateDashBoard() {
     form.setValues({ ...data });
   }
 
-  function removeSet(index, i) {
+  function removeSet(index: number, i: number) {
     let data = { ...form.values };
 
     data.exercises[index].sets = data.exercises[index].sets.filter(

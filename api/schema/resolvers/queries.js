@@ -278,6 +278,22 @@ const Query = {
       return error.message;
     }
   },
+
+  isCorrectPass: async function (_, { userID, password }) {
+    try {
+      const user = await User.findById(userID);
+
+      const correctPassword = await user.isCorrectPassword(password);
+
+      if (!correctPassword) {
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      return error;
+    }
+  },
 };
 
 export { Query };

@@ -60,17 +60,6 @@ userSchema.methods.getNumberOfWorkouts = async function () {
   return this.completedWorkouts.length;
 };
 
-userSchema.methods.getTotalSetsCompleted = async function () {
-  return;
-};
-
-userSchema.methods.getTotalWeightLifted = async function () {
-  return;
-};
-userSchema.methods.getTotalRepsCompleted = async function () {
-  return;
-};
-
 const User = mongoose.model("User", userSchema);
 
 export { User, setSchema };

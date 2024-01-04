@@ -9,8 +9,7 @@ import { useState } from "react";
 
 export default function ProgressPage() {
   const { state } = useLocation();
-  console.log(state);
-  
+
   const [activeTab, setActiveTab] = useState(
     state ? state.activeTab : "recents"
   );

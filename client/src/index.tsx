@@ -5,30 +5,42 @@ import ReactDOM from "react-dom/client";
 import { App } from "./app";
 import { BrowserRouter } from "react-router-dom";
 import { ModalsProvider } from "@mantine/modals";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  ErrorPolicy,
+  DefaultOptions,
+  NormalizedCacheObject,
+} from "@apollo/client";
 import { MantineProvider, createTheme, ScrollArea } from "@mantine/core";
 
-const defaultOptions = {
+// Define the type for the theme
+type Theme = ReturnType<typeof createTheme>;
+
+const defaultApolloOptions: DefaultOptions = {
   watchQuery: {
-    errorPolicy: "ignore",
+    errorPolicy: "ignore" as ErrorPolicy,
+    fetchPolicy: "network-only",
   },
+
   query: {
-    errorPolicy: "all",
+    errorPolicy: "all" as ErrorPolicy,
   },
 };
 
-const client = new ApolloClient({
+const client = new ApolloClient<NormalizedCacheObject>({
   uri: "/graphql",
   cache: new InMemoryCache({
     addTypename: false,
   }),
-  defaultOptions: defaultOptions,
+  defaultOptions: defaultApolloOptions,
   typePolicies: {
     Query: {
       fields: {
         feed: {
           keyArgs: false,
-          merge(existing = [], incoming) {
+          merge(existing = [], incoming: any) {
             return [...existing, ...incoming];
           },
         },
@@ -37,7 +49,7 @@ const client = new ApolloClient({
   },
 });
 
-const theme = createTheme({
+const theme: Theme = createTheme({
   components: {
     Button: {
       defaultProps: {

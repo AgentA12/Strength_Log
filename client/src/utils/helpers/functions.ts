@@ -1,12 +1,12 @@
 import dayjs from "dayjs";
 
-const getOneRepMax = (weight, repetitions) =>
+const getOneRepMax = (weight: number, repetitions: number): number | null =>
   weight <= 0 || repetitions <= 0
     ? null
     : Math.round(((weight / [1.0278 - 0.0278 * repetitions]) * 10) / 10);
 
-function getPercentageOf1RM(oneRepMax) {
-  const repMax = parseFloat(oneRepMax);
+function getPercentageOf1RM(oneRepMax: number) {
+  const repMax = oneRepMax;
 
   let reps = 30;
   let data = [];
@@ -28,21 +28,21 @@ function getPercentageOf1RM(oneRepMax) {
     percentage = percentage + 5;
   }
 
-  data.unshift({ weight: parseFloat(oneRepMax), percentage: 100, reps: 1 });
+  data.unshift({ weight: oneRepMax, percentage: 100, reps: 1 });
 
   return data;
 }
 
-const capitalizeFirstLetter = (string) => {
+const capitalizeFirstLetter = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-const compareDatesByDay = (firstDate, secondDate) =>
+const compareDatesByDay = (firstDate: Date, secondDate: Date) =>
   firstDate.getFullYear() === secondDate.getFullYear() &&
   firstDate.getMonth() === secondDate.getMonth() &&
   firstDate.getDate() === secondDate.getDate();
 
-function getRangeOfDates(range, firstDate, lastDate) {
+function getRangeOfDates(range: string, firstDate: string, lastDate: string) {
   switch (range) {
     case "Last 12 months":
       return getDaysArray(
@@ -74,7 +74,7 @@ function getRangeOfDates(range, firstDate, lastDate) {
 }
 
 // creates an array of dates one day apart from each other
-function getDaysArray(firstDate, endDate) {
+function getDaysArray(firstDate: Date, endDate: Date) {
   for (
     var dateAry = [],
       currentDate = new Date(dayjs(firstDate).subtract(1, "day"));
@@ -86,8 +86,8 @@ function getDaysArray(firstDate, endDate) {
   return dateAry;
 }
 
-function displayExercisesForTemplate(templates, activeTemplate) {
-  let temps = templates.filter(
+function displayExercisesForTemplate(templates: [any], activeTemplate: string) {
+  let temps: any = templates.filter(
     (template) =>
       template.templateName.toLowerCase() === activeTemplate.toLowerCase()
   )[0];
@@ -101,7 +101,7 @@ function displayExercisesForTemplate(templates, activeTemplate) {
       );
 }
 
-function formatTime(num) {
+function formatTime(num: number) {
   if (num < 10) return `0${num}`;
   return `${num}`;
 }

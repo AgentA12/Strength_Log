@@ -6,6 +6,7 @@ import {
   getTotalSets,
   getTotalVolume,
 } from "../../utils/helpers.js";
+import bcrypt from "bcrypt";
 
 const Mutation = {
   login: async function (_, { username, password }) {
@@ -183,12 +184,56 @@ const Mutation = {
 
   deleteAccount: async function (_, { userID }) {
     try {
-      const user = await User.findByIdAndDelete(userID);
+      const { _id } = await User.findByIdAndDelete(userID);
 
-      if (user) {
+      if (_id) {
         return { confirm: true };
       }
       return { confirm: false };
+    } catch (error) {
+      return error.message;
+    }
+  },
+
+  changeUsername: async function (_, { userID, username }) {
+    try {
+      const users = await User.findOne({ username: username }).select("_id");
+
+      console.log(users);
+
+      if (users) throw new Error("username is taken");
+
+      const user = await User.findByIdAndUpdate(userID, {
+        username: username,
+      }).select("username _id");
+
+      console.log(user);
+
+      return { confirm: true };
+    } catch (error) {
+      return error;
+    }
+  },
+
+  updatePassword: async function (_, { userID, password }) {
+    try {
+      const saltRounds = 10;
+      password = await bcrypt.hash(password, saltRounds);
+      const user = await User.update(
+        { _id: userID },
+        {
+          $set: {
+            password: password,
+          },
+        },
+        { new: true }
+      );
+      console.log(user);
+      if (user.password) {
+        return true;
+      }
+
+      return false;
     } catch (error) {
       return error.message;
     }
