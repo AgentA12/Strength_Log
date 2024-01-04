@@ -5,7 +5,7 @@ import RouteContainer from "./routes/routes";
 import auth from "./utils/auth/auth";
 import ScrollToTop from "./components/ScrollToTop";
 
-export const UserContext = createContext();
+export const UserContext = createContext(auth.getInfo());
 
 export function App() {
   return (

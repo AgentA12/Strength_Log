@@ -48,6 +48,7 @@ export default function TemplateChart({
     },
   });
 
+
   if (loading)
     return (
       <Box style={{ position: "relative" }}>
@@ -78,8 +79,6 @@ export default function TemplateChart({
         </Text>
       </Box>
     );
-
-  console.log(data.getChartData);
 
   const labels = getRangeOfDates(
     range,

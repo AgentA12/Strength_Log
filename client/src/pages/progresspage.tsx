@@ -1,4 +1,3 @@
-import classes from "./dashboard.module.css";
 import { Container, Divider, Tabs, Title } from "@mantine/core";
 import { RecentProgress } from "../components/progresspage/index";
 import TemplateProgressPage from "./TemplateProgressPage";
@@ -16,9 +15,7 @@ export default function ProgressPage() {
 
   return (
     <Container fluid>
-      <Divider
-        label={<Title className={classes.dividerTitle}>Progress</Title>}
-      />
+      <Divider label={<Title>Progress</Title>} />
       <Tabs value={activeTab} onChange={setActiveTab}>
         <Tabs.List>
           <Tabs.Tab leftSection={<IconCheck size={16} />} value="recents">
@@ -35,17 +32,24 @@ export default function ProgressPage() {
             Exercises
           </Tabs.Tab>
         </Tabs.List>
-        <Tabs.Panel value="recents">
-          <RecentProgress setActiveTab={setActiveTab} />
-        </Tabs.Panel>
+        {/* the mantine tabs are all rendered right away, slowing down the page, so don't render them unless the need to be rendered */}
+        {activeTab === "recents" ? (
+          <Tabs.Panel value="recents">
+            <RecentProgress setActiveTab={setActiveTab} />
+          </Tabs.Panel>
+        ) : null}
 
-        <Tabs.Panel value="templates">
-          <TemplateProgressPage />
-        </Tabs.Panel>
+        {activeTab === "templates" ? (
+          <Tabs.Panel value="templates">
+            <TemplateProgressPage />
+          </Tabs.Panel>
+        ) : null}
 
-        <Tabs.Panel value="exercises">
-          <ExerciseProgressPage />
-        </Tabs.Panel>
+        {activeTab === "exercises" ? (
+          <Tabs.Panel value="exercises">
+            <ExerciseProgressPage />
+          </Tabs.Panel>
+        ) : null}
       </Tabs>
     </Container>
   );

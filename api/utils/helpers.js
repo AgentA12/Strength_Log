@@ -8,6 +8,11 @@ function formatChartData(exerciseArrs, metric) {
     return {
       label: exercise.exercise.exerciseName,
       belongsTo: exercise.belongsTo ? exercise.belongsTo.templateName : null,
+      x: new Date(exercise.savedOn),
+      y:
+        metric === "Total Volume"
+          ? getTotalVolumeForExercise(exercise.sets)
+          : calculateEstOneRepMax(exercise),
       data: exercise.sets.map((set) => {
         return {
           x: new Date(exercise.savedOn).toLocaleDateString(),
@@ -19,7 +24,9 @@ function formatChartData(exerciseArrs, metric) {
       }),
     };
   });
+
   return dataSet;
+  // exercise
 }
 
 const calculateEstOneRepMax = (exercise) => {
@@ -51,6 +58,9 @@ const getTotalSets = (exercises) =>
     (accumulator, currentValue) => accumulator + currentValue.sets.length,
     0
   );
+
+const getTotalVolumeForExercise = (sets) =>
+  sets.reduce((total, set) => (total += set.weight * set.reps), 0);
 
 export {
   getOneRepMax,

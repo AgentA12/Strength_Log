@@ -89,9 +89,12 @@ const Query = {
 
       for (let i = 0; i < dataSet.length; i++) {
         if (!map[dataSet[i].label]) {
-          map[dataSet[i].label] = dataSet[i].data;
+          map[dataSet[i].label] = [{ x: dataSet[i].x, y: dataSet[i].y }];
         } else {
-          map[dataSet[i].label] = map[dataSet[i].label].concat(dataSet[i].data);
+          map[dataSet[i].label].push({
+            x: dataSet[i].x,
+            y: dataSet[i].y,
+          });
         }
       }
 

@@ -24,7 +24,17 @@ const defaultApolloOptions: DefaultOptions = {
     fetchPolicy: "network-only",
   },
 
+  // fields: {
+  //   feed: {
+  //     keyArgs: false,
+  //     merge(existing = [], incoming: any) {
+  //       return [...existing, ...incoming];
+  //     },
+  //   },
+  // },
+
   query: {
+    fetchPolicy: 'network-only',
     errorPolicy: "all" as ErrorPolicy,
   },
 };
@@ -35,18 +45,6 @@ const client = new ApolloClient<NormalizedCacheObject>({
     addTypename: false,
   }),
   defaultOptions: defaultApolloOptions,
-  typePolicies: {
-    Query: {
-      fields: {
-        feed: {
-          keyArgs: false,
-          merge(existing = [], incoming: any) {
-            return [...existing, ...incoming];
-          },
-        },
-      },
-    },
-  },
 });
 
 const theme: Theme = createTheme({
@@ -60,7 +58,7 @@ const theme: Theme = createTheme({
       defaultProps: {
         scrollAreaComponent: ScrollArea.Autosize,
       },
-      styles: (theme) => ({
+      styles: (theme: Theme) => ({
         content: {
           border: "1px solid",
           borderColor: theme.colors.dark[4],

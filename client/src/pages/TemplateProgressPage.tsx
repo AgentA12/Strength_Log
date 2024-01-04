@@ -4,7 +4,7 @@ import {
   DateRangeSelect,
   MetricSelect,
 } from "../components/progresspage/index";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../app";
 import { TemplateChart } from "../components/progresspage/index";
 import { GET_TEMPLATES } from "../utils/graphql/queries";
@@ -22,7 +22,7 @@ export default function TemplateProgressPage() {
   const [range, setRange] = useState<string>("All time");
   const [metric, setMetric] = useState<string>("Total Volume");
   const [activeTemplate, setActiveTemplate] = useState<string | null>(
-    state ? state.templateName : "(strength) push day"
+    state ? state.templateName : ""
   );
 
   const {
@@ -30,6 +30,13 @@ export default function TemplateProgressPage() {
     loading,
     error,
   } = useQuery(GET_TEMPLATES, { variables: { userId: userID } });
+
+  useEffect(() => {
+    if (templates)
+      setActiveTemplate(templates.getTemplates[0].templateName);
+
+    console.log(templates, loading, error);
+  }, [loading, error, templates]);
 
   if (loading) return "loading...";
   if (error) return error.message;

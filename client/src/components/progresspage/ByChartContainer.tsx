@@ -61,7 +61,7 @@ export default function ByTemplatesContainer({ activeTab = "templates" }) {
       },
       y: {
         ticks: {
-          callback: (label) => label + unit,
+          callback: (label: string) => label + unit,
         },
 
         grid: {
