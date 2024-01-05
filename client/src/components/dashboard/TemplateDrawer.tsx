@@ -1,4 +1,4 @@
-import { Modal, Text, useMantineTheme, Flex, Button } from "@mantine/core";
+import { Text, Flex, Button, Drawer } from "@mantine/core";
 import { useContext, useState } from "react";
 import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
 import { useMutation } from "@apollo/client";
@@ -9,14 +9,12 @@ import { BiErrorCircle } from "react-icons/bi";
 import { UserContext } from "../../app";
 import { StartWorkoutBtn } from "./index";
 
-export default function TemplateModal({ template, opened, setOpened }) {
+export default function TemplateDrawer({ template, opened, setOpened }) {
   const {
     data: { _id: userID },
   } = useContext(UserContext);
 
   const [templateState, setTemplateState] = useState(template);
-
-  const theme = useMantineTheme();
 
   const [saveWorkoutFunction, { loading, error }] = useMutation(SAVE_WORKOUT);
 
@@ -52,17 +50,7 @@ export default function TemplateModal({ template, opened, setOpened }) {
   }
 
   return (
-    <Modal
-      overlayProps={{
-        color:
-          theme.colorScheme === "dark"
-            ? theme.colors.dark[9]
-            : theme.colors.gray[2],
-            backgroundOpacity: 0.55,
-            blur: 3,
-      }}
-      transitionProps={{ transition: "rotate-left" }}
-      lockScroll={false}
+    <Drawer
       opened={opened}
       onClose={() => setOpened(false)}
       title={
@@ -76,7 +64,6 @@ export default function TemplateModal({ template, opened, setOpened }) {
           {template.templateName}
         </Text>
       }
-     
       size="lg"
     >
       <Text c="dimmed" mb={10}>
@@ -105,6 +92,6 @@ export default function TemplateModal({ template, opened, setOpened }) {
           {error.message}
         </Text>
       ) : null}
-    </Modal>
+    </Drawer>
   );
 }

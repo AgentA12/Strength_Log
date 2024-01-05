@@ -4,12 +4,13 @@ import {
   Table,
   NumberInput,
   Flex,
+  Button,
+  Group,
 } from "@mantine/core";
 import { v4 as uuidv4 } from "uuid";
 import { ExerciseLink } from "../progresspage/ExerciseLink";
 
 export default function WorkoutState({ setTemplateState, templateState }) {
-
   function handleChange({ target }, exerciseIndex, setIndex) {
     let data = JSON.parse(JSON.stringify(templateState));
 
@@ -20,16 +21,40 @@ export default function WorkoutState({ setTemplateState, templateState }) {
     setTemplateState({ ...data });
   }
 
+  function addSet(exerciseIndex: number) {
+    const templateStateCopy = JSON.parse(JSON.stringify(templateState));
+
+    const lastSetIndex =
+      templateStateCopy.exercises[exerciseIndex].sets.length - 1;
+
+    const setToAdd =
+      templateStateCopy.exercises[exerciseIndex].sets[lastSetIndex];
+
+    templateStateCopy.exercises[exerciseIndex].sets.push(setToAdd);
+
+    setTemplateState({ ...templateStateCopy });
+  }
+
+  function removeSet(exerciseIndex: number) {
+    const templateStateCopy = JSON.parse(JSON.stringify(templateState));
+
+    templateStateCopy.exercises[exerciseIndex].sets.pop();
+
+    setTemplateState({ ...templateStateCopy });
+  }
+
   const Tables = templateState.exercises.map((exercise, exerciseIndex) => (
     <Container mb={10} key={uuidv4()}>
       <Flex mt={10} justify="space-between" align="center">
-       <ExerciseLink exerciseName={exercise.exercise.exerciseName} />
-        {exercise.restTime ? <Text fz={13} fw="normal" c="dimmed">
-          Rest: {exercise.restTime} seconds
-        </Text> : null}
+        <ExerciseLink exerciseName={exercise.exercise.exerciseName} />
+        {exercise.restTime ? (
+          <Text fz={13} fw="normal" c="dimmed">
+            Rest: {exercise.restTime} seconds
+          </Text>
+        ) : null}
       </Flex>
 
-      <Table  >
+      <Table>
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Set</Table.Th>
@@ -77,6 +102,14 @@ export default function WorkoutState({ setTemplateState, templateState }) {
           ))}
         </Table.Tbody>
       </Table>
+      <Group my={5} justify="space-between">
+        <Button size="xs" onClick={() => addSet(exerciseIndex)}>
+          Add Set
+        </Button>{" "}
+        <Button disabled={exercise.sets.length === 1} size="xs" color="red" onClick={() => removeSet(exerciseIndex)}>
+          Remove Set
+        </Button>
+      </Group>
     </Container>
   ));
 

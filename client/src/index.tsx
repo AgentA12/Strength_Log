@@ -15,7 +15,6 @@ import {
 } from "@apollo/client";
 import { MantineProvider, createTheme, ScrollArea } from "@mantine/core";
 
-// Define the type for the theme
 type Theme = ReturnType<typeof createTheme>;
 
 const defaultApolloOptions: DefaultOptions = {
@@ -23,7 +22,6 @@ const defaultApolloOptions: DefaultOptions = {
     errorPolicy: "ignore" as ErrorPolicy,
     fetchPolicy: "network-only",
   },
-
   query: {
     fetchPolicy: "network-only",
     errorPolicy: "all" as ErrorPolicy,
@@ -38,6 +36,9 @@ const client = new ApolloClient<NormalizedCacheObject>({
   defaultOptions: defaultApolloOptions,
 });
 
+const localStoragePreferredColor =
+  (localStorage.getItem("preferredColor") as Theme["primaryColor"]) || "teal";
+
 const theme: Theme = createTheme({
   components: {
     Button: {
@@ -49,30 +50,16 @@ const theme: Theme = createTheme({
       defaultProps: {
         scrollAreaComponent: ScrollArea.Autosize,
       },
-      styles: (theme: Theme) => ({
-        content: {
-          border: "1px solid",
-          borderColor: theme.colors.dark[4],
-          borderRadius: "0.5em",
-          overflow: "hidden",
-        },
-      }),
     },
-
     Divider: {
       defaultProps: {
         variant: "dashed",
         labelPosition: "left",
       },
-      styles: () => ({}),
     },
   },
-
   fontFamily: "Inter",
-  colorScheme: "dark",
-  loader: "spinner",
-  colors: {},
-  primaryColor: localStorage.getItem("preferredColor") || "teal",
+  primaryColor: localStoragePreferredColor,
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

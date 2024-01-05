@@ -1,7 +1,7 @@
 import { Table, Text } from "@mantine/core";
 import { getPercentageOf1RM } from "../../utils/helpers/functions";
 
-export default function OneRepMaxTable({ oneRepMax }) {
+export default function OneRepMaxTable({ oneRepMax }: { oneRepMax: number }) {
   const oneRepMaxAry = getPercentageOf1RM(oneRepMax);
 
   const rows = oneRepMaxAry.map((d) => (

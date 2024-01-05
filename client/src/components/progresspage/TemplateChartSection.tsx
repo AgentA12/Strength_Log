@@ -1,4 +1,4 @@
-import { Box, Flex } from "@mantine/core";
+import { Box, Flex, Paper } from "@mantine/core";
 import {
   TemplateSelect,
   TemplateChart,
@@ -36,15 +36,13 @@ export default function TemplateChartSection({
         <MetricSelect setMetric={setMetric} metric={metric} />
       </Flex>
 
-      <Box>
-        <TemplateChart
-          activeTemplate={activeTemplate}
-          userId={userID}
-          range={range}
-          options={options}
-          metric={metric}
-        />
-      </Box>
+      <TemplateChart
+        activeTemplate={activeTemplate}
+        userId={userID}
+        range={range}
+        options={options}
+        metric={metric}
+      />
     </>
   );
 }

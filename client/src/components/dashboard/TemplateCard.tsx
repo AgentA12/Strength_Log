@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { capitalizeFirstLetter } from "../../utils/helpers/functions";
 import TemplateMenu from "./TemplateMenu";
-import TemplateModal from "./TemplateModal";
 import { Text, Card, Flex, Modal, Button, Stack } from "@mantine/core";
 import classes from "./homepage.module.css";
+import { TemplateDrawer } from "./index";
 
 export default function TemplateCard({ template, handleTemplateDelete }) {
   const [opened, setOpened] = useState(false);
@@ -57,7 +57,7 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
         </Stack>
       </Modal>
 
-      <TemplateModal
+      <TemplateDrawer
         template={template}
         opened={opened}
         setOpened={setOpened}

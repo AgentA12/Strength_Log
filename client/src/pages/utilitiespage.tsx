@@ -3,14 +3,13 @@ import "@mantine/core/styles.css";
 import { useForm } from "@mantine/form";
 import { useState } from "react";
 import {
-  Accordion,
   Text,
   NumberInput,
   Button,
   Group,
   Box,
-  Stack,
   Container,
+  Title,
 } from "@mantine/core";
 import { getOneRepMax } from "../utils/helpers/functions";
 import { useViewportSize } from "@mantine/hooks";
@@ -22,8 +21,8 @@ export default function UtilitiesPage() {
 
   const form = useForm({
     initialValues: {
-      weight: undefined,
-      reps: undefined,
+      weight: null,
+      reps: null,
     },
     validate: {
       weight: (value) => (value <= 0 ? "Enter a number greater than 0" : null),
@@ -41,66 +40,48 @@ export default function UtilitiesPage() {
     );
   }
 
-  const items = [{ title: "oneRepMaxCalc", label: "One Rep Max Calculator" }];
-
-  const accordionItems = items.map((item) => (
-    <Accordion.Item value={item.title}>
-      <Accordion.Control style={{ height: "100px" }}>
-        <Text
-          tt="capitalize"
-          size={width >= 500 ? 30 : 15}
-          fw={500}
-          fs="oblique"
-        >
-          {item.label}
-        </Text>
-      </Accordion.Control>
-      <Accordion.Panel>
-        <Box>
-          <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
-            <Group mb={10} align="flex-start" justify="flex-start" gap="xs">
-              <NumberInput
-                size="sm"
-                label="Lift Weight"
-                suffix=" lbs"
-                step={5}
-                {...form.getInputProps("weight")}
-                placeholder="Weight"
-              />
-              <NumberInput
-                size="sm"
-                label="Number of repetitions"
-                {...form.getInputProps("reps")}
-                suffix=" reps"
-                placeholder="Reps"
-              />
-            </Group>
-            <Button size="sm" type="submit">
-              Calculate One Rep Max
-            </Button>
-          </form>
-        </Box>
-        {oneRepMax && (
-          <>
-            <Text fs={50} fw={500} size="lg" mt={20}>
-              Estimated One Rep Max:
-            </Text>
-            <Text fs={50} fw={800} size="xl">
-              {oneRepMax} Lbs
-            </Text>
-            <OneRepMaxTable oneRepMax={oneRepMax} />
-          </>
-        )}
-      </Accordion.Panel>
-    </Accordion.Item>
-  ));
-
   return (
     <Container fluid>
-      <Accordion defaultValue="oneRepMaxCalc">
-        {...accordionItems}
-       
-      </Accordion>
+      <Title tt="capitalize" fw={700} fs="oblique">
+        One Rep Max Calculator
+      </Title>
+
+      <Box>
+        <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
+          <Group mb={10} align="flex-start" justify="flex-start" gap="xs">
+            <NumberInput
+              size="sm"
+              label="Lift"
+              suffix=" lbs"
+              step={5}
+              {...form.getInputProps("weight")}
+              min={5}
+              max={1000}
+            />
+            <NumberInput
+              size="sm"
+              label="Repetitions"
+              {...form.getInputProps("reps")}
+              suffix=" rep"
+              min={1}
+            />
+          </Group>
+          <Button mt={5} size="sm" type="submit">
+            Calculate One Rep Max
+          </Button>
+        </form>
+      </Box>
+      {oneRepMax && (
+        <>
+          <Text mt={20}>
+            Your Estimated One Rep Max is{" "}
+          </Text>
+          <Text fw={800} c={'primaryColor'} style={{fontSize: "35px"}}>
+            {oneRepMax} Lbs
+          </Text>
+          <OneRepMaxTable oneRepMax={oneRepMax} />
+        </>
+      )}
     </Container>
   );
 }

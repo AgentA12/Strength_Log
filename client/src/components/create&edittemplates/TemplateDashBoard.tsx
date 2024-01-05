@@ -178,7 +178,7 @@ export default function TemplateDashBoard() {
     <Container fluid>
       <Divider
         label={
-          <Title className={classes.title} order={2} tt="capitalize">
+          <Title  order={2} tt="capitalize">
             {state ? `Edit ${form.values.templateName}` : "Create a template"}
           </Title>
         }

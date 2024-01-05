@@ -21,6 +21,9 @@ import { UserContext } from "../../app";
 import { showNotification } from "@mantine/notifications";
 import { AiOutlineCheck } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
+import { IconConfetti } from "@tabler/icons-react";
+
+const startedOn = new Date();
 
 export default function WorkoutPage() {
   const {
@@ -157,9 +160,7 @@ export default function WorkoutPage() {
         mb={10}
         label={
           <Group justify="center" gap="xs" align="center">
-            <Title c={primaryColor} className={classes.dividerTitle}>
-              Training{" "}
-            </Title>
+            <Title c={primaryColor}>Training </Title>
             <Title tt="capitalize" className={classes.title}>
               {workoutState.template.templateName}
             </Title>
@@ -168,19 +169,29 @@ export default function WorkoutPage() {
         variant="dashed"
       />
       <Stack gap={0} align="center" justify="center">
-        <Text c="dimmed" fz="xl">
-          {new Date().toDateString()}
+        Started on{" "}
+        <Text c={workoutState.workoutFinished ? "green" : undefined}>
+          {Intl.DateTimeFormat("en-US", {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            hour12: true,
+            year: "numeric",
+          }).format(startedOn)}
         </Text>
-        <Text mb={12} c="dimmed" fz="lg">{`${hours}:${formatTime(
-          minutes
-        )}:${formatTime(seconds)}`}</Text>
-
+        <Text
+          c={workoutState.workoutFinished ? "green" : undefined}
+        >{`${hours}:${formatTime(minutes)}:${formatTime(seconds)}`}</Text>
         {workoutState.workoutFinished ? (
           <>
-            <Text size="xl">Completed</Text>
+            <Group gap={5}>
+              Workout Completed! <IconConfetti />
+            </Group>
 
             <Button mt={10} color="green" onClick={handleFinish}>
-              Finish
+              Finish and save
             </Button>
           </>
         ) : (

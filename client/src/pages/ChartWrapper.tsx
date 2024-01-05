@@ -1,7 +1,11 @@
 import { Paper, useMantineColorScheme } from "@mantine/core";
 import { cloneElement } from "react";
 
-export default function ChartWrapper({ children }) {
+export default function ChartWrapper({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const unit = " Lbs";
 
   const { colorScheme } = useMantineColorScheme();
@@ -40,7 +44,14 @@ export default function ChartWrapper({ children }) {
   });
 
   return (
-    <Paper mah={1200} maw={1200} mt={12} withBorder bg={"dark.6"} p={12}>
+    <Paper
+      mah={1200}
+      maw={1200}
+      mt={12}
+      withBorder
+      bg={colorScheme == "dark" ? "dark.6" : "gray.0"}
+      p={12}
+    >
       {childWithProps}
     </Paper>
   );

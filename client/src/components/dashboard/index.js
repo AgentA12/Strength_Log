@@ -5,7 +5,7 @@ import TemplateSection from "./TemplateSection";
 import CreateTemplateContainer from "../create&edittemplates/TemplateDashBoard";
 import ExerciseForm from "../create&edittemplates/ExerciseForm";
 import TemplateMenu from "./TemplateMenu";
-import TemplateModal from "./TemplateModal";
+import TemplateDrawer from "./TemplateDrawer";
 import WorkoutState from "./WorkoutState";
 import StartWorkoutModal from "./StartWorkoutModal";
 import DataOverview from "./DataOverview";
@@ -19,7 +19,7 @@ export {
   CreateTemplateContainer,
   ExerciseForm,
   TemplateMenu,
-  TemplateModal,
+  TemplateDrawer,
   WorkoutState,
   DataOverview,
   StartWorkoutModal,
