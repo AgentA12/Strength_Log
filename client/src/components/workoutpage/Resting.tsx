@@ -1,9 +1,11 @@
-import { Stack, Text, RingProgress, Button } from "@mantine/core";
+import { Stack, Text, RingProgress, Button, useMantineTheme } from "@mantine/core";
 import { useState, useEffect } from "react";
 import { useInterval } from "@mantine/hooks";
 
 export default function Resting({ restTime, handleContinue }) {
   const [seconds, setSeconds] = useState(restTime);
+  const theme = useMantineTheme();
+  const primaryColor = theme.primaryColor
 
   let minutes = Math.floor(seconds / 60);
   let secondsRemaining = seconds - minutes * 60;
@@ -54,7 +56,7 @@ export default function Resting({ restTime, handleContinue }) {
           </Stack>
         }
         thickness={4}
-        sections={[{ value: percentage, color: "teal" }]}
+        sections={[{ value: percentage, color: primaryColor }]}
       />
       <Button onClick={handleContinue}>Skip</Button>
     </Stack>

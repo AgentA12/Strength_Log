@@ -38,7 +38,7 @@ export default function ExerciseProgressPage() {
     <Container fluid>
       <Divider
         label={
-          <Title tt="capitalize" fw={700} c="teal.6" mt={10} w={"fit-content"}>
+          <Title tt="capitalize" fw={700} mt={10} w={"fit-content"}>
             {activeExercise}
           </Title>
         }
@@ -59,7 +59,7 @@ export default function ExerciseProgressPage() {
 
       <Text>
         Estimated One Rep Max:{" "}
-        <Text size="xl" fw={900} c="teal.6" span>
+        <Text size="xl" fw={900} span>
           {oneRepMax ? oneRepMax.getOneRepMax : null}
         </Text>
         <Text span> Lbs</Text>

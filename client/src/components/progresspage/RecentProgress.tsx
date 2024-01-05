@@ -112,7 +112,7 @@ export default function RecentProgress({ setActiveTab }) {
   if (workouts)
     return (
       <Container fluid mt={12}>
-        <Divider label={<Title c="teal.6">Recents</Title>} />
+        <Divider label={<Title>Recents</Title>} />
         <Group>
           <Select
             mb={10}

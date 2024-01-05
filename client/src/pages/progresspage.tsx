@@ -1,17 +1,24 @@
-import { Container, Divider, Tabs, Title } from "@mantine/core";
-import { RecentProgress } from "../components/progresspage/index";
-import TemplateProgressPage from "./TemplateProgressPage";
-import ExerciseProgressPage from "./exerciseProgressPage";
-import { IconTemplate, IconCheck, IconStretching } from "@tabler/icons-react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { Container, Divider, Tabs, Title } from "@mantine/core";
+import { IconCheck, IconTemplate, IconStretching } from "@tabler/icons-react";
+import { TemplateProgressPage, ExerciseProgressPage } from "./index";
+
+import { RecentProgress } from "../components/progresspage/index";
 
 export default function ProgressPage() {
-  const { state } = useLocation();
+  const location = useLocation();
+  const { state } = location;
 
-  const [activeTab, setActiveTab] = useState(
+  const [activeTab, setActiveTab] = useState(() =>
     state ? state.activeTab : "recents"
   );
+
+  useEffect(() => {
+    if (state) {
+      state.activeTab != activeTab && setActiveTab(state.activeTab);
+    }
+  }, [state]);
 
   return (
     <Container fluid>
@@ -32,24 +39,24 @@ export default function ProgressPage() {
             Exercises
           </Tabs.Tab>
         </Tabs.List>
-        {/* the mantine tabs are all rendered right away, slowing down the page, so don't render them unless the need to be rendered */}
-        {activeTab === "recents" ? (
+
+        {activeTab === "recents" && (
           <Tabs.Panel value="recents">
             <RecentProgress setActiveTab={setActiveTab} />
           </Tabs.Panel>
-        ) : null}
+        )}
 
-        {activeTab === "templates" ? (
+        {activeTab === "templates" && (
           <Tabs.Panel value="templates">
             <TemplateProgressPage />
           </Tabs.Panel>
-        ) : null}
+        )}
 
-        {activeTab === "exercises" ? (
+        {activeTab === "exercises" && (
           <Tabs.Panel value="exercises">
             <ExerciseProgressPage />
           </Tabs.Panel>
-        ) : null}
+        )}
       </Tabs>
     </Container>
   );

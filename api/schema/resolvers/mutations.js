@@ -228,8 +228,7 @@ const Mutation = {
         },
         { new: true }
       );
-      console.log(user);
-      if (user.password) {
+      if (user.acknowledged == true && user.modifiedCount > 0) {
         return true;
       }
 

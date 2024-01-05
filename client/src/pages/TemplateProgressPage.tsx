@@ -42,7 +42,7 @@ export default function TemplateProgressPage() {
     <Container fluid>
       <Divider
         label={
-          <Title tt="capitalize" fw={700} c="teal.6" mt={10} w={"fit-content"}>
+          <Title tt="capitalize" fw={700} mt={10} w={"fit-content"}>
             {activeTemplate}
           </Title>
         }

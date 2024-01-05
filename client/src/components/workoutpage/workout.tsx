@@ -8,6 +8,7 @@ import {
   Divider,
   Container,
   Group,
+  useMantineTheme,
 } from "@mantine/core";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ExerciseCard } from "./index";
@@ -31,6 +32,8 @@ export default function WorkoutPage() {
   } = useContext(UserContext);
 
   const navigate = useNavigate();
+  const theme = useMantineTheme();
+  const primaryColor = theme.primaryColor;
 
   const [saveWorkout, { loading }] = useMutation(SAVE_WORKOUT);
 
@@ -154,7 +157,9 @@ export default function WorkoutPage() {
         mb={10}
         label={
           <Group justify="center" gap="xs" align="center">
-            <Title className={classes.dividerTitle}>Training </Title>
+            <Title c={primaryColor} className={classes.dividerTitle}>
+              Training{" "}
+            </Title>
             <Title tt="capitalize" className={classes.title}>
               {workoutState.template.templateName}
             </Title>

@@ -24,17 +24,8 @@ const defaultApolloOptions: DefaultOptions = {
     fetchPolicy: "network-only",
   },
 
-  // fields: {
-  //   feed: {
-  //     keyArgs: false,
-  //     merge(existing = [], incoming: any) {
-  //       return [...existing, ...incoming];
-  //     },
-  //   },
-  // },
-
   query: {
-    fetchPolicy: 'network-only',
+    fetchPolicy: "network-only",
     errorPolicy: "all" as ErrorPolicy,
   },
 };
@@ -77,12 +68,11 @@ const theme: Theme = createTheme({
     },
   },
 
-  globalStyles: () => ({}),
   fontFamily: "Inter",
   colorScheme: "dark",
   loader: "spinner",
   colors: {},
-  primaryColor: "teal",
+  primaryColor: localStorage.getItem("preferredColor") || "teal",
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

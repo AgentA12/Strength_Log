@@ -10,17 +10,34 @@ import {
   PasswordInput,
   Container,
   Modal,
+  Select,
 } from "@mantine/core";
 import { useQuery, gql, useMutation, useLazyQuery } from "@apollo/client";
 import { UserContext } from "../app";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
 import { DELETE_ACCOUNT } from "../utils/graphql/mutations";
 import auth from "../utils/auth/auth";
 
+const colors = [
+  "red",
+  "pink",
+  "grape",
+  "violet",
+  "indigo",
+  "blue",
+  "cyan",
+  "teal",
+  "green",
+  "lime",
+  "yellow",
+  "orange",
+];
+
 export default function SettingsPage() {
+  const color = localStorage.getItem("preferredColor");
   return (
     <Container fluid>
       <Divider label={<Title>Settings</Title>} />
@@ -28,6 +45,25 @@ export default function SettingsPage() {
         <Stack m={5}>
           <FieldUsername />
           <FieldPassword />
+          <Fieldset
+            pt={5}
+            legend={
+              <Text fw={600} size="xl">
+                Preferred Color
+              </Text>
+            }
+            radius="md"
+          >
+            <Select
+              onChange={(val) => {
+                localStorage.setItem("preferredColor", val ? val : "teal");
+                window.location.reload();
+              }}
+              defaultValue={color}
+              data={colors}
+              description="Choose your preferred color"
+            />
+          </Fieldset>
           <FieldDeleteAccount />
         </Stack>
       </Box>
@@ -167,6 +203,7 @@ function FieldPassword() {
   const { data } = useContext<any>(UserContext);
 
   const [password, setPassword] = useState("");
+  const [passwordOld, setPasswordOld] = useState("");
   const [passwordIsCorrect, setPasswordIsCorrect] = useState(false);
 
   const [checkPassword] = useLazyQuery(IS_CORRECT_PASS);
@@ -174,6 +211,8 @@ function FieldPassword() {
 
   async function handleChange(e: React.SyntheticEvent) {
     e.preventDefault();
+
+    setPasswordOld(e.target.value);
 
     const res = await checkPassword({
       variables: {
@@ -204,6 +243,14 @@ function FieldPassword() {
         title: "Password change",
         message: `Your Password was succesfully changed`,
       });
+      setPassword("");
+      setPasswordOld("");
+    } else {
+      notifications.show({
+        title: "Password change",
+        message: `There was an error changing your password`,
+        color: "red.6",
+      });
     }
   }
 
@@ -219,6 +266,7 @@ function FieldPassword() {
     >
       <PasswordInput
         disabled={loading}
+        value={passwordOld}
         onChange={handleChange}
         label={
           <Text size="sm" c="dimmed">
@@ -232,6 +280,7 @@ function FieldPassword() {
       <PasswordInput
         disabled={!passwordIsCorrect || loading}
         value={password}
+        error={!!error}
         onChange={(event) => setPassword(event.currentTarget.value)}
         label={
           <Text size="sm" c="dimmed">

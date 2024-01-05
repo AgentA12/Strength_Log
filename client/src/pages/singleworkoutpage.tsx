@@ -50,7 +50,7 @@ export default function SingleWorkout() {
   if (data.compareWorkouts.hasLatterWorkout != true)
     return (
       <Stack gap={0} key={uuidv4()} mb={120}>
-        <Title fw={600} c="teal.6">
+        <Title fw={600} >
           {new Date(
             parseInt(data.compareWorkouts.formerWorkout.createdAt)
           ).toLocaleDateString("en-US", {
@@ -77,7 +77,7 @@ export default function SingleWorkout() {
 
   return (
     <Stack gap={0} key={uuidv4()} mb={120}>
-      <Title fw={600} c="teal.6">
+      <Title fw={600} >
         {new Date(
           parseInt(data.compareWorkouts.formerWorkout.createdAt)
         ).toLocaleDateString("en-US", {
@@ -93,7 +93,7 @@ export default function SingleWorkout() {
         </Title>
         <Text fw={300} size="lg">
           Compared to{" "}
-          <Text span c="teal.6" td="underline">
+          <Text span  td="underline">
             {new Date(
               parseInt(data.compareWorkouts.latterWorkout.createdAt)
             ).toLocaleDateString("en-US", {
@@ -217,7 +217,7 @@ function ExerciseTableHeader({ exercise, workout, exerciseIndex }) {
         style={{ cursor: "pointer" }}
         td="underline"
         size="xl"
-        c="teal.4"
+       
         tt="capitalize"
         fw={700}
       >

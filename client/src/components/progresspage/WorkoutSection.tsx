@@ -1,17 +1,13 @@
-import classes from "./workoutSection.module.css";
 import { getTotalVolume } from "../../utils/helpers/functions";
-import { Link } from "react-router-dom";
 import { ExerciseTable } from "./index";
-import { Box, Paper, Stack, Text } from "@mantine/core";
+import { Box, Paper, Stack, Text, useMantineTheme } from "@mantine/core";
 import { v4 as uuidv4 } from "uuid";
+import { DateLink } from "./DateLink";
+import { ExerciseLink } from "./ExerciseLink";
 
 export default function SingleWorkout({ workout, setActiveTab }) {
-  const DateLinkProps = {
-    className: classes.dateLink,
-    component: Link,
-    to: `/progress/${workout._id}`,
-    state: { workoutID: workout._id },
-  };
+  const theme = useMantineTheme();
+  const primaryColor = theme.primaryColor;
 
   return (
     <Paper
@@ -25,13 +21,11 @@ export default function SingleWorkout({ workout, setActiveTab }) {
     >
       <Stack justify="center" align="center" gap={0}>
         {workout.template ? (
-          <Text {...DateLinkProps}>
-            {new Date(parseInt(workout.createdAt)).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </Text>
+          <DateLink
+            linkUrl={`/Progress/${workout._id}`}
+            workoutID={workout._id}
+            createdAt={workout.createdAt}
+          />
         ) : (
           <Text c="dimmed" size="xl">
             {new Date(parseInt(workout.createdAt)).toLocaleDateString("en-US", {
@@ -50,6 +44,7 @@ export default function SingleWorkout({ workout, setActiveTab }) {
             This template was deleted permanently
           </Text>
         )}
+
         <Stack align="center" w="fit-content" gap={0}>
           <Text fw={600}>Total Volume</Text>
           <Text>{getTotalVolume(workout.exercises)} Lbs</Text>
@@ -58,25 +53,7 @@ export default function SingleWorkout({ workout, setActiveTab }) {
 
       {workout.exercises.map((exercise) => (
         <Box key={uuidv4()} style={{ maxWidth: "800px" }}>
-          <Text
-            style={{ cursor: "pointer" }}
-            td="underline"
-            size="xl"
-            c="teal.4"
-            tt="capitalize"
-            fw={700}
-            mt={10}
-            w={"fit-content"}
-            component={Link}
-            state={{
-              activeTab: "exercises",
-              exerciseName: exercise.exercise.exerciseName,
-            }}
-            to={`/Progress`}
-            onClick={() => setActiveTab("exercises")}
-          >
-            {exercise.exercise.exerciseName}
-          </Text>
+          <ExerciseLink exerciseName={exercise.exercise.exerciseName} />
           <ExerciseTable exercise={exercise} />
         </Box>
       ))}

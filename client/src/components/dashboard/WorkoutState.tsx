@@ -6,6 +6,7 @@ import {
   Flex,
 } from "@mantine/core";
 import { v4 as uuidv4 } from "uuid";
+import { ExerciseLink } from "../progresspage/ExerciseLink";
 
 export default function WorkoutState({ setTemplateState, templateState }) {
 
@@ -22,9 +23,7 @@ export default function WorkoutState({ setTemplateState, templateState }) {
   const Tables = templateState.exercises.map((exercise, exerciseIndex) => (
     <Container mb={10} key={uuidv4()}>
       <Flex mt={10} justify="space-between" align="center">
-        <Text tt="capitalize" fz={23} fw="normal">
-          {exercise.exercise.exerciseName}
-        </Text>
+       <ExerciseLink exerciseName={exercise.exercise.exerciseName} />
         {exercise.restTime ? <Text fz={13} fw="normal" c="dimmed">
           Rest: {exercise.restTime} seconds
         </Text> : null}
