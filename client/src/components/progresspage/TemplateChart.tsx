@@ -48,7 +48,6 @@ export default function TemplateChart({
     },
   });
 
-
   if (loading)
     return (
       <Box style={{ position: "relative" }}>
@@ -89,8 +88,15 @@ export default function TemplateChart({
     <Line
       options={options}
       data={{
-        labels: labels,
-        datasets: data.getChartData,
+        labels: [...labels],
+        datasets: data.getChartData.map((d) => {
+          return {
+            label: d.label,
+            data: d.data.map((da) => {
+              return { x: new Date(parseInt(da.x)), y: da.y };
+            }),
+          };
+        }),
       }}
     />
   );

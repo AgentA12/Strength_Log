@@ -32,10 +32,7 @@ export default function TemplateProgressPage() {
   } = useQuery(GET_TEMPLATES, { variables: { userId: userID } });
 
   useEffect(() => {
-    if (templates)
-      setActiveTemplate(templates.getTemplates[0].templateName);
-
-    console.log(templates, loading, error);
+    if (templates) setActiveTemplate(templates.getTemplates[0].templateName);
   }, [loading, error, templates]);
 
   if (loading) return "loading...";

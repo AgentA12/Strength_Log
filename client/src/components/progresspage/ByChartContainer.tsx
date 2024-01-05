@@ -37,7 +37,7 @@ export default function ByTemplatesContainer({ activeTab = "templates" }) {
     data: { _id: userID },
   } = useContext(UserContext);
 
-  const unit = " Lbs";
+  const unit = "Lbs";
 
   const { colorScheme } = useMantineColorScheme();
 

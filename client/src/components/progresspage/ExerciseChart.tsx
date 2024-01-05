@@ -91,7 +91,6 @@ export default function ExerciseChart({
   }
 
   const labels = getRangeOfDates(range, ...findFirstAndLastRange(filteredData));
-
   return (
     <Line
       options={options}

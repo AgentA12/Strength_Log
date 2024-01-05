@@ -68,13 +68,20 @@ export default function ExerciseChart({
   );
 
   const labels = getRangeOfDates(range, ...findFirstAndLastRange(filteredData));
-
+  console.log(filteredData);
   return (
     <Line
       options={options}
       data={{
         labels: labels,
-        datasets: filteredData,
+        datasets: filteredData.map((d) => {
+          return {
+            label: d.label,
+            data: d.data.map((da) => {
+              return { y: da.y, x: new Date(parseInt(da.x)) };
+            }),
+          };
+        }),
       }}
     />
   );

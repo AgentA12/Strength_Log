@@ -42,7 +42,7 @@ const compareDatesByDay = (firstDate: Date, secondDate: Date) =>
   firstDate.getMonth() === secondDate.getMonth() &&
   firstDate.getDate() === secondDate.getDate();
 
-function getRangeOfDates(range: string, firstDate: string, lastDate: string) {
+function getRangeOfDates(range: string, firstDate: number, lastDate: number) {
   switch (range) {
     case "Last 12 months":
       return getDaysArray(
@@ -83,6 +83,7 @@ function getDaysArray(firstDate: Date, endDate: Date) {
   ) {
     dateAry.push(new Date(currentDate));
   }
+
   return dateAry;
 }
 
@@ -107,27 +108,27 @@ function formatTime(num: number) {
 }
 
 function findFirstAndLastRange(dataSet) {
-  let greatestDate = new Date(0);
+  let mostRecentDate = new Date(0);
 
   for (let i = 0; i < dataSet.length; i++) {
-    dataSet[i].data.map((d) =>
-      new Date(d.x).getTime() > new Date(greatestDate).getTime()
-        ? (greatestDate = d.x)
+    dataSet[i].data.map((d: { x: string; y: number }) =>
+      new Date(parseInt(d.x)).getTime() > new Date(mostRecentDate).getTime()
+        ? (mostRecentDate = parseInt(d.x))
         : null
     );
   }
 
-  let smallestDate = new Date(greatestDate);
+  let oldestDate = new Date();
 
   for (let x = 0; x < dataSet.length; x++) {
     dataSet[x].data.map((d) =>
-      new Date(d.x).getTime() < new Date(smallestDate).getTime()
-        ? (smallestDate = d.x)
+      new Date(parseInt(d.x)).getTime() < new Date(oldestDate).getTime()
+        ? (oldestDate = parseInt(d.x))
         : null
     );
   }
 
-  return [smallestDate, greatestDate];
+  return [oldestDate, mostRecentDate];
 }
 
 function getTotalVolume(exercises) {
