@@ -1,5 +1,5 @@
 import LandingContact from "./LandingContact";
-import Features from "./Features";
+import Features from "./features";
 import Hero from "./Hero";
 import LandingHeader from "./LandingHeader";
 import Dots from "./Dots";
