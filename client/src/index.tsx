@@ -62,16 +62,11 @@ const theme: Theme = createTheme({
   primaryColor: localStoragePreferredColor,
 });
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("root")!);
 
 root.render(
   <React.StrictMode>
-    <MantineProvider
-      withNormalizeCSS
-      withGlobalStyles
-      defaultColorScheme="dark"
-      theme={theme}
-    >
+    <MantineProvider defaultColorScheme="auto" theme={theme}>
       <ApolloProvider client={client}>
         <ModalsProvider>
           <BrowserRouter>

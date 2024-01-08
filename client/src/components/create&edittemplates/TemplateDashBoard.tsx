@@ -21,7 +21,7 @@ import { GET_EXERCISES } from "../../utils/graphql/queries";
 import { useForm } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 import { useLocation } from "react-router-dom";
-import { UserContext } from "../../app";
+import { UserContext } from "../../contexts/userInfo";
 
 type Exercise ={
   exerciseName: String,

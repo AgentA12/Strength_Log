@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import {
-  SingleWorkout,
+  CompareWorkoutPage,
   AuthPage,
   DashBoardPage,
   NotFoundPage,
@@ -68,11 +68,11 @@ export default function RouteContainer() {
       />
 
       <Route
-        path="/Progress/:workoutId"
+        path="/compare"
         element={
           <Protected isLoggedIn={isLoggedIn}>
             <AppLayout hasNav={true}>
-              <SingleWorkout />
+              <CompareWorkoutPage />
             </AppLayout>
           </Protected>
         }

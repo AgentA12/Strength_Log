@@ -13,10 +13,9 @@ import {
   Button,
   Skeleton,
   Group,
-  Modal,
 } from "@mantine/core";
 import { AiOutlineSearch } from "react-icons/ai";
-import { UserContext } from "../../app";
+import { UserContext, UserInfo } from "../../contexts/userInfo";
 import { showNotification } from "@mantine/notifications";
 import { Link } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
@@ -42,7 +41,7 @@ export default function TemplateSection() {
     if (data) setTemplates(data.getTemplates);
   }, [data]);
 
-  async function handleTemplateDelete(templateId) {
+  async function handleTemplateDelete(templateId: string) {
     try {
       const res = await deleteTemplate({
         variables: {
@@ -54,7 +53,7 @@ export default function TemplateSection() {
         title: `Template was deleted.`,
         message: (
           <>
-            <Text span size="md" weight="bold">
+            <Text span size="md">
               {res.data.deleteTemplate.templateName}
             </Text>{" "}
             was successfully deleted.
@@ -62,7 +61,7 @@ export default function TemplateSection() {
         ),
         autoClose: 3000,
       });
-    } catch (error) {
+    } catch (error: any) {
       showNotification({
         title: "Error, unable to delete template.",
         message: error.message,
@@ -72,7 +71,7 @@ export default function TemplateSection() {
     }
   }
 
-  function filterTemplates(event) {
+  function filterTemplates(event: React.SyntheticEvent) {
     event.preventDefault();
 
     const newTemplates = templates.filter((template) => {

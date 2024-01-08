@@ -1,3 +1,5 @@
+import { MantineTheme } from "@mantine/core";
+
 import dayjs from "dayjs";
 
 const getOneRepMax = (weight: number, repetitions: number): number | null =>
@@ -184,6 +186,10 @@ function formatWorkoutState(template) {
   return workoutState;
 }
 
+function getPrimaryColor(theme: MantineTheme) {
+  return theme.colors.primaryColor;
+}
+
 export {
   getOneRepMax,
   capitalizeFirstLetter,
@@ -200,4 +206,5 @@ export {
   getRandomInt,
   formatWorkoutState,
   getTotalVolumeForExercise,
+  getPrimaryColor,
 };

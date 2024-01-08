@@ -1,4 +1,5 @@
 import jwt_decode from "jwt-decode";
+import { UserInfo } from "../../contexts/userInfo";
 
 class Auth {
   login(token) {
@@ -38,7 +39,7 @@ class Auth {
 
     if (!token) return null;
 
-    const info = jwt_decode(token);
+    const info: UserInfo = jwt_decode(token);
 
     return info;
   }

@@ -1,14 +1,11 @@
 import { getTotalVolume } from "../../utils/helpers/functions";
 import { ExerciseTable } from "./index";
-import { Box, Paper, Stack, Text, useMantineTheme } from "@mantine/core";
+import { Box, Paper, Stack, Text } from "@mantine/core";
 import { v4 as uuidv4 } from "uuid";
 import { DateLink } from "./DateLink";
 import { ExerciseLink } from "./ExerciseLink";
 
 export default function SingleWorkout({ workout, setActiveTab }) {
-  const theme = useMantineTheme();
-  const primaryColor = theme.primaryColor;
-
   return (
     <Paper
       maw={900}
@@ -22,7 +19,7 @@ export default function SingleWorkout({ workout, setActiveTab }) {
       <Stack justify="center" align="center" gap={0}>
         {workout.template ? (
           <DateLink
-            linkUrl={`/Progress/${workout._id}`}
+            linkUrl="/compare"
             workoutID={workout._id}
             createdAt={workout.createdAt}
           />

@@ -1,15 +1,13 @@
 import "@mantine/notifications/styles.css";
 import { Notifications } from "@mantine/notifications";
-import { createContext } from "react";
 import RouteContainer from "./routes/routes";
-import auth from "./utils/auth/auth";
 import ScrollToTop from "./components/ScrollToTop";
-
-export const UserContext = createContext(auth.getInfo());
+import { UserContext } from "./contexts/userInfo";
+import { userInfo } from "./contexts/userInfo";
 
 export function App() {
   return (
-    <UserContext.Provider value={auth.getInfo()}>
+    <UserContext.Provider value={userInfo}>
       <Notifications position="bottom-right" limit={5} />
       <RouteContainer />
       <ScrollToTop />

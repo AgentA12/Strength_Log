@@ -14,6 +14,7 @@ import WorkoutSection from "./WorkoutSection";
 import ExerciseTable from "./ExerciseTable";
 import TotalStatDisplay from "./TotalStatDisplay";
 import RecentProgress from "./RecentProgress";
+import ChartWrapper from "./ChartWrapper";
 
 export {
   SectionMenu,
@@ -32,4 +33,5 @@ export {
   ExerciseTable,
   TotalStatDisplay,
   RecentProgress,
+  ChartWrapper,
 };

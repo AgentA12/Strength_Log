@@ -5,12 +5,12 @@ import {
   MetricSelect,
 } from "../components/progresspage/index";
 import { useContext, useState } from "react";
-import { UserContext } from "../app";
-import ExerciseChart from "./ExerciseChart";
+import { UserContext } from "../contexts/userInfo";
+import ExerciseChart from "../components/progresspage/ExerciseChart";
 import { GET_ONE_REP_MAX } from "../utils/graphql/queries";
 import { useQuery } from "@apollo/client";
 import { useLocation } from "react-router-dom";
-import ChartWrapper from "./ChartWrapper";
+import ChartWrapper from "../components/progresspage/ChartWrapper";
 
 export default function ExerciseProgressPage() {
   const {

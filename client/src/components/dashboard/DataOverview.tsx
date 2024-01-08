@@ -1,21 +1,25 @@
 import { TbWeight } from "react-icons/tb";
 import { GiWeightLiftingUp } from "react-icons/gi";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
-import { UserContext } from "../../app";
+import { UserContext, UserInfo } from "../../contexts/userInfo";
 import { useContext } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_STAT_SUMMARY } from "../../utils/graphql/queries";
 import { Text, Flex, Skeleton } from "@mantine/core";
 import { TotalDataDisplay } from "./index";
 
+interface SummaryData {
+  label: string;
+  stat: number;
+  icon: () => React.ReactNode;
+}
+
 export default function DataOverView() {
-  const {
-    data: { _id: userID },
-  } = useContext(UserContext);
+  const userInfo: UserInfo | null = useContext(UserContext);
 
   const { data, loading, error } = useQuery(GET_STAT_SUMMARY, {
     variables: {
-      userID,
+      userID: userInfo == null ? null : userInfo.data._id,
     },
   });
 
@@ -45,7 +49,7 @@ export default function DataOverView() {
       </Text>
     );
 
-  const stats = data.getDataSummary.map((summaryData) => ({
+  const stats = data.getDataSummary.map((summaryData: SummaryData) => ({
     ...summaryData,
     icon: () => {
       switch (summaryData.label) {
@@ -65,8 +69,8 @@ export default function DataOverView() {
       wrap="wrap"
       gap={{ base: "25px", xs: "60px" }}
     >
-      {stats.map((theData, i) => (
-        <TotalDataDisplay key={i} {...theData} />
+      {stats.map((statData: SummaryData, i: number) => (
+        <TotalDataDisplay key={i} {...statData} />
       ))}
     </Flex>
   );

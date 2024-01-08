@@ -13,7 +13,7 @@ import {
 } from "@mantine/core";
 import { COMPARE_WORKOUTS } from "../utils/graphql/queries";
 import { useContext } from "react";
-import { UserContext } from "../app";
+import { UserContext } from "../contexts/userInfo";
 import { TotalStatDisplay } from "../components/progresspage/index";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -23,7 +23,7 @@ import {
   getTotalVolumeForExercise,
 } from "../utils/helpers/functions";
 
-export default function SingleWorkout() {
+export default function CompareWorkoutPage() {
   const {
     state: { workoutID },
   } = useLocation();
@@ -50,7 +50,7 @@ export default function SingleWorkout() {
   if (data.compareWorkouts.hasLatterWorkout != true)
     return (
       <Stack gap={0} key={uuidv4()} mb={120}>
-        <Title fw={600} >
+        <Title fw={600}>
           {new Date(
             parseInt(data.compareWorkouts.formerWorkout.createdAt)
           ).toLocaleDateString("en-US", {
@@ -77,7 +77,7 @@ export default function SingleWorkout() {
 
   return (
     <Stack gap={0} key={uuidv4()} mb={120}>
-      <Title fw={600} >
+      <Title fw={600}>
         {new Date(
           parseInt(data.compareWorkouts.formerWorkout.createdAt)
         ).toLocaleDateString("en-US", {
@@ -93,7 +93,7 @@ export default function SingleWorkout() {
         </Title>
         <Text fw={300} size="lg">
           Compared to{" "}
-          <Text span  td="underline">
+          <Text span td="underline">
             {new Date(
               parseInt(data.compareWorkouts.latterWorkout.createdAt)
             ).toLocaleDateString("en-US", {
@@ -217,7 +217,6 @@ function ExerciseTableHeader({ exercise, workout, exerciseIndex }) {
         style={{ cursor: "pointer" }}
         td="underline"
         size="xl"
-       
         tt="capitalize"
         fw={700}
       >

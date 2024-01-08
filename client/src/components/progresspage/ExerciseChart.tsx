@@ -1,38 +1,19 @@
-import { useQuery } from "@apollo/client";
-import { GET_CHART_PROGRESS } from "../../utils/graphql/queries";
+import {
+  useMantineColorScheme,
+  Box,
+  LoadingOverlay,
+  Text,
+} from "@mantine/core";
+import { Line } from "react-chartjs-2";
 import {
   getRangeOfDates,
   findFirstAndLastRange,
 } from "../../utils/helpers/functions";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Colors,
-  TimeScale,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
-import { Box, LoadingOverlay, Text } from "@mantine/core";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Colors,
-  TimeScale
-);
+import { useQuery } from "@apollo/client";
+import { GET_CHART_PROGRESS } from "../../utils/graphql/queries";
 
 export default function ExerciseChart({
-  userId,
+  userID,
   range,
   metric,
   activeExercise,
@@ -40,7 +21,7 @@ export default function ExerciseChart({
 }) {
   const { loading, data, error } = useQuery(GET_CHART_PROGRESS, {
     variables: {
-      userId: userId,
+      userId: userID,
       templateName: "All templates",
       range: range,
       metric: metric,
@@ -71,10 +52,10 @@ export default function ExerciseChart({
   if (error)
     return (
       <Box color="red" my={20}>
-        <Text size={"xl"} color="red">
+        <Text size={"xl"} c="red.6">
           Oops! Something went wrong
         </Text>
-        <Text size={"xl"} color="red">
+        <Text size={"xl"} c="red.6">
           {error.message}
         </Text>
       </Box>
@@ -82,13 +63,9 @@ export default function ExerciseChart({
 
   let filteredData;
 
-  if (activeExercise !== "All Exercises") {
-    filteredData = data?.getChartData.filter(
-      (data) => data.label.toLowerCase() === activeExercise.toLowerCase()
-    );
-  } else {
-    filteredData = data?.getChartData;
-  }
+  filteredData = data.getChartData.filter(
+    (data) => data.label.toLowerCase() === activeExercise
+  );
 
   const labels = getRangeOfDates(range, ...findFirstAndLastRange(filteredData));
   return (
@@ -96,7 +73,14 @@ export default function ExerciseChart({
       options={options}
       data={{
         labels: labels,
-        datasets: filteredData,
+        datasets: filteredData.map((d) => {
+          return {
+            label: d.label,
+            data: d.data.map((da) => {
+              return { y: da.y, x: new Date(parseInt(da.x)) };
+            }),
+          };
+        }),
       }}
     />
   );

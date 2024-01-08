@@ -6,7 +6,7 @@ import WorkoutState from "./WorkoutState";
 import { showNotification } from "@mantine/notifications";
 import { AiOutlineCheck } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
-import { UserContext } from "../../app";
+import { UserContext } from "../../contexts/userInfo";
 import { StartWorkoutBtn } from "./index";
 
 export default function TemplateDrawer({ template, opened, setOpened }) {

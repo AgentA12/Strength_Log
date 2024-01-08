@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { UserContext } from "../../app";
+import { UserContext } from "../../contexts/userInfo";
 import {
   Group,
   Select,

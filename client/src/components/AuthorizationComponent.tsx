@@ -27,6 +27,7 @@ export default function AuthorizationComponent(): React.JSX.Element {
     username: "",
     password: "",
   });
+
   const [error, setError] = useState<string | false>(false);
 
   const [addUser, { loading: signupLoading }] = useMutation(ADD_USER, {
@@ -35,6 +36,7 @@ export default function AuthorizationComponent(): React.JSX.Element {
       password: "",
     },
   });
+
   const [loginUser, { loading: loginLoading }] = useMutation(LOGIN_USER, {
     variables: {
       username: "",
@@ -42,7 +44,7 @@ export default function AuthorizationComponent(): React.JSX.Element {
     },
   });
 
-  function handleFormChange({ target }: {target: HTMLInputElement}) {
+  function handleFormChange({ target }: { target: HTMLInputElement }) {
     setFormState({
       ...formState,
       [target.name]: target.value,
@@ -123,7 +125,7 @@ export default function AuthorizationComponent(): React.JSX.Element {
         />
 
         <PasswordInput
-          icon={<AiFillLock size={16} />}
+          leftSection={<AiFillLock size={16} />}
           onChange={handleFormChange}
           name="password"
           value={formState.password}

@@ -1,6 +1,14 @@
 import { Text, Flex } from "@mantine/core";
 
-export default function TotalDataDisplay({ label, stat, icon }) {
+interface Props {
+  label: string;
+  stat: number;
+  icon: () => React.ReactNode;
+}
+
+export default function TotalDataDisplay(props: Props) {
+  const { icon, stat, label } = props;
+
   return (
     <Flex direction="column" justify="center">
       <Flex justify={{ base: "center", lg: "flex-start" }} align="center">

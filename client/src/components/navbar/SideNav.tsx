@@ -8,11 +8,13 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { GoHome } from "react-icons/go";
 import { CiSettings } from "react-icons/ci";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import { IconGitCompare } from "@tabler/icons-react";
 
 const linkData = [
   { icon: GoHome, label: "Dashboard", link: "/Dashboard" },
   { icon: AiOutlineLineChart, label: "Progress", link: "/Progress" },
+  // { icon: IconGitCompare, label: "Compare", link: "/Compare" },
   { icon: AiOutlineTool, label: "Utilities", link: "/Utilities" },
   { icon: CiSettings, label: "Settings", link: "/Settings" },
 ];
@@ -27,7 +29,6 @@ export default function SideNav({ toggleMobile }) {
   const [active, setActive] = useState(pathname.replace("/", ""));
   const [hoveredTab, setHoveredTab] = useState(null);
 
-  function handleMouseLeave({ target }) {}
 
   const links = linkData.map((item) => (
     <Box
@@ -51,9 +52,6 @@ export default function SideNav({ toggleMobile }) {
         <motion.div
           className={classes.hoverAnimation}
           layoutId="hoverAnimation"
-          // animate={{ opacity: 1 }}
-          // initial={{ opacity: 0 }}
-          // exit={{ opacity: 0 }}
           transition={{
             duration: 0.05,
             type: "spring",
