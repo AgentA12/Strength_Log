@@ -20,6 +20,7 @@ if (process.env.environment === "production") {
   app.use(express.static(path.join(__dirname, "../client/dist")));
 
   app.get("*", (_, res) => {
+    res.setHeader("Content-Type", "application/javascript");
     res.sendFile(path.join(__dirname, "../client/dist/index.html"));
   });
 }
