@@ -31,9 +31,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "vite",
+    "start": "npm http-server ./dist",
     "build": "vite build",
-    "serve": "vite preview",
     "test:unit": "vitest --root src/",
     "compile": "graphql-codegen",
     "watch": "graphql-codegen -w"

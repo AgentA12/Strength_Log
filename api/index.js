@@ -16,6 +16,13 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+if (true) {
+  app.use(express.static(path.join(__dirname, "../client/dist")));
+  app.get("*", (_, res) => {
+    res.sendFile(path.join(__dirname, "../client/dist/index.html"))
+  })
+}
+console.log(path.join(__dirname, "../client/dist/index.html"));
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -30,6 +37,7 @@ const server = new ApolloServer({
 function startApolloServer(app, server) {
   db.once("open", async () => {
     await server.start();
+
     server.applyMiddleware({ path: "/graphql", app });
     app.listen(PORT, "0.0.0.0", () => {});
   });
