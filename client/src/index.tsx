@@ -29,7 +29,7 @@ const defaultApolloOptions: DefaultOptions = {
 };
 
 const client = new ApolloClient<NormalizedCacheObject>({
-  uri: "/graphql",
+  uri: "https://strengthlog.up.railway.app/graphql",
   cache: new InMemoryCache({
     addTypename: false,
   }),
