@@ -18,6 +18,7 @@ const Query = {
   },
 
   getAllExercises: async function () {
+    console.log("recieved")
     return Exercise.find().select("-__v");
   },
 
