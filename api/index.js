@@ -20,7 +20,6 @@ if (process.env.environment === "production") {
   app.use(express.static(path.join(__dirname, "../client/dist")));
 
   app.get("*", (_, res) => {
-    res.setHeader("Content-Type", "text/javascript");
     res.sendFile(path.join(__dirname, "../client/dist/index.html"));
   });
 }
@@ -31,7 +30,7 @@ const server = new ApolloServer({
   context: authMiddleWare,
   cache: "bounded",
   formatError: (error) => {
-    console.error(error.message)
+    console.error(error.message);
     return new Error(error.message.toString());
   },
 });
