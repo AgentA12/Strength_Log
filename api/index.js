@@ -1,12 +1,11 @@
+import express from "express";
 import cors from "cors";
 import db from "./config/connection.js";
-import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { typeDefs, resolvers } from "./schema/index.js";
 import { authMiddleWare } from "./utils/auth.js";
 import path from "path";
 import { fileURLToPath } from "url";
-import "dotenv/config";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 3001;
@@ -16,9 +15,10 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-if (process.env.environment === "production") {
+if (true) {
   app.use(express.static(path.join(__dirname, "../client/dist")));
-  app.get("*", (_, res) => {
+  app.get("*", (req, res) => {
+    res.contentType(req.params.file);
     res.sendFile(path.join(__dirname, "../client/dist/index.html"));
   });
 }
@@ -29,7 +29,6 @@ const server = new ApolloServer({
   context: authMiddleWare,
   cache: "bounded",
   formatError: (error) => {
-    console.error(error.message);
     return new Error(error.message.toString());
   },
 });
