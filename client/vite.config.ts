@@ -4,6 +4,9 @@ import viteTsconfigPaths from "vite-tsconfig-paths";
 import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
+  resolve: {
+    extensions: [".js", ".mjs", ".tsx", ".ts", ".jsx"],
+  },
   server: {
     port: 3000,
     proxy: {
