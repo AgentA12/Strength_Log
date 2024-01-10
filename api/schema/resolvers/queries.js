@@ -18,7 +18,7 @@ const Query = {
   },
 
   getAllExercises: async function () {
-    console.log("recieved")
+    console.log("recieved");
     return Exercise.find().select("-__v");
   },
 
@@ -206,12 +206,14 @@ const Query = {
   },
 
   async getDataSummary(_, { userID }) {
+    const user = await User.findById(userID);
+
     const {
       totalSetsCompleted,
       totalRepsCompleted,
       totalWeight,
       completedWorkouts,
-    } = await User.findById(userID);
+    } = user;
 
     return [
       { label: "total weight lifted", stat: totalWeight },
