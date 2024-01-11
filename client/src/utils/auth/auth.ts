@@ -1,15 +1,16 @@
 import jwt_decode from "jwt-decode";
 import { UserInfo } from "../../contexts/userInfo";
 
-class Auth {
-  login(token) {
-    window.localStorage.setItem("token", token);
+// this class doesn't do routing, if you use anymethods from this class you will have
+// to handle reloads/assigns/locations yourself after calling said method
 
-    window.location.assign("/Dashboard");
+class Auth {
+  login(token: string) {
+    window.localStorage.setItem("token", token);
   }
 
   isLoggedIn() {
-    const token = localStorage.getItem("token");
+    const token: string | null = localStorage.getItem("token");
 
     return !!token && !this.isTokenExpired(token);
   }
@@ -25,9 +26,8 @@ class Auth {
     }
   }
 
-  logout(page) {
+  logout() {
     window.localStorage.removeItem("token");
-    window.location.assign(page ? page : "/");
   }
 
   getToken() {

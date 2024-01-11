@@ -12,6 +12,7 @@ import {
   Text,
 } from "@mantine/core";
 import { AiOutlineThunderbolt, AiFillLock } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 const linkStyles = {
   marginTop: 12,
@@ -21,6 +22,7 @@ const linkStyles = {
 };
 
 export default function AuthorizationComponent(): React.JSX.Element {
+  const navigate = useNavigate();
   const [type, setType] = useState("Login");
 
   const [formState, setFormState] = useState({
@@ -71,8 +73,11 @@ export default function AuthorizationComponent(): React.JSX.Element {
             ...formState,
           },
         });
-
+        // unbeknownst to me using a url path with navigate() is not working, so
+        // just refresh the page for now
+        //  doing this in a few other places as a quick fix, logout, login, create user
         Auth.login(data.login.token);
+        navigate(0);
       } else {
         if (!formState.password.trim()) {
           setError("invalid password");
@@ -84,6 +89,7 @@ export default function AuthorizationComponent(): React.JSX.Element {
         });
 
         Auth.login(data.createUser.token);
+        navigate(0);
       }
     } catch (error: any) {
       setError(error.message);

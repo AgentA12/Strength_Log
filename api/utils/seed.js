@@ -1,5 +1,5 @@
 import db from "../config/connection.js";
-import { Exercise } from "../models/index";
+import { Exercise } from "../models/exercise.js";
 
 const seedExercises = [
   {
@@ -115,7 +115,13 @@ const seedExercises = [
 ];
 
 db.once("open", async () => {
-  await Exercise.deleteMany({});
-  await Exercise.insertMany(seedExercises);
-  await db.close();
+  try {
+    console.log("Seeding db with exercises...", "\n");
+    await Exercise.deleteMany({});
+    await Exercise.insertMany(seedExercises);
+    await db.close();
+    console.log("Seeding complete.", "\n");
+  } catch (error) {
+    console.error(`Error occured when seeding: ${error.message}`);
+  }
 });

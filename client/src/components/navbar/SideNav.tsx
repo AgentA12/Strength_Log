@@ -4,7 +4,7 @@ import { HiLogout } from "react-icons/hi";
 import { ToggleTheme } from "./index.js";
 import auth from "../../utils/auth/auth.js";
 import classes from "./navbar.module.css";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { GoHome } from "react-icons/go";
 import { CiSettings } from "react-icons/ci";
@@ -21,6 +21,7 @@ const linkData = [
 
 export default function SideNav({ toggleMobile }) {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setActive(pathname.replace("/", ""));
@@ -29,6 +30,10 @@ export default function SideNav({ toggleMobile }) {
   const [active, setActive] = useState(pathname.replace("/", ""));
   const [hoveredTab, setHoveredTab] = useState(null);
 
+  function handleLogout() {
+    auth.logout();
+    navigate(0);
+  }
 
   const links = linkData.map((item) => (
     <Box
@@ -72,11 +77,7 @@ export default function SideNav({ toggleMobile }) {
       <Group style={{ alignSelf: "center" }}>
         <ToggleTheme />
 
-        <ActionIcon
-          variant="outline"
-          label="Logout"
-          onClick={() => auth.logout("/")}
-        >
+        <ActionIcon variant="outline" onClick={handleLogout}>
           <HiLogout />
         </ActionIcon>
       </Group>

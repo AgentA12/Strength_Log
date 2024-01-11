@@ -51,6 +51,7 @@ const Mutation = {
 
   createTemplate: async function (_, args) {
     try {
+      console.log(args)
       // returns an array of templates. If the array has a length greater than 0, a template with the same name exists. return an error
       const template = await Template.find({
         templateName: args.templateName,

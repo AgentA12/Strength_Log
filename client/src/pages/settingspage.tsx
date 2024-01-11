@@ -20,6 +20,7 @@ import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
 import { DELETE_ACCOUNT } from "../utils/graphql/mutations";
 import auth from "../utils/auth/auth";
+import { useNavigate } from "react-router-dom";
 
 const colors = [
   "red",
@@ -37,6 +38,7 @@ const colors = [
 ];
 
 export default function SettingsPage() {
+  const navigate = useNavigate();
   const color = localStorage.getItem("preferredColor");
   return (
     <Container fluid>
@@ -57,7 +59,7 @@ export default function SettingsPage() {
             <Select
               onChange={(val) => {
                 localStorage.setItem("preferredColor", val ? val : "teal");
-                window.location.reload();
+                navigate(0);
               }}
               defaultValue={color}
               data={colors}
@@ -303,6 +305,7 @@ function FieldPassword() {
 function FieldDeleteAccount() {
   const { data } = useContext<any>(UserContext);
   const [opened, { open, close }] = useDisclosure(false);
+  const navigate = useNavigate()
 
   const [deleteAccount, { error, loading }] = useMutation(DELETE_ACCOUNT);
 
@@ -321,10 +324,10 @@ function FieldDeleteAccount() {
       const res = await deleteAccount({ variables: { userID: data._id } });
 
       if (res.data.deleteAccount.confirm === true) {
-        auth.logout("/");
+        auth.logout();
+        navigate(0)
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 
   return (
@@ -376,7 +379,7 @@ function FieldDeleteAccount() {
           mt={10}
           color="red.6"
         >
-          Delete account
+          Permanently remove account
         </Button>
       </Modal>
     </Fieldset>

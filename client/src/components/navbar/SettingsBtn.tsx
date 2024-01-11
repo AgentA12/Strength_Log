@@ -14,13 +14,14 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { DELETE_ACCOUNT } from "../../utils/graphql/mutations";
 import auth from "../../utils/auth/auth";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function SettingsNavBtn() {
   const [opened, setOpened] = useState(false);
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const [deleteAllowed, setDeleteAllowed] = useState(false);
   const [removeAccount, { data, loading }] = useMutation(DELETE_ACCOUNT);
+  const navigate = useNavigate();
 
   //getting user info
   if (auth.isLoggedIn()) {
@@ -46,8 +47,8 @@ export default function SettingsNavBtn() {
   }
 
   if (data?.deleteAccount?.confirm === true) {
-    auth.logout("/");
-    return <Navigate to="/login" replace />;
+    auth.logout();
+    navigate(0)
   }
 
   const dark = colorScheme === "dark";
