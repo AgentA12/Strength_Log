@@ -25,7 +25,7 @@ export default function RouteContainer() {
       <Route path="/login" element={<AuthPage isLoggedIn={isLoggedIn} />} />
 
       <Route
-        path="/Dashboard"
+        path="/dashboard"
         element={
           <Protected isLoggedIn={isLoggedIn}>
             <AppLayout hasNav={true}>
@@ -35,7 +35,7 @@ export default function RouteContainer() {
         }
       />
       <Route
-        path="/Settings"
+        path="/settings"
         element={
           <Protected isLoggedIn={isLoggedIn}>
             <AppLayout hasNav={true}>
@@ -46,7 +46,7 @@ export default function RouteContainer() {
       />
 
       <Route
-        path="/Create-template"
+        path="/create-template"
         element={
           <Protected isLoggedIn={isLoggedIn}>
             <AppLayout hasNav={true}>
@@ -57,7 +57,7 @@ export default function RouteContainer() {
       />
 
       <Route
-        path="/Progress"
+        path="/progress"
         element={
           <Protected isLoggedIn={isLoggedIn}>
             <AppLayout hasNav={true}>
@@ -79,7 +79,7 @@ export default function RouteContainer() {
       />
 
       <Route
-        path="/Workout"
+        path="/workout"
         element={
           <Protected isLoggedIn={isLoggedIn}>
             <AppLayout hasNav={true}>
@@ -90,7 +90,7 @@ export default function RouteContainer() {
       />
 
       <Route
-        path="/Utilities"
+        path="/utilities"
         element={
           <Protected isLoggedIn={isLoggedIn}>
             <AppLayout hasNav={true}>

@@ -1,7 +1,7 @@
 import jwt_decode from "jwt-decode";
 import { UserInfo } from "../../contexts/userInfo";
 
-// this class doesn't do routing, if you use anymethods from this class you will have
+// this class doesn't do routing, if you use any methods from this class you will have
 // to handle reloads/assigns/locations yourself after calling said method
 
 class Auth {

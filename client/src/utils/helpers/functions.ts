@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 const getOneRepMax = (weight: number, repetitions: number): number | null =>
   weight <= 0 || repetitions <= 0
     ? null
-    : Math.round(((weight / [1.0278 - 0.0278 * repetitions]) * 10) / 10);
+    : Math.round(((weight / (1.0278 - 0.0278 * repetitions)) * 10) / 10);
 
 function getPercentageOf1RM(oneRepMax: number) {
   const repMax = oneRepMax;

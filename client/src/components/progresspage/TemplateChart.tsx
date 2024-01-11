@@ -30,13 +30,16 @@ ChartJS.register(
   TimeScale
 );
 
-export default function TemplateChart({
-  activeTemplate,
-  userId,
-  range,
-  metric,
-  options,
-}) {
+interface Props {
+  activeTemplate: string;
+  userId: string;
+  range: string;
+  metric: string;
+}
+
+export default function TemplateChart(props: Props) {
+  const { activeTemplate, userId, range, metric } = props;
+
   const { loading, data, error } = useQuery(GET_CHART_PROGRESS, {
     variables: {
       userId: userId,
@@ -58,7 +61,6 @@ export default function TemplateChart({
           }}
         />
         <Line
-          options={options}
           data={{
             labels: [],
             datasets: [],
@@ -84,15 +86,15 @@ export default function TemplateChart({
     ...findFirstAndLastRange(data.getChartData)
   );
 
+
   return (
     <Line
-      options={options}
       data={{
         labels: [...labels],
-        datasets: data.getChartData.map((d) => {
+        datasets: data.getChartData.map((chartData) => {
           return {
-            label: d.label,
-            data: d.data.map((da) => {
+            label: chartData.label,
+            data: chartData.data.map((da) => {
               return { x: new Date(parseInt(da.x)), y: da.y };
             }),
           };

@@ -8,7 +8,7 @@ export type UserInfo = {
   };
   exp: number;
   iat: number;
-};
+} | null;
 
 export const userInfo = auth.getInfo();
-export const UserContext = createContext(userInfo);
+export const UserContext = createContext<UserInfo>(null);

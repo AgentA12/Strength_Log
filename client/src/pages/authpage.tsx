@@ -6,7 +6,7 @@ export default function AuthPage({ isLoggedIn }: { isLoggedIn: Boolean }) {
   let navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoggedIn === true) navigate("/Dashboard");
+    if (isLoggedIn === true) navigate("/dashboard");
   }, [isLoggedIn]);
 
   return <AuthorizationComponent />;
