@@ -13,6 +13,7 @@ import {
   Flex,
   Button,
   Box,
+  Loader
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { SelectExerciseModal, ExerciseForm } from "./index";
@@ -29,9 +30,9 @@ type Exercise ={
 }
 
 export default function TemplateDashBoard() {
-  const {
-    data: { _id: userID },
-  } = useContext(UserContext);
+ const userInfo = useContext(UserContext);
+
+ const userID = userInfo?.data._id;
 
   const { state } = useLocation();
 
@@ -66,7 +67,7 @@ export default function TemplateDashBoard() {
   const [editTemplate, { loading: editTemplateLoading }] =
     useMutation(EDIT_TEMPLATE);
 
-  if (loading) return null;
+  if (loading) return <Loader />;
 
   const exercises = data.getAllExercises.map((e: Exercise) => {
     return {
