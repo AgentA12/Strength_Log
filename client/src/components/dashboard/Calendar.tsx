@@ -73,7 +73,7 @@ export default function Calendar() {
 
   return (
     <DatePicker
-      type="default"
+      type="multiple"
       weekendDays={[]}
       size={width < 1300 ? (width < 400 ? "xs" : "sm") : "md"}
       value={calendarTimeStamps.map(

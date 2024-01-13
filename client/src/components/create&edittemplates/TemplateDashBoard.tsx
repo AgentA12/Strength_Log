@@ -1,4 +1,3 @@
-import classes from "./templatedashboard.module.css";
 import { v4 as uuidv4 } from "uuid";
 import { useContext } from "react";
 import { useMutation, useQuery } from "@apollo/client";

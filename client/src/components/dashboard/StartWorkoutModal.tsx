@@ -1,4 +1,4 @@
-import classes from "./startworkoutmodal.module.css";
+import classes from "./css/startworkoutmodal.module.css";
 import { Modal, Text } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { formatWorkoutState } from "../../utils/helpers/functions";
