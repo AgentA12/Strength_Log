@@ -109,25 +109,21 @@ function formatTime(num: number) {
   return `${num}`;
 }
 
-function findFirstAndLastRange(dataSet) {
-  let mostRecentDate = new Date(0);
+// finds the most recent and oldest date
+function findFirstAndLastRange(dataSet: { x: string; y: number }[]) {
+  let mostRecentDate = 0;
+  let oldestDate = Infinity;
 
-  for (let i = 0; i < dataSet.length; i++) {
-    dataSet[i].data.map((d: { x: string; y: number }) =>
-      new Date(parseInt(d.x)).getTime() > new Date(mostRecentDate).getTime()
-        ? (mostRecentDate = parseInt(d.x))
-        : null
-    );
-  }
+  for (const { x } of dataSet) {
+    const currentDate = parseInt(x);
 
-  let oldestDate = new Date();
+    if (isNaN(currentDate)) {
+     
+      continue;
+    }
 
-  for (let x = 0; x < dataSet.length; x++) {
-    dataSet[x].data.map((d) =>
-      new Date(parseInt(d.x)).getTime() < new Date(oldestDate).getTime()
-        ? (oldestDate = parseInt(d.x))
-        : null
-    );
+    mostRecentDate = Math.max(mostRecentDate, currentDate);
+    oldestDate = Math.min(oldestDate, currentDate);
   }
 
   return [oldestDate, mostRecentDate];

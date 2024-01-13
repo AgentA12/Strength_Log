@@ -91,10 +91,8 @@ const typeDefs = gql`
   }
 
   type TemplateChartData {
-    belongsTo: String
     label: String
     data: [ChartData]
-    findFirstAndLastDate: [String]
   }
 
   type Progress {

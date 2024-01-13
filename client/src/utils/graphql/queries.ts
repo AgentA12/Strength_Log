@@ -50,13 +50,11 @@ export const GET_CHART_PROGRESS = gql`
       exercise: $exercise
       shouldSortByTemplate: $shouldSortByTemplate
     ) {
-      belongsTo
       label
       data {
         x
         y
       }
-      findFirstAndLastDate
     }
   }
 `;

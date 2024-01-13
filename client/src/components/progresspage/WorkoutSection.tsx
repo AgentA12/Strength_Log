@@ -3,9 +3,13 @@ import { ExerciseTable } from "./index";
 import { Box, Paper, Stack, Text } from "@mantine/core";
 import { v4 as uuidv4 } from "uuid";
 import { DateLink } from "./DateLink";
-import { ExerciseLink } from "./ExerciseLink";
+import ExerciseLink from "./ExerciseLink";
+import { Workout } from "../../types/workout";
 
-export default function SingleWorkout({ workout, setActiveTab }) {
+interface Props {
+  workout: Workout;
+}
+export default function SingleWorkout({ workout }: Props) {
   return (
     <Paper
       maw={900}
@@ -21,11 +25,11 @@ export default function SingleWorkout({ workout, setActiveTab }) {
           <DateLink
             linkUrl="/compare"
             workoutID={workout._id}
-            createdAt={workout.createdAt}
+            createdAt={String(workout.createdAt)}
           />
         ) : (
           <Text c="dimmed" size="xl">
-            {new Date(parseInt(workout.createdAt)).toLocaleDateString("en-US", {
+            {new Date(String(workout.createdAt)).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
               day: "numeric",

@@ -51,7 +51,6 @@ const Mutation = {
 
   createTemplate: async function (_, args) {
     try {
-      console.log(args)
       // returns an array of templates. If the array has a length greater than 0, a template with the same name exists. return an error
       const template = await Template.find({
         templateName: args.templateName,
@@ -78,7 +77,6 @@ const Mutation = {
       };
 
       const temp = await Template.create(tempPayload);
-
       await User.findByIdAndUpdate(args.userId, {
         $push: { templates: [temp._id] },
       });
@@ -200,15 +198,11 @@ const Mutation = {
     try {
       const users = await User.findOne({ username: username }).select("_id");
 
-      console.log(users);
-
       if (users) throw new Error("username is taken");
 
       const user = await User.findByIdAndUpdate(userID, {
         username: username,
       }).select("username _id");
-
-      console.log(user);
 
       return { confirm: true };
     } catch (error) {

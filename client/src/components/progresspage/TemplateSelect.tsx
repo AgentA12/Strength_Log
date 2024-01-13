@@ -1,11 +1,17 @@
 import { Select } from "@mantine/core";
+import { TemplateShape } from "../../types";
+
+interface Props {
+  templates: TemplateShape[];
+  setActiveTemplate: React.Dispatch<React.SetStateAction<string>>;
+  activeTemplate: string;
+}
 
 export default function TemplateSelect({
   templates,
   setActiveTemplate,
   activeTemplate,
-}) {
-  
+}: Props) {
   const templateData = templates.map((template) => {
     return {
       label: template.templateName,
@@ -17,11 +23,8 @@ export default function TemplateSelect({
     <Select
       data={templateData}
       searchable
-      defaultValue={templateData[0] ? templateData[0] : []}
       value={activeTemplate}
-      onChange={(value) => {
-        setActiveTemplate(value);
-      }}
+      onChange={(val: string | null) => setActiveTemplate(val ? val : "")}
     />
   );
 }

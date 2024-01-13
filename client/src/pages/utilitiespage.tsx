@@ -12,12 +12,10 @@ import {
   Title,
 } from "@mantine/core";
 import { getOneRepMax } from "../utils/helpers/functions";
-import { useViewportSize } from "@mantine/hooks";
 import { OneRepMaxTable } from "../components/progresspage/index";
 
 export default function UtilitiesPage() {
   const [oneRepMax, setOneRepMax] = useState(null);
-  const { width } = useViewportSize();
 
   const form = useForm({
     initialValues: {
@@ -71,12 +69,10 @@ export default function UtilitiesPage() {
           </Button>
         </form>
       </Box>
-      {oneRepMax && (
+      {typeof oneRepMax === 'number' && (
         <>
-          <Text mt={20}>
-            Your Estimated One Rep Max is{" "}
-          </Text>
-          <Text fw={800} c={'primaryColor'} style={{fontSize: "35px"}}>
+          <Text mt={20}>Your Estimated One Rep Max is </Text>
+          <Text fw={800} c={"primaryColor"} style={{ fontSize: "35px" }}>
             {oneRepMax} Lbs
           </Text>
           <OneRepMaxTable oneRepMax={oneRepMax} />

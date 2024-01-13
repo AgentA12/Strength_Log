@@ -18,7 +18,6 @@ const Query = {
   },
 
   getAllExercises: async function () {
-    console.log("recieved");
     return Exercise.find().select("-__v");
   },
 
@@ -280,7 +279,7 @@ const Query = {
       // ]);
       return 500;
     } catch (error) {
-      console.log(error);
+      
       return error.message;
     }
   },

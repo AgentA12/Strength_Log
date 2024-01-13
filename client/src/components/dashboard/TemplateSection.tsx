@@ -19,11 +19,12 @@ import { UserContext, UserInfo } from "../../contexts/userInfo";
 import { showNotification } from "@mantine/notifications";
 import { Link } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
+import { TemplateShape } from "../../types/template";
 
 export default function TemplateSection() {
-  const {
-    data: { _id },
-  } = useContext(UserContext);
+  const userInfo = useContext<UserInfo>(UserContext);
+
+  const userID = userInfo?.data._id;
 
   const [templates, setTemplates] = useState([]);
   const [opened, { open, close }] = useDisclosure(false);
@@ -31,9 +32,9 @@ export default function TemplateSection() {
   const [deleteTemplate] = useMutation(DELETE_TEMPLATE);
 
   const { loading, data, error, refetch } = useQuery(GET_TEMPLATES, {
-    fetchPolicy: "network-only", // Used for first execution
+    fetchPolicy: "network-only",
     variables: {
-      userId: _id,
+      userId: userID,
     },
   });
 
@@ -71,10 +72,10 @@ export default function TemplateSection() {
     }
   }
 
-  function filterTemplates(event: React.SyntheticEvent) {
+  function filterTemplates(event: React.ChangeEvent<HTMLInputElement>) {
     event.preventDefault();
 
-    const newTemplates = templates.filter((template) => {
+    const newTemplates = templates.filter((template: TemplateShape) => {
       return template.templateName
         .toLowerCase()
         .includes(event.target.value.toLowerCase());
@@ -102,25 +103,18 @@ export default function TemplateSection() {
       );
 
     if (templates.length)
-      return templates.map((template, i) => (
+      return templates.map((template: TemplateShape) => (
         <TemplateCard
           template={template}
-          refetch={refetch}
           handleTemplateDelete={handleTemplateDelete}
           key={template._id}
         />
       ));
     return <Text size="xl">You have no templates saved.</Text>;
   }
-
   return (
     <Box component="section" mb={100}>
-      <StartWorkoutModal
-        opened={opened}
-        close={close}
-        loading={loading}
-        templates={templates}
-      />
+      <StartWorkoutModal opened={opened} close={close} templates={templates} />
       <Flex
         gap="lg"
         justify={{ base: "center", lg: "flex-start" }}
@@ -128,12 +122,12 @@ export default function TemplateSection() {
         wrap="wrap"
         mb={20}
       >
-        <Title order={2} tt="capitalize" align="center">
+        <Title order={2} tt="capitalize">
           Your Templates
         </Title>
         <TextInput
           style={{ flexGrow: 1 }}
-          onChange={(event) => filterTemplates(event, templates)}
+          onChange={(event) => filterTemplates(event)}
           placeholder="Search templates..."
           leftSection={<AiOutlineSearch size={20} />}
         />

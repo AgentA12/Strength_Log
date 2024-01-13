@@ -42,7 +42,7 @@ export default function ProgressPage() {
 
         {activeTab === "recents" && (
           <Tabs.Panel value="recents">
-            <RecentProgress setActiveTab={setActiveTab} />
+            <RecentProgress />
           </Tabs.Panel>
         )}
 

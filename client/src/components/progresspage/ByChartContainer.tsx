@@ -1,4 +1,4 @@
-import { Container, useMantineColorScheme } from "@mantine/core";
+import { Container } from "@mantine/core";
 import { UserContext } from "../../contexts/userInfo";
 import { useState, useContext } from "react";
 import { useQuery } from "@apollo/client";
@@ -37,40 +37,6 @@ export default function ByTemplatesContainer({ activeTab = "templates" }) {
     data: { _id: userID },
   } = useContext(UserContext);
 
-  const unit = "Lbs";
-
-  const { colorScheme } = useMantineColorScheme();
-
-  const options = {
-    responsive: true,
-    spanGaps: true,
-    plugins: {
-      legend: {
-        position: "bottom",
-      },
-    },
-    scales: {
-      x: {
-        type: "time",
-        time: {
-          unit: "day",
-        },
-        grid: {
-          color: colorScheme === "dark" ? "#454545" : "#DEE2E6",
-        },
-      },
-      y: {
-        ticks: {
-          callback: (label: string) => label + unit,
-        },
-
-        grid: {
-          color: colorScheme === "dark" ? "#454545" : "#DEE2E6",
-        },
-      },
-    },
-  };
-
   const [range, setRange] = useState("Last month");
   const [activeTemplate, setActiveTemplate] = useState("");
   const [activeExercise, setActiveExercise] = useState("All Exercises");
@@ -92,7 +58,6 @@ export default function ByTemplatesContainer({ activeTab = "templates" }) {
           setRange={setRange}
           range={range}
           userID={userID}
-          options={options}
           setMetric={setMetric}
           metric={metric}
         />
@@ -103,7 +68,6 @@ export default function ByTemplatesContainer({ activeTab = "templates" }) {
           userID={userID}
           setRange={setRange}
           range={range}
-          options={options}
           setMetric={setMetric}
           metric={metric}
         />

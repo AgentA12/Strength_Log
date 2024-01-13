@@ -5,7 +5,7 @@ interface Props {
   exerciseName: string;
 }
 
-export const ExerciseLink: React.FC<Props> = (props) => {
+export default function ExerciseLink(props: Props) {
   const { exerciseName } = props;
 
   const { primaryColor } = useMantineTheme();
@@ -31,4 +31,4 @@ export const ExerciseLink: React.FC<Props> = (props) => {
       {exerciseName}
     </Text>
   );
-};
+}

@@ -1,29 +1,36 @@
-import { Container, Divider, Group, Paper, Text, Title } from "@mantine/core";
+import { Container, Divider, Group, Text, Title } from "@mantine/core";
 import {
   ExerciseSelect,
   DateRangeSelect,
   MetricSelect,
 } from "../components/progresspage/index";
 import { useContext, useState } from "react";
-import { UserContext } from "../contexts/userInfo";
+import { UserContext, UserInfo } from "../contexts/userInfo";
 import ExerciseChart from "../components/progresspage/ExerciseChart";
 import { GET_ONE_REP_MAX } from "../utils/graphql/queries";
 import { useQuery } from "@apollo/client";
 import { useLocation } from "react-router-dom";
 import ChartWrapper from "../components/progresspage/ChartWrapper";
 
+type Range =
+  | "All time"
+  | "Last month"
+  | "Last 3 months"
+  | "Last 6 months"
+  | "Last 12 months";
+
+type Metric = "Estimated 1RM" | "Total Volume";
+
 export default function ExerciseProgressPage() {
-  const {
-    data: { _id: userID },
-  } = useContext<UserContext>(UserContext);
+  const userInfo = useContext<UserInfo>(UserContext);
+
+  const userID = userInfo?.data._id;
 
   const { state } = useLocation();
 
-  const [range, setRange] = useState<string>("All time");
-  const [metric, setMetric] = useState<"Estimated 1RM" | "Total Volume">(
-    "Estimated 1RM"
-  );
-  const [activeExercise, setActiveExercise] = useState<string | null>(
+  const [range, setRange] = useState<Range>("All time");
+  const [metric, setMetric] = useState<Metric>("Estimated 1RM");
+  const [activeExercise, setActiveExercise] = useState<string>(
     state ? state.exerciseName : "bench press"
   );
 
@@ -45,10 +52,11 @@ export default function ExerciseProgressPage() {
       />
       <Group my="xs">
         <ExerciseSelect
-          userID={userID}
+          userID={userID ? userID : ""}
           activeExercise={activeExercise}
           setActiveExercise={setActiveExercise}
         />
+
         <Divider orientation="vertical" variant="solid" />
 
         <Group>
@@ -67,7 +75,7 @@ export default function ExerciseProgressPage() {
 
       <ChartWrapper>
         <ExerciseChart
-          userID={userID}
+          userID={userID ? userID : ""}
           range={range}
           metric={metric}
           activeExercise={activeExercise}

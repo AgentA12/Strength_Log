@@ -17,9 +17,12 @@ interface SummaryData {
 export default function DataOverView() {
   const userInfo: UserInfo | null = useContext(UserContext);
 
+  const userID = userInfo?.data._id;
+  const NumOfStatsLength = 4;
+
   const { data, loading, error } = useQuery(GET_STAT_SUMMARY, {
     variables: {
-      userID: userInfo == null ? null : userInfo.data._id,
+      userID: userID,
     },
   });
 
@@ -30,7 +33,7 @@ export default function DataOverView() {
         wrap="wrap"
         gap={{ base: "25px", xs: "60px" }}
       >
-        {Array.from({ length: 4 }, (_, index) => (
+        {Array.from({ length: NumOfStatsLength }, (_, index) => (
           <Flex key={index} direction="column" justify="center">
             <Flex align="center" mb={5}>
               <Skeleton h={15} w={15} radius="md" />

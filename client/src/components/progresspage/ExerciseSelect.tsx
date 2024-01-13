@@ -1,13 +1,22 @@
 import { Select, Stack } from "@mantine/core";
 import { useQuery } from "@apollo/client";
 import { GET_EXERCISES } from "../../utils/graphql/queries";
+import { SetStateAction } from "react";
+import { ExerciseDetailsShape } from "../../types/template";
+
+interface Props {
+  setActiveExercise: React.Dispatch<SetStateAction<string>>;
+  activeExercise: string;
+  userID: string;
+  size?: string;
+}
 
 export default function ExerciseSelect({
   setActiveExercise,
   activeExercise,
   userID,
   size = "md",
-}) {
+}: Props) {
   const {
     data: exerciseData,
     loading: exerciseLoading,
@@ -18,23 +27,25 @@ export default function ExerciseSelect({
     },
   });
 
-  if (exerciseLoading) return <Select data={[]} />;
+  if (exerciseLoading) return <Select disabled />;
 
   if (exerciseError)
     return (
       <Stack gap={0} align="center">
-        <Select color="red" data={[]} error={`${exerciseError.message}`} />
+        <Select color="red" error={`${exerciseError.message}`} />
       </Stack>
     );
 
-  let exercises = exerciseData.getAllExercises.map((e) => e.exerciseName);
+  const exerciseNames = exerciseData.getAllExercises.map(
+    ({ exerciseName }: ExerciseDetailsShape) => exerciseName
+  );
 
   return (
     <Select
       style={{ width: "fit-content" }}
-      data={exercises}
+      data={exerciseNames}
       value={activeExercise}
-      onChange={(value) => setActiveExercise(value)}
+      onChange={(value) => setActiveExercise(value as string)}
       size={size}
     />
   );

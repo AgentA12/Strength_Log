@@ -2,8 +2,15 @@ import { Link } from "react-router-dom";
 import { Menu, Button } from "@mantine/core";
 import { FaEdit, FaRegChartBar } from "react-icons/fa";
 import { BsTrash3 } from "react-icons/bs";
+import { TemplateShape } from "../../types/template";
+interface Props {
+  template: TemplateShape;
+  setModalOpen: () => void;
+}
+export default function TemplateMenu(props: Props) {
+  const { template, setModalOpen } = props;
 
-export default function TemplateMenu({ template, setModalOpen }) {
+  //messed up shit right here
   const editState = {
     templateName: template.templateName,
     templateNotes: template.templateNotes,
@@ -19,14 +26,10 @@ export default function TemplateMenu({ template, setModalOpen }) {
   };
 
   const menuList = (
-    <Menu.Dropdown
-      onClick={(event) => {
-        event.stopPropagation();
-      }}
-    >
+    <Menu.Dropdown w={155} onClick={(event) => event.stopPropagation()}>
       <Menu.Item
         component={Link}
-        to={`/Progress`}
+        to={`/progress`}
         state={{ activeTab: "templates", templateName: template.templateName }}
         leftSection={<FaRegChartBar size={14} />}
       >
@@ -55,20 +58,15 @@ export default function TemplateMenu({ template, setModalOpen }) {
   return (
     <Menu
       position="bottom-end"
-      zindex={99}
+      zIndex={99}
       shadow="lg"
-      width={175}
       trigger="click"
       closeDelay={100}
-      transition="fade"
-      ml={5}
     >
       <Menu.Target>
         <Button
           variant="subtle"
-          onClick={(event) => {
-            event.stopPropagation();
-          }}
+          onClick={(event) => event.stopPropagation()}
           data-dropdown-toggle="dropdownDotsHorizontal"
           p="xs"
         >

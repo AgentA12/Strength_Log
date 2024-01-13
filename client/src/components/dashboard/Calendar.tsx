@@ -9,12 +9,16 @@ import { UserContext } from "../../contexts/userInfo";
 import { Text, LoadingOverlay, Overlay, Box } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 
+interface CalendarTimeStamp {
+  createdAt: string;
+}
+
 export default function Calendar() {
   const { width } = useViewportSize();
 
-  const {
-    data: { _id: userID },
-  } = useContext(UserContext);
+  const userInfo = useContext(UserContext);
+
+  const userID = userInfo?.data._id;
 
   const {
     data: { calendarTimeStamps } = [],
@@ -29,8 +33,9 @@ export default function Calendar() {
   const navigate = useNavigate();
 
   function handleDateClick(date: Date) {
-    const dateSelected = calendarTimeStamps.filter((d) =>
-      compareDatesByDay(date, new Date(parseInt(d.createdAt)))
+    const dateSelected = calendarTimeStamps.filter(
+      (timeStamp: CalendarTimeStamp) =>
+        compareDatesByDay(date, new Date(parseInt(timeStamp.createdAt)))
     );
     if (dateSelected.length > 0) {
       const workoutID = dateSelected[0]._id;
@@ -39,17 +44,15 @@ export default function Calendar() {
     }
   }
 
-  const datePickerDefaultProps = {
-    type: "multiple",
-    weekendDays: [],
-    size: width <= 1300 ? (width < 400 ? "xs" : "sm") : "md",
-  };
-
   if (loading)
     return (
       <Box style={{ borderRadius: "50px" }} pos="relative">
         <LoadingOverlay visible={true} />
-        <DatePicker {...datePickerDefaultProps} />
+        <DatePicker
+          type="default"
+          weekendDays={[]}
+          size={width < 1300 ? (width < 400 ? "xs" : "sm") : "md"}
+        />
       </Box>
     );
 
@@ -60,15 +63,21 @@ export default function Calendar() {
           <Text ta="center">{error.message}</Text>
         </Overlay>
 
-        <DatePicker {...datePickerDefaultProps} />
+        <DatePicker
+          type="default"
+          weekendDays={[]}
+          size={width < 1300 ? (width < 400 ? "xs" : "sm") : "md"}
+        />
       </Box>
     );
 
   return (
     <DatePicker
-      {...datePickerDefaultProps}
+      type="default"
+      weekendDays={[]}
+      size={width < 1300 ? (width < 400 ? "xs" : "sm") : "md"}
       value={calendarTimeStamps.map(
-        (date) => new Date(parseInt(date.createdAt))
+        (date: CalendarTimeStamp) => new Date(parseInt(date.createdAt))
       )}
       getDayProps={(date) => ({
         onClick: () => handleDateClick(date),

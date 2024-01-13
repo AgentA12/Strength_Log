@@ -12,13 +12,16 @@ import {
 import { useQuery } from "@apollo/client";
 import { GET_CHART_PROGRESS } from "../../utils/graphql/queries";
 
-export default function ExerciseChart({
-  userID,
-  range,
-  metric,
-  activeExercise,
-  options,
-}) {
+interface Props {
+  activeExercise: string;
+  userID: string;
+  range: string;
+  metric: string;
+}
+
+export default function ExerciseChart(props: Props) {
+  const { userID, range, metric, activeExercise } = props;
+
   const { loading, data, error } = useQuery(GET_CHART_PROGRESS, {
     variables: {
       userId: userID,
@@ -29,6 +32,40 @@ export default function ExerciseChart({
       shouldSortByTemplate: true,
     },
   });
+
+  const unit = "Lbs";
+
+  const { colorScheme } = useMantineColorScheme();
+
+  const options = {
+    responsive: true,
+    spanGaps: true,
+    plugins: {
+      legend: {
+        position: "bottom",
+      },
+    },
+    scales: {
+      x: {
+        type: "time",
+        time: {
+          unit: "day",
+        },
+        grid: {
+          color: colorScheme === "dark" ? "#454545" : "#DEE2E6",
+        },
+      },
+      y: {
+        ticks: {
+          callback: (label: string) => label + unit,
+        },
+
+        grid: {
+          color: colorScheme === "dark" ? "#454545" : "#DEE2E6",
+        },
+      },
+    },
+  };
 
   if (loading)
     return (
@@ -66,8 +103,12 @@ export default function ExerciseChart({
   filteredData = data.getChartData.filter(
     (data) => data.label.toLowerCase() === activeExercise
   );
+  console.log(filteredData);
 
-  const labels = getRangeOfDates(range, ...findFirstAndLastRange(filteredData));
+  const [firstDate, lastDate] = findFirstAndLastRange(filteredData[0].data);
+
+  const labels = getRangeOfDates(range, firstDate, lastDate);
+
   return (
     <Line
       options={options}

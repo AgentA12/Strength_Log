@@ -2,7 +2,7 @@ import { Text, useMantineTheme } from "@mantine/core";
 import { Link } from "react-router-dom";
 
 interface Props {
-  createdAt: string;
+  createdAt: string ;
   linkUrl: string;
   workoutID: string;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
