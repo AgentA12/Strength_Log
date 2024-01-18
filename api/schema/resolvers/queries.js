@@ -5,13 +5,27 @@ import {
 import { User, Exercise, Template } from "../../models/index.js";
 
 const Query = {
-  calendarTimeStamps: async function (_, { userId }) {
+  calendarTimeStamps: async function (_, { userId, templateName }) {
     try {
-      const { completedWorkouts: dates } = await User.findById(userId).select(
-        "completedWorkouts._id completedWorkouts.createdAt"
-      );
+      const { completedWorkouts: dates } = await User.findById(userId)
+        .select(
+          "completedWorkouts._id completedWorkouts.createdAt compareWorkouts.template.templateName"
+        )
+        .populate({
+          path: "completedWorkouts.template",
+          select: "templateName",
+        });
 
-      return dates.length ? dates : [];
+      console.log(dates);
+
+      let datess = dates;
+
+      if (templateName)
+        datess = dates.filter(
+          (date) => date.template.templateName === templateName
+        );
+
+      return datess.length ? datess : [];
     } catch (error) {
       return error;
     }
@@ -279,7 +293,6 @@ const Query = {
       // ]);
       return 500;
     } catch (error) {
-      
       return error.message;
     }
   },

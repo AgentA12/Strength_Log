@@ -5,12 +5,14 @@ interface Props {
   templates: TemplateShape[];
   setActiveTemplate: React.Dispatch<React.SetStateAction<string>>;
   activeTemplate: string;
+  label?: string;
 }
 
 export default function TemplateSelect({
   templates,
   setActiveTemplate,
   activeTemplate,
+  label,
 }: Props) {
   const templateData = templates.map((template) => {
     return {
@@ -21,6 +23,8 @@ export default function TemplateSelect({
 
   return (
     <Select
+      allowDeselect={false}
+      label={label ? label : null}
       data={templateData}
       searchable
       value={activeTemplate}

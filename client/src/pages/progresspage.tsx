@@ -1,13 +1,23 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Container, Divider, Tabs, Title } from "@mantine/core";
-import { IconCheck, IconTemplate, IconStretching } from "@tabler/icons-react";
-import { TemplateProgressPage, ExerciseProgressPage } from "./index";
+import {
+  IconCheck,
+  IconTemplate,
+  IconStretching,
+  IconGitCompare,
+} from "@tabler/icons-react";
+import {
+  TemplateProgressPage,
+  ExerciseProgressPage,
+  CompareWorkoutPage,
+} from "./index";
 
 import { RecentProgress } from "../components/progresspage/index";
 
 export default function ProgressPage() {
   const location = useLocation();
+
   const { state } = location;
 
   const [activeTab, setActiveTab] = useState(() =>
@@ -26,7 +36,7 @@ export default function ProgressPage() {
       <Tabs value={activeTab} onChange={setActiveTab}>
         <Tabs.List>
           <Tabs.Tab leftSection={<IconCheck size={16} />} value="recents">
-            Recently Completed
+            Workouts
           </Tabs.Tab>
           <Tabs.Tab leftSection={<IconTemplate size={16} />} value="templates">
             Templates
@@ -37,6 +47,9 @@ export default function ProgressPage() {
             value="exercises"
           >
             Exercises
+          </Tabs.Tab>
+          <Tabs.Tab leftSection={<IconGitCompare size={16} />} value="compare">
+            Compare
           </Tabs.Tab>
         </Tabs.List>
 
@@ -55,6 +68,12 @@ export default function ProgressPage() {
         {activeTab === "exercises" && (
           <Tabs.Panel value="exercises">
             <ExerciseProgressPage />
+          </Tabs.Panel>
+        )}
+
+        {activeTab === "compare" && (
+          <Tabs.Panel value="compare">
+            <CompareWorkoutPage />
           </Tabs.Panel>
         )}
       </Tabs>

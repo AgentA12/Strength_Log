@@ -13,7 +13,7 @@ import {
   Flex,
   Button,
   Box,
-  Loader
+  Loader,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { SelectExerciseModal, ExerciseForm } from "./index";
@@ -22,17 +22,17 @@ import { useForm } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 import { useLocation } from "react-router-dom";
 import { UserContext } from "../../contexts/userInfo";
+import { UserInfo } from "../../contexts/userInfo";
 
-type Exercise ={
-  exerciseName: String,
-  _id: String,
-  equipment: String
-}
+type Exercise = {
+  exerciseName: String;
+  _id: String;
+  equipment: String;
+};
 
 export default function TemplateDashBoard() {
- const userInfo = useContext(UserContext);
-
- const userID = userInfo?.data._id;
+  const userInfo = useContext<UserInfo>(UserContext);
+  const userID = userInfo?.data?._id;
 
   const { state } = useLocation();
 
@@ -81,43 +81,27 @@ export default function TemplateDashBoard() {
   async function handleSubmit(event: Event) {
     event.preventDefault();
 
-    if (!form.validate().hasErrors) {
-      try {
-        let mutationRes;
+    if (form.validate().hasErrors) return;
 
-        if (state) {
-          mutationRes = await editTemplate({
-            variables: {
-              ...form.values,
-            },
-          });
-        } else {
-          mutationRes = await addTemplate({
-            variables: {
-              ...form.values,
-              userId: userID,
-            },
-          });
-        }
+    try {
+      state
+        ? await editTemplate({ variables: { ...form.values } })
+        : await addTemplate({ variables: { ...form.values, userId: userID } });
 
-        if (mutationRes) {
-          showNotification({
-            title: `${form.values.templateName} is ready`,
-            message: "Your template was successfully created",
-            autoClose: 3000,
-          });
-          navigate("/Dashboard");
-        }
-      } catch (error: any) {
-        if (error.message) {
-          form.setFieldError("templateName", error.message);
-        }
-      }
+      showNotification({
+        title: `${form.values.templateName} is ready`,
+        message: "Your template was successfully created",
+        autoClose: 3000,
+      });
+
+      navigate("/Dashboard");
+    } catch (error: any) {
+      if (error.message) form.setFieldError("templateName", error.message);
     }
   }
 
   //adds an exercise to the form
-  function addExercise(value) {
+  function addExercise(value: string) {
     const e = exercises.find((exercise) => exercise.value === value);
 
     const exercise = {
@@ -136,7 +120,7 @@ export default function TemplateDashBoard() {
     close();
   }
 
-  function addSet(exerciseIndex : number) {
+  function addSet(exerciseIndex: number) {
     let data = { ...form.values };
 
     data.exercises[exerciseIndex].sets.push({
@@ -178,7 +162,7 @@ export default function TemplateDashBoard() {
     <Container fluid>
       <Divider
         label={
-          <Title  order={2} tt="capitalize">
+          <Title order={2} tt="capitalize">
             {state ? `Edit ${form.values.templateName}` : "Create a template"}
           </Title>
         }

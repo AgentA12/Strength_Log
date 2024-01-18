@@ -2,14 +2,14 @@ import { Text, useMantineTheme } from "@mantine/core";
 import { Link } from "react-router-dom";
 
 interface Props {
-  createdAt: string ;
-  linkUrl: string;
+  createdAt: string;
+
   workoutID: string;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
 }
 
 export const DateLink: React.FC<Props> = (props) => {
-  const { linkUrl, workoutID, createdAt, size } = props;
+  const { workoutID, createdAt, size } = props;
 
   const { primaryColor } = useMantineTheme();
 
@@ -22,10 +22,10 @@ export const DateLink: React.FC<Props> = (props) => {
 
   return (
     <Text
-      state={{ workoutID: workoutID }}
+      state={{ activeTab: "compare"}}
       component={Link}
       style={styles}
-      to={linkUrl}
+      to={"/progress"}
       c={primaryColor}
       size={size ? size : "md"}
     >

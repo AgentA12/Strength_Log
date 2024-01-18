@@ -68,17 +68,6 @@ export default function RouteContainer() {
       />
 
       <Route
-        path="/compare"
-        element={
-          <Protected isLoggedIn={isLoggedIn}>
-            <AppLayout hasNav={true}>
-              <CompareWorkoutPage />
-            </AppLayout>
-          </Protected>
-        }
-      />
-
-      <Route
         path="/workout"
         element={
           <Protected isLoggedIn={isLoggedIn}>

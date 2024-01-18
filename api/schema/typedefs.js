@@ -132,6 +132,7 @@ const typeDefs = gql`
   type CalendarDates {
     createdAt: String
     _id: ID
+    template: Template
   }
 
   type RecentCarousel {
@@ -208,7 +209,7 @@ const typeDefs = gql`
       shouldSortByTemplate: Boolean
     ): [TemplateChartData]
     getChartDataForExercises(userId: ID!): [ExerciseChartData]
-    calendarTimeStamps(userId: ID!): [CalendarDates]
+    calendarTimeStamps(userId: ID!, templateName: String): [CalendarDates]
     getProgressByDate(userID: ID!, workoutID: ID): [CompletedWorkout]
     getTemplateProgress(userID: ID!, templateID: ID!): [workout]
     getDataSummary(userID: ID!): [TotalData]

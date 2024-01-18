@@ -103,7 +103,6 @@ export default function ExerciseChart(props: Props) {
   filteredData = data.getChartData.filter(
     (data) => data.label.toLowerCase() === activeExercise
   );
-  console.log(filteredData);
 
   const [firstDate, lastDate] = findFirstAndLastRange(filteredData[0].data);
 

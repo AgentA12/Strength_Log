@@ -15,7 +15,7 @@ class Auth {
     return !!token && !this.isTokenExpired(token);
   }
 
-  isTokenExpired(token) {
+  isTokenExpired(token: any) {
     try {
       const decoded = jwt_decode(token);
       if (decoded.exp < Date.now() / 1000) {

@@ -15,12 +15,12 @@ import { getOneRepMax } from "../utils/helpers/functions";
 import { OneRepMaxTable } from "../components/progresspage/index";
 
 export default function UtilitiesPage() {
-  const [oneRepMax, setOneRepMax] = useState(null);
+  const [oneRepMax, setOneRepMax] = useState<null | number>(null);
 
   const form = useForm({
     initialValues: {
-      weight: null,
-      reps: null,
+      weight: 0,
+      reps: 0,
     },
     validate: {
       weight: (value) => (value <= 0 ? "Enter a number greater than 0" : null),
@@ -30,12 +30,10 @@ export default function UtilitiesPage() {
 
   function handleSubmit() {
     form.validate();
-    setOneRepMax(
-      getOneRepMax(
-        form.getInputProps("weight").value,
-        form.getInputProps("reps").value
-      )
-    );
+    const reps = form.getInputProps("reps").value;
+    const weight = form.getInputProps("weight").value;
+    const oneRepMax = getOneRepMax(weight, reps);
+    setOneRepMax(oneRepMax);
   }
 
   return (
@@ -45,7 +43,7 @@ export default function UtilitiesPage() {
       </Title>
 
       <Box>
-        <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
+        <form onSubmit={form.onSubmit(handleSubmit)}>
           <Group mb={10} align="flex-start" justify="flex-start" gap="xs">
             <NumberInput
               size="sm"
@@ -60,7 +58,7 @@ export default function UtilitiesPage() {
               size="sm"
               label="Repetitions"
               {...form.getInputProps("reps")}
-              suffix=" rep"
+              suffix=" reps"
               min={1}
             />
           </Group>
@@ -69,7 +67,7 @@ export default function UtilitiesPage() {
           </Button>
         </form>
       </Box>
-      {typeof oneRepMax === 'number' && (
+      {typeof oneRepMax === "number" && (
         <>
           <Text mt={20}>Your Estimated One Rep Max is </Text>
           <Text fw={800} c={"primaryColor"} style={{ fontSize: "35px" }}>

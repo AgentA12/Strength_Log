@@ -1,5 +1,4 @@
-import { useLocation } from "react-router-dom";
-import { useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { useState } from "react";
 import {
   Group,
@@ -10,339 +9,317 @@ import {
   Title,
   Select,
   Paper,
+  Divider,
+  Container,
+  useMantineTheme,
 } from "@mantine/core";
 import { COMPARE_WORKOUTS } from "../utils/graphql/queries";
 import { useContext } from "react";
 import { UserContext } from "../contexts/userInfo";
 import { TotalStatDisplay } from "../components/progresspage/index";
+import { TemplateSelect } from "../components/progresspage/index";
 import { v4 as uuidv4 } from "uuid";
 import {
   getTotalReps,
   getTotalSets,
   getTotalVolume,
-  getTotalVolumeForExercise,
+  compareWorkouts,
 } from "../utils/helpers/functions";
+import {
+  ExerciseTableHeader,
+  CompareText,
+} from "../components/compareworkouts/index";
+import { useQuery } from "@apollo/client";
+import { GET_TEMPLATES, CALENDAR_TIMESTAMPS } from "../utils/graphql/queries";
+
+type CompareTo = "original workout" | "previous workout";
 
 export default function CompareWorkoutPage() {
-  const {
-    state: { workoutID },
-  } = useLocation();
+  const [compareTo, setCompareTo] = useState<CompareTo>("original workout");
+  const [activeTemplate, setActiveTemplate] = useState<string>("");
+  const [workoutState, setWorkoutState] = useState<any>(null);
+  const [dateToCompare, setDateToCompare] = useState<null | string>(null);
+  const userInfo = useContext(UserContext);
+
+  const userID = userInfo?.data._id;
 
   const {
-    data: { _id: userID },
-  } = useContext(UserContext);
-
-  const [compareToOriginal, setCompareToOriginal] = useState(false);
-
-  const { data, error, loading } = useQuery(COMPARE_WORKOUTS, {
-    variables: { userID: userID, workoutID: workoutID },
+    data: templates,
+    loading: templateLoading,
+    error: templateError,
+  } = useQuery(GET_TEMPLATES, {
+    variables: {
+      userId: userID,
+    },
   });
 
-  if (loading) return <Loader />;
+  const [fetchWorkouts, { loading, error, data }] = useLazyQuery(
+    COMPARE_WORKOUTS,
+    {
+      variables: {
+        userID: userID,
+      },
+    }
+  );
 
-  if (error)
+  const { data: cData } = useQuery(CALENDAR_TIMESTAMPS, {
+    variables: {
+      userId: userID,
+      templateName: activeTemplate ? activeTemplate : "hello",
+    },
+  });
+
+  if (templateError)
     return (
       <Text c="red.6" fw={600}>
-        {error.message}
+        {templateError.message}
       </Text>
     );
+  if (templateLoading) return <Loader />;
 
-  if (data.compareWorkouts.hasLatterWorkout != true)
-    return (
-      <Stack gap={0} key={uuidv4()} mb={120}>
-        <Title fw={600}>
-          {new Date(
-            parseInt(data.compareWorkouts.formerWorkout.createdAt)
-          ).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </Title>
+  async function handleFetchWorkout(value: string | null) {
+    setDateToCompare(value);
+    try {
+      const { data } = await fetchWorkouts({ variables: { workoutID: value } });
+      if (data) {
+        setWorkoutState(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-        <Title order={2} tt="capitalize">
-          {data.compareWorkouts.formerWorkout.template.templateName.toString()}
-        </Title>
-        <Text>No previous workouts saved</Text>
-      </Stack>
-    );
+  function handleTemplateSelect(value: string) {
+    setActiveTemplate(value);
+    setWorkoutState(null);
+    setDateToCompare(null);
+  }
+
+  return (
+    <>
+      <Divider label={<Title>Compare</Title>} />
+      <Group>
+        <TemplateSelect
+          label="Select a template"
+          templates={templates ? templates.getTemplates : [""]}
+          activeTemplate={activeTemplate}
+          setActiveTemplate={(value) => handleTemplateSelect(value as string)}
+        />
+
+        {activeTemplate ? (
+          <Select
+            allowDeselect={false}
+            w={"fit-content"}
+            data={cData?.calendarTimeStamps.map(
+              (stamp: { _id: string; createdAt: string }) => {
+                return {
+                  label: formatDate(stamp.createdAt),
+                  value: stamp._id,
+                };
+              }
+            )}
+            value={dateToCompare}
+            onChange={handleFetchWorkout}
+            label="Date to compare"
+          />
+        ) : null}
+      </Group>
+      {workoutState ? (
+        <CompareWorkoutsContainer
+          data={data}
+          loading={loading}
+          error={error}
+          compareTo={compareTo}
+          setCompareTo={setCompareTo}
+        />
+      ) : null}
+    </>
+  );
+}
+
+function formatDate(date: string | number) {
+  const parsedDate = typeof date === "string" ? parseInt(date) : date;
+
+  if (isNaN(parsedDate)) {
+    return "Invalid Date";
+  }
+
+  return new Date(parsedDate).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  });
+}
+
+function CompareWorkoutsContainer({
+  data,
+  setCompareTo,
+  compareTo,
+  loading,
+  error,
+}: any) {
+  if (loading) return <Loader />;
+  if (error) return <Text c="red">{error.message}</Text>;
+
+  const { primaryColor } = useMantineTheme();
 
   const selectedWorkout = data.compareWorkouts.formerWorkout;
   const previousWorkout = data.compareWorkouts.latterWorkout;
   const originalTemplate = data.compareWorkouts.originalTemplate;
+  const templateName = selectedWorkout.template.templateName;
 
-  const workout = compareToOriginal
-    ? compareWorkouts(selectedWorkout, originalTemplate)
-    : compareWorkouts(selectedWorkout, previousWorkout);
+  let workout: any;
 
-  return (
-    <Stack gap={0} key={uuidv4()} mb={120}>
-      <Title fw={600}>
-        {new Date(
-          parseInt(data.compareWorkouts.formerWorkout.createdAt)
-        ).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}
-      </Title>
-
-      <Stack gap={0}>
-        <Title order={2} tt="capitalize">
-          {data.compareWorkouts.formerWorkout.template.templateName.toString()}
-        </Title>
-        <Text fw={300} size="lg">
-          Compared to{" "}
-          <Text span td="underline">
-            {new Date(
-              parseInt(data.compareWorkouts.latterWorkout.createdAt)
-            ).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </Text>
-        </Text>
-        <Select
-          my={5}
-          description="Compare to"
-          w={"fit-content"}
-          defaultValue={"Previous Workout"}
-          data={["Previous Workout", "Original Template"]}
-          value={compareToOriginal ? "Original Template" : "Previous Workout"}
-          onChange={() => setCompareToOriginal(!compareToOriginal)}
-        />
-
-        <Group mt={12}>
-          {compareToOriginal ? (
-            <>
-              {" "}
-              <TotalStatDisplay
-                diff={
-                  getTotalVolume(selectedWorkout.exercises) -
-                  getTotalVolume(originalTemplate.exercises)
-                }
-                value={getTotalVolume(selectedWorkout.exercises)}
-                title={"Total Volume"}
-                previousValue={getTotalVolume(originalTemplate.exercises)}
-                unit={"Lbs"}
-              />
-              <TotalStatDisplay
-                diff={
-                  getTotalReps(selectedWorkout.exercises) -
-                  getTotalReps(originalTemplate.exercises)
-                }
-                value={getTotalReps(selectedWorkout.exercises)}
-                title={"Total Reps"}
-                previousValue={getTotalReps(originalTemplate.exercises)}
-                unit={null}
-              />
-              <TotalStatDisplay
-                diff={
-                  getTotalSets(selectedWorkout.exercises) -
-                  getTotalSets(originalTemplate.exercises)
-                }
-                value={getTotalSets(selectedWorkout.exercises)}
-                title={"Total Sets"}
-                previousValue={getTotalSets(originalTemplate.exercises)}
-                unit={null}
-              />{" "}
-            </>
-          ) : (
-            <>
-              {" "}
-              <TotalStatDisplay
-                diff={
-                  getTotalVolume(selectedWorkout.exercises) -
-                  getTotalVolume(previousWorkout.exercises)
-                }
-                value={getTotalVolume(selectedWorkout.exercises)}
-                title={"Total Volume"}
-                previousValue={getTotalVolume(previousWorkout.exercises)}
-                unit={"Lbs"}
-              />
-              <TotalStatDisplay
-                diff={
-                  getTotalReps(selectedWorkout.exercises) -
-                  getTotalReps(previousWorkout.exercises)
-                }
-                value={getTotalReps(selectedWorkout.exercises)}
-                title={"Total Reps"}
-                previousValue={getTotalReps(previousWorkout.exercises)}
-                unit={null}
-              />
-              <TotalStatDisplay
-                diff={
-                  getTotalSets(selectedWorkout.exercises) -
-                  getTotalSets(previousWorkout.exercises)
-                }
-                value={getTotalSets(selectedWorkout.exercises)}
-                title={"Total Sets"}
-                previousValue={getTotalSets(previousWorkout.exercises)}
-                unit={null}
-              />{" "}
-            </>
-          )}
-        </Group>
-      </Stack>
-
-      {workout.comparedWorkout.map((exercise, i) => (
-        <Paper
-          maw={900}
-          radius="lg"
-          shadow="xs"
-          p="md"
-          withBorder
-          key={uuidv4()}
-          mx={12}
-          my={20}
-          style={{ maxWidth: "900px" }}
-        >
-          <ExerciseTableHeader
-            exercise={exercise}
-            workout={workout}
-            exerciseIndex={i}
-          />
-          <CompareExerciseTable exercise={exercise} />
-        </Paper>
-      ))}
-    </Stack>
-  );
-}
-
-function ExerciseTableHeader({ exercise, workout, exerciseIndex }) {
-  return (
-    <Group>
-      <Text
-        style={{ cursor: "pointer" }}
-        td="underline"
-        size="xl"
-        tt="capitalize"
-        fw={700}
-      >
-        {exercise.exerciseName}
-      </Text>
-      <Paper>
-        <Text span>
-          Volume:{" "}
-          {getTotalVolumeForExercise(
-            exercise.sets.concat(exercise.increasedSets)
-          )}{" "}
-          Lbs{" "}
-        </Text>
-        <Text span>
-          {getColorForChange(
-            getTotalVolumeForExercise(
-              exercise.sets.concat(exercise.increasedSets)
-            ) -
-              getTotalVolumeForExercise(
-                workout.previousWorkout.exercises[exerciseIndex].sets
-              )
-          )}
-        </Text>
-      </Paper>
-      <Paper>
-        <Text span>
-          Reps:{" "}
-          {getTotalReps(exercise) +
-            getTotalReps(
-              exercise.increasedSets ? { sets: exercise.increasedSets } : null
-            )}{" "}
-        </Text>
-        <Text span>
-          {getColorForChange(
-            getTotalReps(exercise) +
-              getTotalReps({
-                sets: exercise.increasedSets,
-              }) -
-              getTotalReps(workout.previousWorkout.exercises[exerciseIndex])
-          )}
-        </Text>
-      </Paper>
-      <Text>
-        Sets: {exercise.sets.length}{" "}
-        {exercise.increasedSets.length
-          ? getColorForChange(exercise.increasedSets.length)
-          : null}
-        {exercise.decreasedSets.length
-          ? getColorForChange(-exercise.decreasedSets.length)
-          : null}
-      </Text>
-    </Group>
-  );
-}
-
-function compareExerciseSets(setsOne, setsTwo) {
-  let results = { sets: [], increasedSets: [], decreasedSets: [] };
-
-  if (setsOne.length > setsTwo.length) {
-    setsOne.map((set, i) => {
-      if (setsTwo[i] != undefined) {
-        results.sets.push({
-          ...set,
-          weightChange: set.weight - setsTwo[i].weight,
-          repChange: set.reps - setsTwo[i].reps,
-        });
-      } else {
-        results.increasedSets.push({ ...set });
-      }
-    });
-  } else if (setsOne.length < setsTwo.length) {
-    setsTwo.map((set, i) => {
-      if (setsOne[i] != undefined) {
-        results.sets.push({
-          ...setsOne[i],
-          weightChange: setsOne[i].weight - set.weight,
-          repChange: setsOne[i].reps - set.reps,
-        });
-      } else {
-        results.decreasedSets.push({ ...set });
-      }
-    });
+  if (data.compareWorkouts.hasLatterWorkout === false) {
+    workout = compareWorkouts(selectedWorkout, originalTemplate);
   } else {
-    setsOne.map((set, i) => {
-      results.sets.push({
-        ...set,
-        weightChange: set.weight - setsTwo[i].weight,
-        repChange: set.reps - setsTwo[i].reps,
-      });
-    });
+    compareTo === "original template"
+      ? (workout = compareWorkouts(selectedWorkout, originalTemplate))
+      : (workout = compareWorkouts(selectedWorkout, previousWorkout));
   }
-  return { ...results };
+
+  return (
+    <Container fluid mt={12}>
+      <Stack gap={0} mb={120}>
+        <Title order={3} fw={600}>
+          {formatDate(data.compareWorkouts.formerWorkout.createdAt)}
+        </Title>
+
+        <Stack gap={0}>
+          <Title order={4} tt="capitalize">
+            {templateName}
+          </Title>
+          <Group gap={5}>
+            <Text span>Compared to: </Text>
+            <Text span fw={500} c={primaryColor} size="lg">
+              {compareTo === "previous workout"
+                ? formatDate(previousWorkout.createdAt)
+                : "Original Template"}
+            </Text>
+          </Group>
+          <Select
+            allowDeselect={false}
+            my={5}
+            description="Compare to"
+            w={"fit-content"}
+            data={["previous workout", "original template"]}
+            value={compareTo}
+            onChange={setCompareTo}
+            disabled={!data.compareWorkouts.hasLatterWorkout}
+          />
+          <Group mt={12}>
+            {compareTo === "original template" ||
+            data.compareWorkouts.hasLatterWorkout === false ? (
+              <>
+                <TotalStatDisplay
+                  diff={
+                    getTotalVolume(selectedWorkout.exercises) -
+                    getTotalVolume(originalTemplate.exercises)
+                  }
+                  value={getTotalVolume(selectedWorkout.exercises)}
+                  title={"Total Volume"}
+                  previousValue={getTotalVolume(originalTemplate.exercises)}
+                  unit={"Lbs"}
+                />
+                <TotalStatDisplay
+                  diff={
+                    getTotalReps(selectedWorkout.exercises) -
+                    getTotalReps(originalTemplate.exercises)
+                  }
+                  value={getTotalReps(selectedWorkout.exercises)}
+                  title={"Total Reps"}
+                  previousValue={getTotalReps(originalTemplate.exercises)}
+                  unit={null}
+                />
+                <TotalStatDisplay
+                  diff={
+                    getTotalSets(selectedWorkout.exercises) -
+                    getTotalSets(originalTemplate.exercises)
+                  }
+                  value={getTotalSets(selectedWorkout.exercises)}
+                  title={"Total Sets"}
+                  previousValue={getTotalSets(originalTemplate.exercises)}
+                  unit={null}
+                />
+              </>
+            ) : (
+              <>
+                <TotalStatDisplay
+                  diff={
+                    getTotalVolume(selectedWorkout.exercises) -
+                    getTotalVolume(previousWorkout.exercises)
+                  }
+                  value={getTotalVolume(selectedWorkout.exercises)}
+                  title={"Total Volume"}
+                  previousValue={getTotalVolume(previousWorkout.exercises)}
+                  unit={"Lbs"}
+                />
+                <TotalStatDisplay
+                  diff={
+                    getTotalReps(selectedWorkout.exercises) -
+                    getTotalReps(previousWorkout.exercises)
+                  }
+                  value={getTotalReps(selectedWorkout.exercises)}
+                  title={"Total Reps"}
+                  previousValue={getTotalReps(previousWorkout.exercises)}
+                  unit={null}
+                />
+                <TotalStatDisplay
+                  diff={
+                    getTotalSets(selectedWorkout.exercises) -
+                    getTotalSets(previousWorkout.exercises)
+                  }
+                  value={getTotalSets(selectedWorkout.exercises)}
+                  title={"Total Sets"}
+                  previousValue={getTotalSets(previousWorkout.exercises)}
+                  unit={null}
+                />
+              </>
+            )}
+          </Group>
+          {workout.comparedWorkout.map((exercise: any, i: number) => (
+            <Paper
+              maw={900}
+              radius="lg"
+              shadow="xs"
+              p="md"
+              withBorder
+              key={uuidv4()}
+              mx={12}
+              my={20}
+              style={{ maxWidth: "900px" }}
+            >
+              <ExerciseTableHeader
+                exercise={exercise}
+                workout={workout}
+                exerciseIndex={i}
+              />
+              <CompareExerciseTable exercise={exercise} />
+            </Paper>
+          ))}
+        </Stack>
+      </Stack>
+    </Container>
+  );
 }
 
-function compareWorkouts(selectedWorkout, previousWorkout) {
-  let result = { comparedWorkout: [], selectedWorkout, previousWorkout };
-  selectedWorkout.exercises.map((exercise) => {
-    previousWorkout.exercises.map((exerciseTwo) => {
-      if (exercise.exercise._id === exerciseTwo.exercise._id) {
-        result.comparedWorkout.push({
-          exerciseName: exercise.exercise.exerciseName,
-          ...compareExerciseSets(exercise.sets, exerciseTwo.sets),
-        });
-      }
-    });
-  });
-
-  return result;
-}
-
-function CompareExerciseTable({ exercise }) {
-  const rows = exercise.sets.map((set, i) => (
+function CompareExerciseTable({ exercise }: any) {
+  const rows = exercise.sets.map((set: any, i: number) => (
     <Table.Tr key={uuidv4()}>
       <Table.Td>{i + 1}</Table.Td>
       <Table.Td>
-        {set.reps} {set.repChange ? getColorForChange(set.repChange) : null}
+        {set.reps} {set.repChange ? CompareText(set.repChange) : null}
       </Table.Td>
       <Table.Td>
-        {set.weight}{" "}
-        {set.weightChange ? getColorForChange(set.weightChange, "Lbs") : null}
+        {set.weight} {set.weightChange ? CompareText(set.weightChange) : null}
       </Table.Td>
     </Table.Tr>
   ));
 
   exercise.increasedSets.length
-    ? exercise.increasedSets.map((e, i) => {
+    ? exercise.increasedSets.map((e: any, i: number) => {
         rows.push(
           <Table.Tr c="green.6" key={uuidv4()}>
             <Table.Td>{exercise.sets.length + i + 1}</Table.Td>
@@ -352,7 +329,7 @@ function CompareExerciseTable({ exercise }) {
         );
       })
     : exercise.decreasedSets.length
-    ? exercise.decreasedSets.map((e, i) => {
+    ? exercise.decreasedSets.map((e: any, i: any) => {
         rows.push(
           <Table.Tr c="red.6" key={uuidv4()}>
             <Table.Td>{exercise.sets.length + i + 1}</Table.Td>
@@ -375,21 +352,4 @@ function CompareExerciseTable({ exercise }) {
       <Table.Tbody>{rows}</Table.Tbody>
     </Table>
   );
-}
-
-function getColorForChange(num, unit) {
-  if (num > 0) {
-    return (
-      <Text c="green.6" span>
-        {" "}
-        +{num} {unit && unit}
-      </Text>
-    );
-  } else if (num < 0) {
-    return (
-      <Text c="red.6" span>
-        {num} {unit && unit}
-      </Text>
-    );
-  }
 }
