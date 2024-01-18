@@ -1,5 +1,5 @@
 import { useLazyQuery } from "@apollo/client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Group,
   Loader,
@@ -31,18 +31,21 @@ import {
 } from "../components/compareworkouts/index";
 import { useQuery } from "@apollo/client";
 import { GET_TEMPLATES, CALENDAR_TIMESTAMPS } from "../utils/graphql/queries";
+import { useLocation, useParams } from "react-router-dom";
 
-type CompareTo = "original workout" | "previous workout";
+type CompareTo = "original template" | "previous workout";
 
 export default function CompareWorkoutPage() {
-  const [compareTo, setCompareTo] = useState<CompareTo>("original workout");
+  const [compareTo, setCompareTo] = useState<CompareTo>("original template");
   const [activeTemplate, setActiveTemplate] = useState<string>("");
   const [workoutState, setWorkoutState] = useState<any>(null);
   const [dateToCompare, setDateToCompare] = useState<null | string>(null);
   const userInfo = useContext(UserContext);
 
-  const userID = userInfo?.data._id;
+  const { state } = useLocation();
 
+  const userID = userInfo?.data._id;
+console.log(state)
   const {
     data: templates,
     loading: templateLoading,
@@ -68,6 +71,28 @@ export default function CompareWorkoutPage() {
       templateName: activeTemplate ? activeTemplate : "hello",
     },
   });
+
+  useEffect(() => {
+    if (state?.compareDate) {
+      fetchWorkouts({
+        variables: {
+          userID: userID,
+          workoutID: state.compareDate,
+        },
+      })
+        .then(({ data }) => {
+          console.log(data);
+          setWorkoutState(data);
+          setActiveTemplate(
+            data.compareWorkouts.formerWorkout.template.templateName.toString()
+          );
+          setDateToCompare(data.compareWorkouts.formerWorkout._id);
+        })
+        .catch((error: Error) => {
+          console.log(error);
+        });
+    }
+  }, [state]);
 
   if (templateError)
     return (
@@ -202,8 +227,10 @@ function CompareWorkoutsContainer({
             my={5}
             description="Compare to"
             w={"fit-content"}
+            defaultValue={'original template'}
             data={["previous workout", "original template"]}
             value={compareTo}
+            
             onChange={setCompareTo}
             disabled={!data.compareWorkouts.hasLatterWorkout}
           />

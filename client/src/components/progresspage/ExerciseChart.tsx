@@ -3,6 +3,7 @@ import {
   Box,
   LoadingOverlay,
   Text,
+  Overlay,
 } from "@mantine/core";
 import { Line } from "react-chartjs-2";
 import {
@@ -100,20 +101,33 @@ export default function ExerciseChart(props: Props) {
 
   let filteredData;
 
+  if (!activeExercise) {
+    return (
+      <Box style={{ position: "relative" }}>
+        <Line
+          options={options}
+          data={{
+            labels: [],
+            datasets: [],
+          }}
+        />
+      </Box>
+    );
+  }
+
   filteredData = data.getChartData.filter(
     (data) => data.label.toLowerCase() === activeExercise
   );
 
-  const [firstDate, lastDate] = findFirstAndLastRange(filteredData[0].data);
+  const [firstDate, lastDate] = findFirstAndLastRange(filteredData[0]?.data);
 
   const labels = getRangeOfDates(range, firstDate, lastDate);
-
   return (
     <Line
       options={options}
       data={{
         labels: labels,
-        datasets: filteredData.map((d) => {
+        datasets: filteredData?.map((d) => {
           return {
             label: d.label,
             data: d.data.map((da) => {

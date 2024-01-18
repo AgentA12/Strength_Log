@@ -22,7 +22,7 @@ export const DateLink: React.FC<Props> = (props) => {
 
   return (
     <Text
-      state={{ activeTab: "compare"}}
+      state={{ activeTab: "compare", compareDate: workoutID }}
       component={Link}
       style={styles}
       to={"/progress"}

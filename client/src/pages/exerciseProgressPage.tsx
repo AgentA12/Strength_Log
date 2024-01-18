@@ -30,8 +30,8 @@ export default function ExerciseProgressPage() {
 
   const [range, setRange] = useState<Range>("All time");
   const [metric, setMetric] = useState<Metric>("Estimated 1RM");
-  const [activeExercise, setActiveExercise] = useState<string>(
-    state ? state.exerciseName : "bench press"
+  const [activeExercise, setActiveExercise] = useState(
+    state ? state.exerciseName : null
   );
 
   const { data: oneRepMax } = useQuery(GET_ONE_REP_MAX, {
@@ -52,7 +52,7 @@ export default function ExerciseProgressPage() {
       />
       <Group my="xs">
         <ExerciseSelect
-          userID={userID ? userID : ""}
+          userID={userID as string}
           activeExercise={activeExercise}
           setActiveExercise={setActiveExercise}
         />
@@ -75,7 +75,7 @@ export default function ExerciseProgressPage() {
 
       <ChartWrapper>
         <ExerciseChart
-          userID={userID ? userID : ""}
+          userID={userID as string}
           range={range}
           metric={metric}
           activeExercise={activeExercise}

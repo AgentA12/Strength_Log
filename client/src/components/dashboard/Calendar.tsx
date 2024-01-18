@@ -40,7 +40,9 @@ export default function Calendar() {
     if (dateSelected.length > 0) {
       const workoutID = dateSelected[0]._id;
 
-      navigate(`/compare`, { state: { workoutID: workoutID } });
+      navigate(`/progress`, {
+        state: { compareDate: workoutID, activeTab: "compare" },
+      });
     }
   }
 

@@ -30,10 +30,17 @@ export default function ProgressPage() {
     }
   }, [state]);
 
+  function handleTabChange(val: string) {
+    setActiveTab(val);
+  }
+
   return (
     <Container fluid>
       <Divider label={<Title>Progress</Title>} />
-      <Tabs value={activeTab} onChange={setActiveTab}>
+      <Tabs
+        value={activeTab}
+        onChange={(val) => handleTabChange(val as string)}
+      >
         <Tabs.List>
           <Tabs.Tab leftSection={<IconCheck size={16} />} value="workouts">
             Workouts
