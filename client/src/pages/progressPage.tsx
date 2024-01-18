@@ -21,7 +21,7 @@ export default function ProgressPage() {
   const { state } = location;
 
   const [activeTab, setActiveTab] = useState(() =>
-    state ? state.activeTab : "recents"
+    state ? state.activeTab : "workouts"
   );
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function ProgressPage() {
       <Divider label={<Title>Progress</Title>} />
       <Tabs value={activeTab} onChange={setActiveTab}>
         <Tabs.List>
-          <Tabs.Tab leftSection={<IconCheck size={16} />} value="recents">
+          <Tabs.Tab leftSection={<IconCheck size={16} />} value="workouts">
             Workouts
           </Tabs.Tab>
           <Tabs.Tab leftSection={<IconTemplate size={16} />} value="templates">
@@ -53,8 +53,8 @@ export default function ProgressPage() {
           </Tabs.Tab>
         </Tabs.List>
 
-        {activeTab === "recents" && (
-          <Tabs.Panel value="recents">
+        {activeTab === "workouts" && (
+          <Tabs.Panel value="workouts">
             <RecentProgress />
           </Tabs.Panel>
         )}

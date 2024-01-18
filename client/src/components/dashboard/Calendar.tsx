@@ -70,7 +70,6 @@ export default function Calendar() {
         />
       </Box>
     );
-console.log(calendarTimeStamps)
   return (
     <DatePicker
       type="multiple"

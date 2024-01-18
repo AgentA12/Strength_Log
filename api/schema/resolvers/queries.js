@@ -16,8 +16,6 @@ const Query = {
           select: "templateName",
         });
 
-      console.log(dates);
-
       let datess = dates;
 
       if (templateName)

@@ -84,9 +84,7 @@ export default function CompareWorkoutPage() {
       if (data) {
         setWorkoutState(data);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   function handleTemplateSelect(value: string) {

@@ -3,7 +3,7 @@ import "@mantine/core/styles/global.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "./app";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 import { ModalsProvider } from "@mantine/modals";
 import {
   ApolloClient,
@@ -71,9 +71,9 @@ root.render(
     <MantineProvider defaultColorScheme="auto" theme={theme}>
       <ApolloProvider client={client}>
         <ModalsProvider>
-          <BrowserRouter>
+          <Router>
             <App />
-          </BrowserRouter>
+          </Router>
         </ModalsProvider>
       </ApolloProvider>
     </MantineProvider>
