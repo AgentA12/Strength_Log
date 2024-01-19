@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 
 interface Props {
   exerciseName: string;
+  size: "xs" | "sm" | "md" | "lg" | "xl"
 }
 
 export default function ExerciseLink(props: Props) {
-  const { exerciseName } = props;
+  const { exerciseName, size = "md" } = props;
 
   const { primaryColor } = useMantineTheme();
 
@@ -17,6 +18,7 @@ export default function ExerciseLink(props: Props) {
 
   return (
     <Text
+    size={size}
       style={style}
       c={primaryColor}
       tt="capitalize"

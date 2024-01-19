@@ -23,6 +23,7 @@ import { showNotification } from "@mantine/notifications";
 import { useLocation } from "react-router-dom";
 import { UserContext } from "../../contexts/userInfo";
 import { UserInfo } from "../../contexts/userInfo";
+import DividerTitle from "../DividerTitle";
 
 type Exercise = {
   exerciseName: String;
@@ -160,12 +161,8 @@ export default function TemplateDashBoard() {
 
   return (
     <Container fluid>
-      <Divider
-        label={
-          <Title order={2} tt="capitalize">
-            {state ? `Edit ${form.values.templateName}` : "Create a template"}
-          </Title>
-        }
+      <DividerTitle
+        name={state ? `Edit ${form.values.templateName}` : "Create a template"}
       />
       <Box maw={1200}>
         <form>

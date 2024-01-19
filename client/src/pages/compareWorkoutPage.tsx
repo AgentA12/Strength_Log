@@ -31,7 +31,8 @@ import {
 } from "../components/compareworkouts/index";
 import { useQuery } from "@apollo/client";
 import { GET_TEMPLATES, CALENDAR_TIMESTAMPS } from "../utils/graphql/queries";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import DividerTitle from "../components/DividerTitle";
 
 type CompareTo = "original template" | "previous workout";
 
@@ -45,7 +46,7 @@ export default function CompareWorkoutPage() {
   const { state } = useLocation();
 
   const userID = userInfo?.data._id;
-console.log(state)
+
   const {
     data: templates,
     loading: templateLoading,
@@ -120,7 +121,7 @@ console.log(state)
 
   return (
     <>
-      <Divider label={<Title>Compare</Title>} />
+      <DividerTitle name="Compare" />
       <Group>
         <TemplateSelect
           label="Select a template"
@@ -227,10 +228,9 @@ function CompareWorkoutsContainer({
             my={5}
             description="Compare to"
             w={"fit-content"}
-            defaultValue={'original template'}
+            defaultValue={"original template"}
             data={["previous workout", "original template"]}
             value={compareTo}
-            
             onChange={setCompareTo}
             disabled={!data.compareWorkouts.hasLatterWorkout}
           />

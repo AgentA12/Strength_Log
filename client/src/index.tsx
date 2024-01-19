@@ -13,7 +13,11 @@ import {
   DefaultOptions,
   NormalizedCacheObject,
 } from "@apollo/client";
-import { MantineProvider, createTheme, ScrollArea } from "@mantine/core";
+import {
+  MantineProvider,
+  createTheme,
+  ScrollArea,
+} from "@mantine/core";
 
 type Theme = ReturnType<typeof createTheme>;
 
@@ -53,6 +57,11 @@ const theme: Theme = createTheme({
         scrollAreaComponent: ScrollArea.Autosize,
       },
     },
+
+    Title: {
+      defaultProps: { order: 1 },
+    },
+
     Divider: {
       defaultProps: {
         variant: "dashed",

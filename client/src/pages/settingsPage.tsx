@@ -5,11 +5,12 @@ import {
   PasswordField,
   PrefferedColorField,
 } from "../components/settingspage";
+import DividerTitle from "../components/DividerTitle";
 
 export default function SettingsPage() {
   return (
     <Container fluid>
-      <Divider label={<Title>Settings</Title>} />
+      <DividerTitle name="Settings"/>
       <Box style={{ maxWidth: "700px" }}>
         <Stack m={5}>
           <UsernameField />

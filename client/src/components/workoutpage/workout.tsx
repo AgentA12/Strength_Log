@@ -161,7 +161,7 @@ export default function WorkoutPage() {
         label={
           <Group justify="center" gap="xs" align="center">
             <Title c={primaryColor}>Training </Title>
-            <Title tt="capitalize" className={classes.title}>
+            <Title tt="capitalize" className={classes.dividertitle}>
               {workoutState.template.templateName}
             </Title>
           </Group>

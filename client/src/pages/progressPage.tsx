@@ -14,6 +14,7 @@ import {
 } from "./index";
 
 import { RecentProgress } from "../components/progresspage/index";
+import DividerTitle from "../components/DividerTitle";
 
 export default function ProgressPage() {
   const location = useLocation();
@@ -36,7 +37,7 @@ export default function ProgressPage() {
 
   return (
     <Container fluid>
-      <Divider label={<Title>Progress</Title>} />
+     <DividerTitle name="Progress" />
       <Tabs
         value={activeTab}
         onChange={(val) => handleTabChange(val as string)}

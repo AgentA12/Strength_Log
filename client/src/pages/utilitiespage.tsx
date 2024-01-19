@@ -13,6 +13,7 @@ import {
 } from "@mantine/core";
 import { getOneRepMax } from "../utils/helpers/functions";
 import { OneRepMaxTable } from "../components/progresspage/index";
+import DividerTitle from "../components/DividerTitle";
 
 export default function UtilitiesPage() {
   const [oneRepMax, setOneRepMax] = useState<null | number>(null);
@@ -38,10 +39,8 @@ export default function UtilitiesPage() {
 
   return (
     <Container fluid>
-      <Title tt="capitalize" fw={700} fs="oblique">
-        One Rep Max Calculator
-      </Title>
 
+      <DividerTitle fs="oblique" name="One Rep Max Calculator" />
       <Box>
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <Group mb={10} align="flex-start" justify="flex-start" gap="xs">

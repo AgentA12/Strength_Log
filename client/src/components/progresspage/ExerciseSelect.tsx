@@ -42,6 +42,7 @@ export default function ExerciseSelect({
 
   return (
     <Select
+      allowDeselect={false}
       style={{ width: "fit-content" }}
       data={exerciseNames}
       value={activeExercise}

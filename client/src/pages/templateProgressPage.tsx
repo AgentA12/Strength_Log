@@ -11,6 +11,7 @@ import { GET_TEMPLATES } from "../utils/graphql/queries";
 import { useQuery } from "@apollo/client";
 import { useLocation } from "react-router-dom";
 import ChartWrapper from "../components/progresspage/ChartWrapper";
+import DividerTitle from "../components/DividerTitle";
 
 type Range =
   | "Last month"
@@ -19,7 +20,7 @@ type Range =
   | "Last 12 months"
   | "All time";
 
-  type Metric = "Estimated 1RM" | "Total Volume"
+type Metric = "Estimated 1RM" | "Total Volume";
 
 export default function TemplateProgressPage() {
   const userInfo = useContext<UserInfo>(UserContext);
@@ -54,13 +55,7 @@ export default function TemplateProgressPage() {
 
   return (
     <Container fluid>
-      <Divider
-        label={
-          <Title tt="capitalize" fw={700} mt={10} w={"fit-content"}>
-            {activeTemplate}
-          </Title>
-        }
-      />
+      <DividerTitle name={activeTemplate} />
       <Group my="xs">
         <TemplateSelect
           activeTemplate={activeTemplate}

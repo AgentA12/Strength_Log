@@ -7,9 +7,8 @@ import {
   Pagination,
   Container,
   Loader,
-  Divider,
-  Title,
 } from "@mantine/core";
+import DividerTitle from "../DividerTitle";
 import { useQuery } from "@apollo/client";
 import {
   GET_PROGRESS_BY_DATE,
@@ -119,7 +118,8 @@ export default function RecentProgress() {
   if (workouts)
     return (
       <Container fluid mt={12}>
-        <Divider label={<Title>Recents</Title>} />
+        <DividerTitle name="Recents" />
+
         <Group>
           <Select
             mb={10}

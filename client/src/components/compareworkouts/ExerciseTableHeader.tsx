@@ -4,6 +4,7 @@ import {
   getTotalVolumeForExercise,
   getTotalReps,
 } from "../../utils/helpers/functions";
+import ExerciseLink from "../progresspage/ExerciseLink";
 
 export default function ExerciseTableHeader({
   exercise,
@@ -12,15 +13,7 @@ export default function ExerciseTableHeader({
 }) {
   return (
     <Group>
-      <Text
-        style={{ cursor: "pointer" }}
-        td="underline"
-        size="xl"
-        tt="capitalize"
-        fw={700}
-      >
-        {exercise.exerciseName}
-      </Text>
+      <ExerciseLink exerciseName={exercise.exerciseName} size="xl" />
       <Paper>
         <Text span>
           Volume:{" "}
