@@ -3,7 +3,7 @@ import "@mantine/core/styles/global.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "./app";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 import { ModalsProvider } from "@mantine/modals";
 import {
   ApolloClient,
@@ -13,7 +13,11 @@ import {
   DefaultOptions,
   NormalizedCacheObject,
 } from "@apollo/client";
-import { MantineProvider, createTheme, ScrollArea } from "@mantine/core";
+import {
+  MantineProvider,
+  createTheme,
+  ScrollArea,
+} from "@mantine/core";
 
 type Theme = ReturnType<typeof createTheme>;
 
@@ -53,6 +57,11 @@ const theme: Theme = createTheme({
         scrollAreaComponent: ScrollArea.Autosize,
       },
     },
+
+    Title: {
+      defaultProps: { order: 1 },
+    },
+
     Divider: {
       defaultProps: {
         variant: "dashed",
@@ -71,9 +80,9 @@ root.render(
     <MantineProvider defaultColorScheme="auto" theme={theme}>
       <ApolloProvider client={client}>
         <ModalsProvider>
-          <BrowserRouter>
+          <Router>
             <App />
-          </BrowserRouter>
+          </Router>
         </ModalsProvider>
       </ApolloProvider>
     </MantineProvider>

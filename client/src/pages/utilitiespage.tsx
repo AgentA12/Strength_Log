@@ -12,17 +12,16 @@ import {
   Title,
 } from "@mantine/core";
 import { getOneRepMax } from "../utils/helpers/functions";
-import { useViewportSize } from "@mantine/hooks";
 import { OneRepMaxTable } from "../components/progresspage/index";
+import DividerTitle from "../components/DividerTitle";
 
 export default function UtilitiesPage() {
-  const [oneRepMax, setOneRepMax] = useState(null);
-  const { width } = useViewportSize();
+  const [oneRepMax, setOneRepMax] = useState<null | number>(null);
 
   const form = useForm({
     initialValues: {
-      weight: null,
-      reps: null,
+      weight: 0,
+      reps: 0,
     },
     validate: {
       weight: (value) => (value <= 0 ? "Enter a number greater than 0" : null),
@@ -32,22 +31,18 @@ export default function UtilitiesPage() {
 
   function handleSubmit() {
     form.validate();
-    setOneRepMax(
-      getOneRepMax(
-        form.getInputProps("weight").value,
-        form.getInputProps("reps").value
-      )
-    );
+    const reps = form.getInputProps("reps").value;
+    const weight = form.getInputProps("weight").value;
+    const oneRepMax = getOneRepMax(weight, reps);
+    setOneRepMax(oneRepMax);
   }
 
   return (
     <Container fluid>
-      <Title tt="capitalize" fw={700} fs="oblique">
-        One Rep Max Calculator
-      </Title>
 
+      <DividerTitle fs="oblique" name="One Rep Max Calculator" />
       <Box>
-        <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
+        <form onSubmit={form.onSubmit(handleSubmit)}>
           <Group mb={10} align="flex-start" justify="flex-start" gap="xs">
             <NumberInput
               size="sm"
@@ -62,7 +57,7 @@ export default function UtilitiesPage() {
               size="sm"
               label="Repetitions"
               {...form.getInputProps("reps")}
-              suffix=" rep"
+              suffix=" reps"
               min={1}
             />
           </Group>
@@ -71,12 +66,10 @@ export default function UtilitiesPage() {
           </Button>
         </form>
       </Box>
-      {oneRepMax && (
+      {typeof oneRepMax === "number" && (
         <>
-          <Text mt={20}>
-            Your Estimated One Rep Max is{" "}
-          </Text>
-          <Text fw={800} c={'primaryColor'} style={{fontSize: "35px"}}>
+          <Text mt={20}>Your Estimated One Rep Max is </Text>
+          <Text fw={800} c={"primaryColor"} style={{ fontSize: "35px" }}>
             {oneRepMax} Lbs
           </Text>
           <OneRepMaxTable oneRepMax={oneRepMax} />

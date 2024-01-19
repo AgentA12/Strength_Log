@@ -12,11 +12,12 @@ import {
   TemplateSection,
   DataOverview,
 } from "../components/dashboard/index";
+import DividerTitle from "../components/DividerTitle";
 
 export default function DashBoardPage() {
   return (
     <Container fluid>
-      <Divider label={<Title>Dashboard</Title>} mb={10} />
+      <DividerTitle name="Dashboard" />
       <Flex
         direction={{ base: "column", lg: "row" }}
         justify={{ base: "center", lg: "space-between" }}

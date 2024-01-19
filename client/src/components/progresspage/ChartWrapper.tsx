@@ -7,14 +7,15 @@ export default function ChartWrapper({
   children: React.ReactNode;
 }) {
   const unit = " Lbs";
-
   const { colorScheme } = useMantineColorScheme();
 
   const options = {
     responsive: true,
     spanGaps: true,
     plugins: {
-      legend: false,
+      legend: {
+        position: "bottom",
+      },
     },
     scales: {
       x: {
@@ -28,9 +29,8 @@ export default function ChartWrapper({
       },
       y: {
         ticks: {
-          callback: (label) => label + unit,
+          callback: (label: string) => (label ? label + unit : label),
         },
-
         grid: {
           color: colorScheme === "dark" ? "#454545" : "#DEE2E6",
         },
@@ -38,10 +38,11 @@ export default function ChartWrapper({
     },
   };
 
-  const childWithProps = cloneElement(children, {
-    unit: unit,
-    options: options,
-  });
+  const childWithProps = children
+    ? cloneElement(children as React.ReactElement, {
+        options,
+      })
+    : null;
 
   return (
     <Paper
@@ -49,8 +50,8 @@ export default function ChartWrapper({
       maw={1200}
       mt={12}
       withBorder
-      bg={colorScheme == "dark" ? "dark.6" : "gray.0"}
-      p={12}
+      bg={colorScheme === "dark" ? "dark.6" : "gray.1"}
+      p={15}
     >
       {childWithProps}
     </Paper>

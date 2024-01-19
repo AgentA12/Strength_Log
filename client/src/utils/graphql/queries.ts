@@ -50,13 +50,11 @@ export const GET_CHART_PROGRESS = gql`
       exercise: $exercise
       shouldSortByTemplate: $shouldSortByTemplate
     ) {
-      belongsTo
       label
       data {
         x
         y
       }
-      findFirstAndLastDate
     }
   }
 `;
@@ -109,10 +107,13 @@ export const GET_PROGRESS_BY_DATE = gql`
 `;
 
 export const CALENDAR_TIMESTAMPS = gql`
-  query ($userId: ID!) {
-    calendarTimeStamps(userId: $userId) {
+  query ($userId: ID! $templateName: String) {
+    calendarTimeStamps(userId: $userId, templateName: $templateName) {
       _id
       createdAt
+      template {
+        templateName
+      }
     }
   }
 `;

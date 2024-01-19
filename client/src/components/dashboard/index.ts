@@ -10,6 +10,7 @@ import WorkoutState from "./WorkoutState";
 import StartWorkoutModal from "./StartWorkoutModal";
 import DataOverview from "./DataOverview";
 import TotalDataDisplay from "./TotalDataDisplay";
+import TemplateList from "./TemplateList";
 
 export {
   Calendar,
@@ -24,4 +25,5 @@ export {
   DataOverview,
   StartWorkoutModal,
   TotalDataDisplay,
+  TemplateList,
 };

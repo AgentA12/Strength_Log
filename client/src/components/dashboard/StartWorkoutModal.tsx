@@ -1,12 +1,21 @@
-import classes from "./startworkoutmodal.module.css";
+import classes from "./css/startworkoutmodal.module.css";
 import { Modal, Text } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { formatWorkoutState } from "../../utils/helpers/functions";
+import { TemplateShape } from "../../types/template";
 
-export default function StartWorkoutModal({ opened, close, templates }) {
+interface Props {
+  close: () => void,
+  opened: boolean
+  templates: TemplateShape[]
+}
+
+export default function StartWorkoutModal(props: Props) {
+  const { opened, close, templates } = props;
+
   const navigate = useNavigate();
 
-  function startWorkout(template) {
+  function startWorkout(template: TemplateShape) {
     const workoutState = formatWorkoutState(template);
 
     navigate("/Workout", { state: { template: workoutState } });

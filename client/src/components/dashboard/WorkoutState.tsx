@@ -8,15 +8,25 @@ import {
   Group,
 } from "@mantine/core";
 import { v4 as uuidv4 } from "uuid";
-import { ExerciseLink } from "../progresspage/ExerciseLink";
+import ExerciseLink from "../progresspage/ExerciseLink";
+import { TemplateShape } from "../../types/template";
 
-export default function WorkoutState({ setTemplateState, templateState }) {
-  function handleChange({ target }, exerciseIndex, setIndex) {
+interface Props {
+  setTemplateState: (templateState: TemplateShape) => void;
+  templateState: TemplateShape;
+}
+
+export default function WorkoutState(props: Props) {
+  const { setTemplateState, templateState } = props;
+console.log(templateState)
+  function handleChange(
+    { target }: { target: { name: string; value: string } },
+    exerciseIndex: number,
+    setIndex: number
+  ) {
     let data = JSON.parse(JSON.stringify(templateState));
 
-    data.exercises[exerciseIndex].sets[setIndex][target.name] = parseInt(
-      target.value
-    );
+    data.exercises[exerciseIndex].sets[setIndex][target.name] = target.value;
 
     setTemplateState({ ...data });
   }
@@ -44,9 +54,9 @@ export default function WorkoutState({ setTemplateState, templateState }) {
   }
 
   const Tables = templateState.exercises.map((exercise, exerciseIndex) => (
-    <Container mb={10} key={uuidv4()}>
+    <Container mb={10} key={exercise.exercise._id}>
       <Flex mt={10} justify="space-between" align="center">
-        <ExerciseLink exerciseName={exercise.exercise.exerciseName} />
+        <ExerciseLink size="xl" exerciseName={exercise.exercise.exerciseName} />
         {exercise.restTime ? (
           <Text fz={13} fw="normal" c="dimmed">
             Rest: {exercise.restTime} seconds
@@ -64,7 +74,7 @@ export default function WorkoutState({ setTemplateState, templateState }) {
         </Table.Thead>
         <Table.Tbody>
           {exercise.sets.map((set, setIndex) => (
-            <Table.Tr key={uuidv4()}>
+            <Table.Tr key={exercise.exercise._id}>
               <Table.Td>{setIndex + 1}</Table.Td>
               <Table.Td>
                 <NumberInput
@@ -72,10 +82,10 @@ export default function WorkoutState({ setTemplateState, templateState }) {
                   w={75}
                   min={1}
                   max={99}
-                  defaultValue={parseInt(set.reps)}
+                  defaultValue={set.reps}
                   onChange={(value) =>
                     handleChange(
-                      { target: { name: "reps", value: value } },
+                      { target: { name: "reps", value: value as string } },
                       exerciseIndex,
                       setIndex
                     )
@@ -88,10 +98,10 @@ export default function WorkoutState({ setTemplateState, templateState }) {
                   step={5}
                   min={5}
                   max={995}
-                  defaultValue={parseInt(set.weight)}
-                  onChange={(value) =>
+                  defaultValue={set.weight}
+                  onChange={(value: string | number) =>
                     handleChange(
-                      { target: { name: "weight", value: value } },
+                      { target: { name: "weight", value: value as string } },
                       exerciseIndex,
                       setIndex
                     )
@@ -106,7 +116,12 @@ export default function WorkoutState({ setTemplateState, templateState }) {
         <Button size="xs" onClick={() => addSet(exerciseIndex)}>
           Add Set
         </Button>{" "}
-        <Button disabled={exercise.sets.length === 1} size="xs" color="red" onClick={() => removeSet(exerciseIndex)}>
+        <Button
+          disabled={exercise.sets.length === 1}
+          size="xs"
+          color="red"
+          onClick={() => removeSet(exerciseIndex)}
+        >
           Remove Set
         </Button>
       </Group>

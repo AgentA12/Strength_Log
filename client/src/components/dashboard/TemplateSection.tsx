@@ -1,8 +1,7 @@
 import { useEffect, useState, useContext } from "react";
-import { useMutation, useQuery } from "@apollo/client";
-import { TemplateCard, StartWorkoutModal } from "./index";
+import { useQuery } from "@apollo/client";
+import { StartWorkoutModal } from "./index";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
-import { DELETE_TEMPLATE } from "../../utils/graphql/mutations";
 import {
   Box,
   Title,
@@ -11,116 +10,55 @@ import {
   Center,
   TextInput,
   Button,
-  Skeleton,
   Group,
 } from "@mantine/core";
 import { AiOutlineSearch } from "react-icons/ai";
 import { UserContext, UserInfo } from "../../contexts/userInfo";
-import { showNotification } from "@mantine/notifications";
 import { Link } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
+import { TemplateShape } from "../../types/template";
+import { TemplateList } from "./index";
 
 export default function TemplateSection() {
-  const {
-    data: { _id },
-  } = useContext(UserContext);
+  const userInfo = useContext<UserInfo>(UserContext);
 
-  const [templates, setTemplates] = useState([]);
-  const [opened, { open, close }] = useDisclosure(false);
-
-  const [deleteTemplate] = useMutation(DELETE_TEMPLATE);
+  const userID = userInfo?.data._id;
 
   const { loading, data, error, refetch } = useQuery(GET_TEMPLATES, {
-    fetchPolicy: "network-only", // Used for first execution
+    fetchPolicy: "network-only",
     variables: {
-      userId: _id,
+      userId: userID,
     },
   });
+
+  const [templates, setTemplates] = useState(() => data?.getTemplates || []);
+  const [opened, { open, close }] = useDisclosure(false);
 
   useEffect(() => {
     if (data) setTemplates(data.getTemplates);
   }, [data]);
 
-  async function handleTemplateDelete(templateId: string) {
-    try {
-      const res = await deleteTemplate({
-        variables: {
-          templateId: templateId,
-        },
-      });
-      refetch();
-      showNotification({
-        title: `Template was deleted.`,
-        message: (
-          <>
-            <Text span size="md">
-              {res.data.deleteTemplate.templateName}
-            </Text>{" "}
-            was successfully deleted.
-          </>
-        ),
-        autoClose: 3000,
-      });
-    } catch (error: any) {
-      showNotification({
-        title: "Error, unable to delete template.",
-        message: error.message,
-        autoClose: 3000,
-        color: "red",
-      });
-    }
-  }
-
-  function filterTemplates(event: React.SyntheticEvent) {
+  function filterTemplates(event: React.ChangeEvent<HTMLInputElement>) {
     event.preventDefault();
 
-    const newTemplates = templates.filter((template) => {
+    const newTemplates = templates.filter((template: TemplateShape) => {
       return template.templateName
         .toLowerCase()
-        .includes(event.target.value.toLowerCase());
+        .includes(event.currentTarget.value.toLowerCase());
     });
 
     if (newTemplates.length > 0) {
       setTemplates(newTemplates);
     }
 
-    if (event.target.value.trim().length === 0) {
+    if (event.currentTarget.value.trim().length === 0) {
       setTemplates(data.getTemplates);
     }
   }
 
-  function displayQueryState() {
-    if (loading)
-      return (
-        <>
-          <Skeleton width={"auto"} height={120} />{" "}
-          <Skeleton width={"auto"} height={120} />{" "}
-          <Skeleton width={"auto"} height={120} />{" "}
-          <Skeleton width={"auto"} height={120} />{" "}
-          <Skeleton width={"auto"} height={120} />{" "}
-        </>
-      );
-
-    if (templates.length)
-      return templates.map((template, i) => (
-        <TemplateCard
-          template={template}
-          refetch={refetch}
-          handleTemplateDelete={handleTemplateDelete}
-          key={template._id}
-        />
-      ));
-    return <Text size="xl">You have no templates saved.</Text>;
-  }
-
   return (
     <Box component="section" mb={100}>
-      <StartWorkoutModal
-        opened={opened}
-        close={close}
-        loading={loading}
-        templates={templates}
-      />
+      <StartWorkoutModal opened={opened} close={close} templates={templates} />
       <Flex
         gap="lg"
         justify={{ base: "center", lg: "flex-start" }}
@@ -128,12 +66,12 @@ export default function TemplateSection() {
         wrap="wrap"
         mb={20}
       >
-        <Title order={2} tt="capitalize" align="center">
+        <Title order={2} tt="capitalize">
           Your Templates
         </Title>
         <TextInput
           style={{ flexGrow: 1 }}
-          onChange={(event) => filterTemplates(event, templates)}
+          onChange={(event) => filterTemplates(event)}
           placeholder="Search templates..."
           leftSection={<AiOutlineSearch size={20} />}
         />
@@ -159,7 +97,11 @@ export default function TemplateSection() {
             gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
           }}
         >
-          {displayQueryState()}
+          <TemplateList
+            refetch={refetch}
+            loading={loading}
+            templates={templates}
+          />
         </div>
       )}
     </Box>

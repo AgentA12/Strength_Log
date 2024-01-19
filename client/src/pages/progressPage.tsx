@@ -1,17 +1,28 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Container, Divider, Tabs, Title } from "@mantine/core";
-import { IconCheck, IconTemplate, IconStretching } from "@tabler/icons-react";
-import { TemplateProgressPage, ExerciseProgressPage } from "./index";
+import {
+  IconCheck,
+  IconTemplate,
+  IconStretching,
+  IconGitCompare,
+} from "@tabler/icons-react";
+import {
+  TemplateProgressPage,
+  ExerciseProgressPage,
+  CompareWorkoutPage,
+} from "./index";
 
 import { RecentProgress } from "../components/progresspage/index";
+import DividerTitle from "../components/DividerTitle";
 
 export default function ProgressPage() {
   const location = useLocation();
+
   const { state } = location;
 
   const [activeTab, setActiveTab] = useState(() =>
-    state ? state.activeTab : "recents"
+    state ? state.activeTab : "workouts"
   );
 
   useEffect(() => {
@@ -20,13 +31,20 @@ export default function ProgressPage() {
     }
   }, [state]);
 
+  function handleTabChange(val: string) {
+    setActiveTab(val);
+  }
+
   return (
     <Container fluid>
-      <Divider label={<Title>Progress</Title>} />
-      <Tabs value={activeTab} onChange={setActiveTab}>
+     <DividerTitle name="Progress" />
+      <Tabs
+        value={activeTab}
+        onChange={(val) => handleTabChange(val as string)}
+      >
         <Tabs.List>
-          <Tabs.Tab leftSection={<IconCheck size={16} />} value="recents">
-            Recently Completed
+          <Tabs.Tab leftSection={<IconCheck size={16} />} value="workouts">
+            Workouts
           </Tabs.Tab>
           <Tabs.Tab leftSection={<IconTemplate size={16} />} value="templates">
             Templates
@@ -38,11 +56,14 @@ export default function ProgressPage() {
           >
             Exercises
           </Tabs.Tab>
+          <Tabs.Tab leftSection={<IconGitCompare size={16} />} value="compare">
+            Compare
+          </Tabs.Tab>
         </Tabs.List>
 
-        {activeTab === "recents" && (
-          <Tabs.Panel value="recents">
-            <RecentProgress setActiveTab={setActiveTab} />
+        {activeTab === "workouts" && (
+          <Tabs.Panel value="workouts">
+            <RecentProgress />
           </Tabs.Panel>
         )}
 
@@ -55,6 +76,12 @@ export default function ProgressPage() {
         {activeTab === "exercises" && (
           <Tabs.Panel value="exercises">
             <ExerciseProgressPage />
+          </Tabs.Panel>
+        )}
+
+        {activeTab === "compare" && (
+          <Tabs.Panel value="compare">
+            <CompareWorkoutPage />
           </Tabs.Panel>
         )}
       </Tabs>

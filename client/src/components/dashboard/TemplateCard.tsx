@@ -4,8 +4,16 @@ import TemplateMenu from "./TemplateMenu";
 import { Text, Card, Flex, Modal, Button, Stack } from "@mantine/core";
 import classes from "./homepage.module.css";
 import { TemplateDrawer } from "./index";
+import { TemplateShape } from "../../types/template";
 
-export default function TemplateCard({ template, handleTemplateDelete }) {
+interface Props {
+  template: TemplateShape;
+  handleTemplateDelete: (templateID: string) => void;
+}
+
+export default function TemplateCard(props: Props) {
+  const { template, handleTemplateDelete } = props;
+
   const [opened, setOpened] = useState(false);
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -40,7 +48,6 @@ export default function TemplateCard({ template, handleTemplateDelete }) {
         title="Delete Template"
       >
         <Stack>
-          {" "}
           <Text>
             Are you sure you want to delete{" "}
             <Text span fw={600} size="md">

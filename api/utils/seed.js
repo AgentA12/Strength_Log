@@ -116,7 +116,7 @@ const seedExercises = [
 
 db.once("open", async () => {
   try {
-    console.log("Seeding db with exercises...", "\n");
+    console.log("\n Seeding db with exercises...", "\n");
     await Exercise.deleteMany({});
     await Exercise.insertMany(seedExercises);
     await db.close();

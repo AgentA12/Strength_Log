@@ -1,5 +1,5 @@
-import SelectExercise from "./SelectExercise";
 import SelectExerciseModal from "./SelectExerciseModal";
 import ExerciseForm from "./ExerciseForm";
+import TemplateDashBoard from "./TemplateDashBoard";
 
-export { SelectExercise, SelectExerciseModal, ExerciseForm };
+export { SelectExerciseModal, ExerciseForm, TemplateDashBoard };

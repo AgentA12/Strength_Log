@@ -1,11 +1,8 @@
 import { MantineTheme } from "@mantine/core";
-
 import dayjs from "dayjs";
 
-const getOneRepMax = (weight: number, repetitions: number): number | null =>
-  weight <= 0 || repetitions <= 0
-    ? null
-    : Math.round(((weight / (1.0278 - 0.0278 * repetitions)) * 10) / 10);
+const getOneRepMax = (weight: number, repetitions: number) =>
+  Math.round(((weight / (1.0278 - 0.0278 * repetitions)) * 10) / 10);
 
 function getPercentageOf1RM(oneRepMax: number) {
   const repMax = oneRepMax;
@@ -109,25 +106,20 @@ function formatTime(num: number) {
   return `${num}`;
 }
 
-function findFirstAndLastRange(dataSet) {
-  let mostRecentDate = new Date(0);
+// finds the most recent and oldest date
+function findFirstAndLastRange(dataSet: { x: string; y: number }[]) {
+  let mostRecentDate = 0;
+  let oldestDate = Infinity;
 
-  for (let i = 0; i < dataSet.length; i++) {
-    dataSet[i].data.map((d: { x: string; y: number }) =>
-      new Date(parseInt(d.x)).getTime() > new Date(mostRecentDate).getTime()
-        ? (mostRecentDate = parseInt(d.x))
-        : null
-    );
-  }
+  for (const { x } of dataSet) {
+    const currentDate = parseInt(x);
 
-  let oldestDate = new Date();
+    if (isNaN(currentDate)) {
+      continue;
+    }
 
-  for (let x = 0; x < dataSet.length; x++) {
-    dataSet[x].data.map((d) =>
-      new Date(parseInt(d.x)).getTime() < new Date(oldestDate).getTime()
-        ? (oldestDate = parseInt(d.x))
-        : null
-    );
+    mostRecentDate = Math.max(mostRecentDate, currentDate);
+    oldestDate = Math.min(oldestDate, currentDate);
   }
 
   return [oldestDate, mostRecentDate];
@@ -190,6 +182,61 @@ function getPrimaryColor(theme: MantineTheme) {
   return theme.colors.primaryColor;
 }
 
+function compareExerciseSets(setsOne, setsTwo) {
+  let results = { sets: [], increasedSets: [], decreasedSets: [] };
+
+  if (setsOne.length > setsTwo.length) {
+    setsOne.map((set, i) => {
+      if (setsTwo[i] != undefined) {
+        results.sets.push({
+          ...set,
+          weightChange: set.weight - setsTwo[i].weight,
+          repChange: set.reps - setsTwo[i].reps,
+        });
+      } else {
+        results.increasedSets.push({ ...set });
+      }
+    });
+  } else if (setsOne.length < setsTwo.length) {
+    setsTwo.map((set, i) => {
+      if (setsOne[i] != undefined) {
+        results.sets.push({
+          ...setsOne[i],
+          weightChange: setsOne[i].weight - set.weight,
+          repChange: setsOne[i].reps - set.reps,
+        });
+      } else {
+        results.decreasedSets.push({ ...set });
+      }
+    });
+  } else {
+    setsOne.map((set, i) => {
+      results.sets.push({
+        ...set,
+        weightChange: set.weight - setsTwo[i].weight,
+        repChange: set.reps - setsTwo[i].reps,
+      });
+    });
+  }
+  return { ...results };
+}
+
+function compareWorkouts(selectedWorkout, previousWorkout) {
+  let result = { comparedWorkout: [], selectedWorkout, previousWorkout };
+  selectedWorkout.exercises.map((exercise) => {
+    previousWorkout.exercises.map((exerciseTwo) => {
+      if (exercise.exercise._id === exerciseTwo.exercise._id) {
+        result.comparedWorkout.push({
+          exerciseName: exercise.exercise.exerciseName,
+          ...compareExerciseSets(exercise.sets, exerciseTwo.sets),
+        });
+      }
+    });
+  });
+
+  return result;
+}
+
 export {
   getOneRepMax,
   capitalizeFirstLetter,
@@ -207,4 +254,6 @@ export {
   formatWorkoutState,
   getTotalVolumeForExercise,
   getPrimaryColor,
+  compareExerciseSets,
+  compareWorkouts,
 };

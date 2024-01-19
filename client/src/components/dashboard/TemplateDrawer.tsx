@@ -8,11 +8,20 @@ import { AiOutlineCheck } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
 import { UserContext } from "../../contexts/userInfo";
 import { StartWorkoutBtn } from "./index";
+import { TemplateShape } from "../../types/template";
 
-export default function TemplateDrawer({ template, opened, setOpened }) {
-  const {
-    data: { _id: userID },
-  } = useContext(UserContext);
+interface Props {
+  template: TemplateShape;
+  opened: boolean;
+  setOpened: (bool: boolean) => void;
+}
+
+export default function TemplateDrawer(props: Props) {
+  const { template, opened, setOpened } = props;
+
+  const userInfo = useContext(UserContext);
+
+  const userID = userInfo?.data._id;
 
   const [templateState, setTemplateState] = useState(template);
 
@@ -71,24 +80,19 @@ export default function TemplateDrawer({ template, opened, setOpened }) {
       </Text>
 
       <Flex justify="space-around" align="center">
-        <Button
-          onClick={() => handleSaveWorkout(templateState)}
-          loading={loading}
-        >
+        <Button onClick={handleSaveWorkout} loading={loading}>
           Quick Save
         </Button>
         <StartWorkoutBtn template={template} />
       </Flex>
 
       <WorkoutState
-        loading={loading}
-        handleSaveWorkout={handleSaveWorkout}
         setTemplateState={setTemplateState}
         templateState={templateState}
       />
 
       {error ? (
-        <Text color="red" mt={5}>
+        <Text c="red.4" mt={5}>
           {error.message}
         </Text>
       ) : null}
