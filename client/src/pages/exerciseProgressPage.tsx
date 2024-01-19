@@ -63,7 +63,7 @@ export default function ExerciseProgressPage() {
         </Group>
       </Group>
 
-      {oneRepMax?.getOneRepMax ? (
+      {oneRepMax?.getOneRepMax && activeExercise ? (
         <Text>
           Estimated One Rep Max:{" "}
           <Text size="xl" fw={900} span>
