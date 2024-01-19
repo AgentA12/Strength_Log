@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
 import { useContext } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_TEMPLATE, EDIT_TEMPLATE } from "../../utils/graphql/mutations";
@@ -7,7 +6,6 @@ import {
   TextInput,
   Text,
   Textarea,
-  Divider,
   Container,
   Title,
   Flex,
@@ -25,11 +23,18 @@ import { UserContext } from "../../contexts/userInfo";
 import { UserInfo } from "../../contexts/userInfo";
 import DividerTitle from "../DividerTitle";
 
-type Exercise = {
+interface Exercise {
   exerciseName: String;
   _id: String;
   equipment: String;
-};
+}
+
+interface Exerciseform {
+  value: string;
+  label: string;
+  _id: string;
+  equipment: string;
+}
 
 export default function TemplateDashBoard() {
   const userInfo = useContext<UserInfo>(UserContext);
@@ -79,7 +84,7 @@ export default function TemplateDashBoard() {
     };
   });
 
-  async function handleSubmit(event: Event) {
+  async function handleSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
 
     if (form.validate().hasErrors) return;
@@ -103,7 +108,9 @@ export default function TemplateDashBoard() {
 
   //adds an exercise to the form
   function addExercise(value: string) {
-    const e = exercises.find((exercise) => exercise.value === value);
+    const e = exercises.find(
+      (exercise: Exerciseform) => exercise.value === value
+    );
 
     const exercise = {
       exerciseName: value,
@@ -141,18 +148,20 @@ export default function TemplateDashBoard() {
     let data = { ...form.values };
 
     data.exercises[index].sets = data.exercises[index].sets.filter(
-      (_, x) => i !== x
+      (_: any, x: number) => i !== x
     );
 
     form.setValues({ ...data });
   }
 
-  function removeExercise(_, index) {
+  function removeExercise(_: any, index: number) {
     let data = { ...form.values };
 
-    const filteredExercises = form.values.exercises.filter((_, i) => {
-      return i !== index;
-    });
+    const filteredExercises = form.values.exercises.filter(
+      (_: any, i: number) => {
+        return i !== index;
+      }
+    );
 
     data.exercises = filteredExercises;
 
@@ -169,7 +178,6 @@ export default function TemplateDashBoard() {
           <TextInput
             label={<Text>Template Name</Text>}
             name="templateName"
-            value={form.values.templateName}
             mb={15}
             {...form.getInputProps("templateName")}
           />
@@ -178,7 +186,6 @@ export default function TemplateDashBoard() {
             minRows={5}
             name="templateNotes"
             label={<Text>Template Notes</Text>}
-            value={form.values.templateNotes}
             {...form.getInputProps("templateNotes")}
           />
           <Flex mt={10} justify="space-between">
@@ -198,17 +205,19 @@ export default function TemplateDashBoard() {
               <Title>Exercises</Title>
               <Button onClick={open}>Add Exercise</Button>
             </Flex>
-            {form.values.exercises.map((_, exerciseIndex) => (
-              <Box maw={475} key={uuidv4()}>
-                <ExerciseForm
-                  exerciseIndex={exerciseIndex}
-                  form={form}
-                  removeExercise={removeExercise}
-                  addSet={addSet}
-                  removeSet={removeSet}
-                />
-              </Box>
-            ))}
+            {form.values.exercises.map(
+              (exercise: Exercise, exerciseIndex: number) => (
+                <Box maw={475} key={exercise._id as string}>
+                  <ExerciseForm
+                    exerciseIndex={exerciseIndex}
+                    form={form}
+                    removeExercise={removeExercise}
+                    addSet={addSet}
+                    removeSet={removeSet}
+                  />
+                </Box>
+              )
+            )}
           </Flex>
         </form>
       </Box>

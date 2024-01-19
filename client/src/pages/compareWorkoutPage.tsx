@@ -82,16 +82,13 @@ export default function CompareWorkoutPage() {
         },
       })
         .then(({ data }) => {
-          console.log(data);
           setWorkoutState(data);
           setActiveTemplate(
             data.compareWorkouts.formerWorkout.template.templateName.toString()
           );
           setDateToCompare(data.compareWorkouts.formerWorkout._id);
         })
-        .catch((error: Error) => {
-          console.log(error);
-        });
+        .catch((error: Error) => {});
     }
   }, [state]);
 

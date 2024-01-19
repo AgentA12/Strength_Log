@@ -11,6 +11,7 @@ import StartWorkoutModal from "./StartWorkoutModal";
 import DataOverview from "./DataOverview";
 import TotalDataDisplay from "./TotalDataDisplay";
 import TemplateList from "./TemplateList";
+
 export {
   Calendar,
   StartWorkoutBtn,

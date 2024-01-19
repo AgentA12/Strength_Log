@@ -5,7 +5,7 @@ import { LiaDumbbellSolid } from "react-icons/lia";
 import { GiBodyBalance } from "react-icons/gi";
 import classes from "./templatedashboard.module.css";
 
-function getExerciseIcon(str) {
+function getExerciseIcon(str: string) {
   switch (str.toLowerCase()) {
     case "barbell":
       return <TbBarbell />;
@@ -22,12 +22,32 @@ function getExerciseIcon(str) {
   }
 }
 
+interface Exerciseform {
+  value: string;
+  label: string;
+  _id: string;
+  equipment: string;
+}
+
+interface Exercise {
+  exerciseName: String;
+  _id: String;
+  equipment: String;
+}
+
+interface Props {
+  opened: boolean;
+  close: () => void;
+  addExercise: (value: string) => void;
+  exercises: [Exercise];
+}
+
 export default function SelectExerciseModal({
   opened,
   close,
   addExercise,
   exercises,
-}) {
+}: Props) {
   return (
     <Modal
       title={<Text>Select an Exercise</Text>}
@@ -37,18 +57,18 @@ export default function SelectExerciseModal({
     >
       <Select
         mt={10}
-        data={exercises}
+        data={exercises.map((exercise: any) => exercise.value)}
         searchable
         onChange={(value) => {
-          addExercise(value);
+          addExercise(value as string);
         }}
         placeholder="Search..."
       />
 
       <List withPadding mt={10}>
-        {exercises.map((e) => (
+        {exercises.map((e: any) => (
           <List.Item
-            onClick={() => addExercise(e.value, e._id)}
+            onClick={() => addExercise(e.value)}
             p={5}
             icon={
               <ThemeIcon size={24} radius="xl">

@@ -18,7 +18,7 @@ interface Props {
 
 export default function WorkoutState(props: Props) {
   const { setTemplateState, templateState } = props;
-
+console.log(templateState)
   function handleChange(
     { target }: { target: { name: string; value: string } },
     exerciseIndex: number,
@@ -54,9 +54,9 @@ export default function WorkoutState(props: Props) {
   }
 
   const Tables = templateState.exercises.map((exercise, exerciseIndex) => (
-    <Container mb={10} key={uuidv4()}>
+    <Container mb={10} key={exercise.exercise._id}>
       <Flex mt={10} justify="space-between" align="center">
-        <ExerciseLink exerciseName={exercise.exercise.exerciseName} />
+        <ExerciseLink size="xl" exerciseName={exercise.exercise.exerciseName} />
         {exercise.restTime ? (
           <Text fz={13} fw="normal" c="dimmed">
             Rest: {exercise.restTime} seconds
@@ -74,7 +74,7 @@ export default function WorkoutState(props: Props) {
         </Table.Thead>
         <Table.Tbody>
           {exercise.sets.map((set, setIndex) => (
-            <Table.Tr key={uuidv4()}>
+            <Table.Tr key={exercise.exercise._id}>
               <Table.Td>{setIndex + 1}</Table.Td>
               <Table.Td>
                 <NumberInput

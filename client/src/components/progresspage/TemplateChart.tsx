@@ -42,7 +42,7 @@ interface Props {
   activeTemplate: string;
   range: string;
   metric: string;
-  
+
   options?: {
     responsive: boolean;
     spanGaps: boolean;
@@ -105,17 +105,27 @@ export default function TemplateChart(props: Props) {
       </Box>
     );
 
+  if (data.getChartData.length === 0) {
+    return (
+      <Line
+        options={options as any}
+        data={{
+          labels: [],
+          datasets: [],
+        }}
+      />
+    );
+  }
+
   const [firstRange, lastRange] = findFirstAndLastRange(
     data.getChartData[0].data
   );
   const labels = getRangeOfDates(range, firstRange, lastRange);
-
   return (
     <Line
       options={options as any}
       data={{
         labels: [...labels],
-
         datasets: data.getChartData.map((chartData: ChartData) => {
           return {
             label: chartData.label,

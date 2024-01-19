@@ -8,11 +8,14 @@ export default function ChartWrapper({
 }) {
   const unit = " Lbs";
   const { colorScheme } = useMantineColorScheme();
+
   const options = {
     responsive: true,
     spanGaps: true,
     plugins: {
-      legend: false,
+      legend: {
+        position: "bottom",
+      },
     },
     scales: {
       x: {

@@ -105,7 +105,7 @@ export default function ExerciseChart(props: Props) {
     return (
       <Box style={{ position: "relative" }}>
         <Line
-          options={options}
+          options={options as any}
           data={{
             labels: [],
             datasets: [],
@@ -119,12 +119,26 @@ export default function ExerciseChart(props: Props) {
     (data) => data.label.toLowerCase() === activeExercise
   );
 
+  if (filteredData.length === 0) {
+    return (
+      <Box style={{ position: "relative" }}>
+        <Line
+          options={options as any}
+          data={{
+            labels: [],
+            datasets: [],
+          }}
+        />
+      </Box>
+    );
+  }
+
   const [firstDate, lastDate] = findFirstAndLastRange(filteredData[0]?.data);
 
   const labels = getRangeOfDates(range, firstDate, lastDate);
   return (
     <Line
-      options={options}
+      options={options as any}
       data={{
         labels: labels,
         datasets: filteredData?.map((d) => {
