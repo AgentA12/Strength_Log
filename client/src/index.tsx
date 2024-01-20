@@ -13,11 +13,9 @@ import {
   DefaultOptions,
   NormalizedCacheObject,
 } from "@apollo/client";
-import {
-  MantineProvider,
-  createTheme,
-  ScrollArea,
-} from "@mantine/core";
+import { MantineProvider, createTheme, ScrollArea } from "@mantine/core";
+
+const isInProduction = import.meta.env.MODE === "production";
 
 type Theme = ReturnType<typeof createTheme>;
 
@@ -32,10 +30,11 @@ const defaultApolloOptions: DefaultOptions = {
   },
 };
 
+// api url
 // https://strengthlog.up.railway.app
 
 const client = new ApolloClient<NormalizedCacheObject>({
-  uri: "https://strengthlog.up.railway.app/graphql",
+  uri: isInProduction ? process.env.API_URL : "/graphql",
   cache: new InMemoryCache({
     addTypename: false,
   }),

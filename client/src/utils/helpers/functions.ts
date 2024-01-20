@@ -122,7 +122,6 @@ const getTotalVolumeForExercise = (sets: { weight: number; reps: number }[]) =>
   sets.reduce((total, set) => (total += set.weight * set.reps), 0);
 
 const getTotalReps = (exercises: ExerciseShape[]) => {
-  // console.log(exercises)
   if (exercises?.length != undefined) {
     return exercises.reduce(
       (accumulator, currentValue) =>
