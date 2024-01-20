@@ -18,6 +18,7 @@ export default function DataOverView() {
   const userInfo: UserInfo | null = useContext(UserContext);
 
   const userID = userInfo?.data._id;
+
   const NumOfStatsLength = 4;
 
   const { data, loading, error } = useQuery(GET_STAT_SUMMARY, {

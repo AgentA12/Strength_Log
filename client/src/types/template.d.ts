@@ -1,6 +1,7 @@
 interface ExerciseDetailsShape {
   exerciseName: string;
   equipment: string;
+  isUserCreated: boolean;
   _id: string;
 }
 
@@ -9,10 +10,9 @@ interface SetShape {
   reps: number;
 }
 
-interface ExerciseShape {
-  exercise: ExerciseDetailsShape;
+interface ExerciseShape extends ExerciseDetailsShape {
   restTime: number;
-  sets: [SetShape];
+  sets: SetShape[];
 }
 
 export interface TemplateShape {

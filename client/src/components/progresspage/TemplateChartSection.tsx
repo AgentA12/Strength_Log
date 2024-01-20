@@ -1,4 +1,4 @@
-import { Box, Flex, Paper } from "@mantine/core";
+import { Box, Flex } from "@mantine/core";
 import {
   TemplateSelect,
   TemplateChart,

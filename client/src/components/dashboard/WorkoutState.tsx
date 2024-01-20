@@ -7,7 +7,6 @@ import {
   Button,
   Group,
 } from "@mantine/core";
-import { v4 as uuidv4 } from "uuid";
 import ExerciseLink from "../progresspage/ExerciseLink";
 import { TemplateShape } from "../../types/template";
 
@@ -18,7 +17,6 @@ interface Props {
 
 export default function WorkoutState(props: Props) {
   const { setTemplateState, templateState } = props;
-console.log(templateState)
   function handleChange(
     { target }: { target: { name: string; value: string } },
     exerciseIndex: number,

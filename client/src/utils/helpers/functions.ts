@@ -1,8 +1,9 @@
 import { MantineTheme } from "@mantine/core";
 import dayjs from "dayjs";
+import { ExerciseShape } from "../../types/template";
 
 const getOneRepMax = (weight: number, repetitions: number) =>
-  Math.round(((weight / (1.0278 - 0.0278 * repetitions)) * 10) / 10);
+  weight < 1 || repetitions < 1 ? null : Math.round(((weight / (1.0278 - 0.0278 * repetitions)) * 10) / 10);
 
 function getPercentageOf1RM(oneRepMax: number) {
   const repMax = oneRepMax;
@@ -32,10 +33,8 @@ function getPercentageOf1RM(oneRepMax: number) {
   return data;
 }
 
-const capitalizeFirstLetter = (string: string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
 
+// checks if two dates are on the same day
 const compareDatesByDay = (firstDate: Date, secondDate: Date) =>
   firstDate.getFullYear() === secondDate.getFullYear() &&
   firstDate.getMonth() === secondDate.getMonth() &&
@@ -72,34 +71,18 @@ function getRangeOfDates(range: string, firstDate: number, lastDate: number) {
   }
 }
 
-// creates an array of dates one day apart from each other
 function getDaysArray(firstDate: Date, endDate: Date) {
   for (
     var dateAry = [],
-      currentDate = new Date(dayjs(firstDate).subtract(1, "day"));
+    currentDate = new Date(dayjs(firstDate).subtract(1, "day").toString());
     currentDate < new Date(endDate);
     currentDate.setDate(currentDate.getDate() + 1)
   ) {
     dateAry.push(new Date(currentDate));
   }
-
   return dateAry;
 }
 
-function displayExercisesForTemplate(templates: [any], activeTemplate: string) {
-  let temps: any = templates.filter(
-    (template) =>
-      template.templateName.toLowerCase() === activeTemplate.toLowerCase()
-  )[0];
-
-  return temps
-    ? temps.exercises.map((exercise) => exercise.exercise.exerciseName + "   ")
-    : templates.map((template) =>
-        template.exercises.map(
-          (exercise) => exercise.exercise.exerciseName + "   "
-        )
-      );
-}
 
 function formatTime(num: number) {
   if (num < 10) return `0${num}`;
@@ -125,10 +108,10 @@ function findFirstAndLastRange(dataSet: { x: string; y: number }[]) {
   return [oldestDate, mostRecentDate];
 }
 
-function getTotalVolume(exercises) {
+function getTotalVolume(exercises: ExerciseShape[]) {
   let TotalVolume = 0;
 
-  exercises.map((exercise) =>
+  exercises.map((exercise: ExerciseShape) =>
     exercise.sets.map((set) => (TotalVolume += set.weight * set.reps))
   );
 
@@ -138,7 +121,8 @@ function getTotalVolume(exercises) {
 const getTotalVolumeForExercise = (sets: { weight: number; reps: number }[]) =>
   sets.reduce((total, set) => (total += set.weight * set.reps), 0);
 
-const getTotalReps = (exercises) => {
+const getTotalReps = (exercises: ExerciseShape[]) => {
+  // console.log(exercises)
   if (exercises?.length != undefined) {
     return exercises.reduce(
       (accumulator, currentValue) =>
@@ -239,11 +223,9 @@ function compareWorkouts(selectedWorkout, previousWorkout) {
 
 export {
   getOneRepMax,
-  capitalizeFirstLetter,
   compareDatesByDay,
   getDaysArray,
   getRangeOfDates,
-  displayExercisesForTemplate,
   findFirstAndLastRange,
   getTotalVolume,
   formatTime,

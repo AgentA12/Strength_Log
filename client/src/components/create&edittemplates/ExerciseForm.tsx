@@ -7,7 +7,6 @@ import {
   Group,
   List,
 } from "@mantine/core";
-import { ExerciseShape } from "../../types/template";
 
 interface Props {
   exerciseIndex: number;
@@ -32,7 +31,6 @@ export default function ExerciseForm({
   removeSet,
 }: Props) {
   const exercises = [...form.values.exercises];
-  console.log(exercises);
   return (
     <Card withBorder my={10}>
       <Group justify="space-between">

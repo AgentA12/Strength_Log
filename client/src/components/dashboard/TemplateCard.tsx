@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { capitalizeFirstLetter } from "../../utils/helpers/functions";
 import TemplateMenu from "./TemplateMenu";
 import { Text, Card, Flex, Modal, Button, Stack } from "@mantine/core";
 import classes from "./homepage.module.css";
@@ -35,8 +34,8 @@ export default function TemplateCard(props: Props) {
           {template.exercises.map((exercise, i) => (
             <Text tt="capitalize" span key={exercise.exercise._id}>
               {template.exercises.length - 1 === i
-                ? capitalizeFirstLetter(exercise.exercise.exerciseName)
-                : capitalizeFirstLetter(exercise.exercise.exerciseName) + ", "}
+                ? exercise.exercise.exerciseName
+                : exercise.exercise.exerciseName + ", "}
             </Text>
           ))}
         </Text>

@@ -5,12 +5,35 @@ import {
   getTotalReps,
 } from "../../utils/helpers/functions";
 import ExerciseLink from "../progresspage/ExerciseLink";
+import {
+  ExerciseDetailsShape,
+  ExerciseShape,
+  SetShape,
+} from "../../types/template";
+
+interface Props {
+  workout: {
+    compareWorkout: any[];
+    previousWorkout: any[];
+    selectedWorkout: any[];
+  };
+
+  exercise: {
+    decreasedSets: any[];
+    exerciseName: string;
+    increasedSets: any[];
+    sets: SetShape[];
+  };
+
+  exerciseIndex: number;
+}
 
 export default function ExerciseTableHeader({
   exercise,
   workout,
   exerciseIndex,
-}) {
+}: Props) {
+  console.log(workout, exercise);
   return (
     <Group>
       <ExerciseLink exerciseName={exercise.exerciseName} size="xl" />

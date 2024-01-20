@@ -218,7 +218,6 @@ const Query = {
 
   async getDataSummary(_, { userID }) {
     const user = await User.findById(userID);
-
     const {
       totalSetsCompleted,
       totalRepsCompleted,

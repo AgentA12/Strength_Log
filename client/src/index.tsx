@@ -3,7 +3,7 @@ import "@mantine/core/styles/global.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "./app";
-import { HashRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { ModalsProvider } from "@mantine/modals";
 import {
   ApolloClient,
@@ -35,7 +35,7 @@ const defaultApolloOptions: DefaultOptions = {
 // https://strengthlog.up.railway.app
 
 const client = new ApolloClient<NormalizedCacheObject>({
-  uri: "https://strengthlog.up.railway.app/graphql",
+  uri: "/graphql",
   cache: new InMemoryCache({
     addTypename: false,
   }),
