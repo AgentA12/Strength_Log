@@ -4,7 +4,15 @@ import {
   IconArrowDownRight,
   IconEqual,
 } from "@tabler/icons-react";
-import classes from "./totalStatDisplay.module.css";
+import classes from "./css/totalStatDisplay.module.css";
+
+interface Props {
+  title: string;
+  value: number;
+  previousValue: number;
+  diff: number;
+  unit: string;
+}
 
 export default function TotalStatDisplay({
   title,
@@ -12,11 +20,11 @@ export default function TotalStatDisplay({
   previousValue,
   diff,
   unit,
-}) {
+}: Props) {
   const DiffIcon =
     diff > 0 ? IconArrowUpRight : diff === 0 ? IconEqual : IconArrowDownRight;
 
-  function getProgressColor(value) {
+  function getProgressColor(value: number) {
     if (value > 0) return "green";
     if (value < 0) return "red";
     return "gray";

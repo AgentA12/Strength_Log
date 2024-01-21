@@ -2,7 +2,7 @@ import Calendar from "./Calendar";
 import StartWorkoutBtn from "./StartWorkoutBtn";
 import TemplateCard from "./TemplateCard";
 import TemplateSection from "./TemplateSection";
-import CreateTemplateContainer from "../create&edittemplates/TemplateDashBoard";
+import CreateTemplateContainer from "../../pages/createandedittemplate";
 import ExerciseForm from "../create&edittemplates/ExerciseForm";
 import TemplateMenu from "./TemplateMenu";
 import TemplateDrawer from "./TemplateDrawer";

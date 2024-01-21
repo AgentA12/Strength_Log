@@ -5,7 +5,7 @@ import {
   PasswordField,
   PrefferedColorField,
 } from "../components/settingspage";
-import DividerTitle from "../components/DividerTitle";
+import DividerTitle from "../components/universal/DividerTitle";
 
 export default function SettingsPage() {
   return (

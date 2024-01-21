@@ -3,7 +3,6 @@ import {
   Box,
   LoadingOverlay,
   Text,
-  Overlay,
 } from "@mantine/core";
 import { Line } from "react-chartjs-2";
 import {
@@ -18,6 +17,14 @@ interface Props {
   userID: string;
   range: string;
   metric: string;
+}
+
+interface GetChartData {
+  label: string;
+  data: {
+    x: string;
+    y: number;
+  }[];
 }
 
 export default function ExerciseChart(props: Props) {
@@ -78,7 +85,7 @@ export default function ExerciseChart(props: Props) {
           }}
         />
         <Line
-          options={options}
+          options={options as any}
           data={{
             labels: [],
             datasets: [],
@@ -114,9 +121,8 @@ export default function ExerciseChart(props: Props) {
       </Box>
     );
   }
-
   filteredData = data.getChartData.filter(
-    (data) => data.label.toLowerCase() === activeExercise
+    (data: GetChartData) => data.label.toLowerCase() === activeExercise
   );
 
   if (filteredData.length === 0) {
@@ -141,10 +147,10 @@ export default function ExerciseChart(props: Props) {
       options={options as any}
       data={{
         labels: labels,
-        datasets: filteredData?.map((d) => {
+        datasets: filteredData?.map((d: GetChartData) => {
           return {
             label: d.label,
-            data: d.data.map((da) => {
+            data: d.data.map((da: { x: string; y: number }) => {
               return { y: da.y, x: new Date(parseInt(da.x)) };
             }),
           };

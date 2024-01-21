@@ -13,7 +13,7 @@ import {
 } from "@mantine/core";
 import { getOneRepMax } from "../utils/helpers/functions";
 import { OneRepMaxTable } from "../components/progresspage/index";
-import DividerTitle from "../components/DividerTitle";
+import DividerTitle from "../components/universal/DividerTitle";
 
 export default function UtilitiesPage() {
   const [oneRepMax, setOneRepMax] = useState<null | number>(null);

@@ -22,9 +22,7 @@ import { getRangeOfDates } from "../../utils/helpers/functions";
 import "chartjs-adapter-dayjs-4/dist/chartjs-adapter-dayjs-4.esm";
 import { Line } from "react-chartjs-2";
 import { findFirstAndLastRange } from "../../utils/helpers/functions";
-import { useContext } from "react";
-import { UserContext, UserInfo } from "../../contexts/userInfo";
-import { ChartData } from "../../types/index";
+import { ChartData, Data } from "../../types/chartdata";
 
 ChartJS.register(
   CategoryScale,
@@ -38,11 +36,18 @@ ChartJS.register(
   TimeScale
 );
 
+type Range =
+  | "Last month"
+  | "Last 3 months"
+  | "Last 6 months"
+  | "Last 12 months"
+  | "All time";
+
 interface Props {
   activeTemplate: string;
-  range: string;
+  range: Range;
   metric: string;
-
+  userID: string;
   options?: {
     responsive: boolean;
     spanGaps: boolean;
@@ -58,11 +63,7 @@ interface Props {
 }
 
 export default function TemplateChart(props: Props) {
-  const userInfo = useContext<UserInfo>(UserContext);
-
-  const userID = userInfo?.data._id;
-
-  const { activeTemplate, range, metric, options } = props;
+  const { activeTemplate, range, metric, options, userID } = props;
 
   const { loading, data, error } = useQuery(GET_CHART_PROGRESS, {
     variables: {
@@ -121,6 +122,7 @@ export default function TemplateChart(props: Props) {
     data.getChartData[0].data
   );
   const labels = getRangeOfDates(range, firstRange, lastRange);
+
   return (
     <Line
       options={options as any}

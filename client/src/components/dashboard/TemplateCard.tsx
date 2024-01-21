@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TemplateMenu from "./TemplateMenu";
 import { Text, Card, Flex, Modal, Button, Stack } from "@mantine/core";
-import classes from "./homepage.module.css";
+import classes from "./css/homepage.module.css";
 import { TemplateDrawer } from "./index";
 import { TemplateShape } from "../../types/template";
 
@@ -12,7 +12,6 @@ interface Props {
 
 export default function TemplateCard(props: Props) {
   const { template, handleTemplateDelete } = props;
-
   const [opened, setOpened] = useState(false);
 
   const [modalOpen, setModalOpen] = useState(false);

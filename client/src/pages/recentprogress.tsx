@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { UserContext } from "../../contexts/userInfo";
+import { UserContext } from "../contexts/userInfo";
 import {
   Group,
   Select,
@@ -8,15 +8,15 @@ import {
   Container,
   Loader,
 } from "@mantine/core";
-import DividerTitle from "../DividerTitle";
+import DividerTitle from "../components/universal/DividerTitle";
 import { useQuery } from "@apollo/client";
 import {
   GET_PROGRESS_BY_DATE,
   GET_TEMPLATES,
-} from "../../utils/graphql/queries";
-import { WorkoutSection } from "./index";
-import { Workout } from "../../types/workout";
-import { TemplateShape } from "../../types/template";
+} from "../utils/graphql/queries";
+import { WorkoutSection } from "../components/progresspage/index";
+import { Workout } from "../types/workout";
+import { TemplateShape } from "../types/template";
 
 // "chunk" is used to create a two dimensional array for pagination
 function chunk<T>(array: T[], size: number): T[][] {

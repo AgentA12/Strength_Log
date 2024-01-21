@@ -10,13 +10,14 @@ interface SetShape {
   reps: number;
 }
 
-interface ExerciseShape extends ExerciseDetailsShape {
+interface ExerciseShape   {
   restTime: number;
   sets: SetShape[];
+  exercise: ExerciseDetailsShape
 }
 
 export interface TemplateShape {
-  exercises: [ExerciseShape];
+  exercises: ExerciseShape[];
   templateName: string;
   templateNotes: string;
   _id: string;

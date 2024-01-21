@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { CREATE_TEMPLATE, EDIT_TEMPLATE } from "../../utils/graphql/mutations";
+import { CREATE_TEMPLATE, EDIT_TEMPLATE } from "../utils/graphql/mutations";
 import { useNavigate } from "react-router-dom";
 import {
   TextInput,
@@ -14,14 +14,13 @@ import {
   Loader,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { SelectExerciseModal, ExerciseForm } from "./index";
-import { GET_EXERCISES } from "../../utils/graphql/queries";
+import { SelectExerciseModal, ExerciseForm } from "../components/create&edittemplates/index";
+import { GET_EXERCISES } from "../utils/graphql/queries";
 import { useForm } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 import { useLocation } from "react-router-dom";
-import { UserContext } from "../../contexts/userInfo";
-import { UserInfo } from "../../contexts/userInfo";
-import DividerTitle from "../DividerTitle";
+import { UserContext, UserInfo } from "../contexts/userInfo";
+import DividerTitle from "../components/universal/DividerTitle";
 
 interface Exercise {
   exerciseName: String;
@@ -36,7 +35,7 @@ interface Exerciseform {
   equipment: string;
 }
 
-export default function TemplateDashBoard() {
+export default function createAndEditTemplate() {
   const userInfo = useContext<UserInfo>(UserContext);
   const userID = userInfo?.data?._id;
 

@@ -5,7 +5,7 @@ import { BsTrash3 } from "react-icons/bs";
 import { TemplateShape } from "../../types/template";
 interface Props {
   template: TemplateShape;
-  setModalOpen: () => void;
+  setModalOpen: (val: true) => void;
 }
 export default function TemplateMenu(props: Props) {
   const { template, setModalOpen } = props;
@@ -29,7 +29,7 @@ export default function TemplateMenu(props: Props) {
     <Menu.Dropdown w={155} onClick={(event) => event.stopPropagation()}>
       <Menu.Item
         component={Link}
-        to={`/progress`}
+        to={`/Progress`}
         state={{ activeTab: "templates", templateName: template.templateName }}
         leftSection={<FaRegChartBar size={14} />}
       >
@@ -47,7 +47,7 @@ export default function TemplateMenu(props: Props) {
 
       <Menu.Item
         color="red"
-        onClick={setModalOpen}
+        onClick={() =>setModalOpen(true)}
         leftSection={<BsTrash3 size={14} />}
       >
         Delete
@@ -62,6 +62,7 @@ export default function TemplateMenu(props: Props) {
       shadow="lg"
       trigger="click"
       closeDelay={100}
+      transitionProps={{ transition: "skew-down" }}
     >
       <Menu.Target>
         <Button

@@ -1,11 +1,16 @@
-import { AppShell, Burger, Title, Group } from "@mantine/core";
-import { SideNav } from "./navbar";
+import { AppShell, Burger, Title, Group, useMantineTheme } from "@mantine/core";
+import { SideNav } from "../navbar";
 import { useDisclosure } from "@mantine/hooks";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 
-export default function AppLayout({ children, hasNav }) {
-  const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
+interface Props {
+  children: React.ReactNode;
+  hasNav: boolean;
+}
+export default function AppLayout({ children, hasNav }: Props) {
+  const [mobileOpened, { toggle: toggleMobile }] = useDisclosure(false);
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
+  const theme = useMantineTheme();
 
   return (
     <AppShell
@@ -44,7 +49,7 @@ export default function AppLayout({ children, hasNav }) {
 
       {hasNav && (
         <AppShell.Navbar p="sm">
-          <SideNav toggleDesktop={toggleDesktop} toggleMobile={toggleMobile} />
+          <SideNav toggleMobile={toggleMobile} />
         </AppShell.Navbar>
       )}
 

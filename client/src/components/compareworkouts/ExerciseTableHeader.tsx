@@ -5,11 +5,7 @@ import {
   getTotalReps,
 } from "../../utils/helpers/functions";
 import ExerciseLink from "../progresspage/ExerciseLink";
-import {
-  ExerciseDetailsShape,
-  ExerciseShape,
-  SetShape,
-} from "../../types/template";
+import { SetShape } from "../../types/template";
 
 interface Props {
   workout: {

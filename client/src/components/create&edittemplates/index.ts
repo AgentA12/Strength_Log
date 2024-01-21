@@ -1,5 +1,5 @@
 import SelectExerciseModal from "./SelectExerciseModal";
 import ExerciseForm from "./ExerciseForm";
-import TemplateDashBoard from "./TemplateDashBoard";
+import TemplateDashBoard from "../../pages/createandedittemplate";
 
 export { SelectExerciseModal, ExerciseForm, TemplateDashBoard };

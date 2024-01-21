@@ -8,12 +8,7 @@ type Range =
   | "All time";
 
 interface Props {
-  range:
-    | "Last month"
-    | "Last 3 months"
-    | "Last 6 months"
-    | "Last 12 months"
-    | "All time";
+  range: Range;
   setRange: React.Dispatch<React.SetStateAction<Range>>;
 }
 

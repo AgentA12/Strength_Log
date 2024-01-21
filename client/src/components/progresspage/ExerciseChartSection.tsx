@@ -1,7 +1,25 @@
-import classes from "./chart.module.css";
+import classes from "./css/chart.module.css";
 import { ExerciseSelect, ExerciseChart } from "./index";
 import { Flex, Box } from "@mantine/core";
 import { DateRangeSelect, MetricSelect } from "./index";
+
+type Range =
+  | "Last month"
+  | "Last 3 months"
+  | "Last 6 months"
+  | "Last 12 months"
+  | "All time";
+
+interface Props {
+  activeExercise: string;
+  setActiveExercise: React.Dispatch<React.SetStateAction<string>>;
+  userID: string;
+  setRange: React.Dispatch<React.SetStateAction<Range>>;
+  range: Range;
+  metric: string;
+  setMetric: React.Dispatch<React.SetStateAction<"Estimated 1RM" | "Total Volume">>;
+  options?: any;
+}
 
 export default function ExerciseChartSection({
   activeExercise,
@@ -9,10 +27,9 @@ export default function ExerciseChartSection({
   userID,
   setRange,
   range,
-  options,
   metric,
   setMetric,
-}) {
+}: Props) {
   return (
     <>
       <Box style={{ width: "fit-content" }} mt={25}>
@@ -28,15 +45,14 @@ export default function ExerciseChartSection({
         justify={{ base: "center", sm: "left" }}
         my={15}
       >
-        <DateRangeSelect setRange={setRange} />
+        <DateRangeSelect range={range} setRange={setRange} />
         <MetricSelect setMetric={setMetric} metric={metric} />
       </Flex>
       <Box className={classes.chartContainer}>
         <ExerciseChart
-          userId={userID}
+          userID={userID}
           range={range}
           activeExercise={activeExercise}
-          options={options}
           metric={metric}
         />
       </Box>

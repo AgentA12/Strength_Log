@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import AuthorizationComponent from "../components/AuthorizationComponent";
+import AuthorizationComponent from "../components/universal/AuthorizationComponent";
 import { useEffect } from "react";
 
 export default function AuthPage({ isLoggedIn }: { isLoggedIn: Boolean }) {

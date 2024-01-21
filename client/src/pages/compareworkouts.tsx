@@ -32,7 +32,7 @@ import {
 import { useQuery } from "@apollo/client";
 import { GET_TEMPLATES, CALENDAR_TIMESTAMPS } from "../utils/graphql/queries";
 import { useLocation } from "react-router-dom";
-import DividerTitle from "../components/DividerTitle";
+import DividerTitle from "../components/universal/DividerTitle";
 
 type CompareTo = "original template" | "previous workout";
 

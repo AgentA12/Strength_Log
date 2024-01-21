@@ -1,7 +1,7 @@
 import "@mantine/notifications/styles.css";
 import { Notifications } from "@mantine/notifications";
 import RouteContainer from "./routes/routes";
-import ScrollToTop from "./components/ScrollToTop";
+import ScrollToTop from "./components/universal/ScrollToTop";
 import { UserContext } from "./contexts/userInfo";
 import { userInfo } from "./contexts/userInfo";
 

@@ -1,4 +1,4 @@
-import { Box, Container, Divider, Group, Text, Title } from "@mantine/core";
+import { Box, Container, Divider, Group, Text } from "@mantine/core";
 import {
   ExerciseSelect,
   DateRangeSelect,
@@ -11,7 +11,7 @@ import { GET_ONE_REP_MAX } from "../utils/graphql/queries";
 import { useQuery } from "@apollo/client";
 import { useLocation } from "react-router-dom";
 import ChartWrapper from "../components/progresspage/ChartWrapper";
-import DividerTitle from "../components/DividerTitle";
+import DividerTitle from "../components/universal/DividerTitle";
 
 type Range =
   | "All time"

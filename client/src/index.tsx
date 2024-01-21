@@ -1,3 +1,4 @@
+import "./global.css"
 import "@mantine/core/styles.css";
 import "@mantine/core/styles/global.css";
 import React from "react";

@@ -1,5 +1,5 @@
-interface Data {
-    x: string
+export interface Data {
+    x: string 
     y: number
 }
 

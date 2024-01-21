@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Container, Divider, Tabs, Title } from "@mantine/core";
+import { Container, Tabs } from "@mantine/core";
 import {
   IconCheck,
   IconTemplate,
@@ -11,10 +11,10 @@ import {
   TemplateProgressPage,
   ExerciseProgressPage,
   CompareWorkoutPage,
+  RecentProgress 
 } from "./index";
 
-import { RecentProgress } from "../components/progresspage/index";
-import DividerTitle from "../components/DividerTitle";
+import DividerTitle from "../components/universal/DividerTitle";
 
 export default function ProgressPage() {
   const location = useLocation();
@@ -37,7 +37,7 @@ export default function ProgressPage() {
 
   return (
     <Container fluid>
-     <DividerTitle name="Progress" />
+      <DividerTitle name="Progress" />
       <Tabs
         value={activeTab}
         onChange={(val) => handleTabChange(val as string)}

@@ -8,11 +8,11 @@ import {
   ProgressPage,
 } from "../pages/index";
 
-import Protected from "../components/ProtectedRoute";
+import Protected from "../components/universal/ProtectedRoute";
 import auth from "../utils/auth/auth";
-import TemplateDashBoard from "../components/create&edittemplates/TemplateDashBoard";
-import UtilitiesPage from "../pages/utilitiespage";
-import AppLayout from "../components/AppLayout";
+import TemplateDashBoard from "../pages/createandedittemplate";
+import UtilitiesPage from "../pages/utilities";
+import AppLayout from "../components/universal/AppLayout";
 
 const isLoggedIn = auth.isLoggedIn();
 

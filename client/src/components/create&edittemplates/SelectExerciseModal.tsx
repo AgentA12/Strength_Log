@@ -3,7 +3,20 @@ import { TbBarbell } from "react-icons/tb";
 import { MdCable, MdOutlineAirlineSeatFlatAngled } from "react-icons/md";
 import { LiaDumbbellSolid } from "react-icons/lia";
 import { GiBodyBalance } from "react-icons/gi";
-import classes from "./templatedashboard.module.css";
+import classes from "./css/templatedashboard.module.css";
+
+interface Exercise {
+  exerciseName: String;
+  _id: String;
+  equipment: String;
+}
+
+interface Props {
+  opened: boolean;
+  close: () => void;
+  addExercise: (value: string) => void;
+  exercises: [Exercise];
+}
 
 function getExerciseIcon(str: string) {
   switch (str.toLowerCase()) {
@@ -20,26 +33,6 @@ function getExerciseIcon(str: string) {
     default:
       <TbBarbell />;
   }
-}
-
-interface Exerciseform {
-  value: string;
-  label: string;
-  _id: string;
-  equipment: string;
-}
-
-interface Exercise {
-  exerciseName: String;
-  _id: String;
-  equipment: String;
-}
-
-interface Props {
-  opened: boolean;
-  close: () => void;
-  addExercise: (value: string) => void;
-  exercises: [Exercise];
 }
 
 export default function SelectExerciseModal({

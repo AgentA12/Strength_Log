@@ -23,7 +23,6 @@ export default function SingleWorkout({ workout }: Props) {
       <Stack justify="center" align="center" gap={0}>
         {workout.template ? (
           <DateLink
-            linkUrl="/compare"
             workoutID={workout._id}
             createdAt={String(workout.createdAt)}
           />

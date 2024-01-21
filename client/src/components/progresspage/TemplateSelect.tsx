@@ -1,5 +1,5 @@
 import { Select } from "@mantine/core";
-import { TemplateShape } from "../../types";
+import { TemplateShape } from "../../types/template";
 
 interface Props {
   templates: TemplateShape[];

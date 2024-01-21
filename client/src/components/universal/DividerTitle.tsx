@@ -1,15 +1,11 @@
-import classes from "./dividertitle.module.css";
+import classes from "./css/dividertitle.module.css";
 import { Divider, Title } from "@mantine/core";
-
-export default function DividerTitle({
-  name,
-  fs,
-  fw,
-}: {
+interface Props {
   name: string;
   fs?: string;
   fw?: string;
-}) {
+}
+export default function DividerTitle({ name, fs, fw }: Props) {
   return (
     <Divider
       tt="capitalize"
