@@ -11,6 +11,23 @@ import {
 import { BsPlus } from "react-icons/bs";
 import { useState } from "react";
 import Resting from "./Resting";
+import { ExerciseShape } from "../../types/template";
+
+interface Props {
+  opened: boolean;
+  close: () => void;
+  exercise: ExerciseShape;
+  templateName: string;
+  handleChange: () => void;
+  exerciseIndex: number;
+  handleExerciseComplete: () => void;
+  addSet: (
+    exercise: ExerciseShape,
+    exerciseIndex: number,
+    setIsResting: React.Dispatch<React.SetStateAction<boolean>>,
+    setSetDone: React.Dispatch<React.SetStateAction<boolean>>
+  ) => void;
+}
 
 export default function WorkoutModal({
   opened,
@@ -19,12 +36,11 @@ export default function WorkoutModal({
   templateName,
   handleChange,
   exerciseIndex,
-  exerciseComplete,
   addSet,
-}) {
+}: Props) {
   const [currentSet, setCurrentSet] = useState(0);
-  const [isResting, setIsResting] = useState(false);
-  const [setDone, setSetDone] = useState(false);
+  const [isResting, setIsResting] = useState<boolean>(false);
+  const [setDone, setSetDone] = useState<boolean>(false);
 
   function handleSetFinished() {
     if (currentSet !== exercise.sets.length - 1) {
@@ -75,7 +91,7 @@ export default function WorkoutModal({
               color="green"
               onClick={() => {
                 close();
-                exerciseComplete(exerciseIndex);
+                hanldeExerciseComplete(exerciseIndex);
               }}
             >
               Finish Exercise
@@ -87,7 +103,6 @@ export default function WorkoutModal({
 
             {isResting ? (
               <Resting
-                setIsResting={setIsResting}
                 handleContinue={handleContinue}
                 restTime={exercise.restTime}
               />

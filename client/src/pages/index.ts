@@ -4,7 +4,7 @@ import LandingPage from "./landing";
 import NotFoundPage from "./notfound";
 import ProgressPage from "./progress";
 import SettingsPage from "./settings";
-import WorkoutPage from "../components/workoutpage/workout";
+import WorkoutPage from "./workout";
 import CompareWorkoutPage from "./compareworkouts";
 import TemplateProgressPage from "./templateprogress";
 import ExerciseProgressPage from "./exerciseprogress";

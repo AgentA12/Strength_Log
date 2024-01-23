@@ -1,4 +1,4 @@
-import classes from "./workout.module.css";
+import classes from "./css/workout.module.css";
 import {
   Title,
   Flex,
@@ -11,37 +11,51 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ExerciseCard } from "./index";
+import { ExerciseCard } from "../components/workoutpage/index";
 import { useState, useEffect, useContext } from "react";
 import { useInterval } from "@mantine/hooks";
-import { formatTime } from "../../utils/helpers/functions";
+import { formatTime } from "../utils/helpers/functions";
 import { useMutation } from "@apollo/client";
-import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
-import { UserContext } from "../../contexts/userInfo";
+import { SAVE_WORKOUT } from "../utils/graphql/mutations";
+import { UserContext } from "../contexts/userInfo";
 import { showNotification } from "@mantine/notifications";
 import { AiOutlineCheck } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
 import { IconConfetti } from "@tabler/icons-react";
+import { ExerciseShape } from "../types/template";
+
+interface Exercise extends ExerciseShape {
+  completed: boolean;
+}
+
+interface WorkoutState {
+  exercises: Exercise[];
+  timeToComplete: null | number;
+  templateId: string;
+  templateName: string;
+  workoutFinished: boolean;
+}
 
 const startedOn = new Date();
 
 export default function WorkoutPage() {
   const {
-    state: { template },
+    state: { workout },
   } = useLocation();
 
-  const {
-    data: { _id: userID },
-  } = useContext(UserContext);
+  const userInfo = useContext(UserContext);
+
+  const userID = userInfo?.data._id;
 
   const navigate = useNavigate();
+
   const theme = useMantineTheme();
   const primaryColor = theme.primaryColor;
 
   const [saveWorkout, { loading }] = useMutation(SAVE_WORKOUT);
 
-  const [workoutState, setWorkoutState] = useState({
-    template: template,
+  const [workoutState, setWorkoutState] = useState<WorkoutState>({
+    ...workout,
     timeToComplete: null,
     workoutFinished: false,
   });
@@ -58,18 +72,6 @@ export default function WorkoutPage() {
     return interval.stop;
   }, [interval, workoutDone]);
 
-  useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      // Perform actions before the component unloads
-      event.preventDefault();
-      event.returnValue = "";
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, []);
-
   if (!workoutDone) {
     if (seconds >= 60) {
       setSeconds(0);
@@ -82,36 +84,46 @@ export default function WorkoutPage() {
     }
   }
 
-  function handleChange(value, exerciseIndex, name, setIndex) {
+  function handleChange(
+    value: string,
+    exerciseIndex: number,
+    name: string,
+    setIndex: number
+  ) {
     const data = { ...workoutState };
 
-    data.template[exerciseIndex].sets[setIndex][name] = value;
-    data.template[exerciseIndex].sets[setIndex][name] = value;
+    data.exercises[exerciseIndex].sets[setIndex][name] = value;
+    data.exercises[exerciseIndex].sets[setIndex][name] = value;
 
     setWorkoutState(data);
   }
 
-  function addSet(exercise, exerciseIndex, setIsResting, setSetDone) {
+  function addSet(
+    exercise: ExerciseShape,
+    exerciseIndex: number,
+    setIsResting: React.Dispatch<React.SetStateAction<boolean>>,
+    setSetDone: React.Dispatch<React.SetStateAction<boolean>>
+  ) {
     const data = { ...workoutState };
 
     // the set to add is just a copy of the last set completed
     const setToAdd = exercise.sets[exercise.sets.length - 1];
 
-    data.template[exerciseIndex].completed = false;
+    data.exercises[exerciseIndex].completed = false;
 
-    data.template[exerciseIndex].sets.push(setToAdd);
+    data.exercises[exerciseIndex].sets.push(setToAdd);
 
     setWorkoutState(data);
     setSetDone(false);
     setIsResting(true);
   }
 
-  function exerciseComplete(exerciseIndex) {
+  function handleExerciseComplete(exerciseIndex: number) {
     const data = { ...workoutState };
 
-    data.template[exerciseIndex].completed = true;
+    data.exercises[exerciseIndex].completed = true;
 
-    let isWorkoutDone = data.template.every((e) => e.completed === true);
+    let isWorkoutDone = data.exercises.every((e) => e.completed === true);
 
     data.workoutFinished = isWorkoutDone;
 
@@ -126,9 +138,9 @@ export default function WorkoutPage() {
   function handleFinish() {
     saveWorkout({
       variables: {
-        templateId: workoutState.template.templateId,
+        templateId: workoutState.templateId,
         userID: userID,
-        exercises: workoutState.template,
+        exercises: workoutState.exercises,
       },
     })
       .then((res) => {
@@ -154,6 +166,8 @@ export default function WorkoutPage() {
     navigate("/Dashboard");
   }
 
+  console.log(workoutState);
+
   return (
     <Container fluid>
       <Divider
@@ -162,7 +176,7 @@ export default function WorkoutPage() {
           <Group justify="center" gap="xs" align="center">
             <Title c={primaryColor}>Training </Title>
             <Title tt="capitalize" className={classes.dividertitle}>
-              {workoutState.template.templateName}
+              {workoutState.templateName}
             </Title>
           </Group>
         }
@@ -182,6 +196,7 @@ export default function WorkoutPage() {
           }).format(startedOn)}
         </Text>
         <Text
+          mb={15}
           c={workoutState.workoutFinished ? "green" : undefined}
         >{`${hours}:${formatTime(minutes)}:${formatTime(seconds)}`}</Text>
         {workoutState.workoutFinished ? (
@@ -195,19 +210,20 @@ export default function WorkoutPage() {
             </Button>
           </>
         ) : (
-          <Flex direction="column" gap={12}>
-            {workoutState.template.map((exercise, exerciseIndex) => (
-              <ExerciseCard
-                exerciseIndex={exerciseIndex}
-                template={workoutState.template}
-                exercise={exercise}
-                completed={exercise.completed}
-                key={exercise.exercise._id}
-                handleChange={handleChange}
-                exerciseComplete={exerciseComplete}
-                addSet={addSet}
-              />
-            ))}
+          <Flex direction="column" gap={15}>
+            {workoutState.exercises.map(
+              (exercise: ExerciseShape, exerciseIndex: number) => (
+                <ExerciseCard
+                  exerciseIndex={exerciseIndex}
+                  template={workoutState}
+                  exercise={exercise}
+                  key={exercise.exercise._id}
+                  handleChange={handleChange}
+                  exerciseComplete={handleExerciseComplete}
+                  addSet={addSet}
+                />
+              )
+            )}
           </Flex>
         )}
       </Stack>

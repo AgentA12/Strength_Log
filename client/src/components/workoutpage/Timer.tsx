@@ -2,8 +2,32 @@ import { Text } from "@mantine/core";
 import { useState, useEffect } from "react";
 import { useInterval } from "@mantine/hooks";
 import { formatTime } from "../../utils/helpers/functions";
+import { ExerciseShape } from "../../types/template";
 
-export default function Timer({ textSize, workoutState, setWorkoutState }) {
+interface Exercise extends ExerciseShape {
+  completed: boolean;
+}
+
+interface WorkoutState {
+  exercises: Exercise[];
+  timeToComplete: null | number;
+  templateId: string;
+  templateName: string;
+  workoutFinished: boolean;
+}
+
+
+interface Props {
+  textSize: string;
+  workoutState: WorkoutState;
+  setWorkoutState: React.Dispatch<React.SetStateAction<WorkoutState>>;
+}
+
+export default function Timer({
+  textSize,
+  workoutState,
+  setWorkoutState,
+}: Props) {
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [hours, setHours] = useState(0);

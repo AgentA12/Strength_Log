@@ -2,7 +2,12 @@ import { Stack, Text, RingProgress, Button, useMantineTheme } from "@mantine/cor
 import { useState, useEffect } from "react";
 import { useInterval } from "@mantine/hooks";
 
-export default function Resting({ restTime, handleContinue }) {
+interface Props {
+  restTime: number
+  handleContinue: () => void
+}
+
+export default function Resting({ restTime, handleContinue }: Props) {
   const [seconds, setSeconds] = useState(restTime);
   const theme = useMantineTheme();
   const primaryColor = theme.primaryColor

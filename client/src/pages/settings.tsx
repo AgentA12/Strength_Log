@@ -1,4 +1,4 @@
-import { Box, Stack, Divider, Title, Container } from "@mantine/core";
+import { Box, Stack, Container } from "@mantine/core";
 import {
   DeleteAccountField,
   UsernameField,

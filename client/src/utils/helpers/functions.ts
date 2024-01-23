@@ -1,6 +1,6 @@
 import { MantineTheme } from "@mantine/core";
 import dayjs from "dayjs";
-import { ExerciseShape } from "../../types/template";
+import { ExerciseShape, TemplateShape } from "../../types/template";
 
 const getOneRepMax = (weight: number, repetitions: number) =>
   weight < 1 || repetitions < 1 ? null : Math.round(((weight / (1.0278 - 0.0278 * repetitions)) * 10) / 10);
@@ -147,18 +147,16 @@ function getRandomInt(min, max) {
   return Intl.NumberFormat("en-US").format(randomNumber);
 }
 
-function formatWorkoutState(template) {
-  let workoutState = template.exercises.map((exercise) => {
-    return {
-      ...exercise,
-      completed: false,
-    };
-  });
+function formatWorkoutState(template: TemplateShape) {
+  return {
+    exercises: template.exercises.map((exercise => {
+      return {
+        ...exercise,
+        completed: false,
+      };
+    })), templateName: template.templateName, templateId: template._id
+  };
 
-  workoutState.templateName = template.templateName;
-  workoutState.templateId = template._id;
-
-  return workoutState;
 }
 
 function getPrimaryColor(theme: MantineTheme) {

@@ -5,9 +5,9 @@ import { formatWorkoutState } from "../../utils/helpers/functions";
 import { TemplateShape } from "../../types/template";
 
 interface Props {
-  close: () => void,
-  opened: boolean
-  templates: TemplateShape[]
+  close: () => void;
+  opened: boolean;
+  templates: TemplateShape[];
 }
 
 export default function StartWorkoutModal(props: Props) {
@@ -18,7 +18,7 @@ export default function StartWorkoutModal(props: Props) {
   function startWorkout(template: TemplateShape) {
     const workoutState = formatWorkoutState(template);
 
-    navigate("/Workout", { state: { template: workoutState } });
+    navigate("/Workout", { state: { workout: workoutState } });
   }
   return (
     <Modal

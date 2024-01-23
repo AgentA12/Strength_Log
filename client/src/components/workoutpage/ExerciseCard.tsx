@@ -1,17 +1,31 @@
-import classes from "./exercisecard.module.css";
+import classes from "./css/exercisecard.module.css";
 import { Group, Card, Text, Button, Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { WorkoutModal } from "./index";
 import { AiOutlineCheckCircle } from "react-icons/ai";
+import { ExerciseShape, TemplateShape } from "../../types/template";
+
+interface Exercise extends ExerciseShape {
+  completed: boolean;
+}
+
+interface Props {
+  exercise: Exercise;
+  template: TemplateShape;
+  handleExerciseComplete: () => void;
+  handleChange: () => void;
+  exerciseIndex: number;
+  addSet: () => void;
+}
 
 export default function ExerciseCard({
   exercise,
   template,
-  exerciseComplete,
+  handleExerciseComplete,
   handleChange,
   exerciseIndex,
   addSet,
-}) {
+}: Props) {
   const [opened, { open, close }] = useDisclosure(false);
 
   return exercise.completed ? (
@@ -58,18 +72,17 @@ export default function ExerciseCard({
           </Button>
         </Group>
       </Card>
-      {open ? (
-        <WorkoutModal
-          exerciseIndex={exerciseIndex}
-          opened={opened}
-          close={close}
-          exercise={exercise}
-          templateName={template.templateName}
-          handleChange={handleChange}
-          exerciseComplete={exerciseComplete}
-          addSet={addSet}
-        />
-      ) : null}
+
+      <WorkoutModal
+        exerciseIndex={exerciseIndex}
+        opened={opened}
+        close={close}
+        exercise={exercise}
+        templateName={template.templateName}
+        handleChange={handleChange}
+        handleExerciseComplete={handleExerciseComplete}
+        addSet={addSet}
+      />
     </>
   );
 }
