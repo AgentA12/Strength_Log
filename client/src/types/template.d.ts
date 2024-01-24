@@ -8,6 +8,7 @@ interface ExerciseDetailsShape {
 interface SetShape {
   weight: number;
   reps: number;
+  [key: string]: number
 }
 
 interface ExerciseShape   {

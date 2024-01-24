@@ -23,18 +23,7 @@ import { AiOutlineCheck } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
 import { IconConfetti } from "@tabler/icons-react";
 import { ExerciseShape } from "../types/template";
-
-interface Exercise extends ExerciseShape {
-  completed: boolean;
-}
-
-interface WorkoutState {
-  exercises: Exercise[];
-  timeToComplete: null | number;
-  templateId: string;
-  templateName: string;
-  workoutFinished: boolean;
-}
+import { Exercise, WorkoutState } from "../types/workoutState";
 
 const startedOn = new Date();
 
@@ -85,9 +74,9 @@ export default function WorkoutPage() {
   }
 
   function handleChange(
-    value: string,
+    value: number,
     exerciseIndex: number,
-    name: string,
+    name: "reps" | "weight",
     setIndex: number
   ) {
     const data = { ...workoutState };
@@ -166,8 +155,6 @@ export default function WorkoutPage() {
     navigate("/Dashboard");
   }
 
-  console.log(workoutState);
-
   return (
     <Container fluid>
       <Divider
@@ -183,7 +170,7 @@ export default function WorkoutPage() {
         variant="dashed"
       />
       <Stack gap={0} align="center" justify="center">
-        Started on{" "}
+        <Text size="xl"> Started on </Text>
         <Text c={workoutState.workoutFinished ? "green" : undefined}>
           {Intl.DateTimeFormat("en-US", {
             weekday: "long",
@@ -212,14 +199,14 @@ export default function WorkoutPage() {
         ) : (
           <Flex direction="column" gap={15}>
             {workoutState.exercises.map(
-              (exercise: ExerciseShape, exerciseIndex: number) => (
+              (exercise: Exercise, exerciseIndex: number) => (
                 <ExerciseCard
                   exerciseIndex={exerciseIndex}
-                  template={workoutState}
+                  workoutState={workoutState}
                   exercise={exercise}
                   key={exercise.exercise._id}
                   handleChange={handleChange}
-                  exerciseComplete={handleExerciseComplete}
+                  handleExerciseComplete={handleExerciseComplete}
                   addSet={addSet}
                 />
               )

@@ -18,9 +18,14 @@ interface Props {
   close: () => void;
   exercise: ExerciseShape;
   templateName: string;
-  handleChange: () => void;
+  handleChange: (
+    value: number,
+    exerciseIndex: number,
+    name: "reps" | "weight",
+    setIndex: number
+  ) => void;
   exerciseIndex: number;
-  handleExerciseComplete: () => void;
+  handleExerciseComplete: (exerciseIndex: number) => void;
   addSet: (
     exercise: ExerciseShape,
     exerciseIndex: number,
@@ -37,6 +42,7 @@ export default function WorkoutModal({
   handleChange,
   exerciseIndex,
   addSet,
+  handleExerciseComplete,
 }: Props) {
   const [currentSet, setCurrentSet] = useState(0);
   const [isResting, setIsResting] = useState<boolean>(false);
@@ -91,7 +97,7 @@ export default function WorkoutModal({
               color="green"
               onClick={() => {
                 close();
-                hanldeExerciseComplete(exerciseIndex);
+                handleExerciseComplete(exerciseIndex);
               }}
             >
               Finish Exercise
@@ -108,13 +114,18 @@ export default function WorkoutModal({
               />
             ) : (
               <>
-                <Group justify="center" gap="xs" grow="true" w="250px">
+                <Group justify="center" gap="xs" grow={true} w="250px">
                   <NumberInput
                     ta="center"
                     label={<Text>Reps</Text>}
                     value={exercise.sets[currentSet].reps}
                     onChange={(value) =>
-                      handleChange(value, exerciseIndex, "reps", currentSet)
+                      handleChange(
+                        value as number,
+                        exerciseIndex,
+                        "reps",
+                        currentSet
+                      )
                     }
                   />
 
@@ -124,7 +135,12 @@ export default function WorkoutModal({
                     label={<Text>Weight (Lbs)</Text>}
                     value={exercise.sets[currentSet].weight}
                     onChange={(value) =>
-                      handleChange(value, exerciseIndex, "weight", currentSet)
+                      handleChange(
+                        value as number,
+                        exerciseIndex,
+                        "weight",
+                        currentSet
+                      )
                     }
                   />
                 </Group>
