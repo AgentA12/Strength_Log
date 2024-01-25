@@ -9,7 +9,6 @@ import {
   Group,
   Box,
   Container,
-  Title,
 } from "@mantine/core";
 import { getOneRepMax } from "../utils/helpers/functions";
 import { OneRepMaxTable } from "../components/progresspage/index";

@@ -11,22 +11,13 @@ import {
 
 export default function LandingContact() {
   return (
-    <Center mx="auto" style={{ paddingBottom: 50 }} >
+    <Center mx="auto" style={{ paddingBottom: 50 }}>
       <Box>
-        <Title
-          order={2}
-          size="h1"
-          weight={900}
-          align="center"
-        >
+        <Title order={2} size="h1" fw={900}>
           Get in touch
         </Title>
 
-        <SimpleGrid
-          cols={2}
-          mt="xl"
-          breakpoints={[{ maxWidth: "sm", cols: 1 }]}
-        >
+        <SimpleGrid cols={2} mt="xl">
           <TextInput
             label="Name"
             placeholder="Your name"
@@ -59,7 +50,7 @@ export default function LandingContact() {
           variant="filled"
         />
 
-        <Group position="center" mt="xl">
+        <Group justify="center" mt="xl">
           <Button type="submit" size="md">
             Send message
           </Button>

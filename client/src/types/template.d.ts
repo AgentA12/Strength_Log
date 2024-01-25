@@ -11,7 +11,7 @@ interface SetShape {
   [key: string]: number
 }
 
-interface ExerciseShape   {
+interface ExerciseShape {
   restTime: number;
   sets: SetShape[];
   exercise: ExerciseDetailsShape

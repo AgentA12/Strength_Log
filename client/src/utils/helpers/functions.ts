@@ -218,6 +218,22 @@ function compareWorkouts(selectedWorkout, previousWorkout) {
   return result;
 }
 
+function formatDate(date: string | number) {
+  const parsedDate = typeof date === "string" ? parseInt(date) : date;
+
+  if (isNaN(parsedDate)) {
+    return "Invalid Date";
+  }
+
+  return new Date(parsedDate).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  });
+}
+
 export {
   getOneRepMax,
   compareDatesByDay,
@@ -235,4 +251,5 @@ export {
   getPrimaryColor,
   compareExerciseSets,
   compareWorkouts,
+  formatDate
 };

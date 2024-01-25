@@ -11,7 +11,7 @@ interface Props {
   value: number;
   previousValue: number;
   diff: number;
-  unit: string;
+  unit?: string;
 }
 
 export default function TotalStatDisplay({

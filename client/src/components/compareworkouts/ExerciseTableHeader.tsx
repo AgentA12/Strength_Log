@@ -5,30 +5,40 @@ import {
   getTotalReps,
 } from "../../utils/helpers/functions";
 import ExerciseLink from "../progresspage/ExerciseLink";
-import { SetShape } from "../../types/template";
+import { SetShape, TemplateShape } from "../../types/template";
+
+type CompareSetShape = {
+  weight: number;
+  reps: number;
+  weightChange?: number;
+  repChange?: number;
+};
 
 interface Props {
-  workout: {
-    compareWorkout: any[];
-    previousWorkout: any[];
-    selectedWorkout: any[];
-  };
+  previousWorkout: TemplateShape;
 
   exercise: {
-    decreasedSets: any[];
+    decreasedSets: SetShape[];
     exerciseName: string;
-    increasedSets: any[];
-    sets: SetShape[];
+    increasedSets: SetShape[];
+    sets: CompareSetShape[];
   };
 
   exerciseIndex: number;
 }
 
+function getTotalRepsSingleExercise(exerciseSets: SetShape[]) {
+  return exerciseSets.reduce((total, set) => (total += set.reps), 0);
+}
+
 export default function ExerciseTableHeader({
   exercise,
-  workout,
+  previousWorkout,
   exerciseIndex,
 }: Props) {
+  const { sets } = exercise;
+
+  console.log(previousWorkout);
   return (
     <Group>
       <ExerciseLink exerciseName={exercise.exerciseName} size="xl" />
@@ -46,7 +56,7 @@ export default function ExerciseTableHeader({
               exercise.sets.concat(exercise.increasedSets)
             ) -
               getTotalVolumeForExercise(
-                workout.previousWorkout.exercises[exerciseIndex].sets
+                previousWorkout.exercises[exerciseIndex].sets
               )
           )}
         </Text>
@@ -54,23 +64,19 @@ export default function ExerciseTableHeader({
       <Paper>
         <Text span>
           Reps:{" "}
-          {getTotalReps(exercise) +
-            getTotalReps(
-              exercise.increasedSets ? { sets: exercise.increasedSets } : null
-            )}{" "}
+          {getTotalRepsSingleExercise(sets) +
+            getTotalRepsSingleExercise(exercise.increasedSets)}
         </Text>
         <Text span>
           {CompareText(
-            getTotalReps(exercise) +
-              getTotalReps({
-                sets: exercise.increasedSets,
-              }) -
-              getTotalReps(workout.previousWorkout.exercises[exerciseIndex])
+            getTotalRepsSingleExercise(sets) +
+              getTotalRepsSingleExercise(exercise.increasedSets) -
+              getTotalReps(previousWorkout.exercises)
           )}
         </Text>
       </Paper>
       <Text>
-        Sets: {exercise.sets.length}{" "}
+        Sets: {exercise.sets.length + exercise.increasedSets.length}{" "}
         {exercise.increasedSets.length
           ? CompareText(exercise.increasedSets.length)
           : null}

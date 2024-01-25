@@ -4,7 +4,7 @@ import { TemplateShape } from "../../types/template";
 interface Props {
   templates: TemplateShape[];
   setActiveTemplate: React.Dispatch<React.SetStateAction<string>>;
-  activeTemplate: string;
+  activeTemplate: string | null;
   label?: string;
 }
 
@@ -27,7 +27,7 @@ export default function TemplateSelect({
       label={label ? label : null}
       data={templateData}
       searchable
-      value={activeTemplate}
+      value={activeTemplate ? activeTemplate : null}
       onChange={(val: string | null) => setActiveTemplate(val ? val : "")}
     />
   );

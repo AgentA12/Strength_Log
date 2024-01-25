@@ -4,7 +4,7 @@ import { ExerciseShape } from "./template";
 export interface Workout {
     createdAt: number;
     _id: string;
-    exercises: [ExerciseShape];
+    exercises: ExerciseShape[];
     template: TemplateShape;
   }
   

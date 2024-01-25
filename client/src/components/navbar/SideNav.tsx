@@ -1,4 +1,4 @@
-import classes from "./navbar.module.css";
+import classes from "./css/navbar.module.css";
 import auth from "../../utils/auth/auth.js";
 import { Flex, Text, Group, ActionIcon, Box } from "@mantine/core";
 import { AiOutlineLineChart, AiOutlineTool } from "react-icons/ai";

@@ -35,7 +35,7 @@ const mockdata = [
 export default function Features() {
   const features = mockdata.map((feature) => (
     <Card key={feature.title} shadow="lg" radius="md" padding="xl">
-      <feature.icon size={rem(50)} stroke={2} />
+      <feature.icon size={rem(50)} stroke={'2'} />
       <Text fz="lg" fw={500} mt="md">
         {feature.title}
       </Text>
@@ -47,7 +47,7 @@ export default function Features() {
 
   return (
     <Container size="lg" py="xl" mb={300}>
-      <Group position="center">
+      <Group align="center">
         <Badge variant="filled" size="lg">
           Best company ever
         </Badge>
@@ -62,12 +62,7 @@ export default function Features() {
         This happens when hunger drives it to try biting a Steel-type Pokémon.
       </Text>
 
-      <SimpleGrid
-        cols={3}
-        spacing="xl"
-        mt={50}
-        breakpoints={[{ maxWidth: "md", cols: 1 }]}
-      >
+      <SimpleGrid cols={3} spacing="xl" mt={50}>
         {features}
       </SimpleGrid>
     </Container>
