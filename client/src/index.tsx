@@ -1,4 +1,4 @@
-import "./global.css"
+import "./global.css";
 import "@mantine/core/styles.css";
 import "@mantine/core/styles/global.css";
 import React from "react";
@@ -32,10 +32,11 @@ const defaultApolloOptions: DefaultOptions = {
 };
 
 // api url
-// https://strengthlog.up.railway.app
+// https://strengthlog.up.railway.app/graphql
 
 const client = new ApolloClient<NormalizedCacheObject>({
   uri: isInProduction ? process.env.API_URL : "/graphql",
+
   cache: new InMemoryCache({
     addTypename: false,
   }),
