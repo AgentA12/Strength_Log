@@ -35,6 +35,7 @@ const typeDefs = gql`
   type SetType {
     weight: Int
     reps: Int
+    _id: ID
   }
 
   input createTemplateExerciseInput {

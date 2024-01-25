@@ -38,7 +38,6 @@ export default function ExerciseTableHeader({
 }: Props) {
   const { sets } = exercise;
 
-  console.log(previousWorkout);
   return (
     <Group>
       <ExerciseLink exerciseName={exercise.exerciseName} size="xl" />

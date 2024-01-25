@@ -16,6 +16,7 @@ export const GET_TEMPLATES = gql`
         sets {
           weight
           reps
+          _id
         }
       }
     }
@@ -75,6 +76,7 @@ export const GET_TEMPLATE_PROGRESS = gql`
           sets {
             weight
             reps
+            _id
           }
         }
       }
@@ -100,6 +102,7 @@ export const GET_PROGRESS_BY_DATE = gql`
         sets {
           weight
           reps
+          _id
         }
       }
     }
@@ -144,6 +147,7 @@ export const COMPARE_WORKOUTS = gql`
           sets {
             weight
             reps
+            _id
           }
         }
       }
@@ -167,6 +171,7 @@ export const COMPARE_WORKOUTS = gql`
           sets {
             weight
             reps
+            _id
           }
         }
       }
@@ -188,6 +193,7 @@ export const COMPARE_WORKOUTS = gql`
           sets {
             weight
             reps
+            _id
           }
         }
       }

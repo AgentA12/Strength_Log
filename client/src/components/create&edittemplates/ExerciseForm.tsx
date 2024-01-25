@@ -31,6 +31,7 @@ export default function ExerciseForm({
   removeSet,
 }: Props) {
   const exercises = [...form.values.exercises];
+
   return (
     <Card withBorder my={10}>
       <Group justify="space-between">
@@ -51,8 +52,11 @@ export default function ExerciseForm({
       </Group>
       <List withPadding listStyleType="none">
         {exercises[exerciseIndex].sets.map(
-          (exercise: Exerciseform, setIndex: number) => (
-            <List.Item mb={14} key={exercise._id}>
+          (
+            set: { weight: number; reps: number; _id: string },
+            setIndex: number
+          ) => (
+            <List.Item mb={14} key={set._id}>
               <Group>
                 <Text fz={20} fw="bold">
                   Set {setIndex + 1}

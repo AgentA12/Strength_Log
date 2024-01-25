@@ -1,9 +1,11 @@
 import { MantineTheme } from "@mantine/core";
 import dayjs from "dayjs";
-import { ExerciseShape, TemplateShape } from "../../types/template";
+import { ExerciseShape, SetShape, TemplateShape } from "../../types/template";
+import { Exercise } from "../../types/workoutState";
 
-const getOneRepMax = (weight: number, repetitions: number) =>
-  weight < 1 || repetitions < 1 ? null : Math.round(((weight / (1.0278 - 0.0278 * repetitions)) * 10) / 10);
+function getOneRepMax(weight: number, repetitions: number) {
+  return weight < 1 || repetitions < 1 ? null : Math.round(((weight / (1.0278 - 0.0278 * repetitions)) * 10) / 10)
+}
 
 function getPercentageOf1RM(oneRepMax: number) {
   const repMax = oneRepMax;
@@ -34,35 +36,35 @@ function getPercentageOf1RM(oneRepMax: number) {
 }
 
 
-// checks if two dates are on the same day
-const compareDatesByDay = (firstDate: Date, secondDate: Date) =>
-  firstDate.getFullYear() === secondDate.getFullYear() &&
-  firstDate.getMonth() === secondDate.getMonth() &&
-  firstDate.getDate() === secondDate.getDate();
+function compareDatesByDay(firstDate: Date, secondDate: Date) {
+  return firstDate.getFullYear() === secondDate.getFullYear() &&
+    firstDate.getMonth() === secondDate.getMonth() &&
+    firstDate.getDate() === secondDate.getDate();
+}
 
 function getRangeOfDates(range: string, firstDate: number, lastDate: number) {
   switch (range) {
     case "Last 12 months":
       return getDaysArray(
-        new Date(dayjs(lastDate).subtract(12, "month").$d),
+        new Date(dayjs(lastDate).subtract(12, "month").toString()),
         new Date(lastDate)
       );
 
     case "Last 6 months":
       return getDaysArray(
-        new Date(dayjs(lastDate).subtract(6, "month").$d),
+        new Date(dayjs(lastDate).subtract(6, "month").toString()),
         new Date(lastDate)
       );
 
     case "Last 3 months":
       return getDaysArray(
-        new Date(dayjs(lastDate).subtract(3, "month").$d),
+        new Date(dayjs(lastDate).subtract(3, "month").toString()),
         new Date(lastDate)
       );
 
     case "Last month":
       return getDaysArray(
-        new Date(dayjs(lastDate).subtract(1, "month").$d),
+        new Date(dayjs(lastDate).subtract(1, "month").toString()),
         new Date(lastDate)
       );
 
@@ -89,7 +91,6 @@ function formatTime(num: number) {
   return `${num}`;
 }
 
-// finds the most recent and oldest date
 function findFirstAndLastRange(dataSet: { x: string; y: number }[]) {
   let mostRecentDate = 0;
   let oldestDate = Infinity;
@@ -118,29 +119,29 @@ function getTotalVolume(exercises: ExerciseShape[]) {
   return TotalVolume;
 }
 
-const getTotalVolumeForExercise = (sets: { weight: number; reps: number }[]) =>
-  sets.reduce((total, set) => (total += set.weight * set.reps), 0);
+function getTotalVolumeForExercise(sets: { weight: number; reps: number }[]) {
+  return sets.reduce((total, set) => (total += set.weight * set.reps), 0)
+}
 
-const getTotalReps = (exercises: ExerciseShape[]) => {
-  if (exercises?.length != undefined) {
-    return exercises.reduce(
-      (accumulator, currentValue) =>
-        accumulator +
-        currentValue.sets.reduce((total, set) => (total += set.reps), 0),
-      0
-    );
-  } else {
-    return exercises.sets.reduce((total, set) => (total += set.reps), 0);
-  }
-};
+function getTotalReps(exercises: ExerciseShape[]) {
 
-const getTotalSets = (exercises) =>
-  exercises.reduce(
-    (accumulator, currentValue) => accumulator + currentValue.sets.length,
+  return exercises.reduce(
+    (accumulator, currentValue) =>
+      accumulator +
+      currentValue.sets.reduce((total, set) => (total += set.reps), 0),
     0
   );
 
-function getRandomInt(min, max) {
+};
+
+function getTotalSets(exercises: ExerciseShape[]) {
+  return exercises.reduce(
+    (accumulator, currentValue) => accumulator + currentValue.sets.length,
+    0
+  )
+}
+
+function getRandomInt(min: number, max: number) {
   min = Math.ceil(min);
   max = Math.floor(max);
   const randomNumber = Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
@@ -163,11 +164,16 @@ function getPrimaryColor(theme: MantineTheme) {
   return theme.colors.primaryColor;
 }
 
-function compareExerciseSets(setsOne, setsTwo) {
-  let results = { sets: [], increasedSets: [], decreasedSets: [] };
+function compareExerciseSets(setsOne: SetShape[], setsTwo: SetShape[]) {
+  type Results = {
+    sets: SetShape[]
+    increasedSets: SetShape[]
+    decreasedSets: SetShape[]
+  }
+  let results: Results = { sets: [], increasedSets: [], decreasedSets: [] };
 
   if (setsOne.length > setsTwo.length) {
-    setsOne.map((set, i) => {
+    setsOne.map((set: SetShape, i: number) => {
       if (setsTwo[i] != undefined) {
         results.sets.push({
           ...set,
@@ -202,10 +208,19 @@ function compareExerciseSets(setsOne, setsTwo) {
   return { ...results };
 }
 
-function compareWorkouts(selectedWorkout, previousWorkout) {
-  let result = { comparedWorkout: [], selectedWorkout, previousWorkout };
-  selectedWorkout.exercises.map((exercise) => {
-    previousWorkout.exercises.map((exerciseTwo) => {
+function compareWorkouts(selectedWorkout: any, previousWorkout: any) {
+
+  interface Result {
+    comparedWorkout: any
+    selectedWorkout: any
+    previousWorkout: any
+  }
+
+
+  let result: Result = { comparedWorkout: [], selectedWorkout, previousWorkout };
+
+  selectedWorkout.exercises.map((exercise: Exercise) => {
+    previousWorkout.exercises.map((exerciseTwo: Exercise) => {
       if (exercise.exercise._id === exerciseTwo.exercise._id) {
         result.comparedWorkout.push({
           exerciseName: exercise.exercise.exerciseName,

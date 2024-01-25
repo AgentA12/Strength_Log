@@ -17,6 +17,7 @@ interface Props {
 
 export default function WorkoutState(props: Props) {
   const { setTemplateState, templateState } = props;
+
   function handleChange(
     { target }: { target: { name: string; value: string } },
     exerciseIndex: number,
@@ -72,7 +73,7 @@ export default function WorkoutState(props: Props) {
         </Table.Thead>
         <Table.Tbody>
           {exercise.sets.map((set, setIndex) => (
-            <Table.Tr key={exercise.exercise._id}>
+            <Table.Tr key={set._id}>
               <Table.Td>{setIndex + 1}</Table.Td>
               <Table.Td>
                 <NumberInput

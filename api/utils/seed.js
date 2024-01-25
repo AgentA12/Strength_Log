@@ -116,11 +116,9 @@ const seedExercises = [
 
 db.once("open", async () => {
   try {
-    console.log("\n Seeding db with exercises...", "\n");
     await Exercise.deleteMany({});
     await Exercise.insertMany(seedExercises);
     await db.close();
-    console.log("Seeding complete.", "\n");
   } catch (error) {
     console.error(`Error occured when seeding: ${error.message}`);
   }
