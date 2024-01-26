@@ -99,7 +99,7 @@ export default function createAndEditTemplate() {
         autoClose: 3000,
       });
 
-      navigate("/Dashboard");
+      navigate("/dashboard");
     } catch (error: any) {
       if (error.message) form.setFieldError("templateName", error.message);
     }

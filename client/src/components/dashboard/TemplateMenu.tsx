@@ -29,7 +29,7 @@ export default function TemplateMenu(props: Props) {
     <Menu.Dropdown w={155} onClick={(event) => event.stopPropagation()}>
       <Menu.Item
         component={Link}
-        to={`/Progress`}
+        to={`/progress`}
         state={{ activeTab: "templates", templateName: template.templateName }}
         leftSection={<FaRegChartBar size={14} />}
       >

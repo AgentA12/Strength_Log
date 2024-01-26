@@ -18,7 +18,7 @@ export default function StartWorkoutModal(props: Props) {
   function startWorkout(template: TemplateShape) {
     const workoutState = formatWorkoutState(template);
 
-    navigate("/Workout", { state: { workout: workoutState } });
+    navigate("/workout", { state: { workout: workoutState } });
   }
   return (
     <Modal

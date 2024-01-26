@@ -152,7 +152,7 @@ export default function WorkoutPage() {
         });
       });
 
-    navigate("/Dashboard");
+    navigate("/dashboard");
   }
 
   return (

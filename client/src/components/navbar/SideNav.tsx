@@ -15,10 +15,10 @@ interface Props {
 }
 
 const linkData = [
-  { icon: GoHome, label: "Dashboard", link: "/Dashboard" },
-  { icon: AiOutlineLineChart, label: "Progress", link: "/Progress" },
-  { icon: AiOutlineTool, label: "Utilities", link: "/Utilities" },
-  { icon: CiSettings, label: "Settings", link: "/Settings" },
+  { icon: GoHome, label: "dashboard", link: "/dashboard" },
+  { icon: AiOutlineLineChart, label: "progress", link: "/progress" },
+  { icon: AiOutlineTool, label: "utilities", link: "/utilities" },
+  { icon: CiSettings, label: "settings", link: "/settings" },
 ];
 
 export default function SideNav({ toggleMobile }: Props) {
@@ -29,7 +29,7 @@ export default function SideNav({ toggleMobile }: Props) {
     setActive(pathname.replace("/", ""));
   }, [pathname]);
 
-  const [active, setActive] = useState(pathname.replace("/", ""));
+  const [active, setActive] = useState<string>(pathname.replace("/", ""));
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
 
   function handleLogout() {
@@ -44,12 +44,14 @@ export default function SideNav({ toggleMobile }: Props) {
       onMouseEnter={() => setHoveredTab(item.label)}
       className={classes.link}
       key={item.label}
-      data-active={item.label === active || undefined}
+      data-active={item.label.toLowerCase() === active.toLowerCase() || null}
       onClick={toggleMobile}
     >
       <Group gap={8} align="center">
         <item.icon size={20} />
-        <Text span>{item.label}</Text>
+        <Text tt="capitalize" span>
+          {item.label}
+        </Text>
       </Group>
       {item.label === hoveredTab ? (
         <motion.div

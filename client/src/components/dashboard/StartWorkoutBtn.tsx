@@ -10,7 +10,7 @@ export default function StartWorkoutBtn({
 }) {
   const workoutState = formatWorkoutState(template);
   return (
-    <Link to="/Workout" state={{ template: workoutState }}>
+    <Link to="/workout" state={{ template: workoutState }}>
       <Button>Start workout</Button>
     </Link>
   );

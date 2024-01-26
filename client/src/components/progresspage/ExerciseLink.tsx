@@ -28,7 +28,7 @@ export default function ExerciseLink(props: Props) {
         activeTab: "exercises",
         exerciseName: exerciseName,
       }}
-      to={`/Progress`}
+      to="/progress"
     >
       {exerciseName}
     </Text>
