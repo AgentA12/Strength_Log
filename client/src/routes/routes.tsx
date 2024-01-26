@@ -14,9 +14,9 @@ import TemplateDashBoard from "../pages/createandedittemplate";
 import UtilitiesPage from "../pages/utilities";
 import AppLayout from "../components/universal/AppLayout";
 
-const isLoggedIn = auth.isLoggedIn();
-
 export default function RouteContainer() {
+  const isLoggedIn = auth.isLoggedIn();
+
   return (
     <Routes>
       <Route path="/" index element={<AuthPage isLoggedIn={isLoggedIn} />} />

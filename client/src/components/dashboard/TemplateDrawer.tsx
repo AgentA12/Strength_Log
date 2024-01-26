@@ -33,7 +33,7 @@ export default function TemplateDrawer(props: Props) {
       variables: {
         templateId: template._id,
         userID: userID,
-        exercises: templateState.exercises,
+        exercises: [...templateState.exercises],
       },
     })
       .then((res) => {

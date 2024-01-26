@@ -20,22 +20,22 @@ const typeDefs = gql`
     equipment: String
   }
 
-  input saveWorkoutExerciseInput {
-    completed: Boolean
-    exercise: exerciseInput
-    restTime: Int
-    sets: [Set]
-  }
-
   input Set {
     weight: Int
     reps: Int
+    _id: ID
   }
 
   type SetType {
     weight: Int
     reps: Int
     _id: ID
+  }
+
+  input saveWorkoutExerciseInput {
+    exercise: exerciseInput
+    restTime: Int
+    sets: [Set]
   }
 
   input createTemplateExerciseInput {

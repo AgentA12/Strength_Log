@@ -123,8 +123,6 @@ const Mutation = {
         $pull: { templates: templateId },
       });
 
-      // remove deleted template from user.progress schema
-
       return { ...res, templateName: template.templateName };
     } catch (error) {
       return error.message;
