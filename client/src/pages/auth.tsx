@@ -4,7 +4,6 @@ import { useEffect } from "react";
 
 export default function AuthPage({ isLoggedIn }: { isLoggedIn: Boolean }) {
   const navigate = useNavigate();
-
   useEffect(() => {
     if (isLoggedIn === true) navigate("/dashboard");
   }, [isLoggedIn]);

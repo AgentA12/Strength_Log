@@ -31,7 +31,7 @@ const defaultApolloOptions: DefaultOptions = {
   },
 };
 
-const client = new ApolloClient<NormalizedCacheObject>({
+export const client = new ApolloClient<NormalizedCacheObject>({
   uri: isInProduction
     ? "https://strengthlog-production-c98f.up.railway.app/graphql"
     : "/graphql",
@@ -45,7 +45,7 @@ const client = new ApolloClient<NormalizedCacheObject>({
 const localStoragePreferredColor =
   (localStorage.getItem("preferredColor") as Theme["primaryColor"]) || "teal";
 
-const theme: Theme = createTheme({
+export const theme: Theme = createTheme({
   components: {
     Button: {
       defaultProps: {

@@ -18,12 +18,11 @@ const linkData = [
   { icon: GoHome, label: "dashboard", link: "/dashboard" },
   { icon: AiOutlineLineChart, label: "progress", link: "/progress" },
   { icon: AiOutlineTool, label: "utilities", link: "/utilities" },
-  { icon: CiSettings, label: "settings", link: "/settings" },
+  { icon: CiSettings, label: "settings", link: "/uettings" },
 ];
 
 export default function SideNav({ toggleMobile }: Props) {
   const { pathname } = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     setActive(pathname.replace("/", ""));
@@ -32,11 +31,6 @@ export default function SideNav({ toggleMobile }: Props) {
   const [active, setActive] = useState<string>(pathname.replace("/", ""));
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
 
-  function handleLogout() {
-    auth.logout();
-    navigate(0);
-  }
-
   const links = linkData.map((item) => (
     <Box
       component={NavLink}
@@ -44,7 +38,7 @@ export default function SideNav({ toggleMobile }: Props) {
       onMouseEnter={() => setHoveredTab(item.label)}
       className={classes.link}
       key={item.label}
-      data-active={item.label.toLowerCase() === active.toLowerCase() || null}
+      data-active={item.label === active || null}
       onClick={toggleMobile}
     >
       <Group gap={8} align="center">
@@ -77,7 +71,7 @@ export default function SideNav({ toggleMobile }: Props) {
       <Group style={{ alignSelf: "center" }}>
         <ToggleTheme />
 
-        <ActionIcon variant="outline" onClick={handleLogout}>
+        <ActionIcon variant="outline" onClick={auth.logout}>
           <HiLogout />
         </ActionIcon>
       </Group>

@@ -77,7 +77,8 @@ const Mutation = {
       };
 
       const temp = await Template.create(tempPayload);
-      await User.findByIdAndUpdate(args.userId, {
+
+      const { templates } = await User.findByIdAndUpdate(args.userId, {
         $push: { templates: [temp._id] },
       });
 

@@ -17,7 +17,7 @@ class Auth {
 
   isTokenExpired(token: any) {
     try {
-      const decoded = jwt_decode(token);
+      const decoded = jwt_decode<any>(token);
       if (decoded.exp < Date.now() / 1000) {
         return true;
       } else return false;
@@ -28,6 +28,7 @@ class Auth {
 
   logout() {
     window.localStorage.removeItem("token");
+    window.location.assign("/login")
   }
 
   getToken() {

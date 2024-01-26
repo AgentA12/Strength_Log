@@ -9,7 +9,6 @@ const templateSchema = mongoose.Schema(
       required: true,
       trim: true,
       lowercase: true,
-      unique: true,
     },
     templateNotes: { type: String, trim: true, required: false, default: null },
     exercises: [
