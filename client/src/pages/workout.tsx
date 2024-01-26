@@ -169,7 +169,7 @@ export default function WorkoutPage() {
         variant="dashed"
       />
       <Stack gap={0} align="center" justify="center">
-        <Text size="xl"> Started on </Text>
+        <Text size="xl">Started on</Text>
         <Text c={workoutState.workoutFinished ? "green" : undefined}>
           {Intl.DateTimeFormat("en-US", {
             weekday: "long",

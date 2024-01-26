@@ -55,7 +55,7 @@ export default function CompareWorkoutsContainer({
     <Container fluid mt={12}>
       <Stack gap={0} mb={120}>
         <Title order={3} fw={600}>
-          {formatDate(workoutState.formerWorkout.createdAt)}
+          {formatDate(parseInt(workoutState.formerWorkout.createdAt))}
         </Title>
 
         <Stack gap={0}>
@@ -66,7 +66,7 @@ export default function CompareWorkoutsContainer({
             <Text span>Compared to: </Text>
             <Text span fw={500} c={primaryColor} size="lg">
               {compareTo === "previous workout"
-                ? formatDate(previousWorkout.createdAt)
+                ? formatDate(parseInt(previousWorkout.createdAt))
                 : "Original Template"}
             </Text>
           </Group>
