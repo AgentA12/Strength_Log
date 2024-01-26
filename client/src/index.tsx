@@ -31,11 +31,10 @@ const defaultApolloOptions: DefaultOptions = {
   },
 };
 
-// api url
-// https://strengthlog.up.railway.app/graphql
-
 const client = new ApolloClient<NormalizedCacheObject>({
-  uri: isInProduction ? process.env.API_URL : "/graphql",
+  uri: isInProduction
+    ? "https://strengthlog-production-c98f.up.railway.app/graphql"
+    : "/graphql",
 
   cache: new InMemoryCache({
     addTypename: false,
