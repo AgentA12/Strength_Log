@@ -38,8 +38,7 @@ export default function WorkoutPage() {
 
   const navigate = useNavigate();
 
-  const theme = useMantineTheme();
-  const primaryColor = theme.primaryColor;
+  const { primaryColor } = useMantineTheme();
 
   const [saveWorkout, { loading }] = useMutation(SAVE_WORKOUT);
 
