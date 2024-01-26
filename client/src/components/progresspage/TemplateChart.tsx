@@ -123,6 +123,8 @@ export default function TemplateChart(props: Props) {
   );
   const labels = getRangeOfDates(range, firstRange, lastRange);
 
+  console.log(labels);
+
   return (
     <Line
       options={options as any}

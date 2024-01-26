@@ -42,7 +42,11 @@ function compareDatesByDay(firstDate: Date, secondDate: Date) {
     firstDate.getDate() === secondDate.getDate();
 }
 
-function getRangeOfDates(range: string, firstDate: number, lastDate: number) {
+
+type Range = "Last 12 months" | "Last 6 months" | "Last 3 months" | "Last month" | "All time"
+
+function getRangeOfDates(range: Range, firstDate: number, lastDate: number): Date[] {
+  console.log(range, firstDate, lastDate)
   switch (range) {
     case "Last 12 months":
       return getDaysArray(
@@ -170,6 +174,7 @@ function compareExerciseSets(setsOne: SetShape[], setsTwo: SetShape[]) {
     increasedSets: SetShape[]
     decreasedSets: SetShape[]
   }
+  
   let results: Results = { sets: [], increasedSets: [], decreasedSets: [] };
 
   if (setsOne.length > setsTwo.length) {
@@ -233,14 +238,12 @@ function compareWorkouts(selectedWorkout: any, previousWorkout: any) {
   return result;
 }
 
-function formatDate(date: string | number) {
-  const parsedDate = typeof date === "string" ? parseInt(date) : date;
-
-  if (isNaN(parsedDate)) {
+function formatDate(date: number): string {
+  if (isNaN(date)) {
     return "Invalid Date";
   }
 
-  return new Date(parsedDate).toLocaleDateString("en-US", {
+  return new Date(date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",

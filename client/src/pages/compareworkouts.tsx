@@ -116,7 +116,7 @@ export default function CompareWorkoutPage() {
             allowDeselect={false}
             w={"fit-content"}
             data={cData?.calendarTimeStamps.map(
-              (stamp: { _id: string; createdAt: string }) => {
+              (stamp: { _id: string; createdAt: number }) => {
                 return {
                   label: formatDate(stamp.createdAt),
                   value: stamp._id,

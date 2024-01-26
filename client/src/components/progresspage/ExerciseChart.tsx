@@ -15,7 +15,12 @@ import { GET_CHART_PROGRESS } from "../../utils/graphql/queries";
 interface Props {
   activeExercise: string;
   userID: string;
-  range: string;
+  range:
+    | "Last 12 months"
+    | "Last 6 months"
+    | "Last 3 months"
+    | "Last month"
+    | "All time";
   metric: string;
 }
 
