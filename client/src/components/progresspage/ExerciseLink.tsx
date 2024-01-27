@@ -16,11 +16,13 @@ export default function ExerciseLink(props: Props) {
     width: "fit-content",
   };
 
+
+
   return (
     <Text
     size={size}
       style={style}
-      c={primaryColor}
+      c={`${primaryColor}.6`}
       tt="capitalize"
       fw={700}
       component={Link}

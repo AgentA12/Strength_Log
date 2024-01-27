@@ -10,8 +10,10 @@ interface Props {
   handleTemplateDelete: (templateID: string) => void;
 }
 
-export default function TemplateCard(props: Props) {
-  const { template, handleTemplateDelete } = props;
+export default function TemplateCard({
+  template,
+  handleTemplateDelete,
+}: Props) {
   const [opened, setOpened] = useState(false);
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -31,7 +33,7 @@ export default function TemplateCard(props: Props) {
         </Flex>
         <Text c="dimmed" lineClamp={1}>
           {template.exercises.map((exercise, i) => (
-            <Text tt="capitalize" span key={exercise.exercise._id}>
+            <Text tt="capitalize" c="teal.4" span key={exercise.exercise._id}>
               {template.exercises.length - 1 === i
                 ? exercise.exercise.exerciseName
                 : exercise.exercise.exerciseName + ", "}

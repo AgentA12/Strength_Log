@@ -62,25 +62,23 @@ export const GET_CHART_PROGRESS = gql`
 
 export const GET_TEMPLATE_PROGRESS = gql`
   query ($userID: ID!, $templateID: ID!) {
-    getTemplateProgress(userID: $userID, templateID: $templateID) {
-      timeToComplete
-      template {
-        _id
-        templateName
-        templateNotes
-        exercises {
-          exercise {
-            exerciseName
-          }
-          restTime
-          sets {
-            weight
-            reps
-            _id
-          }
+    getPreviousWorkout(userID: $userID, templateID: $templateID ) {
+      _id
+      templateName
+      templateNotes
+      exercises {
+        restTime
+        exercise {
+          exerciseName
+          _id
+          equipment
+        }
+        sets {
+          weight
+          reps
+          _id
         }
       }
-      createdAt
     }
   }
 `;

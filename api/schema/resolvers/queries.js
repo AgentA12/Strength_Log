@@ -49,24 +49,38 @@ const Query = {
     }
   },
 
-  getTemplateProgress: async function (_, { userID, templateID }) {
+  getPreviousWorkout: async function (_, { userID, templateID }) {
     try {
-      const { completedWorkouts } = await User.findById(userID)
-        .select("completedWorkouts")
+      const { completedWorkouts } = await User.findById(
+        userID,
+        "completedWorkouts"
+      )
         .populate({
           path: "completedWorkouts.template",
           model: "Template",
-          populate: {
-            path: "exercises.exercise",
-            model: "Exercise",
-          },
+        })
+        .populate({
+          path: "completedWorkouts.exercises.exercise",
+          model: "Exercise",
         });
 
       const workouts = completedWorkouts
         .filter((workout) => workout?.template?._id.toString() === templateID)
         .sort((a, b) => b.createdAt - a.createdAt);
 
-      return workouts;
+      let workout = workouts[0];
+
+
+      workout.template.exercises = workout.exercises;
+
+      let template = {
+        templateName: workout.template.templateName,
+        templateNotes: workout.template.templateNotes,
+        _id: workout.template._id,
+        exercises: workouts[0].exercises,
+      };
+console.log(template.exercises[0].sets)
+      return template;
     } catch (error) {
       return error.message;
     }

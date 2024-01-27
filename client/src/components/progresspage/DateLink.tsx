@@ -25,7 +25,7 @@ export const DateLink: React.FC<Props> = (props) => {
       component={Link}
       style={styles}
       to={"/progress"}
-      c={primaryColor}
+      c={`${primaryColor}.6`}
       size={size ? size : "md"}
     >
       {new Date(parseInt(createdAt)).toLocaleDateString("en-US", {

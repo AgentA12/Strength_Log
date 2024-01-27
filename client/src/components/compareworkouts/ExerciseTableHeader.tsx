@@ -4,7 +4,7 @@ import {
   getTotalVolumeForExercise,
   getTotalReps,
 } from "../../utils/helpers/functions";
-import ExerciseLink from "../progresspage/ExerciseLink";
+import {ExerciseLink} from "../progresspage/index";
 import { SetShape, TemplateShape } from "../../types/template";
 
 type CompareSetShape = {

@@ -1,7 +1,7 @@
-import { Text, Flex, Button, Drawer } from "@mantine/core";
-import { useContext, useState } from "react";
+import { Text, Flex, Button, Drawer, Select, Loader } from "@mantine/core";
+import { useContext, useState, useEffect } from "react";
 import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
-import { useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import WorkoutState from "./WorkoutState";
 import { showNotification } from "@mantine/notifications";
 import { AiOutlineCheck } from "react-icons/ai";
@@ -9,6 +9,7 @@ import { BiErrorCircle } from "react-icons/bi";
 import { UserContext } from "../../contexts/userInfo";
 import { StartWorkoutBtn } from "./index";
 import { TemplateShape } from "../../types/template";
+import { GET_TEMPLATE_PROGRESS } from "../../utils/graphql/queries";
 
 interface Props {
   template: TemplateShape;
@@ -16,16 +17,40 @@ interface Props {
   setOpened: (bool: boolean) => void;
 }
 
+type WorkoutData = "original template" | "previously saved";
+
 export default function TemplateDrawer(props: Props) {
   const { template, opened, setOpened } = props;
 
   const userInfo = useContext(UserContext);
 
   const userID = userInfo?.data._id;
+  const templateID = template._id;
+
+  const [workoutDataType, setWorkoutDataType] =
+    useState<WorkoutData>("original template");
+
+  const [saveWorkoutFunction, { loading, error }] = useMutation(SAVE_WORKOUT);
+  const {
+    data,
+    loading: loadin,
+    error: err,
+  } = useQuery(GET_TEMPLATE_PROGRESS, {
+    variables: {
+      userID: userID,
+      templateID: templateID,
+    },
+  });
 
   const [templateState, setTemplateState] = useState(template);
 
-  const [saveWorkoutFunction, { loading, error }] = useMutation(SAVE_WORKOUT);
+  useEffect(() => {
+    if (data?.getPreviousWorkout) {
+      workoutDataType === "previously saved"
+        ? setTemplateState(data.getPreviousWorkout)
+        : setTemplateState(template);
+    }
+  }, [workoutDataType]);
 
   function handleSaveWorkout() {
     // async await is very inconsistent here
@@ -60,6 +85,7 @@ export default function TemplateDrawer(props: Props) {
 
   return (
     <Drawer
+      size="lg"
       opened={opened}
       onClose={() => setOpened(false)}
       title={
@@ -73,12 +99,22 @@ export default function TemplateDrawer(props: Props) {
           {template.templateName}
         </Text>
       }
-      size="lg"
     >
+      <Select
+        mb={12}
+        description="Use"
+        w={"fit-content"}
+        defaultValue="original template"
+        data={["original template", "previously saved"]}
+        onChange={(val) => setWorkoutDataType(val as WorkoutData)}
+        allowDeselect={false}
+      />
       <Text c="dimmed" mb={10}>
-        {template.templateNotes.trim() ? `- ${template.templateNotes}` : null}
+        {template.templateNotes.trim()
+          ? `- ${template.templateNotes}`
+          : `- No notes.`}
       </Text>
-
+      <Text>{templateState.exercises[0].sets[0].weight}</Text>
       <Flex justify="space-around" align="center">
         <Button onClick={handleSaveWorkout} loading={loading}>
           Quick Save

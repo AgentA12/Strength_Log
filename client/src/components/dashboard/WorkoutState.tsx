@@ -7,7 +7,7 @@ import {
   Button,
   Group,
 } from "@mantine/core";
-import ExerciseLink from "../progresspage/ExerciseLink";
+import { ExerciseLink } from "../progresspage/index";
 import { TemplateShape } from "../../types/template";
 
 interface Props {
@@ -51,14 +51,14 @@ export default function WorkoutState(props: Props) {
 
     setTemplateState({ ...templateStateCopy });
   }
-
-  const Tables = templateState.exercises.map((exercise, exerciseIndex) => (
+  console.log(templateState.exercises[0].sets[0])
+  return templateState.exercises.map((exercise, exerciseIndex) => (
     <Container mb={10} key={exercise.exercise._id}>
       <Flex mt={10} justify="space-between" align="center">
         <ExerciseLink size="xl" exerciseName={exercise.exercise.exerciseName} />
         {exercise.restTime ? (
           <Text fz={13} fw="normal" c="dimmed">
-            Rest: {exercise.restTime} seconds
+            Rest: {exercise?.restTime} seconds
           </Text>
         ) : null}
       </Flex>
@@ -81,7 +81,7 @@ export default function WorkoutState(props: Props) {
                   w={75}
                   min={1}
                   max={99}
-                  defaultValue={set.reps}
+                  value={set.reps}
                   onChange={(value) =>
                     handleChange(
                       { target: { name: "reps", value: value as string } },
@@ -97,7 +97,7 @@ export default function WorkoutState(props: Props) {
                   step={5}
                   min={5}
                   max={995}
-                  defaultValue={set.weight}
+                  value={set.weight}
                   onChange={(value: string | number) =>
                     handleChange(
                       { target: { name: "weight", value: value as string } },
@@ -126,6 +126,4 @@ export default function WorkoutState(props: Props) {
       </Group>
     </Container>
   ));
-
-  return Tables;
 }

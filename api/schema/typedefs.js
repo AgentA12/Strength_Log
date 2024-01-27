@@ -182,8 +182,6 @@ const typeDefs = gql`
     exercises: [Exercise]
     timeToComplete: Int
     _id: ID
-    createdAt: String
-    updatedAt: String
   }
 
   type TotalData {
@@ -212,7 +210,7 @@ const typeDefs = gql`
     getChartDataForExercises(userId: ID!): [ExerciseChartData]
     calendarTimeStamps(userId: ID!, templateName: String): [CalendarDates]
     getProgressByDate(userID: ID!, workoutID: ID): [CompletedWorkout]
-    getTemplateProgress(userID: ID!, templateID: ID!): [workout]
+    getPreviousWorkout(userID: ID!, templateID: ID!): Template
     getDataSummary(userID: ID!): [TotalData]
     getUserSettings(userID: ID!): User
     compareWorkouts(userID: ID!, workoutID: ID!): WorkoutComparison

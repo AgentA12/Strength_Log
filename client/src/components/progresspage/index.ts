@@ -11,7 +11,7 @@ import WorkoutSection from "./WorkoutSection";
 import ExerciseTable from "./ExerciseTable";
 import TotalStatDisplay from "./TotalStatDisplay";
 import ChartWrapper from "./ChartWrapper";
-
+import ExerciseLink from "./ExerciseLink";
 export {
   TemplateSelect,
   TemplateChart,
@@ -26,4 +26,5 @@ export {
   ExerciseTable,
   TotalStatDisplay,
   ChartWrapper,
+  ExerciseLink
 };

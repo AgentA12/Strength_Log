@@ -3,7 +3,7 @@ import { ExerciseTable } from "./index";
 import { Box, Paper, Stack, Text } from "@mantine/core";
 import { v4 as uuidv4 } from "uuid";
 import { DateLink } from "./DateLink";
-import ExerciseLink from "./ExerciseLink";
+import { ExerciseLink } from "./index";
 import { Workout } from "../../types/workout";
 
 interface Props {
