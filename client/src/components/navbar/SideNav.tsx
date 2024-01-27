@@ -18,7 +18,7 @@ const linkData = [
   { icon: GoHome, label: "dashboard", link: "/dashboard" },
   { icon: AiOutlineLineChart, label: "progress", link: "/progress" },
   { icon: AiOutlineTool, label: "utilities", link: "/utilities" },
-  { icon: CiSettings, label: "settings", link: "/uettings" },
+  { icon: CiSettings, label: "settings", link: "/settings" },
 ];
 
 export default function SideNav({ toggleMobile }: Props) {
