@@ -18,7 +18,6 @@ import { MantineProvider, createTheme, ScrollArea } from "@mantine/core";
 
 const isInProduction = import.meta.env.MODE === "production";
 
-
 type Theme = ReturnType<typeof createTheme>;
 
 const defaultApolloOptions: DefaultOptions = {
