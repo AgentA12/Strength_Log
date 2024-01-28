@@ -79,7 +79,6 @@ const Query = {
         _id: workout.template._id,
         exercises: workouts[0].exercises,
       };
-console.log(template.exercises[0].sets)
       return template;
     } catch (error) {
       return error.message;

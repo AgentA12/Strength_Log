@@ -1,6 +1,6 @@
 import { useState } from "react";
 import TemplateMenu from "./TemplateMenu";
-import { Text, Card, Flex, Modal, Button, Stack } from "@mantine/core";
+import { Text, Card, Flex, Modal, Button, Stack, useMantineTheme } from "@mantine/core";
 import classes from "./css/homepage.module.css";
 import { TemplateDrawer } from "./index";
 import { TemplateShape } from "../../types/template";
@@ -15,6 +15,7 @@ export default function TemplateCard({
   handleTemplateDelete,
 }: Props) {
   const [opened, setOpened] = useState(false);
+  const {primaryColor} = useMantineTheme()
 
   const [modalOpen, setModalOpen] = useState(false);
   return (
@@ -33,7 +34,7 @@ export default function TemplateCard({
         </Flex>
         <Text c="dimmed" lineClamp={1}>
           {template.exercises.map((exercise, i) => (
-            <Text tt="capitalize" c="teal.4" span key={exercise.exercise._id}>
+            <Text tt="capitalize" c={`${primaryColor}.4`} span key={exercise.exercise._id}>
               {template.exercises.length - 1 === i
                 ? exercise.exercise.exerciseName
                 : exercise.exercise.exerciseName + ", "}

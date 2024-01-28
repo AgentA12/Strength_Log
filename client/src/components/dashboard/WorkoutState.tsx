@@ -51,7 +51,6 @@ export default function WorkoutState(props: Props) {
 
     setTemplateState({ ...templateStateCopy });
   }
-  console.log(templateState.exercises[0].sets[0])
   return templateState.exercises.map((exercise, exerciseIndex) => (
     <Container mb={10} key={exercise.exercise._id}>
       <Flex mt={10} justify="space-between" align="center">

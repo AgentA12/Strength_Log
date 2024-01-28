@@ -4,7 +4,7 @@ import {
   getTotalVolumeForExercise,
   getTotalReps,
 } from "../../utils/helpers/functions";
-import {ExerciseLink} from "../progresspage/index";
+import { ExerciseLink } from "../progresspage/index";
 import { SetShape, TemplateShape } from "../../types/template";
 
 type CompareSetShape = {
@@ -37,7 +37,6 @@ export default function ExerciseTableHeader({
   exerciseIndex,
 }: Props) {
   const { sets } = exercise;
-
   return (
     <Group>
       <ExerciseLink exerciseName={exercise.exerciseName} size="xl" />
@@ -70,7 +69,9 @@ export default function ExerciseTableHeader({
           {CompareText(
             getTotalRepsSingleExercise(sets) +
               getTotalRepsSingleExercise(exercise.increasedSets) -
-              getTotalReps(previousWorkout.exercises)
+              getTotalRepsSingleExercise(
+                previousWorkout.exercises[exerciseIndex].sets
+              )
           )}
         </Text>
       </Paper>
