@@ -16,13 +16,6 @@ interface Props {
   removeSet: (exerciseIndex: number, setIndex: number) => void;
 }
 
-interface Exerciseform {
-  value: string;
-  label: string;
-  _id: string;
-  equipment: string;
-}
-
 export default function ExerciseForm({
   exerciseIndex,
   form,

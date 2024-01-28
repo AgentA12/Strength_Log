@@ -1,5 +1,6 @@
 import classes from "./css/dividertitle.module.css";
 import { Divider, Title } from "@mantine/core";
+
 interface Props {
   name: string;
   fs?: string;

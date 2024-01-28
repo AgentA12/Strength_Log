@@ -10,10 +10,7 @@ import {
 } from "@mantine/core";
 import DividerTitle from "../components/universal/DividerTitle";
 import { useQuery } from "@apollo/client";
-import {
-  GET_PROGRESS_BY_DATE,
-  GET_TEMPLATES,
-} from "../utils/graphql/queries";
+import { GET_PROGRESS_BY_DATE, GET_TEMPLATES } from "../utils/graphql/queries";
 import { WorkoutSection } from "../components/progresspage/index";
 import { Workout } from "../types/workout";
 import { TemplateShape } from "../types/template";
@@ -71,8 +68,8 @@ export default function RecentProgress() {
         chunk(
           bufferData.sort((a, b) =>
             sortBy === "oldest first"
-              ? a.createdAt - b.createdAt
-              : b.createdAt - a.createdAt
+              ? parseInt(a.createdAt) - parseInt(b.createdAt)
+              : parseInt(b.createdAt) - parseInt(a.createdAt)
           ),
           limitPerPage
         )

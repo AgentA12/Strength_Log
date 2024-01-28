@@ -1,4 +1,4 @@
-import { Container, Divider, Group, Loader, Title } from "@mantine/core";
+import { Container, Divider, Group, Loader } from "@mantine/core";
 import {
   TemplateSelect,
   DateRangeSelect,

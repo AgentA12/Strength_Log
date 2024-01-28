@@ -124,7 +124,7 @@ const Mutation = {
         $pull: { templates: templateId },
       });
 
-      return { ...res, templateName: template.templateName };
+      return {confirm: true}
     } catch (error) {
       return error.message;
     }

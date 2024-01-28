@@ -1,4 +1,4 @@
-import { Text, Flex, Button, Drawer, Select, Loader } from "@mantine/core";
+import { Text, Flex, Button, Drawer, Select } from "@mantine/core";
 import { useContext, useState, useEffect } from "react";
 import { SAVE_WORKOUT } from "../../utils/graphql/mutations";
 import { useQuery, useMutation } from "@apollo/client";

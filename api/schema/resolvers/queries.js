@@ -70,7 +70,6 @@ const Query = {
 
       let workout = workouts[0];
 
-
       workout.template.exercises = workout.exercises;
 
       let template = {
@@ -278,30 +277,6 @@ const Query = {
       });
 
       return greatest;
-      // const result = await User.aggregate([
-      //   {
-      //     $lookup: {
-      //       from: "exercise", // The name of the referenced collection (case-sensitive)
-      //       localField: "completedExercises.exercise",
-      //       foreignField: "_id",
-      //       as: "exerciseInfo",
-      //     },
-      //   },
-      //   {
-      //     $match: {
-      //       "exerciseInfo.exerciseName": "bench press",
-      //     },
-      //   },
-
-      //   {
-      //     $project: {
-      //       _id: 0,
-      //       itemName: "$exercise.product",
-      //       itemQuantity: "$items.quantity",
-      //     },
-      //   },
-      // ]);
-      return 500;
     } catch (error) {
       return error.message;
     }

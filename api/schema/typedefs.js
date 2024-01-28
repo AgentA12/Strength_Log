@@ -45,14 +45,6 @@ const typeDefs = gql`
     sets: [Set]
   }
 
-  input TemplateInput {
-    templateName: String
-    templateNotes: String
-    _id: ID
-    exercise: [exerciseInput]
-    sets: [Set]
-  }
-
   type ExerciseType {
     _id: ID
     exerciseName: String
@@ -73,11 +65,6 @@ const typeDefs = gql`
     exercise: ExerciseType
     restTime: Int
     sets: [SetType]
-  }
-
-  type Routine {
-    _id: ID
-    templates: [Template]
   }
 
   type ChartData {
@@ -110,19 +97,8 @@ const typeDefs = gql`
     reps: Int
   }
 
-  type isDeleted {
-    acknowledged: Boolean
-    deleteCount: Int
-    templateName: String
-  }
-
   type Confirm {
     confirm: Boolean
-  }
-
-  type Chart {
-    labels: [String]
-    totalWeights: [Int]
   }
 
   type ExerciseProgress {
@@ -134,21 +110,6 @@ const typeDefs = gql`
     createdAt: String
     _id: ID
     template: Template
-  }
-
-  type RecentCarousel {
-    templateName: String
-    dateCompleted: String
-    date: String
-    totalVolume: Int
-    diff: Int
-    prs: [PersonalRecords]
-  }
-
-  type PersonalRecords {
-    sets: Int
-    weight: Int
-    reps: Int
   }
 
   type Exercises {
@@ -163,25 +124,6 @@ const typeDefs = gql`
     template: Template
     _id: ID
     exercises: [Exercise]
-  }
-
-  type ExerciseChartData {
-    exerciseData: String
-  }
-
-  input editExerciseInput {
-    exercise: exerciseInput
-    sets: [Set]
-    restTime: Int
-    completed: Boolean
-    _id: ID
-  }
-
-  type workout {
-    template: Template
-    exercises: [Exercise]
-    timeToComplete: Int
-    _id: ID
   }
 
   type TotalData {
@@ -207,7 +149,6 @@ const typeDefs = gql`
       exercise: String
       shouldSortByTemplate: Boolean
     ): [TemplateChartData]
-    getChartDataForExercises(userId: ID!): [ExerciseChartData]
     calendarTimeStamps(userId: ID!, templateName: String): [CalendarDates]
     getProgressByDate(userID: ID!, workoutID: ID): [CompletedWorkout]
     getPreviousWorkout(userID: ID!, templateID: ID!): Template
@@ -233,7 +174,7 @@ const typeDefs = gql`
       templateNotes: String
       exercises: [createTemplateExerciseInput!]
     ): Template
-    deleteTemplate(templateId: ID!): isDeleted
+    deleteTemplate(templateId: ID!): Confirm
     saveWorkout(
       templateId: ID!
       userID: ID!

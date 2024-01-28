@@ -1,9 +1,6 @@
 import { Text, Group, Paper } from "@mantine/core";
 import CompareText from "./CompareText";
-import {
-  getTotalVolumeForExercise,
-  getTotalReps,
-} from "../../utils/helpers/functions";
+import { getTotalVolumeForExercise } from "../../utils/helpers/functions";
 import { ExerciseLink } from "../progresspage/index";
 import { SetShape, TemplateShape } from "../../types/template";
 

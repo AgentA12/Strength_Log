@@ -1,6 +1,5 @@
 import { AiFillThunderbolt } from "react-icons/ai";
 import { useDisclosure } from "@mantine/hooks";
-import { useState } from "react";
 import { Container, Group, Burger } from "@mantine/core";
 
 const links = [
@@ -11,17 +10,9 @@ const links = [
 
 export default function LandingHeader() {
   const [opened, { toggle }] = useDisclosure(false);
-  const [active, setActive] = useState<undefined | string>();
 
   const items = links.map((link: { link: string; label: string }) => (
-    <a
-      key={link.label}
-      href={link.link}
-      onClick={(event) => {
-        event.preventDefault();
-        setActive(link.link);
-      }}
-    >
+    <a key={link.label} href={link.link}>
       {link.label}
     </a>
   ));

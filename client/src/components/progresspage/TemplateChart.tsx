@@ -1,11 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { GET_CHART_PROGRESS } from "../../utils/graphql/queries";
-import {
-  Box,
-  LoadingOverlay,
-  Text,
-  useMantineColorScheme,
-} from "@mantine/core";
+import { Box, LoadingOverlay, Text } from "@mantine/core";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -22,7 +17,7 @@ import { getRangeOfDates } from "../../utils/helpers/functions";
 import "chartjs-adapter-dayjs-4/dist/chartjs-adapter-dayjs-4.esm";
 import { Line } from "react-chartjs-2";
 import { findFirstAndLastRange } from "../../utils/helpers/functions";
-import { ChartData, Data } from "../../types/chartdata";
+import { ChartData } from "../../types/chartdata";
 
 ChartJS.register(
   CategoryScale,

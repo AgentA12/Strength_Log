@@ -1,5 +1,3 @@
-import "@mantine/core/styles.css";
-
 import { useForm } from "@mantine/form";
 import { useState } from "react";
 import {

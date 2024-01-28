@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 const secret = "thisisthesecretkeyforstrengthLog!";
-const expiration = "48h";
+const expiration = "72h";
 
 function authMiddleWare({ req }) {
   let token = req.body.token || req.query.token || req.headers.authorization;

@@ -7,7 +7,7 @@ import { TemplateShape } from "../../types/template";
 
 interface Props {
   template: TemplateShape;
-  handleTemplateDelete: (templateID: string) => void;
+  handleTemplateDelete: (templateID: string, templateName: string) => void;
 }
 
 export default function TemplateCard({
@@ -57,7 +57,7 @@ export default function TemplateCard({
             ?
           </Text>
           <Button
-            onClick={() => handleTemplateDelete(template._id)}
+            onClick={() => handleTemplateDelete(template._id, template.templateName)}
             color="red.5"
           >
             Yes delete it

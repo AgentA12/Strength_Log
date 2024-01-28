@@ -13,26 +13,32 @@ interface Props {
 export default function TemplateList({ templates, refetch, loading }: Props) {
   const [deleteTemplate] = useMutation(DELETE_TEMPLATE);
 
-  async function handleTemplateDelete(templateId: string) {
+  async function handleTemplateDelete(
+    templateId: string,
+    templateName: string
+  ) {
     try {
       const res = await deleteTemplate({
         variables: {
           templateId: templateId,
         },
       });
+
+      if (res.data.deleteTemplate.comfirm === true) {
+        showNotification({
+          title: `Template was deleted.`,
+          message: (
+            <>
+              <Text span size="md">
+                {templateName}
+              </Text>{" "}
+              was successfully deleted.
+            </>
+          ),
+          autoClose: 3000,
+        });
+      }
       refetch();
-      showNotification({
-        title: `Template was deleted.`,
-        message: (
-          <>
-            <Text span size="md">
-              {res.data.deleteTemplate.templateName}
-            </Text>{" "}
-            was successfully deleted.
-          </>
-        ),
-        autoClose: 3000,
-      });
     } catch (error: any) {
       showNotification({
         title: "Error, unable to delete template.",

@@ -69,9 +69,7 @@ export const EDIT_TEMPLATE = gql`
 export const DELETE_TEMPLATE = gql`
   mutation ($templateId: ID!) {
     deleteTemplate(templateId: $templateId) {
-      acknowledged
-      deleteCount
-      templateName
+      confirm
     }
   }
 `;
