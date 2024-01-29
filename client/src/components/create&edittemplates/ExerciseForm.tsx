@@ -8,7 +8,6 @@ import {
   List,
   useMantineTheme,
 } from "@mantine/core";
-import { getPrimaryColor } from "../../utils/helpers/functions";
 
 interface Props {
   exerciseIndex: number;

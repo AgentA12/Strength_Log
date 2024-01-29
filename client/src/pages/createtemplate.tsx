@@ -8,7 +8,6 @@ import {
   Text,
   Textarea,
   Container,
-  Title,
   Flex,
   Button,
   Box,
@@ -18,6 +17,8 @@ import {
   Stepper,
   Group,
   Stack,
+  useMantineTheme,
+  Paper,
 } from "@mantine/core";
 import { motion } from "framer-motion";
 import {
@@ -30,11 +31,14 @@ import { showNotification } from "@mantine/notifications";
 import { useLocation } from "react-router-dom";
 import { UserContext, UserInfo } from "../contexts/userInfo";
 import { useDisclosure } from "@mantine/hooks";
+import { SetShape } from "../types/template";
 
 interface Exercise {
   exerciseName: String;
   _id: String;
   equipment: String;
+  sets: SetShape[];
+  restTime: number;
 }
 
 interface Exerciseform {
@@ -54,7 +58,6 @@ export default function CreateTemplatePage() {
   const { data, loading } = useQuery(GET_EXERCISES);
   const { state } = useLocation();
   const [opened, { open, close }] = useDisclosure(false);
-
   const form = useForm({
     initialValues: state
       ? { ...state.template }
@@ -187,8 +190,7 @@ export default function CreateTemplatePage() {
         }
         break;
       case 1:
-        console.log(form.validate());
-        if (form.values.exercises.length === 0) {
+        if (form.values.exercises.length === 0 || form.validate().hasErrors) {
           return;
         }
     }
@@ -197,125 +199,166 @@ export default function CreateTemplatePage() {
   }
 
   return (
-    <Container fluid>
-      <Center>
-        <Box>
-          <Text size="xxl" fw="bolder" ta="center">
-            Create a template
-          </Text>
-          <>
-            <Group justify="center" my="md">
+    <Center>
+      <Box>
+        <Text size="xxl" fw="bolder" ta="center">
+          Create a template
+        </Text>
+        <>
+          <Group justify="center" my="md">
+            <Button
+              disabled={active === 0}
+              variant="default"
+              onClick={prevStep}
+            >
+              Back
+            </Button>
+
+            {active === 2 ? (
               <Button
-                disabled={active === 0}
-                variant="default"
-                onClick={prevStep}
+                color="green.5"
+                loading={submitLoading || editTemplateLoading}
+                onClick={handleSubmit}
+                disabled={form.values.exercises.length < 1}
               >
-                Back
+                Save Template
               </Button>
+            ) : (
+              <Button onClick={handleStepClick}>Next {"=>"}</Button>
+            )}
+          </Group>
 
-              {active === 2 ? (
-                <Button
-                  color="green.5"
-                  loading={submitLoading || editTemplateLoading}
-                  onClick={handleSubmit}
-                  disabled={form.values.exercises.length < 1}
-                >
-                  Save Template
-                </Button>
-              ) : (
-                <Button onClick={handleStepClick}>Next {"=>"}</Button>
-              )}
-            </Group>
-
-            <Stepper active={active}>
-              <Stepper.Step label={<Text fw={600}>Template Info</Text>}>
-                <motion.div
-                  initial={{ opacity: 0, y: 50 }}
-                  exit={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                >
-                  <FormOne form={form} />
-                </motion.div>
-              </Stepper.Step>
-              <Stepper.Step label={<Text fw={600}>Exercises</Text>}>
-                <motion.div
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                >
-                  <FormTwo
-                    form={form}
-                    open={open}
-                    removeSet={removeSet}
-                    addSet={addSet}
-                    removeExercise={removeExercise}
-                  />
-                </motion.div>
-              </Stepper.Step>
-              <Stepper.Step label={<Text fw={600}>Confirm</Text>}>
-                <Center>
-                  <Text fw={600} size="xl">
-                    Look good?
-                  </Text>
-                </Center>
-              </Stepper.Step>
-            </Stepper>
-          </>
-        </Box>
-      </Center>
+          <Stepper active={active}>
+            <Stepper.Step label={<Text fw={600}>Template Info</Text>}>
+              <FormOne form={form} />
+            </Stepper.Step>
+            <Stepper.Step label={<Text fw={600}>Exercises</Text>}>
+              <FormTwo
+                form={form}
+                open={open}
+                removeSet={removeSet}
+                addSet={addSet}
+                removeExercise={removeExercise}
+              />
+            </Stepper.Step>
+            <Stepper.Step label={<Text fw={600}>Confirm</Text>}>
+              <Text fw={600} ta="center" mb={20} size="xl">
+                Look good?
+              </Text>
+              <FormThree form={form} />
+            </Stepper.Step>
+          </Stepper>
+        </>
+      </Box>
       <SelectExerciseModal
         opened={opened}
         close={close}
         addExercise={addExercise}
         exercises={exercises}
       />
-    </Container>
+    </Center>
   );
 }
 
 function FormOne({ form }: any) {
   return (
-    <Fieldset>
-      <Stack justify="center">
-        <Box>
-          <TextInput
-            withAsterisk
-            label="Template Name"
-            name="templateName"
-            {...form.getInputProps("templateName")}
-          />
-        </Box>
-        <Box>
-          <Textarea
-            label="Template Notes"
-            minRows={5}
-            name="templateNotes"
-            {...form.getInputProps("templateNotes")}
-          />
-        </Box>
-      </Stack>
-    </Fieldset>
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      exit={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+    >
+      <Fieldset>
+        <Stack justify="center">
+          <Box>
+            <TextInput
+              withAsterisk
+              label="Template Name"
+              name="templateName"
+              {...form.getInputProps("templateName")}
+            />
+          </Box>
+          <Box>
+            <Textarea
+              label="Template Notes"
+              minRows={5}
+              name="templateNotes"
+              {...form.getInputProps("templateNotes")}
+            />
+          </Box>
+        </Stack>
+      </Fieldset>
+    </motion.div>
   );
 }
 function FormTwo({ form, open, removeSet, addSet, removeExercise }: any) {
   return (
-    <Flex direction="column">
-      <Flex align="center" direction="column" justify="space-around" wrap="wrap" gap={2}>
-      
-        <Button onClick={open}>Add Exercise</Button>
+    <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }}>
+      <Flex direction="column">
+        <Flex
+          align="center"
+          direction="column"
+          justify="space-around"
+          wrap="wrap"
+          gap={2}
+        >
+          <Button onClick={open}>Add Exercise</Button>
+        </Flex>
+        {form.values.exercises.map(
+          (exercise: Exercise, exerciseIndex: number) => (
+            <Box maw={475} key={exercise._id as string}>
+              <ExerciseForm
+                exerciseIndex={exerciseIndex}
+                form={form}
+                removeExercise={removeExercise}
+                addSet={addSet}
+                removeSet={removeSet}
+              />
+            </Box>
+          )
+        )}
       </Flex>
-      {form.values.exercises.map(
-        (exercise: Exercise, exerciseIndex: number) => (
-          <Box maw={475} key={exercise._id as string}>
-            <ExerciseForm
-              exerciseIndex={exerciseIndex}
-              form={form}
-              removeExercise={removeExercise}
-              addSet={addSet}
-              removeSet={removeSet}
-            />
-          </Box>
-        )
-      )}
-    </Flex>
+    </motion.div>
+  );
+}
+
+function FormThree({ form }: any) {
+  const { primaryColor } = useMantineTheme();
+
+  return (
+    <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }}>
+      <Stack align="center" gap={5}>
+        <Text size="xxl" fw={700} tt="capitalize">
+          {form.values.templateName}
+        </Text>
+        <Text size="md">
+          {form.values.templateNotes.trim()
+            ? form.values.templateNotes
+            : "No notes"}
+        </Text>
+
+        {form.values.exercises.map((exercise: Exercise) => (
+          <Stack
+            gap={0}
+            justify="center"
+            align="center"
+            key={exercise._id as string}
+          >
+            <Text size="xl" tt="capitalize" fw={500} c={`${primaryColor}.5`}>
+              {exercise.exerciseName}
+            </Text>
+            <Text>{exercise.sets.length} Set</Text>
+            <Text c="dimmed" fw={300}>
+              Rest: {exercise.restTime}
+            </Text>
+
+            {exercise.sets.map((set: SetShape) => (
+              <Text c="dimmed">
+                {set.reps} x {set.weight} Lbs
+              </Text>
+            ))}
+          </Stack>
+        ))}
+      </Stack>
+    </motion.div>
   );
 }
