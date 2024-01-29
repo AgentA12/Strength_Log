@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client";
 import { GET_EXERCISES } from "../../utils/graphql/queries";
 import { SetStateAction } from "react";
 import { ExerciseDetailsShape } from "../../types/template";
+import { ExerciseInfoForm } from "../create&edittemplates";
 
 interface Props {
   setActiveExercise: React.Dispatch<SetStateAction<string>>;
@@ -39,7 +40,6 @@ export default function ExerciseSelect({
   const exerciseNames = exerciseData.getAllExercises.map(
     ({ exerciseName }: ExerciseDetailsShape) => exerciseName
   );
-
   return (
     <Select
       allowDeselect={false}

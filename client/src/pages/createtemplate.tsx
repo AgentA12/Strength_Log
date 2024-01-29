@@ -1,29 +1,22 @@
-import { useState } from "react";
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_TEMPLATE, EDIT_TEMPLATE } from "../utils/graphql/mutations";
 import { useNavigate } from "react-router-dom";
 import {
-  TextInput,
   Text,
-  Textarea,
-  Container,
-  Flex,
   Button,
   Box,
   Loader,
   Center,
-  Fieldset,
   Stepper,
   Group,
   Stack,
-  useMantineTheme,
-  Paper,
 } from "@mantine/core";
-import { motion } from "framer-motion";
 import {
-  ExerciseForm,
+  ConfirmForm,
+  ExerciseInfoForm,
   SelectExerciseModal,
+  TemplateInfoForm,
 } from "../components/create&edittemplates";
 import { GET_EXERCISES } from "../utils/graphql/queries";
 import { useForm } from "@mantine/form";
@@ -31,7 +24,12 @@ import { showNotification } from "@mantine/notifications";
 import { useLocation } from "react-router-dom";
 import { UserContext, UserInfo } from "../contexts/userInfo";
 import { useDisclosure } from "@mantine/hooks";
-import { SetShape } from "../types/template";
+import {
+  ExerciseDetailsShape,
+  ExerciseShape,
+  SetShape,
+} from "../types/template";
+import { IconArrowsLeft, IconArrowsRight } from "@tabler/icons-react";
 
 interface Exercise {
   exerciseName: String;
@@ -58,6 +56,7 @@ export default function CreateTemplatePage() {
   const { data, loading } = useQuery(GET_EXERCISES);
   const { state } = useLocation();
   const [opened, { open, close }] = useDisclosure(false);
+
   const form = useForm({
     initialValues: state
       ? { ...state.template }
@@ -126,6 +125,15 @@ export default function CreateTemplatePage() {
       (exercise: Exerciseform) => exercise.value === value
     );
 
+    const exerciseExistsInForm = form.values.exercises?.find(
+      (exercise: ExerciseDetailsShape) => exercise.exerciseName === value
+    );
+
+    if (exerciseExistsInForm) {
+      close();
+      return;
+    }
+
     const exercise = {
       exerciseName: value,
       _id: e._id,
@@ -168,7 +176,7 @@ export default function CreateTemplatePage() {
     form.setValues({ ...data });
   }
 
-  function removeExercise(_: any, index: number) {
+  function removeExercise(index: number) {
     let data = { ...form.values };
 
     const filteredExercises = form.values.exercises.filter(
@@ -210,30 +218,27 @@ export default function CreateTemplatePage() {
               disabled={active === 0}
               variant="default"
               onClick={prevStep}
+              leftSection={<IconArrowsLeft size={15} />}
             >
-              Back
+              Go Back
             </Button>
 
-            {active === 2 ? (
+            {active !== 2 ? (
               <Button
-                color="green.5"
-                loading={submitLoading || editTemplateLoading}
-                onClick={handleSubmit}
-                disabled={form.values.exercises.length < 1}
+                rightSection={<IconArrowsRight size={15} />}
+                onClick={handleStepClick}
               >
-                Save Template
+                Next{" "}
               </Button>
-            ) : (
-              <Button onClick={handleStepClick}>Next {"=>"}</Button>
-            )}
+            ) : null}
           </Group>
 
           <Stepper active={active}>
             <Stepper.Step label={<Text fw={600}>Template Info</Text>}>
-              <FormOne form={form} />
+              <TemplateInfoForm form={form} />
             </Stepper.Step>
             <Stepper.Step label={<Text fw={600}>Exercises</Text>}>
-              <FormTwo
+              <ExerciseInfoForm
                 form={form}
                 open={open}
                 removeSet={removeSet}
@@ -242,10 +247,21 @@ export default function CreateTemplatePage() {
               />
             </Stepper.Step>
             <Stepper.Step label={<Text fw={600}>Confirm</Text>}>
-              <Text fw={600} ta="center" mb={20} size="xl">
-                Look good?
-              </Text>
-              <FormThree form={form} />
+              <Stack align="center" gap={5} mb={10}>
+                <Text fw={600} size="xl">
+                  Look good?
+                </Text>
+                <Button
+                  w={"fit-content"}
+                  color="green.5"
+                  loading={submitLoading || editTemplateLoading}
+                  onClick={handleSubmit}
+                  disabled={form.values.exercises.length < 1}
+                >
+                  Save Template
+                </Button>
+              </Stack>
+              <ConfirmForm form={form} />
             </Stepper.Step>
           </Stepper>
         </>
@@ -257,108 +273,5 @@ export default function CreateTemplatePage() {
         exercises={exercises}
       />
     </Center>
-  );
-}
-
-function FormOne({ form }: any) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      exit={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-    >
-      <Fieldset>
-        <Stack justify="center">
-          <Box>
-            <TextInput
-              withAsterisk
-              label="Template Name"
-              name="templateName"
-              {...form.getInputProps("templateName")}
-            />
-          </Box>
-          <Box>
-            <Textarea
-              label="Template Notes"
-              minRows={5}
-              name="templateNotes"
-              {...form.getInputProps("templateNotes")}
-            />
-          </Box>
-        </Stack>
-      </Fieldset>
-    </motion.div>
-  );
-}
-function FormTwo({ form, open, removeSet, addSet, removeExercise }: any) {
-  return (
-    <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }}>
-      <Flex direction="column">
-        <Flex
-          align="center"
-          direction="column"
-          justify="space-around"
-          wrap="wrap"
-          gap={2}
-        >
-          <Button onClick={open}>Add Exercise</Button>
-        </Flex>
-        {form.values.exercises.map(
-          (exercise: Exercise, exerciseIndex: number) => (
-            <Box maw={475} key={exercise._id as string}>
-              <ExerciseForm
-                exerciseIndex={exerciseIndex}
-                form={form}
-                removeExercise={removeExercise}
-                addSet={addSet}
-                removeSet={removeSet}
-              />
-            </Box>
-          )
-        )}
-      </Flex>
-    </motion.div>
-  );
-}
-
-function FormThree({ form }: any) {
-  const { primaryColor } = useMantineTheme();
-
-  return (
-    <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }}>
-      <Stack align="center" gap={5}>
-        <Text size="xxl" fw={700} tt="capitalize">
-          {form.values.templateName}
-        </Text>
-        <Text size="md">
-          {form.values.templateNotes.trim()
-            ? form.values.templateNotes
-            : "No notes"}
-        </Text>
-
-        {form.values.exercises.map((exercise: Exercise) => (
-          <Stack
-            gap={0}
-            justify="center"
-            align="center"
-            key={exercise._id as string}
-          >
-            <Text size="xl" tt="capitalize" fw={500} c={`${primaryColor}.5`}>
-              {exercise.exerciseName}
-            </Text>
-            <Text>{exercise.sets.length} Set</Text>
-            <Text c="dimmed" fw={300}>
-              Rest: {exercise.restTime}
-            </Text>
-
-            {exercise.sets.map((set: SetShape) => (
-              <Text c="dimmed">
-                {set.reps} x {set.weight} Lbs
-              </Text>
-            ))}
-          </Stack>
-        ))}
-      </Stack>
-    </motion.div>
   );
 }

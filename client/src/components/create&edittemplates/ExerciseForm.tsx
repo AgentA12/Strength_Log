@@ -12,7 +12,7 @@ import {
 interface Props {
   exerciseIndex: number;
   form: any;
-  removeExercise: (event: React.SyntheticEvent, exerciseIndex: number) => void;
+  removeExercise: (index: number) => void;
   addSet: (exerciseIndex: number) => void;
   removeSet: (exerciseIndex: number, setIndex: number) => void;
 }
@@ -89,10 +89,7 @@ export default function ExerciseForm({
 
       <Group mt={5} justify="left">
         <Button onClick={() => addSet(exerciseIndex)}>Add Set</Button>
-        <Button
-          color="red"
-          onClick={(event) => removeExercise(event, exerciseIndex)}
-        >
+        <Button color="red" onClick={() => removeExercise(exerciseIndex)}>
           Remove Exercise
         </Button>
       </Group>

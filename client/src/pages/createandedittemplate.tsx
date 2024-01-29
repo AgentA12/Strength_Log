@@ -153,7 +153,7 @@ export default function createAndEditTemplate() {
     form.setValues({ ...data });
   }
 
-  function removeExercise(_: any, index: number) {
+  function removeExercise(index: number) {
     let data = { ...form.values };
 
     const filteredExercises = form.values.exercises.filter(
