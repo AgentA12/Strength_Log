@@ -1,15 +1,17 @@
-import { List, Modal, Select, Text, ThemeIcon } from "@mantine/core";
+import {
+  Highlight,
+  List,
+  Modal,
+  Text,
+  TextInput,
+  ThemeIcon,
+} from "@mantine/core";
 import { TbBarbell } from "react-icons/tb";
 import { MdCable, MdOutlineAirlineSeatFlatAngled } from "react-icons/md";
 import { LiaDumbbellSolid } from "react-icons/lia";
 import { GiBodyBalance } from "react-icons/gi";
 import classes from "./css/templatedashboard.module.css";
-
-interface Exercise {
-  exerciseName: String;
-  _id: String;
-  equipment: String;
-}
+import { useState } from "react";
 
 interface Props {
   opened: boolean;
@@ -35,31 +37,54 @@ function getExerciseIcon(str: string) {
   }
 }
 
+interface Exercise {
+  _id: string;
+  equipment: string;
+  value: string;
+  label: string;
+}
+
 export default function SelectExerciseModal({
   opened,
   close,
   addExercise,
   exercises,
 }: Props) {
+  const [exercisesState, setExercises] = useState<Exercise[] | [Exercise]>(
+    exercises ? exercises : []
+  );
+  const [searchState, setSearchState] = useState<string>("");
+
+  function sortList(target: EventTarget) {
+    if (target instanceof HTMLInputElement) {
+      const result = exercises.filter((exercise: Exercise) =>
+        exercise.value.includes(target.value.toString().toLowerCase().trim())
+      );
+      setSearchState(target.value);
+      setExercises(result);
+    }
+  }
   return (
     <Modal
       title={<Text>Select an Exercise</Text>}
       opened={opened}
-      onClose={close}
+      onClose={() => {
+        setExercises(exercises);
+        close();
+        setSearchState("");
+      }}
       size="md"
+      onChange={({ target }) => sortList(target)}
     >
-      <Select
+      <TextInput
+        data-autofocus
+        value={searchState}
         mt={10}
-        data={exercises.map((exercise: any) => exercise.value)}
-        searchable
-        onChange={(value) => {
-          addExercise(value as string);
-        }}
         placeholder="Search..."
       />
 
       <List withPadding mt={10}>
-        {exercises.map((e: any) => (
+        {exercisesState.map((e: any) => (
           <List.Item
             onClick={() => addExercise(e.value)}
             p={5}
@@ -71,9 +96,9 @@ export default function SelectExerciseModal({
             className={classes.listStyles}
             key={e._id}
           >
-            <Text fz={15} fw="bold">
+            <Highlight highlight={searchState} fz={15} fw="bold">
               {e.label}
-            </Text>
+            </Highlight>
           </List.Item>
         ))}
       </List>

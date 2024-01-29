@@ -24,11 +24,7 @@ import { showNotification } from "@mantine/notifications";
 import { useLocation } from "react-router-dom";
 import { UserContext, UserInfo } from "../contexts/userInfo";
 import { useDisclosure } from "@mantine/hooks";
-import {
-  ExerciseDetailsShape,
-  ExerciseShape,
-  SetShape,
-} from "../types/template";
+import { ExerciseDetailsShape, SetShape } from "../types/template";
 import { IconArrowsLeft, IconArrowsRight } from "@tabler/icons-react";
 
 interface Exercise {
@@ -225,6 +221,7 @@ export default function CreateTemplatePage() {
 
             {active !== 2 ? (
               <Button
+                disabled={form.values.exercises.length == 0 && active === 1}
                 rightSection={<IconArrowsRight size={15} />}
                 onClick={handleStepClick}
               >
