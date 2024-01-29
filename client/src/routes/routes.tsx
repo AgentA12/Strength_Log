@@ -13,12 +13,24 @@ import auth from "../utils/auth/auth";
 import TemplateDashBoard from "../pages/createandedittemplate";
 import UtilitiesPage from "../pages/utilities";
 import AppLayout from "../components/universal/AppLayout";
+import CreateTemplatePage from "../pages/createtemplate";
 
 export default function RouteContainer() {
   const isLoggedIn = auth.isLoggedIn();
 
   return (
     <Routes>
+      <Route
+        path="/create"
+        element={
+          <Protected isLoggedIn={isLoggedIn}>
+            <AppLayout hasNav={true}>
+              <CreateTemplatePage />
+            </AppLayout>
+          </Protected>
+        }
+      />
+
       <Route path="/" index element={<AuthPage isLoggedIn={isLoggedIn} />} />
 
       <Route path="/login" element={<AuthPage isLoggedIn={isLoggedIn} />} />

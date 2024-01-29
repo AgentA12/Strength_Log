@@ -6,7 +6,9 @@ import {
   Text,
   Group,
   List,
+  useMantineTheme,
 } from "@mantine/core";
+import { getPrimaryColor } from "../../utils/helpers/functions";
 
 interface Props {
   exerciseIndex: number;
@@ -24,17 +26,17 @@ export default function ExerciseForm({
   removeSet,
 }: Props) {
   const exercises = [...form.values.exercises];
+  const { primaryColor } = useMantineTheme();
 
   return (
     <Card withBorder my={10}>
       <Group justify="space-between">
-        <Title tt="capitalize" order={2}>
+        <Title c={`${primaryColor}.6`} tt="capitalize" order={2}>
           {form.values.exercises[exerciseIndex].exerciseName}
         </Title>
         <NumberInput
           size="xs"
           label="Rest time"
-          description="In Seconds"
           min={1}
           max={300}
           w={120}

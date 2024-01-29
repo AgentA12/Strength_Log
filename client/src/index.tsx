@@ -14,7 +14,7 @@ import {
   DefaultOptions,
   NormalizedCacheObject,
 } from "@apollo/client";
-import { MantineProvider, createTheme, ScrollArea } from "@mantine/core";
+import { MantineProvider, createTheme, ScrollArea, rem } from "@mantine/core";
 
 const isInProduction = import.meta.env.MODE === "production";
 
@@ -71,6 +71,10 @@ export const theme: Theme = createTheme({
   },
   fontFamily: "Inter",
   primaryColor: localStoragePreferredColor,
+  fontSizes: {
+    xxl: rem(30),
+    xxxl: rem(40)
+  }
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
