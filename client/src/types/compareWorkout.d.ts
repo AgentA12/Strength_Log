@@ -1,5 +1,4 @@
 import { TemplateShape } from "./template";
-import { Workout } from "./workout";
 
 export interface CompareWorkout {
     originalTemplate: TemplateShape;

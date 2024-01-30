@@ -43,7 +43,7 @@ interface Exerciseform {
   equipment: string;
 }
 
-export default function CreateTemplatePage() {
+export default function CreateAndEditTemplatePage() {
   const [active, setActive] = useState(0);
 
   const userInfo = useContext<UserInfo>(UserContext);
@@ -202,11 +202,16 @@ export default function CreateTemplatePage() {
 
     nextStep();
   }
-
   return (
     <Box>
-      <DividerTitle name="Create a Template" />
-      <Stack  align="center">
+      <DividerTitle
+        name={
+          state.template
+            ? `Editing ${state.template.templateName}`
+            : "Create a Template"
+        }
+      />
+      <Stack align="center">
         <Group justify="center" my="md">
           <Button
             disabled={active === 0}

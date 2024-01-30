@@ -38,7 +38,7 @@ export default function TemplateMenu(props: Props) {
 
       <Menu.Item
         component={Link}
-        to="/Create-template"
+        to="/edittemplate"
         state={{ template: editState }}
         leftSection={<FaEdit size={14} />}
       >

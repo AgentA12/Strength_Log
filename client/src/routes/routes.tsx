@@ -57,11 +57,11 @@ export default function RouteContainer() {
       />
 
       <Route
-        path="/create-template"
+        path="/edittemplate"
         element={
           <Protected isLoggedIn={isLoggedIn}>
             <AppLayout hasNav={true}>
-              <TemplateDashBoard />
+              <CreateTemplatePage />
             </AppLayout>
           </Protected>
         }

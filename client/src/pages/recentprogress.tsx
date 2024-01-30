@@ -8,7 +8,6 @@ import {
   Container,
   Loader,
 } from "@mantine/core";
-import DividerTitle from "../components/universal/DividerTitle";
 import { useQuery } from "@apollo/client";
 import { GET_PROGRESS_BY_DATE, GET_TEMPLATES } from "../utils/graphql/queries";
 import { WorkoutSection } from "../components/progresspage/index";
