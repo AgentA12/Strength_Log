@@ -1,6 +1,5 @@
 import {
   Container,
-  Text,
   Table,
   NumberInput,
   Flex,
@@ -55,11 +54,6 @@ export default function WorkoutState(props: Props) {
     <Container mb={10} key={exercise.exercise._id}>
       <Flex mt={10} justify="space-between" align="center">
         <ExerciseLink size="xl" exerciseName={exercise.exercise.exerciseName} />
-        {exercise.restTime ? (
-          <Text fz={13} fw="normal" c="dimmed">
-            Rest: {exercise?.restTime} seconds
-          </Text>
-        ) : null}
       </Flex>
 
       <Table>

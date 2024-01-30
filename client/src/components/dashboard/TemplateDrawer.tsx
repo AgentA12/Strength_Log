@@ -31,21 +31,20 @@ export default function TemplateDrawer(props: Props) {
     useState<WorkoutData>("original template");
 
   const [saveWorkoutFunction, { loading, error }] = useMutation(SAVE_WORKOUT);
-  const {
-    data,
-    loading: loadin,
-    error: err,
-  } = useQuery(GET_TEMPLATE_PROGRESS, {
-    variables: {
-      userID: userID,
-      templateID: templateID,
-    },
-  });
+  const { data, loading: tempProgressLoading } = useQuery(
+    GET_TEMPLATE_PROGRESS,
+    {
+      variables: {
+        userID: userID,
+        templateID: templateID,
+      },
+    }
+  );
 
   const [templateState, setTemplateState] = useState(template);
 
   useEffect(() => {
-    if (data?.getPreviousWorkout) {
+    if (data?.getPreviousWorkout._id) {
       workoutDataType === "previously saved"
         ? setTemplateState(data.getPreviousWorkout)
         : setTemplateState(template);
@@ -82,7 +81,6 @@ export default function TemplateDrawer(props: Props) {
         });
       });
   }
-
   return (
     <Drawer
       size="lg"
@@ -101,20 +99,22 @@ export default function TemplateDrawer(props: Props) {
       }
     >
       <Select
+        size="md"
         mb={12}
-        description="Use"
+        description="Using"
         w={"fit-content"}
         defaultValue="original template"
         data={["original template", "previously saved"]}
         onChange={(val) => setWorkoutDataType(val as WorkoutData)}
         allowDeselect={false}
+        disabled={data?.getPreviousWorkout._id ? false : true}
       />
-      <Text c="dimmed" mb={10}>
+
+      <Text c="dimmed" size="sm" mb={10}>
         {template.templateNotes.trim()
           ? `- ${template.templateNotes}`
           : `- No notes.`}
       </Text>
-      <Text>{templateState.exercises[0].sets[0].weight}</Text>
       <Flex justify="space-around" align="center">
         <Button onClick={handleSaveWorkout} loading={loading}>
           Quick Save

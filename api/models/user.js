@@ -11,6 +11,7 @@ const completedExerciseSchema = mongoose.Schema(
     exercise: { type: mongoose.Schema.ObjectId, ref: "Exercise" },
     sets: [setSchema],
     belongsTo: { type: mongoose.Schema.ObjectId, ref: "Template" },
+    restTime: Number,
     savedOn: Date,
   },
   { timestamps: true }

@@ -78,7 +78,7 @@ const Mutation = {
 
       const temp = await Template.create(tempPayload);
 
-      const { templates } = await User.findByIdAndUpdate(args.userId, {
+      await User.findByIdAndUpdate(args.userId, {
         $push: { templates: [temp._id] },
       });
 
@@ -116,15 +116,11 @@ const Mutation = {
 
   deleteTemplate: async function (_, { templateId }) {
     try {
-      const template = await Template.findById(templateId);
-
-      const res = await Template.deleteOne({ _id: templateId });
-
       await User.updateOne({
         $pull: { templates: templateId },
       });
 
-      return {confirm: true}
+      return { confirm: true };
     } catch (error) {
       return error.message;
     }

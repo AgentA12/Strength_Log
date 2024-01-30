@@ -26,7 +26,7 @@ import { UserContext, UserInfo } from "../contexts/userInfo";
 import { useDisclosure } from "@mantine/hooks";
 import { ExerciseDetailsShape, SetShape } from "../types/template";
 import { IconArrowsLeft, IconArrowsRight } from "@tabler/icons-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { DividerTitle } from "../components/universal";
 
 interface Exercise {
   exerciseName: String;
@@ -204,66 +204,62 @@ export default function CreateTemplatePage() {
   }
 
   return (
-    <Center>
-      <Box>
-        <Text size="xxl" fw="bolder" ta="center">
-          Create a template
-        </Text>
-        <>
-          <Group justify="center" my="md">
+    <Box>
+      <DividerTitle name="Create a Template" />
+      <Stack  align="center">
+        <Group justify="center" my="md">
+          <Button
+            disabled={active === 0}
+            variant="default"
+            onClick={prevStep}
+            leftSection={<IconArrowsLeft size={15} />}
+          >
+            Go Back
+          </Button>
+
+          {active !== 2 ? (
             <Button
-              disabled={active === 0}
-              variant="default"
-              onClick={prevStep}
-              leftSection={<IconArrowsLeft size={15} />}
+              disabled={form.values.exercises.length == 0 && active === 1}
+              rightSection={<IconArrowsRight size={15} />}
+              onClick={handleStepClick}
             >
-              Go Back
+              Next{" "}
             </Button>
+          ) : null}
+        </Group>
 
-            {active !== 2 ? (
+        <Stepper active={active}>
+          <Stepper.Step label={<Text fw={600}>Template Info</Text>}>
+            <TemplateInfoForm form={form} />
+          </Stepper.Step>
+          <Stepper.Step label={<Text fw={600}>Exercises</Text>}>
+            <ExerciseInfoForm
+              form={form}
+              open={open}
+              removeSet={removeSet}
+              addSet={addSet}
+              removeExercise={removeExercise}
+            />
+          </Stepper.Step>
+          <Stepper.Step label={<Text fw={600}>Confirm</Text>}>
+            <Stack align="center" gap={5} mb={10}>
+              <Text fw={600} size="xl">
+                Look good?
+              </Text>
               <Button
-                disabled={form.values.exercises.length == 0 && active === 1}
-                rightSection={<IconArrowsRight size={15} />}
-                onClick={handleStepClick}
+                w={"fit-content"}
+                color="green.5"
+                loading={submitLoading || editTemplateLoading}
+                onClick={handleSubmit}
+                disabled={form.values.exercises.length < 1}
               >
-                Next{" "}
+                Save Template
               </Button>
-            ) : null}
-          </Group>
-
-          <Stepper active={active}>
-            <Stepper.Step label={<Text fw={600}>Template Info</Text>}>
-              <TemplateInfoForm form={form} />
-            </Stepper.Step>
-            <Stepper.Step label={<Text fw={600}>Exercises</Text>}>
-              <ExerciseInfoForm
-                form={form}
-                open={open}
-                removeSet={removeSet}
-                addSet={addSet}
-                removeExercise={removeExercise}
-              />
-            </Stepper.Step>
-            <Stepper.Step label={<Text fw={600}>Confirm</Text>}>
-              <Stack align="center" gap={5} mb={10}>
-                <Text fw={600} size="xl">
-                  Look good?
-                </Text>
-                <Button
-                  w={"fit-content"}
-                  color="green.5"
-                  loading={submitLoading || editTemplateLoading}
-                  onClick={handleSubmit}
-                  disabled={form.values.exercises.length < 1}
-                >
-                  Save Template
-                </Button>
-              </Stack>
-              <ConfirmForm form={form} />
-            </Stepper.Step>
-          </Stepper>
-        </>
-      </Box>
+            </Stack>
+            <ConfirmForm form={form} />
+          </Stepper.Step>
+        </Stepper>
+      </Stack>
 
       <SelectExerciseModal
         opened={opened}
@@ -271,6 +267,6 @@ export default function CreateTemplatePage() {
         addExercise={addExercise}
         exercises={exercises}
       />
-    </Center>
+    </Box>
   );
 }

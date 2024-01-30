@@ -77,6 +77,7 @@ export default function SideNav({
       direction={direction}
     >
       <Flex
+        w="100%"
         onMouseLeave={() => setHoveredTab(null)}
         direction={direction}
         gap={12}
@@ -86,7 +87,7 @@ export default function SideNav({
         {...links}
       </Flex>
 
-      <Group style={{ alignSelf: "center" }}>
+      <Group wrap="nowrap" style={{ alignSelf: "center" }}>
         <ToggleTheme />
 
         <ActionIcon variant="outline" onClick={auth.logout}>

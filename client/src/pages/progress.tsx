@@ -11,7 +11,7 @@ import {
   TemplateProgressPage,
   ExerciseProgressPage,
   CompareWorkoutPage,
-  RecentProgress 
+  RecentProgress,
 } from "./index";
 
 import DividerTitle from "../components/universal/DividerTitle";
@@ -22,7 +22,7 @@ export default function ProgressPage() {
   const { state } = location;
 
   const [activeTab, setActiveTab] = useState(() =>
-    state ? state.activeTab : "workouts"
+    state ? state.activeTab : "completed"
   );
 
   useEffect(() => {
@@ -42,9 +42,9 @@ export default function ProgressPage() {
         value={activeTab}
         onChange={(val) => handleTabChange(val as string)}
       >
-        <Tabs.List>
-          <Tabs.Tab leftSection={<IconCheck size={16} />} value="workouts">
-            Workouts
+        <Tabs.List mb={20} grow>
+          <Tabs.Tab leftSection={<IconCheck size={16} />} value="completed">
+            Completed
           </Tabs.Tab>
           <Tabs.Tab leftSection={<IconTemplate size={16} />} value="templates">
             Templates
@@ -61,8 +61,8 @@ export default function ProgressPage() {
           </Tabs.Tab>
         </Tabs.List>
 
-        {activeTab === "workouts" && (
-          <Tabs.Panel value="workouts">
+        {activeTab === "completed" && (
+          <Tabs.Panel value="completed">
             <RecentProgress />
           </Tabs.Panel>
         )}

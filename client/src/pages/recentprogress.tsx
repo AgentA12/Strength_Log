@@ -114,34 +114,21 @@ export default function RecentProgress() {
 
   if (workouts)
     return (
-      <Container fluid mt={12}>
-        <DividerTitle name="Recents" />
-
+      <Container fluid>
         <Group>
           <Select
             mb={10}
-            label={<Text c="dimmed">Sort by</Text>}
             defaultValue="newest first"
             data={["newest first", "oldest first"]}
             onChange={filterWorkoutsByDate}
           />
           <Select
             mb={10}
-            label={<Text c="dimmed">By templates</Text>}
             defaultValue={"all templates"}
             data={[...templateSelectData]}
             onChange={filterWorkoutsByTemplates}
           />
         </Group>
-
-        {workouts.length ? (
-          workouts[activePage - 1].map((workout: Workout) => (
-            <WorkoutSection key={workout._id} workout={workout} />
-          ))
-        ) : (
-          <Text>No saved workouts for this template.</Text>
-        )}
-
         <Pagination
           mb={45}
           mt={20}
@@ -152,6 +139,13 @@ export default function RecentProgress() {
           }}
           withEdges
         />
+        {workouts.length ? (
+          workouts[activePage - 1].map((workout: Workout) => (
+            <WorkoutSection key={workout._id} workout={workout} />
+          ))
+        ) : (
+          <Text>No saved workouts for this template.</Text>
+        )}
       </Container>
     );
 }

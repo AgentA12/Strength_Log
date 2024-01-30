@@ -55,8 +55,7 @@ export default function TemplateProgressPage() {
 
   return (
     <Container fluid>
-      <DividerTitle name={activeTemplate} />
-      <Group my="xs">
+      <Group >
         <TemplateSelect
           activeTemplate={activeTemplate}
           setActiveTemplate={setActiveTemplate}

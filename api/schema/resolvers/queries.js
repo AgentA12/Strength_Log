@@ -68,16 +68,16 @@ const Query = {
         .filter((workout) => workout?.template?._id.toString() === templateID)
         .sort((a, b) => b.createdAt - a.createdAt);
 
-      let workout = workouts[0];
-
-      workout.template.exercises = workout.exercises;
+      let previousWorkout = workouts[0];
+      previousWorkout.template.exercises = previousWorkout.exercises;
 
       let template = {
-        templateName: workout.template.templateName,
-        templateNotes: workout.template.templateNotes,
-        _id: workout.template._id,
+        templateName: previousWorkout.template.templateName,
+        templateNotes: previousWorkout.template.templateNotes,
+        _id: previousWorkout.template._id,
         exercises: workouts[0].exercises,
       };
+
       return template;
     } catch (error) {
       return error.message;

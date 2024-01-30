@@ -17,6 +17,7 @@ export default function TemplateInfoForm({ form }: Props) {
         <Stack justify="center">
           <Box>
             <TextInput
+            autoFocus
               withAsterisk
               label="Template Name"
               name="templateName"

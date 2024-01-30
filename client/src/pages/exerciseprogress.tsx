@@ -4,7 +4,7 @@ import {
   DateRangeSelect,
   MetricSelect,
 } from "../components/progresspage/index";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext, UserInfo } from "../contexts/userInfo";
 import ExerciseChart from "../components/progresspage/ExerciseChart";
 import { GET_ONE_REP_MAX } from "../utils/graphql/queries";
@@ -34,6 +34,7 @@ export default function ExerciseProgressPage() {
     state ? state.exerciseName : null
   );
 
+
   const { data: oneRepMax } = useQuery(GET_ONE_REP_MAX, {
     variables: {
       exerciseName: activeExercise,
@@ -43,11 +44,6 @@ export default function ExerciseProgressPage() {
 
   return (
     <Container fluid>
-      <Box mt={5}>
-        <DividerTitle
-          name={activeExercise ? activeExercise : "Select an exercise"}
-        />
-      </Box>
       <Group my="xs">
         <ExerciseSelect
           userID={userID as string}
@@ -63,15 +59,13 @@ export default function ExerciseProgressPage() {
         </Group>
       </Group>
 
-      {oneRepMax?.getOneRepMax && activeExercise ? (
-        <Text>
-          Estimated One Rep Max:{" "}
-          <Text size="xl" fw={900} span>
-            {oneRepMax.getOneRepMax}
-          </Text>
-          <Text span> Lbs</Text>
+      <Text>
+        Estimated Best 1RM:{" "}
+        <Text size="xxl" fw={900} span>
+          {oneRepMax?.getOneRepMax && activeExercise && oneRepMax.getOneRepMax}
         </Text>
-      ) : null}
+        <Text span> Lbs</Text>
+      </Text>
 
       <ChartWrapper>
         <ExerciseChart

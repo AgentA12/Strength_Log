@@ -1,11 +1,9 @@
-import classes from "./css/workout.module.css";
 import {
   Title,
   Flex,
   Stack,
   Button,
   Text,
-  Divider,
   Container,
   Group,
   useMantineTheme,
@@ -24,6 +22,7 @@ import { BiErrorCircle } from "react-icons/bi";
 import { IconConfetti } from "@tabler/icons-react";
 import { ExerciseShape } from "../types/template";
 import { Exercise, WorkoutState } from "../types/workoutState";
+import { DividerTitle } from "../components/universal";
 
 const startedOn = new Date();
 
@@ -156,19 +155,15 @@ export default function WorkoutPage() {
 
   return (
     <Container fluid>
-      <Divider
-        mb={10}
-        label={
-          <Group justify="center" gap="xs" align="center">
-            <Title c={primaryColor}>Training </Title>
-            <Title tt="capitalize" className={classes.dividertitle}>
-              {workoutState.templateName}
-            </Title>
+      <DividerTitle
+        name={
+          <Group>
+            <Title c={primaryColor}>Training</Title>
+            <Title tt="capitalize">{workoutState.templateName}</Title>
           </Group>
         }
-        variant="dashed"
       />
-      <Stack gap={0} align="center" justify="center">
+      <Stack gap={0}>
         <Text size="xl">Started on</Text>
         <Text c={workoutState.workoutFinished ? "green" : undefined}>
           {Intl.DateTimeFormat("en-US", {

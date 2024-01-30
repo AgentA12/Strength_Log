@@ -21,8 +21,8 @@ export default function AppLayout({ children, hasNav }: Props) {
       padding={{ base: "xs", sm: "md" }}
     >
       <AppShell.Header>
-        <Group wrap="nowrap" h="100%" px="md" justify="space-around">
-          <Group  gap={0} align="center" justify="center">
+        <Group wrap="nowrap" h="100%" justify="space-around">
+          <Group gap={2} align="center" justify="center">
             <Title order={2}>Strength Log</Title>
             <AiOutlineThunderbolt
               style={{
