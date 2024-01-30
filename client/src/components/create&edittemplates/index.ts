@@ -4,12 +4,13 @@ import TemplateDashBoard from "../../pages/createandedittemplate";
 import TemplateInfoForm from "./TemplateInfoForm";
 import ExerciseInfoForm from "./ExerciseInfoForm"
 import ConfirmForm from "./ConfirmForm"
-
+import ExerciseDisplayCard from "./ExerciseDisplayCard";
 export {
     SelectExerciseModal,
     ExerciseForm,
     TemplateDashBoard,
     TemplateInfoForm,
     ExerciseInfoForm,
-    ConfirmForm
+    ConfirmForm,
+    ExerciseDisplayCard
 };

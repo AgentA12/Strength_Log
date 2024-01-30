@@ -1,4 +1,5 @@
 import {
+  Divider,
   Highlight,
   List,
   Modal,
@@ -12,6 +13,7 @@ import { LiaDumbbellSolid } from "react-icons/lia";
 import { GiBodyBalance } from "react-icons/gi";
 import classes from "./css/templatedashboard.module.css";
 import { useState } from "react";
+import { IconSearch } from "@tabler/icons-react";
 
 interface Props {
   opened: boolean;
@@ -38,8 +40,8 @@ function getExerciseIcon(str: string) {
 }
 
 interface Exercise {
-  _id: string;
-  equipment: string;
+  _id?: string;
+  equipment?: string;
   value: string;
   label: string;
 }
@@ -50,9 +52,7 @@ export default function SelectExerciseModal({
   addExercise,
   exercises,
 }: Props) {
-  const [exercisesState, setExercises] = useState<Exercise[] | [Exercise]>(
-    exercises ? exercises : []
-  );
+  const [exercisesState, setExercises] = useState<Exercise[]>(exercises);
   const [searchState, setSearchState] = useState<string>("");
 
   function sortList(target: EventTarget) {
@@ -60,47 +60,72 @@ export default function SelectExerciseModal({
       const result = exercises.filter((exercise: Exercise) =>
         exercise.value.includes(target.value.toString().toLowerCase().trim())
       );
-      setSearchState(target.value);
-      setExercises(result);
+
+      if (result.length === 0) {
+        setExercises([
+          {
+            label: "Nothing found...",
+            value: "Nothing found...",
+          },
+        ]);
+      } else {
+        setSearchState(target.value);
+        setExercises(result);
+      }
     }
   }
+
   return (
     <Modal
-      title={<Text>Select an Exercise</Text>}
+      p={0}
       opened={opened}
       onClose={() => {
-        setExercises(exercises);
         close();
+        setExercises(exercises);
         setSearchState("");
       }}
       size="md"
-      onChange={({ target }) => sortList(target)}
+      withCloseButton={false}
     >
       <TextInput
+        leftSection={<IconSearch />}
         data-autofocus
+        variant="unstyled"
+        size="md"
         value={searchState}
-        mt={10}
-        placeholder="Search..."
+        placeholder="Search exercises..."
+        onChange={({ target }) => sortList(target)}
       />
+      <Divider />
 
       <List withPadding mt={10}>
-        {exercisesState.map((e: any) => (
-          <List.Item
-            onClick={() => addExercise(e.value)}
-            p={5}
-            icon={
-              <ThemeIcon size={24} radius="xl">
-                {getExerciseIcon(e.equipment)}
-              </ThemeIcon>
-            }
-            className={classes.listStyles}
-            key={e._id}
-          >
-            <Highlight highlight={searchState} fz={15} fw="bold">
-              {e.label}
-            </Highlight>
-          </List.Item>
-        ))}
+        {exercisesState.map((e: any) =>
+          e.value === "Nothing found..." ? (
+            <Text ta="center" c="dimmed" mt={20}>
+              {e.value}
+            </Text>
+          ) : (
+            <List.Item
+              onClick={() => {
+                addExercise(e.value);
+                setExercises(exercises);
+                setSearchState("");
+              }}
+              p={5}
+              icon={
+                <ThemeIcon size={24} radius="xl">
+                  {getExerciseIcon(e.equipment)}
+                </ThemeIcon>
+              }
+              className={classes.listStyles}
+              key={e._id}
+            >
+              <Highlight highlight={searchState} fz={15} fw="bold">
+                {e.label}
+              </Highlight>
+            </List.Item>
+          )
+        )}
       </List>
     </Modal>
   );

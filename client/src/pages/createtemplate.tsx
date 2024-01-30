@@ -26,6 +26,7 @@ import { UserContext, UserInfo } from "../contexts/userInfo";
 import { useDisclosure } from "@mantine/hooks";
 import { ExerciseDetailsShape, SetShape } from "../types/template";
 import { IconArrowsLeft, IconArrowsRight } from "@tabler/icons-react";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface Exercise {
   exerciseName: String;
@@ -263,6 +264,7 @@ export default function CreateTemplatePage() {
           </Stepper>
         </>
       </Box>
+
       <SelectExerciseModal
         opened={opened}
         close={close}
