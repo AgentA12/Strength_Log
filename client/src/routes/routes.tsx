@@ -6,6 +6,7 @@ import {
   SettingsPage,
   WorkoutPage,
   ProgressPage,
+  Calories
 } from "../pages/index";
 
 import Protected from "../components/universal/ProtectedRoute";
@@ -62,6 +63,17 @@ export default function RouteContainer() {
           <Protected isLoggedIn={isLoggedIn}>
             <AppLayout hasNav={true}>
               <CreateTemplatePage />
+            </AppLayout>
+          </Protected>
+        }
+      />
+
+      <Route
+        path="/foodstuffs"
+        element={
+          <Protected isLoggedIn={isLoggedIn}>
+            <AppLayout hasNav={true}>
+              <Calories />
             </AppLayout>
           </Protected>
         }

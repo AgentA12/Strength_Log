@@ -6,6 +6,7 @@ import {
   Fieldset,
   Divider,
   Modal,
+  Group,
 } from "@mantine/core";
 import { useContext } from "react";
 import { UserContext, UserInfo } from "../../contexts/userInfo";
@@ -47,10 +48,15 @@ export default function DeleteAccountField() {
   }
 
   return (
-    <Fieldset radius="md" p={0}>
+    <Fieldset
+      legend={
+        <Text c="red.5" fw={700} size="xl">
+          Delete Account
+        </Text>
+      }
+      radius="md"
+    >
       <Box p={10}>
-        <Text size="xl">Delete Account</Text>
-
         <Text c="dimmed" size="sm">
           Permanently remove your Personal Account and all of its contents. This
           action is not reversible.
@@ -86,17 +92,19 @@ export default function DeleteAccountField() {
             </Text>
           }
         />
-        <Button
-          disabled={
-            form.values.confirmDeletion !=
-            "Yes I want to delete my account forever"
-          }
-          onClick={handleDelete}
-          mt={10}
-          color="red.6"
-        >
-          Permanently remove account
-        </Button>
+        <Group mt={10} justify="space-around" align="center">
+          <Button
+            disabled={
+              form.values.confirmDeletion !=
+              "Yes I want to delete my account forever"
+            }
+            onClick={handleDelete}
+            color="red.6"
+          >
+            Permanently remove account
+          </Button>
+          <Button onClick={close} color="">Cancel</Button>
+        </Group>
       </Modal>
     </Fieldset>
   );

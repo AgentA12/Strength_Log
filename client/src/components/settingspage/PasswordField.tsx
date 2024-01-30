@@ -83,6 +83,7 @@ export default function PasswordField() {
       }
       radius="md"
     >
+      <form>
       <PasswordInput
         disabled={loading}
         value={passwordOld}
@@ -96,26 +97,32 @@ export default function PasswordField() {
 
       <Divider my={12} />
 
-      <PasswordInput
-        disabled={!passwordIsCorrect || loading}
-        value={password}
-        error={!!error}
-        onChange={(event) => setPassword(event.currentTarget.value)}
-        label={
-          <Text size="sm" c="dimmed">
-            Enter your new password
-          </Text>
-        }
-      />
-      <Button
-        loading={loading}
-        onClick={handleSubmit}
-        disabled={!passwordIsCorrect}
-        mb={0}
-        mt={5}
-      >
-        Save
-      </Button>
+      
+        <PasswordInput
+          disabled={!passwordIsCorrect || loading}
+          value={password}
+          error={!!error}
+          onChange={(event) => setPassword(event.currentTarget.value)}
+          label={
+            <Text size="sm" c="dimmed">
+              Enter your{" "}
+              <Text span fw={800} size="xl">
+                new
+              </Text>{" "}
+              password
+            </Text>
+          }
+        />
+        <Button
+          loading={loading}
+          onClick={handleSubmit}
+          disabled={!passwordIsCorrect}
+          mb={0}
+          mt={5}
+        >
+          Save
+        </Button>
+      </form>
     </Fieldset>
   );
 }

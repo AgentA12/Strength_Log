@@ -206,7 +206,7 @@ export default function CreateAndEditTemplatePage() {
     <Box>
       <DividerTitle
         name={
-          state.template
+          state?.template
             ? `Editing ${state.template.templateName}`
             : "Create a Template"
         }

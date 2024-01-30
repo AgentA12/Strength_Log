@@ -9,6 +9,7 @@ import CompareWorkoutPage from "./compareworkouts";
 import TemplateProgressPage from "./templateprogress";
 import ExerciseProgressPage from "./exerciseprogress";
 import RecentProgress from "./recentprogress";
+import Calories from "./Calories"
 
 export {
   AuthPage,
@@ -21,5 +22,7 @@ export {
   CompareWorkoutPage,
   ExerciseProgressPage,
   TemplateProgressPage,
-  RecentProgress
+  RecentProgress,
+  Calories
+
 };

@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { GoHome } from "react-icons/go";
 import { CiSettings } from "react-icons/ci";
 import { motion } from "framer-motion";
-
+import { IconBowl } from "@tabler/icons-react";
 interface Props {
   toggleMobile: () => void;
   direction?: "row" | "column";
@@ -20,6 +20,7 @@ const linkData = [
   { icon: GoHome, label: "dashboard", link: "/dashboard" },
   { icon: AiOutlineLineChart, label: "progress", link: "/progress" },
   { icon: AiOutlineTool, label: "utilities", link: "/utilities" },
+  { icon: IconBowl, label: "foodstuffs", link: "/foodstuffs" },
   { icon: CiSettings, label: "settings", link: "/settings" },
 ];
 
