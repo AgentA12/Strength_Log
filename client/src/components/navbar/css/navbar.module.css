@@ -1,6 +1,4 @@
 .link {
-  font-size: var(--mantine-font-size-xs);
-  padding: 10px;
   text-align: center;
   text-decoration: none;
   position: relative;
@@ -20,10 +18,10 @@
   background-color: light-dark(var(--mantine-color-gray-2), #292929);
   position: absolute;
   top: 0;
-      left: 0;
-      width: 100%; /* Inherit width from the parent */
-      height: 100%; /* Inherit height from the parent */
-  padding: 10px;
+  left: 0;
+  width: 100%; /* Inherit width from the parent */
+  height: 100%; /* Inherit height from the parent */
+  padding: 7px;
   border-radius: var(--mantine-radius-sm);
   z-index: -1;
 }

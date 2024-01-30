@@ -12,6 +12,8 @@ import { motion } from "framer-motion";
 
 interface Props {
   toggleMobile: () => void;
+  direction?: "row" | "column";
+  align?: string;
 }
 
 const linkData = [
@@ -21,7 +23,11 @@ const linkData = [
   { icon: CiSettings, label: "settings", link: "/settings" },
 ];
 
-export default function SideNav({ toggleMobile }: Props) {
+export default function SideNav({
+  toggleMobile,
+  direction,
+  align = "center",
+}: Props) {
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -33,6 +39,7 @@ export default function SideNav({ toggleMobile }: Props) {
 
   const links = linkData.map((item) => (
     <Box
+      p={8}
       component={NavLink}
       to={item.link}
       onMouseEnter={() => setHoveredTab(item.label)}
@@ -41,9 +48,8 @@ export default function SideNav({ toggleMobile }: Props) {
       data-active={item.label === active || null}
       onClick={toggleMobile}
     >
-      <Group gap={8} align="center">
-        <item.icon size={20} />
-        <Text tt="capitalize" span>
+      <Group gap={4} wrap="nowrap" align="center" justify="center">
+        <Text tt="capitalize" size="sm" span>
           {item.label}
         </Text>
       </Group>
@@ -63,10 +69,22 @@ export default function SideNav({ toggleMobile }: Props) {
   ));
 
   return (
-    <Flex h="100%" justify="space-between" direction="column">
-      <Group onMouseLeave={() => setHoveredTab(null)} gap={5} justify="left">
+    <Flex
+      h="100%"
+      align={align}
+      justify="space-between"
+      gap={20}
+      direction={direction}
+    >
+      <Flex
+        onMouseLeave={() => setHoveredTab(null)}
+        direction={direction}
+        gap={12}
+        justify="center"
+        align="center"
+      >
         {...links}
-      </Group>
+      </Flex>
 
       <Group style={{ alignSelf: "center" }}>
         <ToggleTheme />
