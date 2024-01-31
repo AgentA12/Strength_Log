@@ -12,6 +12,8 @@ import ExerciseTable from "./ExerciseTable";
 import TotalStatDisplay from "./TotalStatDisplay";
 import ChartWrapper from "./ChartWrapper";
 import ExerciseLink from "./ExerciseLink";
+import ProgressTabs from "./ProgressTabs";
+
 export {
   TemplateSelect,
   TemplateChart,
@@ -26,5 +28,6 @@ export {
   ExerciseTable,
   TotalStatDisplay,
   ChartWrapper,
-  ExerciseLink
+  ExerciseLink,
+  ProgressTabs
 };
