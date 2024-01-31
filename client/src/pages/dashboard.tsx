@@ -4,7 +4,6 @@ import {
   TemplateSection,
   DataOverview,
 } from "../components/dashboard/index";
-
 import DividerTitle from "../components/universal/DividerTitle";
 
 export default function DashBoardPage() {

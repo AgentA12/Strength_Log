@@ -1,25 +1,20 @@
 import { getTotalVolume } from "../../utils/helpers/functions";
-import { ExerciseTable } from "./index";
+import { ExerciseTable } from "../progresspage/index";
 import { Box, Paper, Stack, Text } from "@mantine/core";
 import { v4 as uuidv4 } from "uuid";
-import { DateLink } from "./DateLink";
-import { ExerciseLink } from "./index";
+import { DateLink } from "../progresspage/DateLink";
+import { ExerciseLink } from "../progresspage/index";
 import { Workout } from "../../types/workout";
+import { Link } from "react-router-dom";
+import TemplateProgressLink from "../universal/TemplateProgressLink";
 
 interface Props {
   workout: Workout;
 }
+
 export default function SingleWorkout({ workout }: Props) {
   return (
-    <Paper
-      maw={900}
-      radius="lg"
-      shadow="xs"
-      p="xl"
-      m={12}
-      withBorder
-      key={uuidv4()}
-    >
+    <Paper>
       <Stack justify="center" align="center" gap={0}>
         {workout.template ? (
           <DateLink
@@ -28,7 +23,7 @@ export default function SingleWorkout({ workout }: Props) {
           />
         ) : (
           <Text c="dimmed" size="xl">
-            {new Date(String(workout.createdAt)).toLocaleDateString("en-US", {
+            {new Date(workout.createdAt).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
               day: "numeric",
@@ -36,9 +31,7 @@ export default function SingleWorkout({ workout }: Props) {
           </Text>
         )}
         {workout.template ? (
-          <Text tt="capitalize" fw={700} size="xl">
-            {workout.template.templateName.toString()}{" "}
-          </Text>
+          <TemplateProgressLink size="xs" templateName={workout.template.templateName} />
         ) : (
           <Text c="red.6" fw={600} size="xl">
             This template was deleted permanently

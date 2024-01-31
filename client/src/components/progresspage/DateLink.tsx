@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 interface Props {
   createdAt: string;
   workoutID: string;
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  size?: "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
 }
 
 export const DateLink: React.FC<Props> = (props) => {

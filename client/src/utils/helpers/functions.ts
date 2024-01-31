@@ -251,6 +251,16 @@ function formatDate(date: number): string {
   });
 }
 
+// "chunk" is used to create a two dimensional array for pagination
+function chunk<T>(array: T[], size: number): T[][] {
+  if (!array.length) {
+    return [];
+  }
+  const head = array.slice(0, size);
+  const tail = array.slice(size);
+  return [head, ...chunk(tail, size)];
+}
+
 export {
   getOneRepMax,
   compareDatesByDay,
@@ -268,5 +278,6 @@ export {
   getPrimaryColor,
   compareExerciseSets,
   compareWorkouts,
-  formatDate
+  formatDate,
+  chunk
 };

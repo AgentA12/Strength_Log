@@ -7,25 +7,18 @@ import {
   Pagination,
   Container,
   Loader,
+  Checkbox,
 } from "@mantine/core";
 import { useQuery } from "@apollo/client";
 import { GET_PROGRESS_BY_DATE, GET_TEMPLATES } from "../utils/graphql/queries";
-import { WorkoutSection } from "../components/progresspage/index";
 import { Workout } from "../types/workout";
 import { TemplateShape } from "../types/template";
+import { chunk } from "../utils/helpers/functions";
+import { WorkoutList } from "../components/completedTab";
 
-// "chunk" is used to create a two dimensional array for pagination
-function chunk<T>(array: T[], size: number): T[][] {
-  if (!array.length) {
-    return [];
-  }
-  const head = array.slice(0, size);
-  const tail = array.slice(size);
-  return [head, ...chunk(tail, size)];
-}
+const limitPerPage = 8;
 
 export default function RecentProgress() {
-  const limitPerPage = 12;
   const userInfo = useContext(UserContext);
   const userID = userInfo?.data._id;
 
@@ -45,24 +38,23 @@ export default function RecentProgress() {
 
   const [activePage, setPage] = useState(1);
   const [workouts, setWorkouts] = useState<Workout[][]>();
-
+  const [activeTemplate, setActiveTemplate] = useState("all templates");
+  const [sortBy, setSortBy] = useState("newest first");
+  const [openAll, setOpenAll] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<null | string[]>(null);
   // can't use the data returned from query because filtering pages on client
   useEffect(() => {
     if (data) {
-      const paginatedWorkouts = chunk<Workout>(
-        data.getProgressByDate,
-        limitPerPage
-      );
-      setWorkouts(paginatedWorkouts);
+      setWorkouts(chunk<Workout>(data.getProgressByDate, limitPerPage));
     }
-  }, [loading]);
+  }, [data]);
 
   if (loading || templateLoading) return <Loader />;
 
-  function filterWorkoutsByDate(sortBy: string | null) {
+  function filterWorkoutsByDate(sortBy: string) {
     let bufferData = workouts?.flat();
 
-    if (sortBy && bufferData) {
+    if (bufferData) {
       setWorkouts(
         chunk(
           bufferData.sort((a, b) =>
@@ -74,25 +66,41 @@ export default function RecentProgress() {
         )
       );
     }
+    setSortBy(sortBy);
     setPage(1);
   }
 
-  function filterWorkoutsByTemplates(templateValue: string | null) {
+  function filterWorkoutsByTemplates(selectName: string) {
     const bufferData = [...data.getProgressByDate];
 
-    if (templateValue != null && bufferData) {
+    if (bufferData) {
       setWorkouts(
         chunk(
-          templateValue === "all templates"
-            ? bufferData.sort((a, b) => b.createdAt - a.createdAt)
+          selectName === "all templates"
+            ? bufferData.sort((a, b) =>
+                sortBy === "oldest first"
+                  ? parseInt(a.createdAt) - parseInt(b.createdAt)
+                  : parseInt(b.createdAt) - parseInt(a.createdAt)
+              )
             : bufferData
-                .filter((workout) => workout.template?._id === templateValue)
-                .sort((a, b) => b.createdAt - a.createdAt),
+                .filter(
+                  (workout) => workout.template.templateName === selectName
+                )
+                .sort((a, b) =>
+                  sortBy === "oldest first"
+                    ? parseInt(a.createdAt) - parseInt(b.createdAt)
+                    : parseInt(b.createdAt) - parseInt(a.createdAt)
+                ),
           limitPerPage
         )
       );
     }
-
+    setActiveTemplate(
+      templates.getTemplates.find(
+        (template: TemplateShape) =>
+          template._id === selectName && template.templateName
+      )
+    );
     setPage(1);
   }
 
@@ -100,51 +108,53 @@ export default function RecentProgress() {
   if (templateError) return <Text>{templateError.message}</Text>;
 
   // formatting template data for select template input
-  const templateSelectData = templates
-    ? templates.getTemplates.map((temp: TemplateShape) => {
-        return { label: temp.templateName, value: temp._id };
-      })
-    : null;
-
-  templateSelectData.unshift({
-    value: "all templates",
-    label: "all templates",
-  });
+  const templateSelectData =
+    templates &&
+    templates.getTemplates.map(
+      (template: TemplateShape) => template.templateName
+    );
 
   if (workouts)
     return (
       <Container fluid>
-        <Group>
+        <Group mb={20}>
           <Select
-            mb={10}
-            defaultValue="newest first"
+            allowDeselect={false}
+            value={sortBy}
             data={["newest first", "oldest first"]}
-            onChange={filterWorkoutsByDate}
+            onChange={(value) => filterWorkoutsByDate(value as string)}
           />
           <Select
-            mb={10}
-            defaultValue={"all templates"}
-            data={[...templateSelectData]}
-            onChange={filterWorkoutsByTemplates}
+            allowDeselect={false}
+            value={activeTemplate}
+            data={["all templates", ...templateSelectData]}
+            onChange={(templateName) =>
+              filterWorkoutsByTemplates(templateName as string)
+            }
+          />
+          <Checkbox
+            onChange={() => setOpenAll(!openAll)}
+            checked={openAll}
+            label="Open All"
           />
         </Group>
+
+        <WorkoutList
+          openAll={openAll}
+          activePage={activePage}
+          workouts={workouts}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+        />
+
         <Pagination
-          mb={45}
-          mt={20}
+          my={10}
           total={workouts.length}
           value={activePage}
           onChange={(val) => {
             setPage(val), window.scrollTo(0, 0);
           }}
-          withEdges
         />
-        {workouts.length ? (
-          workouts[activePage - 1].map((workout: Workout) => (
-            <WorkoutSection key={workout._id} workout={workout} />
-          ))
-        ) : (
-          <Text>No saved workouts for this template.</Text>
-        )}
       </Container>
     );
 }
