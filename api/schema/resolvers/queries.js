@@ -106,7 +106,8 @@ const Query = {
       if (templateName != "All templates" || !shouldSortByTemplate)
         dataSet = dataSet.filter((data) => {
           if (!data.belongsTo) return null;
-          return data.belongsTo.toLowerCase() === templateName.toLowerCase();
+
+          return data.belongsTo.toLowerCase() === templateName;
         });
 
       let map = {};
