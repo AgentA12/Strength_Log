@@ -16,6 +16,7 @@ import { useMutation } from "@apollo/client";
 import { DELETE_ACCOUNT } from "../../utils/graphql/mutations";
 import { useNavigate } from "react-router-dom";
 import auth from "../../utils/auth/auth";
+import { useAuth } from "../../contexts/auth";
 
 export default function DeleteAccountField() {
   const userInfo = useContext<UserInfo>(UserContext);
@@ -23,6 +24,7 @@ export default function DeleteAccountField() {
 
   const [opened, { open, close }] = useDisclosure(false);
   const navigate = useNavigate();
+  const { setToken } = useAuth();
 
   const [deleteAccount] = useMutation(DELETE_ACCOUNT);
 
@@ -41,7 +43,7 @@ export default function DeleteAccountField() {
       const res = await deleteAccount({ variables: { userID: userID } });
 
       if (res.data.deleteAccount.confirm === true) {
-        auth.logout();
+        setToken();
         navigate(0);
       }
     } catch (error) {}
@@ -103,7 +105,9 @@ export default function DeleteAccountField() {
           >
             Permanently remove account
           </Button>
-          <Button onClick={close} color="">Cancel</Button>
+          <Button onClick={close} color="">
+            Cancel
+          </Button>
         </Group>
       </Modal>
     </Fieldset>

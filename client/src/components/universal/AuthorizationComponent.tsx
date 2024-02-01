@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_USER, LOGIN_USER } from "../../utils/graphql/mutations";
-import Auth from "../../utils/auth/auth";
 import {
   Button,
   Title,
@@ -12,7 +11,8 @@ import {
   Text,
 } from "@mantine/core";
 import { AiOutlineThunderbolt, AiFillLock } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/auth";
 
 const linkStyles = {
   marginTop: 12,
@@ -22,6 +22,8 @@ const linkStyles = {
 };
 
 export default function AuthorizationComponent(): React.JSX.Element {
+  const { setToken }: any = useAuth();
+
   const navigate = useNavigate();
   const [type, setType] = useState("Login");
 
@@ -53,6 +55,11 @@ export default function AuthorizationComponent(): React.JSX.Element {
     });
   }
 
+  const handleLogin = (token: string) => {
+    setToken(token);
+    return <Navigate to="/dashboard" replace />;
+  };
+
   function handleTypeSwitch(type: string) {
     type === "Login" ? setType("Login") : setType("Signup");
 
@@ -76,8 +83,8 @@ export default function AuthorizationComponent(): React.JSX.Element {
         // unbeknownst to me using a url path with navigate() is not working, so
         // just refresh the page for now
         //  doing this in a few other places as a quick fix, logout, login, create user
-        Auth.login(data.login.token);
-        navigate(0);
+
+        handleLogin(data.login.token);
       } else {
         if (!formState.password.trim()) {
           setError("invalid password");
@@ -87,9 +94,8 @@ export default function AuthorizationComponent(): React.JSX.Element {
             ...formState,
           },
         });
-
-        Auth.login(data.createUser.token);
-        navigate(0);
+        console.log(data);
+        handleLogin(data.createUser.token);
       }
     } catch (error: any) {
       setError(error.message);

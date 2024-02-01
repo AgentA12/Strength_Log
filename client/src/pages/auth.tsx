@@ -1,12 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import AuthorizationComponent from "../components/universal/AuthorizationComponent";
 import { useEffect } from "react";
+import { useAuth } from "../contexts/auth";
 
-export default function AuthPage({ isLoggedIn }: { isLoggedIn: Boolean }) {
+export default function AuthPage() {
   const navigate = useNavigate();
+
+  const { token }: any = useAuth();
+
   useEffect(() => {
-    if (isLoggedIn === true) navigate("/dashboard");
-  }, [isLoggedIn]);
+    if (token) navigate("/dashboard");
+  }, [token]);
 
   return <AuthorizationComponent />;
 }

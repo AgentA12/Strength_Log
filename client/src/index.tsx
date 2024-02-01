@@ -19,7 +19,6 @@ import {
   createTheme,
   ScrollArea,
   rem,
-  useMantineColorScheme,
 } from "@mantine/core";
 
 const isInProduction = import.meta.env.MODE === "production";

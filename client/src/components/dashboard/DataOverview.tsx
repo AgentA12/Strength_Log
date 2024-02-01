@@ -21,6 +21,8 @@ export default function DataOverView() {
 
   const NumOfStatsLength = 4;
 
+  console.log(userID);
+
   const { data, loading, error } = useQuery(GET_STAT_SUMMARY, {
     variables: {
       userID: userID,

@@ -77,7 +77,7 @@ export default function TemplateSection() {
         />
         <Group justify="center">
           <Button onClick={open}>Start a workout</Button>
-          <Button component={Link} to="/create">
+          <Button component={Link} to="/createtemplate">
             Create new Template
           </Button>
         </Group>
