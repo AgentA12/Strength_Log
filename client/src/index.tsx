@@ -14,7 +14,13 @@ import {
   DefaultOptions,
   NormalizedCacheObject,
 } from "@apollo/client";
-import { MantineProvider, createTheme, ScrollArea, rem } from "@mantine/core";
+import {
+  MantineProvider,
+  createTheme,
+  ScrollArea,
+  rem,
+  useMantineColorScheme,
+} from "@mantine/core";
 
 const isInProduction = import.meta.env.MODE === "production";
 
@@ -52,9 +58,29 @@ export const theme: Theme = createTheme({
         variant: "outline",
       },
     },
+
+    Drawer: {
+      styles: {
+        content: {
+          borderRight:
+            localStorage.getItem("mantine-color-scheme-value") === "dark"
+              ? "1px #333 solid"
+              : null,
+        },
+      },
+    },
+
     Modal: {
       defaultProps: {
         scrollAreaComponent: ScrollArea.Autosize,
+      },
+      styles: {
+        content: {
+          border:
+            localStorage.getItem("mantine-color-scheme-value") === "dark"
+              ? "1px #333 solid"
+              : null,
+        },
       },
     },
 
@@ -69,12 +95,26 @@ export const theme: Theme = createTheme({
       },
     },
   },
+  colors: {
+    dark: [
+      "#eaeaea",
+      "#999",
+      "#777",
+      "#555",
+      "#333",
+      "#222",
+      "#111",
+      "#000",
+      "#000",
+      "#000",
+    ],
+  },
   fontFamily: "Inter",
   primaryColor: localStoragePreferredColor,
   fontSizes: {
     xxl: rem(30),
-    xxxl: rem(40)
-  }
+    xxxl: rem(40),
+  },
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);

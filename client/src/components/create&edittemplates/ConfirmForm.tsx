@@ -44,7 +44,7 @@ export default function ConfirmFrom({ form }: Props) {
             </Text>
 
             {exercise.sets.map((set: SetShape) => (
-              <Text c="dimmed">
+              <Text key={set.key} c="dimmed">
                 {set.reps} x {set.weight} Lbs
               </Text>
             ))}
