@@ -24,7 +24,7 @@ export default function WorkoutList({
         variant="separated"
         multiple
         value={
-          openAll
+          openAll && workouts.length
             ? workouts[activePage - 1].map((workout) =>
                 workout.createdAt.toString()
               )

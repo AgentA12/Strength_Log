@@ -25,7 +25,6 @@ export const UserInfoProvider = ({
   useEffect(() => {
     if (token) {
       const info: UserInfo = jwt_decode(token);
-      console.log(info);
       setUserInfo(info);
     }
   }, [token]);

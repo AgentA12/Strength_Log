@@ -94,7 +94,6 @@ export default function AuthorizationComponent(): React.JSX.Element {
             ...formState,
           },
         });
-        console.log(data);
         handleLogin(data.createUser.token);
       }
     } catch (error: any) {
