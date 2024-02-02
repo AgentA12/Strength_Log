@@ -1,7 +1,6 @@
 import { Select, Text } from "@mantine/core";
 import { useQuery } from "@apollo/client";
-import { useContext } from "react";
-import { UserContext } from "../../contexts/userInfo";
+import { useUserInfo } from "../../contexts/userInfo";
 import { GET_TEMPLATES } from "../../utils/graphql/queries";
 import { TemplateShape } from "../../types/template";
 
@@ -10,7 +9,7 @@ interface Props {
 }
 
 export default function SelectTemplate({ filterFunction }: Props) {
-  const userInfo = useContext(UserContext);
+  const userInfo = useUserInfo();
   const userID = userInfo?.data._id;
 
   const {

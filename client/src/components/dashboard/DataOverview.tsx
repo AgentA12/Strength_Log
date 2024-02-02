@@ -1,8 +1,7 @@
 import { TbWeight } from "react-icons/tb";
 import { GiWeightLiftingUp } from "react-icons/gi";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
-import { UserContext, UserInfo } from "../../contexts/userInfo";
-import { useContext } from "react";
+import { useUserInfo } from "../../contexts/userInfo";
 import { useQuery } from "@apollo/client";
 import { GET_STAT_SUMMARY } from "../../utils/graphql/queries";
 import { Text, Flex, Skeleton } from "@mantine/core";
@@ -15,12 +14,11 @@ interface SummaryData {
 }
 
 export default function DataOverView() {
-  const userInfo: UserInfo | null = useContext(UserContext);
+  const userInfo = useUserInfo();
 
   const userID = userInfo?.data._id;
 
   const NumOfStatsLength = 4;
-
 
   const { data, loading, error } = useQuery(GET_STAT_SUMMARY, {
     variables: {

@@ -1,0 +1,9 @@
+.accountlink {
+    color: light-dark(var(--mantine-color-gray-8), var(--mantine-color-dark-2));
+}
+
+
+.accountlink:hover {
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  transition: all 0.1s ease-in-out;
+}

@@ -4,8 +4,7 @@ import { compareDatesByDay } from "../../utils/helpers/functions";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { CALENDAR_TIMESTAMPS } from "../../utils/graphql/queries";
-import { useContext } from "react";
-import { UserContext } from "../../contexts/userInfo";
+import { useUserInfo } from "../../contexts/userInfo";
 import { Text, LoadingOverlay, Overlay, Box } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 
@@ -16,7 +15,7 @@ interface CalendarTimeStamp {
 export default function Calendar() {
   const { width } = useViewportSize();
 
-  const userInfo = useContext(UserContext);
+  const userInfo = useUserInfo();
 
   const userID = userInfo?.data._id;
 

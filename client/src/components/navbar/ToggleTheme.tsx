@@ -8,7 +8,6 @@ export default function ToggleTheme() {
 
   return (
     <ActionIcon
-   
       color={dark ? "yellow" : "pink"}
       onClick={() => toggleColorScheme()}
       title="Toggle scheme"

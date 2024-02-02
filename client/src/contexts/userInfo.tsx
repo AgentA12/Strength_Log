@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./auth";
 import jwt_decode from "jwt-decode";
 
@@ -11,7 +11,11 @@ export type UserInfo = {
   iat: number;
 } | null;
 
-export const UserContext = createContext<UserInfo | null>(null);
+const token: null | string = localStorage.getItem("token");
+
+const info: UserInfo | null = token ? jwt_decode(token) : null;
+
+export const UserContext = createContext<UserInfo | null>(info);
 
 export const UserInfoProvider = ({
   children,
@@ -32,4 +36,8 @@ export const UserInfoProvider = ({
   return (
     <UserContext.Provider value={userInfo}>{children}</UserContext.Provider>
   );
+};
+
+export const useUserInfo = () => {
+  return useContext(UserContext);
 };

@@ -2,7 +2,7 @@ import classes from "./css/navbar.module.css";
 import { Flex, Text, Group, ActionIcon, Box } from "@mantine/core";
 import { AiOutlineLineChart, AiOutlineTool } from "react-icons/ai";
 import { HiLogout } from "react-icons/hi";
-import { ToggleTheme } from "./index.js";
+import { AccountLink, ToggleTheme } from "./index.js";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { GoHome } from "react-icons/go";
@@ -21,7 +21,6 @@ const linkData = [
   { icon: AiOutlineLineChart, label: "progress", link: "/progress" },
   { icon: AiOutlineTool, label: "utilities", link: "/utilities" },
   { icon: IconBowl, label: "foodstuffs", link: "/foodstuffs" },
-  { icon: CiSettings, label: "settings", link: "/settings" },
 ];
 
 export default function SideNav({
@@ -31,7 +30,7 @@ export default function SideNav({
 }: Props) {
   const { pathname } = useLocation();
 
-  const { setToken } = useAuth();
+  const { setToken }: any = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -96,13 +95,15 @@ export default function SideNav({
         {...links}
       </Flex>
 
-      <Group wrap="nowrap" style={{ alignSelf: "center" }}>
+      <AccountLink />
+
+      {/* <Group wrap="nowrap" style={{ alignSelf: "center" }}>
         <ToggleTheme />
 
         <ActionIcon variant="outline" onClick={handleLogout}>
           <HiLogout />
         </ActionIcon>
-      </Group>
+      </Group> */}
     </Flex>
   );
 }
