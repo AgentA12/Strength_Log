@@ -16,7 +16,6 @@ export const DateLink: React.FC<Props> = (props) => {
     textDecoration: "underline",
     cursor: "pointer",
     width: "fitContent",
-    fontSize: "25px",
   };
 
   return (

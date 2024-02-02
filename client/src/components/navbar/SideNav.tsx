@@ -1,15 +1,13 @@
 import classes from "./css/navbar.module.css";
-import { Flex, Text, Group, ActionIcon, Box } from "@mantine/core";
+import { Flex, Text, Group, Box } from "@mantine/core";
 import { AiOutlineLineChart, AiOutlineTool } from "react-icons/ai";
-import { HiLogout } from "react-icons/hi";
-import { AccountLink, ToggleTheme } from "./index.js";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { AccountLink } from "./index.js";
+import { NavLink, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { GoHome } from "react-icons/go";
-import { CiSettings } from "react-icons/ci";
 import { motion } from "framer-motion";
 import { IconBowl } from "@tabler/icons-react";
-import { useAuth } from "../../contexts/auth";
+
 interface Props {
   toggleMobile: () => void;
   direction?: "row" | "column";
@@ -30,20 +28,12 @@ export default function SideNav({
 }: Props) {
   const { pathname } = useLocation();
 
-  const { setToken }: any = useAuth();
-  const navigate = useNavigate();
-
   useEffect(() => {
     setActive(pathname.replace("/", ""));
   }, [pathname]);
 
   const [active, setActive] = useState<string>(pathname.replace("/", ""));
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
-
-  const handleLogout = () => {
-    setToken();
-    navigate(0);
-  };
 
   const links = linkData.map((item) => (
     <Box
@@ -93,17 +83,8 @@ export default function SideNav({
         align="center"
       >
         {...links}
+        <AccountLink />
       </Flex>
-
-      <AccountLink />
-
-      {/* <Group wrap="nowrap" style={{ alignSelf: "center" }}>
-        <ToggleTheme />
-
-        <ActionIcon variant="outline" onClick={handleLogout}>
-          <HiLogout />
-        </ActionIcon>
-      </Group> */}
     </Flex>
   );
 }

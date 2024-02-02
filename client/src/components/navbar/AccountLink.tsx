@@ -50,6 +50,7 @@ export default function AccountLink() {
           </Menu.Item>
 
           <Menu.Item
+            className={classes.accountlink}
             onClick={() => toggleColorScheme()}
             rightSection={
               <Box>
@@ -57,12 +58,13 @@ export default function AccountLink() {
               </Box>
             }
           >
-            <Text size="sm">Switch theme</Text>
+            <Text size="sm">Switch to {dark ? "Light" : "Dark"}</Text>
           </Menu.Item>
 
           <Menu.Divider />
 
           <Menu.Item
+            className={classes.accountlink}
             onClick={handleLogout}
             rightSection={
               <IconLogout style={{ width: rem(14), height: rem(14) }} />

@@ -68,7 +68,7 @@ export default function DataOverView() {
 
   return (
     <Flex
-      justify={{ base: "center", lg: "flex-start" }}
+      justify="center"
       wrap="wrap"
       gap={{ base: "25px", xs: "60px" }}
     >

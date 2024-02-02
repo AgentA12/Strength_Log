@@ -11,6 +11,7 @@ import StartWorkoutModal from "./StartWorkoutModal";
 import DataOverview from "./DataOverview";
 import TotalDataDisplay from "./TotalDataDisplay";
 import TemplateList from "./TemplateList";
+import RecentlyCompleted from "./RecentyCompleted";
 
 export {
   Calendar,
@@ -26,4 +27,5 @@ export {
   StartWorkoutModal,
   TotalDataDisplay,
   TemplateList,
+  RecentlyCompleted
 };

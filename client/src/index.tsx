@@ -52,6 +52,14 @@ const localStoragePreferredColor =
 
 export const theme: Theme = createTheme({
   components: {
+
+    DatePicker: {
+    styles: {
+    
+    }
+    },
+
+
     Button: {
       defaultProps: {
         variant: "outline",

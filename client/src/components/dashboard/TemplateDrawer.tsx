@@ -17,7 +17,7 @@ interface Props {
   setOpened: (bool: boolean) => void;
 }
 
-type WorkoutData = "original template" | "previously saved";
+type WorkoutData = "original template" | "previously saved workout";
 
 export default function TemplateDrawer(props: Props) {
   const { template, opened, setOpened } = props;
@@ -45,7 +45,7 @@ export default function TemplateDrawer(props: Props) {
 
   useEffect(() => {
     if (data?.getPreviousWorkout._id) {
-      workoutDataType === "previously saved"
+      workoutDataType === "previously saved workout"
         ? setTemplateState(data.getPreviousWorkout)
         : setTemplateState(template);
     }
@@ -99,12 +99,12 @@ export default function TemplateDrawer(props: Props) {
       }
     >
       <Select
-        size="md"
+        size="sm"
         mb={12}
-        description="Using"
+        label="Use values from"
         w={"fit-content"}
         defaultValue="original template"
-        data={["original template", "previously saved"]}
+        data={["original template", "previously saved workout"]}
         onChange={(val) => setWorkoutDataType(val as WorkoutData)}
         allowDeselect={false}
         disabled={data?.getPreviousWorkout._id ? false : true}
