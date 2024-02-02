@@ -95,7 +95,16 @@ export default function FieldUsername() {
   }
 
   if (error) {
-    return <p>Error: {error.message}</p>;
+    return (
+      <>
+        <Text size={"xl"} c="red.5">
+          Oops! Something went wrong, Try refreshing the page
+        </Text>
+        <Text size={"xl"} c="red.5">
+          {error.message}
+        </Text>
+      </>
+    );
   }
 
   return (

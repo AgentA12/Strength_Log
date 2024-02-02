@@ -61,7 +61,7 @@ export default function Calendar() {
     return (
       <Box pos="relative">
         <Overlay p={5} center={true}>
-          <Text ta="center">{error.message}</Text>
+          <Text ta="center">Unable to load Calendar data</Text>
         </Overlay>
 
         <DatePicker

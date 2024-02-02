@@ -48,7 +48,7 @@ export default function DataOverView() {
   if (error)
     return (
       <Text size="xl" fw={500} c="red.6">
-        {error.message.toString()}
+        Something went wrong
       </Text>
     );
 
@@ -67,11 +67,7 @@ export default function DataOverView() {
   }));
 
   return (
-    <Flex
-      justify="center"
-      wrap="wrap"
-      gap={{ base: "25px", xs: "60px" }}
-    >
+    <Flex justify="center" wrap="wrap" gap={{ base: "25px", xs: "60px" }}>
       {stats.map((statData: SummaryData, i: number) => (
         <TotalDataDisplay key={i} {...statData} />
       ))}

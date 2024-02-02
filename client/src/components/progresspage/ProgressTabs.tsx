@@ -1,4 +1,4 @@
-import { Tabs, Text } from "@mantine/core";
+import { Center, Container, Tabs, Text } from "@mantine/core";
 import {
   IconCheck,
   IconTemplate,
@@ -17,13 +17,13 @@ import { useLocation } from "react-router-dom";
 const iconSize = 16;
 
 const tabs = [
-  {
-    icon: <IconCheck size={iconSize} />,
-    value: "completed",
-    label: "completed",
-    pageComponent: <RecentProgress />,
-    key: 0,
-  },
+  // {
+  //   icon: <IconCheck size={iconSize} />,
+  //   value: "completed",
+  //   label: "completed",
+  //   pageComponent: <RecentProgress />,
+  //   key: 0,
+  // },
   {
     icon: <IconTemplate size={iconSize} />,
     value: "templates",
@@ -48,13 +48,14 @@ const tabs = [
 ];
 
 type Tab = (typeof tabs)[0];
-type possibleTabs = "completed" | "templates" | "exercises" | "compare";
+
+type possibleTabs = "templates" | "exercises" | "compare";
 
 export default function ProgressTabs() {
   const { state } = useLocation();
 
   const [activeTab, setActiveTab] = useState<possibleTabs>(() =>
-    state ? state.activeTab : "completed"
+    state ? state.activeTab : "templates"
   );
 
   useEffect(() => {
@@ -64,30 +65,32 @@ export default function ProgressTabs() {
   }, [state]);
 
   return (
-    <Tabs
-      value={activeTab}
-      onChange={(val) => {
-        setActiveTab(val as possibleTabs);
-      }}
-    >
-      <Tabs.List mb={20} grow>
-        {tabs.map((tab: Tab) => (
-          <Tabs.Tab key={tab.key} leftSection={tab.icon} value={tab.value}>
-            <Text tt="capitalize" size="sm">
-              {tab.label}
-            </Text>
-          </Tabs.Tab>
-        ))}
-      </Tabs.List>
+    <Container fluid>
+      <Tabs
+        value={activeTab}
+        onChange={(val) => {
+          setActiveTab(val as possibleTabs);
+        }}
+      >
+        <Tabs.List justify="center" grow>
+          {tabs.map((tab: Tab) => (
+            <Tabs.Tab key={tab.key} leftSection={tab.icon} value={tab.value}>
+              <Text tt="capitalize" size="sm" fw={700}>
+                {tab.label}
+              </Text>
+            </Tabs.Tab>
+          ))}
+        </Tabs.List>
 
-      {tabs.map(
-        (tab: Tab) =>
-          activeTab === tab.value && (
-            <Tabs.Panel key={tab.key} value={tab.value}>
-              {tab.pageComponent}
-            </Tabs.Panel>
-          )
-      )}
-    </Tabs>
+        {tabs.map(
+          (tab: Tab) =>
+            activeTab === tab.value && (
+              <Tabs.Panel key={tab.key} value={tab.value}>
+                {tab.pageComponent}
+              </Tabs.Panel>
+            )
+        )}
+      </Tabs>
+    </Container>
   );
 }

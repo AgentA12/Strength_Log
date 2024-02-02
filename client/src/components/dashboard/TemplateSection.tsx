@@ -86,7 +86,7 @@ export default function TemplateSection() {
       {error ? (
         <Center>
           <Text size="lg" fw={500}>
-            {error.message}
+            Unable to get templates
           </Text>
         </Center>
       ) : (

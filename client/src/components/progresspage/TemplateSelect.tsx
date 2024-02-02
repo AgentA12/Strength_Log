@@ -6,6 +6,7 @@ interface Props {
   setActiveTemplate: React.Dispatch<React.SetStateAction<string>>;
   activeTemplate: string | null;
   label?: string;
+  size?: string
 }
 
 export default function TemplateSelect({
@@ -13,6 +14,7 @@ export default function TemplateSelect({
   setActiveTemplate,
   activeTemplate,
   label,
+  size
 }: Props) {
   const templateData = templates.map((template) => {
     return {
@@ -25,8 +27,10 @@ export default function TemplateSelect({
     <Select
       allowDeselect={false}
       label={label ? label : null}
+      size={size}
       data={templateData}
       searchable
+      w={"fit-content"}
       value={activeTemplate ? activeTemplate : null}
       onChange={(val: string | null) => setActiveTemplate(val ? val : "")}
     />

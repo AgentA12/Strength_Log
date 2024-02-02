@@ -24,7 +24,7 @@ export default function Hero() {
         </Title>
 
         <Container p={0} size={600}>
-          <Text size="xl" color="dimmed">
+          <Text size="xl" c="dimmed">
             Strength Log is the simplest, most intuitive workout tracking
             experience. Take your training to the next level.
           </Text>

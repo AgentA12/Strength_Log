@@ -42,7 +42,7 @@ export default function TemplateList({ templates, refetch, loading }: Props) {
     } catch (error: any) {
       showNotification({
         title: "Error, unable to delete template.",
-        message: error.message,
+        message: `Something went wrong, ${error.message}`,
         autoClose: 3000,
         color: "red",
       });

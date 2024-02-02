@@ -33,6 +33,7 @@ export const DateLink: React.FC<Props> = (props) => {
         day: "numeric",
         hour: "numeric",
         minute: "numeric",
+        second: "2-digit",
       })}
     </Text>
   );

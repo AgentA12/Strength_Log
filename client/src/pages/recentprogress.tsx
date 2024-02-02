@@ -5,20 +5,24 @@ import {
   Select,
   Text,
   Pagination,
-  Container,
+  Box,
   Loader,
   Checkbox,
+  Center,
 } from "@mantine/core";
 import { useQuery } from "@apollo/client";
-import { GET_PROGRESS_BY_DATE, GET_TEMPLATES } from "../utils/graphql/queries";
+import { GET_PROGRESS_BY_DATE } from "../utils/graphql/queries";
 import { Workout } from "../types/workout";
-import { TemplateShape } from "../types/template";
 import { chunk } from "../utils/helpers/functions";
 import { WorkoutList } from "../components/completedTab";
 
 const limitPerPage = 8;
 
-export default function RecentProgress() {
+interface Props {
+  activeTemplate: string;
+}
+
+export default function RecentProgress({ activeTemplate }: Props) {
   const userInfo = useContext(UserContext);
   const userID = userInfo?.data._id;
 
@@ -26,30 +30,18 @@ export default function RecentProgress() {
     variables: { userID: userID },
   });
 
-  const {
-    data: templates,
-    loading: templateLoading,
-    error: templateError,
-  } = useQuery(GET_TEMPLATES, {
-    variables: {
-      userId: userID,
-    },
-  });
-
   const [activePage, setPage] = useState(1);
   const [workouts, setWorkouts] = useState<Workout[][]>();
-  const [activeTemplate, setActiveTemplate] = useState("all templates");
   const [sortBy, setSortBy] = useState("newest first");
   const [openAll, setOpenAll] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<null | string[]>(null);
+
   // can't use the data returned from query because filtering pages on client
   useEffect(() => {
     if (data) {
-      setWorkouts(chunk<Workout>(data.getProgressByDate, limitPerPage));
+      filterWorkoutsByTemplate(activeTemplate);
     }
-  }, [data]);
-
-  if (loading || templateLoading) return <Loader />;
+  }, [data, activeTemplate]);
 
   function filterWorkoutsByDate(sortBy: string) {
     let bufferData = workouts?.flat();
@@ -70,7 +62,7 @@ export default function RecentProgress() {
     setPage(1);
   }
 
-  function filterWorkoutsByTemplates(selectName: string) {
+  function filterWorkoutsByTemplate(selectName: string) {
     const bufferData = [...data.getProgressByDate];
 
     if (bufferData) {
@@ -95,43 +87,35 @@ export default function RecentProgress() {
         )
       );
     }
-    setActiveTemplate(
-      templates.getTemplates.find(
-        (template: TemplateShape) =>
-          template._id === selectName && template.templateName
-      )
-    );
+
     setPage(1);
   }
 
-  if (error) return <Text c="red">{error.message}</Text>;
-  if (templateError) return <Text>{templateError.message}</Text>;
+  if (loading) return <Loader />;
 
-  // formatting template data for select template input
-  const templateSelectData =
-    templates &&
-    templates.getTemplates.map(
-      (template: TemplateShape) => template.templateName
+  if (error)
+    return (
+      <>
+        <Text size={"xl"} c="red.5">
+          Oops! Something went wrong, Try refreshing the page
+        </Text>
+        <Text size={"xl"} c="red.5">
+          {error.message}
+        </Text>
+      </>
     );
 
   if (workouts)
     return (
-      <Container fluid>
-        <Group mb={20}>
+      <>
+        <Group justify="center" mb={10}>
           <Select
             allowDeselect={false}
             value={sortBy}
             data={["newest first", "oldest first"]}
             onChange={(value) => filterWorkoutsByDate(value as string)}
           />
-          <Select
-            allowDeselect={false}
-            value={activeTemplate}
-            data={["all templates", ...templateSelectData]}
-            onChange={(templateName) =>
-              filterWorkoutsByTemplates(templateName as string)
-            }
-          />
+
           <Checkbox
             onChange={() => setOpenAll(!openAll)}
             checked={openAll}
@@ -147,14 +131,16 @@ export default function RecentProgress() {
           setIsOpen={setIsOpen}
         />
 
-        <Pagination
-          my={10}
-          total={workouts.length}
-          value={activePage}
-          onChange={(val) => {
-            setPage(val), window.scrollTo(0, 0);
-          }}
-        />
-      </Container>
+        <Center>
+          <Pagination
+            my={10}
+            total={workouts.length}
+            value={activePage}
+            onChange={(val) => {
+              setPage(val), window.scrollTo(0, 0);
+            }}
+          />
+        </Center>
+      </>
     );
 }

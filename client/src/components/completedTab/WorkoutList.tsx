@@ -20,8 +20,7 @@ export default function WorkoutList({
     return (
       <Accordion
         onChange={setIsOpen}
-        maw={600}
-        variant="separated"
+        variant="contained"
         multiple
         value={
           openAll && workouts.length
@@ -40,9 +39,6 @@ export default function WorkoutList({
               value={workout.createdAt.toString()}
             >
               <Accordion.Control>
-                <Text tt="capitalize" fw={600} size="lg">
-                  {workout.template.templateName}
-                </Text>
                 <Text span tt="capitalize" fw={600} size="sm">
                   {new Date(parseInt(workout.createdAt)).toLocaleDateString(
                     "en-US",
@@ -50,6 +46,8 @@ export default function WorkoutList({
                       year: "numeric",
                       month: "long",
                       day: "numeric",
+                      hour: "numeric",
+                      minute: "2-digit",
                     }
                   )}
                 </Text>

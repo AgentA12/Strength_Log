@@ -32,7 +32,7 @@ export default function Resting({ restTime, handleContinue }: Props) {
           size={200}
           label={
             <Stack align="center">
-              <Text size="sm" ta="center" color="green">
+              <Text size="sm" ta="center" c="green.5">
                 Rest Complete
               </Text>
             </Stack>

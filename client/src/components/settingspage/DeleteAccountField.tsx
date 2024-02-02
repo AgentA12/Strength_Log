@@ -15,7 +15,6 @@ import { useForm } from "@mantine/form";
 import { useMutation } from "@apollo/client";
 import { DELETE_ACCOUNT } from "../../utils/graphql/mutations";
 import { useNavigate } from "react-router-dom";
-import auth from "../../utils/auth/auth";
 import { useAuth } from "../../contexts/auth";
 
 export default function DeleteAccountField() {
@@ -24,7 +23,7 @@ export default function DeleteAccountField() {
 
   const [opened, { open, close }] = useDisclosure(false);
   const navigate = useNavigate();
-  const { setToken } = useAuth();
+  const { setToken }: any = useAuth();
 
   const [deleteAccount] = useMutation(DELETE_ACCOUNT);
 

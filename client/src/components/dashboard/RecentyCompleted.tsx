@@ -46,15 +46,12 @@ export default function RecentlyCompleted() {
     );
 
   return (
-    <Stack visibleFrom="sm">
-      <Title mb={-15} ta="center">
-        Recents
-      </Title>
+    <Stack gap={5} visibleFrom="sm">
       {data.getProgressByDate
         .map((workout: Workout) => (
-          <Paper p={14} mah={200} withBorder key={workout._id}>
+          <Paper px={20} p={10} mah={200} withBorder key={workout._id}>
             <Flex
-              gap={8}
+              gap={0}
               h="100%"
               align="center"
               justify="space-around"
@@ -105,7 +102,7 @@ export default function RecentlyCompleted() {
             </Flex>
           </Paper>
         ))
-        .slice(0, 2)}
+        .slice(0, 3)}
     </Stack>
   );
 }

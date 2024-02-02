@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 interface Props {
   exerciseName: string;
-  size?: "xs" | "sm" | "md" | "lg" | "xl"
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
 }
 
 export default function ExerciseLink(props: Props) {
@@ -16,11 +16,9 @@ export default function ExerciseLink(props: Props) {
     width: "fit-content",
   };
 
-
-
   return (
     <Text
-    size={size}
+      size={size}
       style={style}
       c={`${primaryColor}.6`}
       tt="capitalize"

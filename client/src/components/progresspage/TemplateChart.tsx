@@ -92,10 +92,10 @@ export default function TemplateChart(props: Props) {
   if (error)
     return (
       <Box color="red" my={20}>
-        <Text size={"xl"} color="red">
+        <Text size={"xl"} c="red.5">
           Oops! Something went wrong, Try refreshing the page
         </Text>
-        <Text size={"xl"} color="red">
+        <Text size={"xl"} c="red.5">
           {error.message}
         </Text>
       </Box>

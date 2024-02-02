@@ -4,8 +4,6 @@ import DateRangeSelect from "./DateRangeSelect";
 import ExerciseSelect from "./ExerciseSelect";
 import MetricSelect from "./MetricSelect";
 import ExerciseChart from "./ExerciseChart";
-import ExerciseChartSection from "./ExerciseChartSection";
-import TemplateChartSection from "./TemplateChartSection";
 import OneRepMaxTable from "./OneRepMaxTable";
 import WorkoutSection from "../completedTab/WorkoutSection";
 import ExerciseTable from "./ExerciseTable";
@@ -21,8 +19,6 @@ export {
   ExerciseSelect,
   MetricSelect,
   ExerciseChart,
-  ExerciseChartSection,
-  TemplateChartSection,
   OneRepMaxTable,
   WorkoutSection,
   ExerciseTable,

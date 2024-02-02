@@ -66,7 +66,6 @@ export default function CompareWorkoutPage() {
         })
         .catch((error: Error) => {
           //handle error
-          console.error(error.message);
         });
     }
   }, [state]);
