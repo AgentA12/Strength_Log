@@ -65,6 +65,8 @@ const typeDefs = gql`
     exercise: ExerciseType
     restTime: Int
     sets: [SetType]
+    savedOn: String
+    belongsTo: Template
   }
 
   type ChartData {
@@ -157,6 +159,7 @@ const typeDefs = gql`
     compareWorkouts(userID: ID!, workoutID: ID!): WorkoutComparison
     getOneRepMax(exerciseName: String, userID: ID!): Int
     isCorrectPass(userID: ID!, password: String): Boolean
+    getAllCompletedExercises(userID: ID!): [Exercise]
   }
 
   type Mutation {

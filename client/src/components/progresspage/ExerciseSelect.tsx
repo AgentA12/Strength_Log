@@ -36,12 +36,15 @@ export default function ExerciseSelect({
       </Stack>
     );
 
-  const exerciseNames = exerciseData.getAllExercises.map(
+  const exerciseNames: string[] = exerciseData.getAllExercises.map(
     ({ exerciseName }: ExerciseDetailsShape) => exerciseName
   );
+
+  exerciseNames.unshift("all exercises");
   return (
     <Select
       allowDeselect={false}
+      searchable
       style={{ width: "fit-content" }}
       data={exerciseNames}
       value={activeExercise}

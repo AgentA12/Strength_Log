@@ -157,18 +157,22 @@ const Mutation = {
         { new: true }
       ).select("-password");
 
-      await User.findByIdAndUpdate(userID, {
-        $push: {
-          completedExercises: exercises.map((exercise) => {
-            return {
-              exercise: exercise.exercise._id,
-              sets: exercise.sets.map((set) => set),
-              belongsTo: templateId,
-              savedOn: new Date(),
-            };
-          }),
+      await User.findByIdAndUpdate(
+        userID,
+        {
+          $push: {
+            completedExercises: exercises.map((exercise) => {
+              return {
+                exercise: exercise.exercise._id,
+                sets: exercise.sets.map((set) => set),
+                belongsTo: templateId,
+                savedOn: new Date(),
+              };
+            }),
+          },
         },
-      });
+        { new: true }
+      );
 
       return user;
     } catch (error) {

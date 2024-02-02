@@ -8,7 +8,7 @@ import WorkoutPage from "./workout";
 import CompareWorkoutPage from "./compareworkouts";
 import TemplateProgressPage from "./templateprogress";
 import ExerciseProgressPage from "./exerciseprogress";
-import RecentProgress from "./recentprogress";
+import RecentProgress from "./recenttemplateprogress";
 import Calories from "./Calories"
 
 export {

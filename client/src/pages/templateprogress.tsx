@@ -1,13 +1,4 @@
-import {
-  Box,
-  Center,
-  Container,
-  Divider,
-  Flex,
-  Group,
-  Loader,
-  Text,
-} from "@mantine/core";
+import { Box, Flex, Group, Loader, Text } from "@mantine/core";
 import {
   TemplateSelect,
   DateRangeSelect,
@@ -20,8 +11,7 @@ import { GET_TEMPLATES } from "../utils/graphql/queries";
 import { useQuery } from "@apollo/client";
 import { useLocation } from "react-router-dom";
 import ChartWrapper from "../components/progresspage/ChartWrapper";
-import RecentProgress from "./recentprogress";
-import { DividerTitle } from "../components/universal";
+import RecentProgress from "./recenttemplateprogress";
 
 type Range =
   | "Last month"

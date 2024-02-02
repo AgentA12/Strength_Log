@@ -1,12 +1,10 @@
-import { useEffect, useState, useContext } from "react";
-import { UserContext } from "../contexts/userInfo";
+import { useEffect, useState } from "react";
+import { useUserInfo } from "../contexts/userInfo";
 import {
   Group,
   Select,
   Text,
   Pagination,
-  Box,
-  Loader,
   Checkbox,
   Center,
 } from "@mantine/core";
@@ -19,11 +17,15 @@ import { WorkoutList } from "../components/completedTab";
 const limitPerPage = 8;
 
 interface Props {
-  activeTemplate: string;
+  activeTemplate?: string;
+  activeExercise?: string;
 }
 
-export default function RecentProgress({ activeTemplate }: Props) {
-  const userInfo = useContext(UserContext);
+export default function RecentProgress({
+  activeTemplate,
+  activeExercise,
+}: Props) {
+  const userInfo = useUserInfo();
   const userID = userInfo?.data._id;
 
   const { data, loading, error } = useQuery(GET_PROGRESS_BY_DATE, {
@@ -36,12 +38,13 @@ export default function RecentProgress({ activeTemplate }: Props) {
   const [openAll, setOpenAll] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<null | string[]>(null);
 
-  // can't use the data returned from query because filtering pages on client
   useEffect(() => {
-    if (data) {
+    if (data && activeTemplate) {
       filterWorkoutsByTemplate(activeTemplate);
     }
   }, [data, activeTemplate]);
+
+  useEffect(() => {}, [activeExercise]);
 
   function filterWorkoutsByDate(sortBy: string) {
     let bufferData = workouts?.flat();
@@ -91,7 +94,7 @@ export default function RecentProgress({ activeTemplate }: Props) {
     setPage(1);
   }
 
-  if (loading) return <Loader />;
+  if (!workouts) return;
 
   if (error)
     return (
@@ -105,42 +108,43 @@ export default function RecentProgress({ activeTemplate }: Props) {
       </>
     );
 
-  if (workouts)
-    return (
-      <>
-        <Group justify="center" mb={10}>
-          <Select
-            allowDeselect={false}
-            value={sortBy}
-            data={["newest first", "oldest first"]}
-            onChange={(value) => filterWorkoutsByDate(value as string)}
-          />
+  if (loading) return "loading";
 
-          <Checkbox
-            onChange={() => setOpenAll(!openAll)}
-            checked={openAll}
-            label="Open All"
-          />
-        </Group>
-
-        <WorkoutList
-          openAll={openAll}
-          activePage={activePage}
-          workouts={workouts}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
+  return (
+    <>
+      <Group justify="center" mb={10}>
+        <Select
+          allowDeselect={false}
+          value={sortBy}
+          data={["newest first", "oldest first"]}
+          onChange={(value) => filterWorkoutsByDate(value as string)}
         />
 
-        <Center>
-          <Pagination
-            my={10}
-            total={workouts.length}
-            value={activePage}
-            onChange={(val) => {
-              setPage(val), window.scrollTo(0, 0);
-            }}
-          />
-        </Center>
-      </>
-    );
+        <Checkbox
+          onChange={() => setOpenAll(!openAll)}
+          checked={openAll}
+          label="Open All"
+        />
+      </Group>
+
+      <WorkoutList
+        openAll={openAll}
+        activePage={activePage}
+        workouts={workouts}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
+
+      <Center>
+        <Pagination
+          my={10}
+          total={workouts.length}
+          value={activePage}
+          onChange={(val) => {
+            setPage(val), window.scrollTo(0, 0);
+          }}
+        />
+      </Center>
+    </>
+  );
 }

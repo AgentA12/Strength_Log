@@ -254,6 +254,17 @@ const Query = {
     return user;
   },
 
+  async getAllCompletedExercises(_, { userID }) {
+    try {
+      const { completedExercises } = await User.findById(userID).populate(
+        "completedExercises.exercise completedExercises.belongsTo"
+      );
+      return completedExercises;
+    } catch (error) {
+      return error;
+    }
+  },
+
   async getOneRepMax(_, { exerciseName = "bench press", userID }) {
     // find the best set in the users completed workouts or exercises
 

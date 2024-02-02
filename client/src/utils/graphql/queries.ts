@@ -200,6 +200,28 @@ export const COMPARE_WORKOUTS = gql`
   }
 `;
 
+export const GET_ALL_COMPLETED_EXERCISES = gql`
+  query($userID: ID!) {
+    getAllCompletedExercises(userID: $userID) {
+      _id
+      exercise {
+        exerciseName
+        _id
+      }
+      restTime
+      belongsTo {
+        _id
+        templateName
+      }
+      savedOn
+      sets {
+        weight
+        reps
+      }
+    }
+  }
+`
+
 export const GET_ONE_REP_MAX = gql`
   query ($exerciseName: String, $userID: ID!) {
     getOneRepMax(exerciseName: $exerciseName, userID: $userID)

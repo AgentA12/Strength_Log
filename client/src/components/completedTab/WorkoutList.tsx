@@ -58,7 +58,7 @@ export default function WorkoutList({
             </Accordion.Item>
           ))
         ) : (
-          <Text size="xl" fw={500}>
+          <Text ta="center" size="xl" fw={500}>
             You have not saved any Workouts yet
           </Text>
         )}

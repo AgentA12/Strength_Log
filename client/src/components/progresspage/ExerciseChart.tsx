@@ -111,7 +111,7 @@ export default function ExerciseChart(props: Props) {
       </Box>
     );
 
-  let filteredData;
+  let filteredData = data.getChartData;
 
   if (!activeExercise) {
     return (
@@ -126,9 +126,12 @@ export default function ExerciseChart(props: Props) {
       </Box>
     );
   }
-  filteredData = data.getChartData.filter(
-    (data: GetChartData) => data.label.toLowerCase() === activeExercise
-  );
+
+  if (activeExercise !== "all exercises") {
+    filteredData = data.getChartData.filter(
+      (data: GetChartData) => data.label.toLowerCase() === activeExercise
+    );
+  }
 
   if (filteredData.length === 0) {
     return (
@@ -147,6 +150,8 @@ export default function ExerciseChart(props: Props) {
   const [firstDate, lastDate] = findFirstAndLastRange(filteredData[0]?.data);
 
   const labels = getRangeOfDates(range, firstDate, lastDate);
+
+
   return (
     <Line
       options={options as any}
