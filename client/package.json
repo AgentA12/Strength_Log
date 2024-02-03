@@ -7,7 +7,6 @@
   "dependencies": {
     "@apollo/client": "^3.6.9",
     "@emotion/react": "^11.11.0",
-    "@mantine/carousel": "^7.5.1",
     "@mantine/charts": "^7.5.1",
     "@mantine/core": "^7.2.2",
     "@mantine/dates": "^7.2.2",
@@ -23,7 +22,6 @@
     "chart.js": "^4.3.0",
     "chartjs-adapter-dayjs-4": "^1.0.4",
     "dayjs": "^1.11.10",
-    "embla-carousel-react": "^7.1.0",
     "framer-motion": "^10.16.5",
     "graphql": "^16.6.0",
     "jwt-decode": "^3.1.2",
@@ -32,7 +30,6 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.3.0",
-    "recharts": "^2.11.0",
     "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
   },
