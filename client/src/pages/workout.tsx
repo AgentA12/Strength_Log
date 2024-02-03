@@ -158,18 +158,22 @@ export default function WorkoutPage() {
       <DividerTitle
         name={
           <Group>
-            <Title c={primaryColor}>Training</Title>
-            <Title tt="capitalize">{workoutState.templateName}</Title>
+            <Title tt="capitalize">
+              <Text fw={800} size="xxl" c={`${primaryColor}.6`} span>
+                Training
+              </Text>{" "}
+              {workoutState.templateName}
+            </Title>
           </Group>
         }
       />
-      <Stack gap={0}>
+      <Stack align={"center"} gap={5}>
         <Text size="xl">Started on</Text>
-        <Text c={workoutState.workoutFinished ? "green" : undefined}>
+        <Text c={workoutState.workoutFinished ? "green.5" : undefined}>
           {Intl.DateTimeFormat("en-US", {
             weekday: "long",
             month: "long",
-            day: "numeric",
+            day: "2-digit",
             hour: "numeric",
             minute: "numeric",
             hour12: true,
@@ -177,8 +181,9 @@ export default function WorkoutPage() {
           }).format(startedOn)}
         </Text>
         <Text
+        size="xl"
           mb={15}
-          c={workoutState.workoutFinished ? "green" : undefined}
+          c={workoutState.workoutFinished ? "green.5" : undefined}
         >{`${hours}:${formatTime(minutes)}:${formatTime(seconds)}`}</Text>
         {workoutState.workoutFinished ? (
           <>
@@ -186,7 +191,7 @@ export default function WorkoutPage() {
               Workout Completed! <IconConfetti />
             </Group>
 
-            <Button mt={10} color="green" onClick={handleFinish}>
+            <Button mt={10} color="green.5" onClick={handleFinish}>
               Finish and save
             </Button>
           </>

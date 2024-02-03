@@ -1,6 +1,6 @@
 import { useLazyQuery } from "@apollo/client";
 import { useState, useEffect } from "react";
-import { Group, Loader, Select, Text } from "@mantine/core";
+import { Flex, Group, Loader, Select, Text } from "@mantine/core";
 import { COMPARE_WORKOUTS } from "../utils/graphql/queries";
 import { useContext } from "react";
 import { UserContext } from "../contexts/userInfo";
@@ -98,7 +98,7 @@ export default function CompareWorkoutPage() {
 
   return (
     <>
-      <Group>
+      <Flex wrap="wrap" justify={{ base: "center", md: "start" }} gap={12} mt={10}>
         {templates ? (
           <TemplateSelect
             label="Select a template"
@@ -138,7 +138,7 @@ export default function CompareWorkoutPage() {
             }
           />
         )}
-      </Group>
+      </Flex>
       {workoutState ? (
         <CompareWorkoutsContainer
           workoutState={workoutState}

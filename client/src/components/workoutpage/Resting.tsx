@@ -37,7 +37,7 @@ export default function Resting({ restTime, handleContinue }: Props) {
               </Text>
             </Stack>
           }
-          thickness={4}
+          thickness={2}
           sections={[{ value: 100, color: "green" }]}
         />
         <Button onClick={handleContinue}>Continue</Button>
@@ -60,7 +60,7 @@ export default function Resting({ restTime, handleContinue }: Props) {
             </Text>
           </Stack>
         }
-        thickness={4}
+        thickness={2}
         sections={[{ value: percentage, color: primaryColor }]}
       />
       <Button onClick={handleContinue}>Skip</Button>

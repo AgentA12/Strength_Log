@@ -44,8 +44,8 @@ export default function ExerciseCard({
       p="md"
       withBorder
       radius="md"
-      className={classes.exerciseCard}
-      c="dimmed"
+      classNames={classes}
+      c="green.4"
       key={exercise.exercise._id}
     >
       <Flex mb={5} justify="space-between">
@@ -53,7 +53,7 @@ export default function ExerciseCard({
           {exercise.exercise.exerciseName}
         </Text>
 
-        <AiOutlineCheckCircle size={28} />
+        <AiOutlineCheckCircle size={24} />
       </Flex>
       <Text>{`${exercise.sets.length} Set${
         exercise.sets.length != 1 ? "s" : ""

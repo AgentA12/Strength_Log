@@ -69,13 +69,13 @@ export default function WorkoutModal({
       opened={opened}
       onClose={close}
     >
-      <Group justify="space-between" align="center">
+      <Group justify="center" align="center">
         <Title ta="center" tt="capitalize">
           {templateName}
         </Title>
         <Button onClick={close}>Stop Exercise</Button>
       </Group>
-      <Stack align="center">
+      <Stack  gap={5} align="center">
         <Title tt="capitalize" order={3} mt={30}>
           {exercise.exercise.exerciseName}
         </Title>

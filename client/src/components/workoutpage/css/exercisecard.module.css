@@ -1,6 +1,11 @@
 .exerciseCard {
-    width: 325px;
-    @media (max-width: var(--mantine-breakpoint-xs)) {
-        width: 255px;
-    }
+  width: 300px;
+  @media (max-width: var(--mantine-breakpoint-xs)) {
+    width: 225px;
+  }
+}
+
+.root {
+  border: var(--mantine-color-green-5) 0.1px solid;
+  opacity: 90%;
 }

@@ -5,16 +5,17 @@ import {
   NumberInput,
   Button,
   Group,
-  Box,
   Container,
-  Title,
+  Flex,
 } from "@mantine/core";
 import { getOneRepMax } from "../utils/helpers/functions";
 import { OneRepMaxTable } from "../components/progresspage/index";
 import DividerTitle from "../components/universal/DividerTitle";
+import { useMediaQuery } from "@mantine/hooks";
 
 export default function UtilitiesPage() {
   const [oneRepMax, setOneRepMax] = useState<null | number>(null);
+  const isMobile = useMediaQuery(`(max-width: 767px)`);
 
   const form = useForm({
     initialValues: {
@@ -38,44 +39,55 @@ export default function UtilitiesPage() {
   return (
     <Container fluid>
       <DividerTitle name="Utilities" />
-      <Box >
+      <Flex direction="column" align={isMobile ? "center" : "start"}>
         <Text fw={700} size="xxl" tt="capitalize">
           one rep max calculator
         </Text>
 
         <form onSubmit={form.onSubmit(handleSubmit)}>
-          <Group mb={10} align="flex-start" justify="flex-start" gap="xs">
+          <Flex
+            mb={10}
+            align={{ base: "center", md: "start" }}
+            justify={{ base: "center", md: "start" }}
+            gap="xs"
+          >
             <NumberInput
+              style={{ textAlign: isMobile ? "center" : "start" }}
               size="sm"
               label="Lift"
-              suffix=" lbs"
               step={5}
               {...form.getInputProps("weight")}
               min={5}
               max={1000}
             />
             <NumberInput
+              style={{ textAlign: isMobile ? "center" : "start" }}
               size="sm"
               label="Repetitions"
               {...form.getInputProps("reps")}
-              suffix=" reps"
               min={1}
             />
-          </Group>
-          <Button mt={5} size="sm" type="submit">
-            Calculate One Rep Max
-          </Button>
+          </Flex>
+          <Flex
+            align={{ base: "center", md: "start" }}
+            justify={{ base: "center", md: "start" }}
+          >
+            <Button mt={5} size="lg" type="submit">
+              Calculate One Rep Max
+            </Button>
+          </Flex>
         </form>
-      </Box>
-      {typeof oneRepMax === "number" && (
-        <>
-          <Text mt={20}>Your Estimated One Rep Max is </Text>
-          <Text fw={800} c={"primaryColor"} style={{ fontSize: "35px" }}>
-            {oneRepMax} Lbs
-          </Text>
-          <OneRepMaxTable oneRepMax={oneRepMax} />
-        </>
-      )}
+
+        {typeof oneRepMax === "number" && (
+          <>
+            <Text mt={20}>Your Estimated One Rep Max is </Text>
+            <Text fw={800} c={"primaryColor"} style={{ fontSize: "35px" }}>
+              {oneRepMax} Lbs
+            </Text>
+            <OneRepMaxTable oneRepMax={oneRepMax} />
+          </>
+        )}
+      </Flex>
     </Container>
   );
 }

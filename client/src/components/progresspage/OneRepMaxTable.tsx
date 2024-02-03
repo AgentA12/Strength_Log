@@ -19,7 +19,7 @@ export default function OneRepMaxTable({ oneRepMax }: { oneRepMax: number }) {
   ));
 
   return (
-    <Table highlightOnHover withTableBorder withColumnBorders>
+    <Table highlightOnHover withTableBorder withColumnBorders maw={800}>
       <Table.Thead>
         <Table.Tr>
           <Table.Th>Percentage of 1RM</Table.Th>

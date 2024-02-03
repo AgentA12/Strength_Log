@@ -1,4 +1,4 @@
-import { Text, Group, Paper } from "@mantine/core";
+import { Text, Group, Box } from "@mantine/core";
 import CompareText from "./CompareText";
 import { getTotalVolumeForExercise } from "../../utils/helpers/functions";
 import { ExerciseLink } from "../progresspage/index";
@@ -37,7 +37,7 @@ export default function ExerciseTableHeader({
   return (
     <Group>
       <ExerciseLink exerciseName={exercise.exerciseName} size="xl" />
-      <Paper>
+      <Box>
         <Text span>
           Volume:{" "}
           {getTotalVolumeForExercise(
@@ -55,8 +55,8 @@ export default function ExerciseTableHeader({
               )
           )}
         </Text>
-      </Paper>
-      <Paper>
+      </Box>
+      <Box>
         <Text span>
           Reps:{" "}
           {getTotalRepsSingleExercise(sets) +
@@ -71,7 +71,7 @@ export default function ExerciseTableHeader({
               )
           )}
         </Text>
-      </Paper>
+      </Box>
       <Text>
         Sets: {exercise.sets.length + exercise.increasedSets.length}{" "}
         {exercise.increasedSets.length
