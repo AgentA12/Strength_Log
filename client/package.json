@@ -30,6 +30,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.3.0",
+    "recharts": "^2.11.0",
     "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
   },
