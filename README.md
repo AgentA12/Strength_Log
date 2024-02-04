@@ -1,11 +1,8 @@
-# Strength Tracker
-
-## Strength Tracker is a web application that allows users to track their progress in the gym.
+# Strength Log 
+***
+![Strength Log Logo](./client/public/favicon.png)
 
 # Usage
+Visit [Strength_Log](https://strength-log.vercel.app/) and create an account. Strength log is centered around the idea of using templates to track your workouts. Once you create a template you can either quick save the template or you can start a workout which will start a workout session. You can then save the template. 
 
-Create a account, then create a template. A template is an outline of exercises for a given workout. 
-You can then click on a template, input the exercise weight, reps, sets and save it. 
-Navigate to the progress page and select the template you want to view.
-
-![project image](./client/public/Strength_log.png)
+![project image](./client/public/Strength-log.png)
