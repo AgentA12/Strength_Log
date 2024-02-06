@@ -30,7 +30,9 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Provide the authentication context to the children components
   return (
-    <AuthContext.Provider value={contextValue as any}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={contextValue as any}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_USER, LOGIN_USER } from "../../utils/graphql/mutations";
@@ -11,7 +12,7 @@ import {
   Text,
 } from "@mantine/core";
 import { AiOutlineThunderbolt, AiFillLock } from "react-icons/ai";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "../../contexts/auth";
 
 const linkStyles = {
@@ -24,7 +25,6 @@ const linkStyles = {
 export default function AuthorizationComponent(): React.JSX.Element {
   const { setToken }: any = useAuth();
 
-  const navigate = useNavigate();
   const [type, setType] = useState("Login");
 
   const [formState, setFormState] = useState({
@@ -102,68 +102,76 @@ export default function AuthorizationComponent(): React.JSX.Element {
   }
 
   return (
-    <Card
-      shadow="lg"
-      radius="md"
-      withBorder
-      style={{
-        maxWidth: 450,
-        margin: "auto",
-        marginTop: 120,
-      }}
+    <motion.div
+      initial={{ y: 100, opacity: 0 }}
+      animate={{ y: 0, opacity: 100 }}
+      key={type}
     >
-      <Flex justify={"space-between"}>
-        <Title order={2}>ACCOUNT {type.toUpperCase()}</Title>
-        <AiOutlineThunderbolt size={40} />
-      </Flex>
-
-      <form onSubmit={(event) => handleSubmit(event)}>
-        <TextInput
-          autoFocus
-          withAsterisk
-          label="Username"
-          onChange={handleFormChange}
-          name="username"
-          required
-          value={formState.username}
-          onFocus={() => setError(false)}
-          error={
-            error === "incorrect username"
-              ? error
-              : error === "Username is taken" && error
-          }
-          disabled={loginLoading ? loginLoading : signupLoading}
-        />
-
-        <PasswordInput
-          leftSection={<AiFillLock size={16} />}
-          onChange={handleFormChange}
-          name="password"
-          value={formState.password}
-          label="Password"
-          withAsterisk
-          onFocus={() => setError(false)}
-          error={error === "incorrect password" && error}
-          disabled={loginLoading ? loginLoading : signupLoading}
-        />
-
-        <Button
-          mt={10}
-          type="submit"
-          loading={loginLoading ? loginLoading : signupLoading}
-        >
-          {type.toUpperCase()}
-        </Button>
-      </form>
-
-      <Text
-        span
-        style={linkStyles}
-        td="underline"
-        onClick={() => handleTypeSwitch(type === "Login" ? "Signup" : "Login")}
+      <Card
+        shadow="lg"
+        radius="md"
+        withBorder
+        style={{
+          maxWidth: 450,
+          margin: "auto",
+          marginTop: 120,
+        }}
       >
-        {type === "Login" ? "Signup instead" : "Login"}
-      </Text>
-    </Card>
+        <Flex justify={"space-between"}>
+          <Title order={2}>ACCOUNT {type.toUpperCase()}</Title>
+          <AiOutlineThunderbolt size={40} />
+        </Flex>
+
+        <form onSubmit={(event) => handleSubmit(event)}>
+          <TextInput
+            autoFocus
+            withAsterisk
+            label="Username"
+            onChange={handleFormChange}
+            name="username"
+            required
+            value={formState.username}
+            onFocus={() => setError(false)}
+            error={
+              error === "incorrect username"
+                ? error
+                : error === "Username is taken" && error
+            }
+            disabled={loginLoading ? loginLoading : signupLoading}
+          />
+
+          <PasswordInput
+            leftSection={<AiFillLock size={16} />}
+            onChange={handleFormChange}
+            name="password"
+            value={formState.password}
+            label="Password"
+            withAsterisk
+            onFocus={() => setError(false)}
+            error={error === "incorrect password" && error}
+            disabled={loginLoading ? loginLoading : signupLoading}
+          />
+
+          <Button
+            mt={10}
+            type="submit"
+            loading={loginLoading ? loginLoading : signupLoading}
+          >
+            {type.toUpperCase()}
+          </Button>
+        </form>
+
+        <Text
+          span
+          style={linkStyles}
+          td="underline"
+          onClick={() =>
+            handleTypeSwitch(type === "Login" ? "Signup" : "Login")
+          }
+        >
+          {type === "Login" ? "Signup instead" : "Login"}
+        </Text>
+      </Card>
+    </motion.div>
   );
 }
