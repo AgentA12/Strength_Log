@@ -7,9 +7,12 @@ interface Props {
   statName?: string;
 }
 
-export default function TotalDataDisplay(props: Props) {
-  const { icon, stat, label, statName } = props;
-
+export default function DataOverviewItem({
+  icon,
+  stat,
+  label,
+  statName,
+}: Props) {
   return (
     <Flex direction="column" justify="center">
       <Flex justify="center" align="center">

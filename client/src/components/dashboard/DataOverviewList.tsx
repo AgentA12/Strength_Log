@@ -5,7 +5,7 @@ import { useUserInfo } from "../../contexts/userInfo";
 import { useQuery } from "@apollo/client";
 import { GET_STAT_SUMMARY } from "../../utils/graphql/queries";
 import { Text, Flex, Skeleton } from "@mantine/core";
-import { TotalDataDisplay } from "./index";
+import { DataOverviewItem } from "./index";
 
 interface SummaryData {
   label: string;
@@ -13,11 +13,9 @@ interface SummaryData {
   icon: () => React.ReactNode;
 }
 
-export default function DataOverView() {
+export default function DataOverViewList() {
   const userInfo = useUserInfo();
-
   const userID = userInfo?.data._id;
-
   const NumOfStatsLength = 4;
 
   const { data, loading, error } = useQuery(GET_STAT_SUMMARY, {
@@ -69,7 +67,7 @@ export default function DataOverView() {
   return (
     <Flex justify="center" wrap="wrap" gap={{ base: "25px", xs: "60px" }}>
       {stats.map((statData: SummaryData, i: number) => (
-        <TotalDataDisplay key={i} {...statData} />
+        <DataOverviewItem key={i} {...statData} />
       ))}
     </Flex>
   );

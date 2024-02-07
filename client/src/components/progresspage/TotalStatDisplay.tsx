@@ -25,7 +25,6 @@ export default function TotalStatDisplay({
     diff > 0 ? IconArrowUpRight : diff === 0 ? IconEqual : IconArrowDownRight;
 
   function getProgressColor(value: number) {
-    console.log(value);
     if (value > 0) return "green.6";
     if (value < 0) return "red.6";
     return "gray";

@@ -23,8 +23,7 @@ export default function TemplateList({ templates, refetch, loading }: Props) {
           templateId: templateId,
         },
       });
-
-      if (res.data.deleteTemplate.comfirm === true) {
+      if (res.data.deleteTemplate.confirm === true) {
         showNotification({
           title: `Template was deleted.`,
           message: (
@@ -69,6 +68,6 @@ export default function TemplateList({ templates, refetch, loading }: Props) {
       />
     ))
   ) : (
-    <Text size="xl">You have no templates saved.</Text>
+    <Text size="xl">You have no templates saved yet.</Text>
   );
 }

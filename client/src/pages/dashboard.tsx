@@ -1,8 +1,8 @@
-import { Flex, Container, Stack, Center } from "@mantine/core";
+import { Flex, Container, Stack } from "@mantine/core";
 import {
   Calendar,
   TemplateSection,
-  DataOverview,
+  DataOverviewList,
   RecentlyCompleted,
 } from "../components/dashboard/index";
 import DividerTitle from "../components/universal/DividerTitle";
@@ -17,18 +17,17 @@ export default function DashBoardPage() {
         gap="xl"
       >
         <Stack style={{ flexGrow: 2, order: 2 }}>
-          <DataOverview />
+          <DataOverviewList />
           <TemplateSection />
         </Stack>
 
         <Flex
-          align={{ base: "center",  }}
+          align={{ base: "center" }}
           justify={{ base: "center", lg: "flex-start" }}
           direction={{ base: "row", lg: "column" }}
           gap="md"
         >
           <Calendar />
-
           <RecentlyCompleted />
         </Flex>
       </Flex>

@@ -8,10 +8,11 @@ import TemplateMenu from "./TemplateMenu";
 import TemplateDrawer from "./TemplateDrawer";
 import WorkoutState from "./WorkoutState";
 import StartWorkoutModal from "./StartWorkoutModal";
-import DataOverview from "./DataOverview";
-import TotalDataDisplay from "./TotalDataDisplay";
+import DataOverviewList from "./DataOverviewList";
+import DataOverviewItem from "./DataOverviewItem";
 import TemplateList from "./TemplateList";
 import RecentlyCompleted from "./RecentyCompleted";
+import SearchTemplates from "./SearchTemplates";
 
 export {
   Calendar,
@@ -23,9 +24,10 @@ export {
   TemplateMenu,
   TemplateDrawer,
   WorkoutState,
-  DataOverview,
+  DataOverviewList,
   StartWorkoutModal,
-  TotalDataDisplay,
+  DataOverviewItem,
   TemplateList,
-  RecentlyCompleted
+  RecentlyCompleted,
+  SearchTemplates
 };
