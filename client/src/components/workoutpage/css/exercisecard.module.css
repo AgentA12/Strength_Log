@@ -1,5 +1,5 @@
 .exerciseCard {
-  width: 300px;
+  width: 275px;
   @media (max-width: var(--mantine-breakpoint-xs)) {
     width: 225px;
   }

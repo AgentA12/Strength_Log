@@ -10,12 +10,12 @@ import {
 } from "@mantine/core";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ExerciseCard } from "../components/workoutpage/index";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useInterval } from "@mantine/hooks";
 import { formatTime } from "../utils/helpers/functions";
 import { useMutation } from "@apollo/client";
 import { SAVE_WORKOUT } from "../utils/graphql/mutations";
-import { UserContext } from "../contexts/userInfo";
+import { useUserInfo } from "../contexts/userInfo";
 import { showNotification } from "@mantine/notifications";
 import { AiOutlineCheck } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
@@ -31,12 +31,10 @@ export default function WorkoutPage() {
     state: { workout },
   } = useLocation();
 
-  const userInfo = useContext(UserContext);
-
+  const userInfo = useUserInfo();
   const userID = userInfo?.data._id;
 
   const navigate = useNavigate();
-
   const { primaryColor } = useMantineTheme();
 
   const [saveWorkout, { loading }] = useMutation(SAVE_WORKOUT);
@@ -47,6 +45,8 @@ export default function WorkoutPage() {
     workoutFinished: false,
   });
 
+  // const { ms, isRunning, handleStart, handlePause, handleReset } = useMS();
+
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [hours, setHours] = useState(0);
@@ -56,6 +56,7 @@ export default function WorkoutPage() {
 
   useEffect(() => {
     !workoutDone && interval.start();
+
     return interval.stop;
   }, [interval, workoutDone]);
 
@@ -169,7 +170,10 @@ export default function WorkoutPage() {
       />
       <Stack align={"center"} gap={5}>
         <Text size="xl">Started on</Text>
-        <Text c={workoutState.workoutFinished ? "green.5" : undefined}>
+        <Text
+          ta="center"
+          c={workoutState.workoutFinished ? "green.5" : undefined}
+        >
           {Intl.DateTimeFormat("en-US", {
             weekday: "long",
             month: "long",
@@ -181,7 +185,7 @@ export default function WorkoutPage() {
           }).format(startedOn)}
         </Text>
         <Text
-        size="xl"
+          size="xl"
           mb={15}
           c={workoutState.workoutFinished ? "green.5" : undefined}
         >{`${hours}:${formatTime(minutes)}:${formatTime(seconds)}`}</Text>

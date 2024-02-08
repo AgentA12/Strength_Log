@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Simplify your workouts" />
     <link rel="apple-touch-icon" href="/logo192.png" />
@@ -17,6 +17,16 @@
     <title>Strength Log</title>
   </head>
   <body>
+    <script>
+      if (navigator.userAgent.indexOf("iPhone") > -1) {
+        document
+          .querySelector("[name=viewport]")
+          .setAttribute(
+            "content",
+            "width=device-width, initial-scale=1, maximum-scale=1"
+          );
+      }
+    </script>
     <div id="root?"></div>
     <script type="module" src="/src/index.tsx"></script>
   </body>

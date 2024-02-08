@@ -4,8 +4,13 @@ import { Link } from "react-router-dom";
 import classes from "./css/AccountLink.module.css";
 import { BsSun, BsMoon } from "react-icons/bs";
 import { useAuth } from "../../contexts/auth";
+import { useUserInfo } from "../../contexts/userInfo";
 
 export default function AccountLink() {
+  const userInfo = useUserInfo();
+
+  const username = userInfo?.data.username;
+
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const { setToken }: any = useAuth();
 
@@ -36,7 +41,10 @@ export default function AccountLink() {
           ></Box>
         </Menu.Target>
         <Menu.Dropdown>
-          <Menu.Label ta="center">Application</Menu.Label>
+          <Menu.Label ta="center">
+          
+            <Text c="dimmed" size="sm">{username}'s account</Text>
+          </Menu.Label>
           <Menu.Divider />
           <Menu.Item
             component={Link}

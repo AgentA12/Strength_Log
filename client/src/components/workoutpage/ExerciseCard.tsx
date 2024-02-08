@@ -57,7 +57,7 @@ export default function ExerciseCard({
       </Flex>
       <Text>{`${exercise.sets.length} Set${
         exercise.sets.length != 1 ? "s" : ""
-      } completed`}</Text>
+      } complete`}</Text>
     </Card>
   ) : (
     <>

@@ -14,12 +14,7 @@ import {
   DefaultOptions,
   NormalizedCacheObject,
 } from "@apollo/client";
-import {
-  MantineProvider,
-  createTheme,
-  ScrollArea,
-  rem,
-} from "@mantine/core";
+import { MantineProvider, createTheme, ScrollArea, rem } from "@mantine/core";
 
 const isInProduction = import.meta.env.MODE === "production";
 
@@ -52,13 +47,9 @@ const localStoragePreferredColor =
 
 export const theme: Theme = createTheme({
   components: {
-
     DatePicker: {
-    styles: {
-    
-    }
+      styles: {},
     },
-
 
     Button: {
       defaultProps: {

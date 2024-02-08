@@ -16,7 +16,6 @@ export default function Calendar() {
   const { width } = useViewportSize();
 
   const userInfo = useUserInfo();
-
   const userID = userInfo?.data._id;
 
   const {

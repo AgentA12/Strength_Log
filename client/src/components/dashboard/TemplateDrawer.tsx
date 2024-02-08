@@ -31,15 +31,12 @@ export default function TemplateDrawer(props: Props) {
     useState<WorkoutData>("original template");
 
   const [saveWorkoutFunction, { loading, error }] = useMutation(SAVE_WORKOUT);
-  const { data, loading: tempProgressLoading } = useQuery(
-    GET_TEMPLATE_PROGRESS,
-    {
-      variables: {
-        userID: userID,
-        templateID: templateID,
-      },
-    }
-  );
+  const { data } = useQuery(GET_TEMPLATE_PROGRESS, {
+    variables: {
+      userID: userID,
+      templateID: templateID,
+    },
+  });
 
   const [templateState, setTemplateState] = useState(template);
 

@@ -33,6 +33,7 @@ const typeDefs = gql`
   }
 
   input saveWorkoutExerciseInput {
+    completed: Boolean
     exercise: exerciseInput
     restTime: Int
     sets: [Set]
