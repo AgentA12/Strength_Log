@@ -66,6 +66,7 @@ export const GET_TEMPLATE_PROGRESS = gql`
       _id
       templateName
       templateNotes
+      createdAt
       exercises {
         restTime
         exercise {

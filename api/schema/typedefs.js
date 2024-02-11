@@ -59,6 +59,7 @@ const typeDefs = gql`
     templateName: String
     templateNotes: String
     exercises: [Exercise]
+    createdAt: String
   }
 
   type Exercise {

@@ -22,4 +22,5 @@ export interface TemplateShape {
   templateName: string;
   templateNotes: string;
   _id: string;
+  createdAt?: string
 }

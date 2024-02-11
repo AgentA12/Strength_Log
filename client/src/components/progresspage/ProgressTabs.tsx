@@ -1,6 +1,5 @@
-import { Center, Container, Tabs, Text } from "@mantine/core";
+import { Container, Tabs, Text } from "@mantine/core";
 import {
-  IconCheck,
   IconTemplate,
   IconStretching,
   IconGitCompare,
@@ -9,7 +8,6 @@ import {
   TemplateProgressPage,
   ExerciseProgressPage,
   CompareWorkoutPage,
-  RecentProgress,
 } from "../../pages/index";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
@@ -17,13 +15,6 @@ import { useLocation } from "react-router-dom";
 const iconSize = 16;
 
 const tabs = [
-  // {
-  //   icon: <IconCheck size={iconSize} />,
-  //   value: "completed",
-  //   label: "completed",
-  //   pageComponent: <RecentProgress />,
-  //   key: 0,
-  // },
   {
     icon: <IconTemplate size={iconSize} />,
     value: "templates",

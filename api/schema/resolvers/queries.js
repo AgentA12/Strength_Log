@@ -70,12 +70,13 @@ const Query = {
 
       let previousWorkout = workouts[0];
       previousWorkout.template.exercises = previousWorkout.exercises;
-
+      console.log(previousWorkout);
       let template = {
         templateName: previousWorkout.template.templateName,
         templateNotes: previousWorkout.template.templateNotes,
         _id: previousWorkout.template._id,
         exercises: workouts[0].exercises,
+        createdAt: previousWorkout.createdAt,
       };
 
       return template;

@@ -10,6 +10,7 @@ import { UserContext } from "../../contexts/userInfo";
 import { StartWorkoutBtn } from "./index";
 import { TemplateShape } from "../../types/template";
 import { GET_TEMPLATE_PROGRESS } from "../../utils/graphql/queries";
+import { DateLink } from "../progresspage/DateLink";
 
 interface Props {
   template: TemplateShape;
@@ -42,6 +43,7 @@ export default function TemplateDrawer(props: Props) {
 
   useEffect(() => {
     if (data?.getPreviousWorkout._id) {
+      console.log(data);
       workoutDataType === "previously saved workout"
         ? setTemplateState(data.getPreviousWorkout)
         : setTemplateState(template);
@@ -106,6 +108,14 @@ export default function TemplateDrawer(props: Props) {
         allowDeselect={false}
         disabled={data?.getPreviousWorkout._id ? false : true}
       />
+
+      {templateState.createdAt ? (
+        <Text>last saved on { <DateLink
+          size="lg"
+          workoutID={data.getPreviousWorkout._id}
+          createdAt={templateState.createdAt.toString()}
+        />}</Text>
+      ) : null}
 
       <Text c="dimmed" size="sm" mb={10}>
         {template.templateNotes.trim()
