@@ -25,6 +25,7 @@ export default function RecentProgress({
   activeTemplate,
   activeExercise,
 }: Props) {
+  
   const userInfo = useUserInfo();
   const userID = userInfo?.data._id;
 

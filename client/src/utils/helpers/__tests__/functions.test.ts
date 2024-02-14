@@ -154,7 +154,7 @@ describe("formatTime works", () => {
 describe("getRangeOfDates works", () => {
   it("returns the correct dates", () => {
     const firstDate = 1704961412690, secondDate = 1706179276346;
-    const range = "All time"
+    const range = "all time"
 
     const dates = getRangeOfDates(range, firstDate, secondDate)
 

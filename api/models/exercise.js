@@ -5,13 +5,17 @@ const exerciseSchema = mongoose.Schema({
   equipment: {
     type: String,
     enum: {
-      values: ["barbell", "dumbbell", "cable", "machine", "bodyweight"],
+      values: [
+        "barbell",
+        "dumbbell",
+        "cable",
+        "machine",
+        "bodyweight",
+        "weight belt",
+      ],
       message: "Type is not supported",
     },
   },
-  belongsToTemplate: [
-    { type: mongoose.Schema.Types.ObjectId, model: "Template" },
-  ],
   isUserCreated: { type: Boolean, default: false },
 });
 

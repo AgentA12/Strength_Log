@@ -14,6 +14,16 @@ import { useLocation } from "react-router-dom";
 
 const iconSize = 16;
 
+interface Tab {
+  icon: JSX.Element;
+  value: string;
+  label: string;
+  pageComponent: JSX.Element;
+  key: number;
+}
+
+type possibleTabs = "templates" | "exercises" | "compare";
+
 const tabs = [
   {
     icon: <IconTemplate size={iconSize} />,
@@ -37,10 +47,6 @@ const tabs = [
     key: 3,
   },
 ];
-
-type Tab = (typeof tabs)[0];
-
-type possibleTabs = "templates" | "exercises" | "compare";
 
 export default function ProgressTabs() {
   const { state } = useLocation();
@@ -66,7 +72,7 @@ export default function ProgressTabs() {
         <Tabs.List justify="center" grow>
           {tabs.map((tab: Tab) => (
             <Tabs.Tab key={tab.key} leftSection={tab.icon} value={tab.value}>
-              <Text tt="capitalize" size="sm" fw={700}>
+              <Text tt="capitalize" size="sm" >
                 {tab.label}
               </Text>
             </Tabs.Tab>

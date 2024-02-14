@@ -8,7 +8,7 @@
     "build": "cd client && npm run build",
     "start": "node api/index.js",
     "install": "cd api && npm install && cd ../client && npm install",
-    "seeddb": "cd api && node utils/seed"
+    "seedexercises": "cd api && node utils/seed"
 
   },
   "keywords": [],

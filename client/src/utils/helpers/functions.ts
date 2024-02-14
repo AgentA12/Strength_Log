@@ -2,6 +2,7 @@ import { MantineTheme } from "@mantine/core";
 import dayjs from "dayjs";
 import { ExerciseShape, SetShape, TemplateShape } from "../../types/template";
 import { Exercise } from "../../types/workoutState";
+import { Range } from "../../types/range";
 
 function getOneRepMax(weight: number, repetitions: number) {
   return weight < 1 || repetitions < 1 ? null : Math.round(((weight / (1.0278 - 0.0278 * repetitions)) * 10) / 10)
@@ -43,29 +44,28 @@ function compareDatesByDay(firstDate: Date, secondDate: Date) {
 }
 
 
-type Range = "Last 12 months" | "Last 6 months" | "Last 3 months" | "Last month" | "All time"
 
 function getRangeOfDates(range: Range, firstDate: number, lastDate: number): Date[] {
   switch (range) {
-    case "Last 12 months":
+    case "last 12 months":
       return getDaysArray(
         new Date(dayjs(lastDate).subtract(12, "month").toString()),
         new Date(lastDate)
       );
 
-    case "Last 6 months":
+    case "last 6 months":
       return getDaysArray(
         new Date(dayjs(lastDate).subtract(6, "month").toString()),
         new Date(lastDate)
       );
 
-    case "Last 3 months":
+    case "last 3 months":
       return getDaysArray(
         new Date(dayjs(lastDate).subtract(3, "month").toString()),
         new Date(lastDate)
       );
 
-    case "Last month":
+    case "last month":
       return getDaysArray(
         new Date(dayjs(lastDate).subtract(1, "month").toString()),
         new Date(lastDate)

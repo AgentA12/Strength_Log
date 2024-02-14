@@ -20,23 +20,17 @@ import { useQuery } from "@apollo/client";
 import { useLocation } from "react-router-dom";
 import ChartWrapper from "../components/progresspage/ChartWrapper";
 import RecentExerciseProgress from "./recentExerciseProgress";
+import { Range } from "../types/range";
 
-type Range =
-  | "All time"
-  | "Last month"
-  | "Last 3 months"
-  | "Last 6 months"
-  | "Last 12 months";
-
-type Metric = "Estimated 1RM" | "Total Volume";
+type Metric = "estimated 1rm" | "total volume";
 
 export default function ExerciseProgressPage() {
   const userInfo = useContext<UserInfo>(UserContext);
   const userID = userInfo?.data._id;
 
   const { state } = useLocation();
-  const [range, setRange] = useState<Range>("All time");
-  const [metric, setMetric] = useState<Metric>("Estimated 1RM");
+  const [range, setRange] = useState<Range>("all time");
+  const [metric, setMetric] = useState<Metric>("estimated 1rm");
   const [activeExercise, setActiveExercise] = useState(
     state?.exerciseName ? state.exerciseName : "all exercises"
   );

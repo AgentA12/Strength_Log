@@ -1,11 +1,5 @@
 import { Select } from "@mantine/core";
-
-type Range =
-  | "Last month"
-  | "Last 3 months"
-  | "Last 6 months"
-  | "Last 12 months"
-  | "All time";
+import { Range } from "../../types/range";
 
 interface Props {
   range: Range;
@@ -13,22 +7,22 @@ interface Props {
 }
 
 export default function DateRangeSelect({
-  range = "All time",
+  range = "all time",
   setRange,
 }: Props) {
   const dateRangeData = [
-    "Last month",
-    "Last 3 months",
-    "Last 6 months",
-    "Last 12 months",
-    "All time",
+    "last month",
+    "last 3 months",
+    "last 6 months",
+    "last 12 months",
+    "all time",
   ];
 
   return (
     <Select
       data={dateRangeData}
       value={range}
-      onChange={(value) => setRange(value ? (value as Range) : "All time")}
+      onChange={(value) => setRange(value ? (value as Range) : "all time")}
     />
   );
 }

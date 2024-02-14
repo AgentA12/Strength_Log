@@ -78,14 +78,8 @@ const seedExercises = [
 
   {
     isUserCreated: false,
-    exerciseName: "dumbbell press",
-    equipment: "dumbbell",
-  },
-
-  {
-    isUserCreated: false,
     exerciseName: "cable lateral raises",
-    equipment: "cabel",
+    equipment: "cable",
   },
 
   {
@@ -212,14 +206,12 @@ const seedExercises = [
     equipment: "machine",
   },
 
-  
   {
     isUserCreated: false,
     exerciseName: "abductor machine",
     equipment: "machine",
   },
 
-  
   {
     isUserCreated: false,
     exerciseName: "adductor machine",
@@ -241,10 +233,20 @@ const seedExercises = [
 
 db.once("open", async () => {
   try {
+    console.log("-------------------------------------");
+
+    console.log("Starting Exercise seeding...\n");
+
     await Exercise.deleteMany({});
+    console.log("Cleaning exercises \n");
+
     await Exercise.insertMany(seedExercises);
+    console.log("Inserting exercises\n");
+
     await db.close();
+    console.log("Exercises were successfully seeded\n");
   } catch (error) {
     console.error(`Error occured when seeding: ${error.message}`);
+    console.error(error);
   }
 });

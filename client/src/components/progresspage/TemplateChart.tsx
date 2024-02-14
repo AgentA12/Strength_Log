@@ -18,6 +18,7 @@ import "chartjs-adapter-dayjs-4/dist/chartjs-adapter-dayjs-4.esm";
 import { Line } from "react-chartjs-2";
 import { findFirstAndLastRange } from "../../utils/helpers/functions";
 import { ChartData } from "../../types/chartdata";
+import { Range } from "../../types/range";
 
 ChartJS.register(
   CategoryScale,
@@ -30,13 +31,6 @@ ChartJS.register(
   Colors,
   TimeScale
 );
-
-type Range =
-  | "Last month"
-  | "Last 3 months"
-  | "Last 6 months"
-  | "Last 12 months"
-  | "All time";
 
 interface Props {
   activeTemplate: string;
@@ -57,10 +51,14 @@ interface Props {
   };
 }
 
-export default function TemplateChart(props: Props) {
-  const { activeTemplate, range, metric, options, userID } = props;
-
-  const { loading, data, error } = useQuery(GET_CHART_PROGRESS, {
+export default function TemplateChart({
+  activeTemplate,
+  range,
+  metric,
+  options,
+  userID,
+}: Props) {
+  const { data, loading, error } = useQuery(GET_CHART_PROGRESS, {
     variables: {
       userId: userID,
       templateName: activeTemplate,
@@ -113,9 +111,9 @@ export default function TemplateChart(props: Props) {
     );
   }
 
-  const [firstRange, lastRange] = findFirstAndLastRange(
-    data.getChartData[0].data
-  );
+  const dataSet = data.getChartData[0].data;
+
+  const [firstRange, lastRange] = findFirstAndLastRange(dataSet);
   const labels = getRangeOfDates(range, firstRange, lastRange);
 
   return (
@@ -126,8 +124,8 @@ export default function TemplateChart(props: Props) {
         datasets: data.getChartData.map((chartData: ChartData) => {
           return {
             label: chartData.label,
-            data: chartData.data.map((da) => {
-              return { x: new Date(parseInt(da.x)), y: da.y };
+            data: chartData.data.map((points) => {
+              return { x: new Date(parseInt(points.x)), y: points.y };
             }),
           };
         }),

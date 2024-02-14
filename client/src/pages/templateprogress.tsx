@@ -1,4 +1,4 @@
-import { Box, Flex, Group, Loader, Text } from "@mantine/core";
+import { Box, Flex, Group, Select, Text } from "@mantine/core";
 import {
   TemplateSelect,
   DateRangeSelect,
@@ -12,32 +12,25 @@ import { useQuery } from "@apollo/client";
 import { useLocation } from "react-router-dom";
 import ChartWrapper from "../components/progresspage/ChartWrapper";
 import RecentProgress from "./recenttemplateprogress";
+import { Range } from "../types/range";
+type Metric = "estimated 1rm" | "total volume";
 
-type Range =
-  | "Last month"
-  | "Last 3 months"
-  | "Last 6 months"
-  | "Last 12 months"
-  | "All time";
-
-type Metric = "Estimated 1RM" | "Total Volume";
-
-export default function TemplateProgressPage() {
+export default function TemplateProgress() {
   const userInfo = useContext<UserInfo>(UserContext);
 
   const userID = userInfo?.data._id;
 
   const { state } = useLocation();
 
-  const [range, setRange] = useState<Range>("All time");
-  const [metric, setMetric] = useState<Metric>("Total Volume");
+  const [range, setRange] = useState<Range>("all time");
+  const [metric, setMetric] = useState<Metric>("total volume");
   const [activeTemplate, setActiveTemplate] = useState<string>(
     state ? state.templateName : ""
   );
 
   const {
     data: templates,
-    loading,
+    loading: templatesLoading,
     error,
   } = useQuery(GET_TEMPLATES, { variables: { userId: userID } });
 
@@ -50,7 +43,6 @@ export default function TemplateProgressPage() {
       );
   }, [templates]);
 
-  if (loading) return <Loader m={40} />;
   if (error)
     return (
       <>
@@ -72,11 +64,15 @@ export default function TemplateProgressPage() {
     >
       <Flex direction="column" w={{ base: "100%", lg: "60%", xl: "75%" }}>
         <Group justify="center">
-          <TemplateSelect
-            activeTemplate={activeTemplate}
-            setActiveTemplate={setActiveTemplate}
-            templates={templates.getTemplates}
-          />
+          {templatesLoading ? (
+            <Select />
+          ) : (
+            <TemplateSelect
+              activeTemplate={activeTemplate}
+              setActiveTemplate={setActiveTemplate}
+              templates={templates.getTemplates}
+            />
+          )}
           <DateRangeSelect range={range} setRange={setRange} />
           <MetricSelect metric={metric} setMetric={setMetric} />
         </Group>

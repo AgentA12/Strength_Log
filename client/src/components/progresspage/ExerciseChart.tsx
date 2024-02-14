@@ -11,16 +11,12 @@ import {
 } from "../../utils/helpers/functions";
 import { useQuery } from "@apollo/client";
 import { GET_CHART_PROGRESS } from "../../utils/graphql/queries";
+import { Range } from "../../types/range";
 
 interface Props {
   activeExercise: string;
   userID: string;
-  range:
-    | "Last 12 months"
-    | "Last 6 months"
-    | "Last 3 months"
-    | "Last month"
-    | "All time";
+  range: Range;
   metric: string;
 }
 
@@ -150,7 +146,6 @@ export default function ExerciseChart(props: Props) {
   const [firstDate, lastDate] = findFirstAndLastRange(filteredData[0]?.data);
 
   const labels = getRangeOfDates(range, firstDate, lastDate);
-
 
   return (
     <Line
