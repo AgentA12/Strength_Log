@@ -43,7 +43,6 @@ export default function TemplateDrawer(props: Props) {
 
   useEffect(() => {
     if (data?.getPreviousWorkout._id) {
-      console.log(data);
       workoutDataType === "previously saved workout"
         ? setTemplateState(data.getPreviousWorkout)
         : setTemplateState(template);
