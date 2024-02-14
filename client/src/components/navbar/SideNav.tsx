@@ -51,6 +51,7 @@ export default function SideNav({
           {item.label}
         </Text>
       </Group>
+      
       {item.label === hoveredTab ? (
         <motion.div
           className={classes.hoverAnimation}

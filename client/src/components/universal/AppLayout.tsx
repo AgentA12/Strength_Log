@@ -1,7 +1,6 @@
-import { AppShell, Burger, Title, Group, Box } from "@mantine/core";
+import { AppShell, Burger, Title, Group, Box, Image } from "@mantine/core";
 import { SideNav } from "../navbar";
 import { useDisclosure } from "@mantine/hooks";
-import { AiOutlineThunderbolt } from "react-icons/ai";
 
 interface Props {
   children: React.ReactNode;
@@ -24,12 +23,14 @@ export default function AppLayout({ children, hasNav }: Props) {
         <Group wrap="nowrap" h="100%" justify="space-around">
           <Group gap={2} align="center" justify="center">
             <Title order={2}>Strength Log</Title>
-            <AiOutlineThunderbolt
+            <Image
               style={{
                 alignSelf: "start",
                 justifySelf: "start",
+                marginTop: -8,
               }}
-              size={24}
+              src="./i-32.png"
+              alt="strength log logo"
             />
           </Group>
           <Burger
